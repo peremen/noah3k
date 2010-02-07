@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="${lang}">
+<head>
+    <title>${title}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!--	<link rel="alternate" type="application/rss+xml"> -->
+	<link rel="stylesheet" type="text/css" href="/static/style/default.css">		
+</head>
+
+<body>
+<div class="area">
+    <!-- 헤더프레임 -->
+    <div id="header">
+        <%include file="header.html" />
+    </div>
+
+    <!-- 사이드바 -->
+    <div id="sidemenuOut">
+        <div id="sidemenu">
+        <%include file="sidebar.html" />
+        </div>
+    </div>
+
+    <div id="body">
+        <div class="area">
+            ${next.body()}
+        </div> <!-- end of area -->
+    </div> <!-- end of body -->
+
+    <!-- footer frame -->
+    <!-- IE에서 float으로만 이루어진 내용을 clear하면 layout이 이상해지는 관계로 땜질 -->
+    <div style="clear: both; font-size: 1px">&nbsp;</div>
+    <div id="footer">
+        <%include file="footer.html" />
+    </div>
+	
+</div> <!-- end of area -->
+</body>
+</html>

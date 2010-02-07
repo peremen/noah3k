@@ -1,0 +1,45 @@
+<%inherit file="base.html" />
+<div style="border: 1px solid #C0C0C0; padding:15px; margin: 20px 0 20px 0; width: 33em; font-size: 10pt; font-family: monospace;">
+    Noah2k에 새 아이디를 만듭니다.<br />
+    Noah2k는 KAIST 전산학전공은 물론 KAIST 모든 구성원들에게 자유롭게 열려 있습니다.<br />
+
+    Noah2k는 개인 정보를 BBS 운영 이외의 목적에 사용하지 않습니다.<br />
+    다음의 항목들을 정확하게 기입하여 주십시오.
+</div>
+<form name="newaccount_form" method="post" action="/+join/">
+    <div style="width: 37em;">
+        <hr />
+        <div id="row">
+            <div class="left-container">아이디</div>
+            <span class="sep">:</span>
+            <span><input name="id" type="text" maxlength="12" style="width: 8em"></span>
+        </div>
+        <hr />
+        <div id="row">
+            <div class="left-container">비밀번호</div>
+            <span class="sep">:</span>
+            <span><input name="password1" type="password" maxlength="16" style="width: 8em"></span>
+        </div>
+        <div id="row">
+            <div class="left-container">재확인</div>
+            <span class="sep">:</span>
+            <span><input name="password2" type="password" maxlength="16" style="width: 8em"></span>
+        </div>
+        <hr />
+        <div id="row">
+            <div class="left-container">별명</div>
+            <span class="sep">:</span>
+            <span><input name="nick" type="text" maxlength="16"></span>
+        </div>
+        <div id="row">
+            <div class="left-container">이메일</div>
+            <span class="sep">:</span>
+            <span><input name="email" type="text" maxlength="32"></span>
+        </div>
+        <hr />
+        <div align="right">
+            <input type="submit" name="Submit" value="가입">
+        </div>
+    </div>
+</form>
+

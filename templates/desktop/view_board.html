@@ -1,0 +1,79 @@
+<%inherit file="base.html" />
+<!-- 글 -->
+<table border="0" cellspacing="0" cellpadding="4" style="width: 100%; margin-bottom: 10px; " class="list">
+    <tr align="center" class="head">
+        <th>글번호</th>
+        <th>제목</th>
+        <th>글쓴이</th>
+        <th>날짜</th>
+        <th>조회수</th>
+    </tr>
+
+    <tr class="odd">
+        <!-- 글번호 -->
+        <td align="center"><a href="/${board_path}/+read/523641" class="articlelink">16428</a></td>
+        <!-- 제목 --> 
+        <td  width="55%">
+        <img src="/static/image/thread.gif" alt="thread" style="margin-left: 32px" />
+        <a href="/${board_path}/+read/523641" class="articlelink">[공지] 네오플 도서 전달 및 저녁식사 (목 : 17:30) </a>
+        </td>
+        <!-- 글쓴이 -->
+        <td style="padding-left: 1em">jinsung23</td>
+        <!-- 날짜 -->
+        <td align="center">2010-01-05</td>
+        <!-- 조회수 -->
+        <td align="center">18</td>
+    </tr>
+
+
+    <tr class="even">
+        <!-- 글번호 -->
+        <td align="center"><a href="/${board_path}/+read/523643" class="articlelink">16429</a></td>
+        <!-- 제목 --> 
+        <td  width="55%">
+        <img src="/static/image/thread.gif" alt="thread" style="margin-left: 56px" />
+        <a href="/${board_path}/+read/523643" class="articlelink">[공지] 네오플 도서 전달 및 저녁식사 (목 : 17:30)
+        </a>
+        </td>
+        <!-- 글쓴이 -->
+        <td style="padding-left: 1em">yjh0502</td>
+        <!-- 날짜 -->
+        <td align="center">2010-01-05</td>
+        <!-- 조회수 -->
+        <td align="center">19</td>
+    </tr>
+
+</table>
+
+
+<!-- 페이지 네비게이트 , 글쓰기/관리 버튼-->
+<div id="listmenu">
+<!-- 글쓰기 -->
+<a class="button" href="/${board_path}/+write" title="새 글을 작성합니다">글쓰기</a> 
+<!-- 안 읽은 글 -->
+<a class="button" href="/${board_path}/+new_article" title="읽지 않은 글들을 봅니다">안읽은글</a> 
+<a class="button" href="/${board_path}/+subscribe" title="새글읽기 기능을 토글합니다.">구독하기</a> 
+<a class="button" href="/${board_path}/+mark_as_read_all" title="읽지 않은 글들을 봅니다">새글없애기</a>
+<!-- 보드 관리 -->
+<a class="button" href="/${board_path}/+configure" title="이 보드의 관리 메뉴를 봅니다">관리</a> 
+
+<center>
+    <a href="/${board_path}?page=1"><img src="/static/image/arrows/first.png" alt="first" border="0" style="vertical-align: top" /></a>&nbsp;
+    <a href="/${board_path}?page=904"><img src="/static/image/arrows/more_prev.png" alt="more_prev" border="0" style="vertical-align: top" /></a>&nbsp;
+    <a href="/${board_path}?page=913"><img src="/static/image/arrows/prev.png" alt="prev" border="0" style="vertical-align: top" /></a>&nbsp; <a class="listlink" href="/${board_path}?page=911">911</a>  <a class="listlink" href="/${board_path}?page=912">912</a>  <a class="listlink" href="/${board_path}?page=913">913</a>  <b>914</b> 
+</center>
+
+<!-- 검색 -->				
+<div id="search">
+    <form name="search_form" method="post" style="margin: 0; padding: 0;" action="/${board_path}/+search">
+        <!--        <input name="${board_path}" type="hidden" value="27"/>-->
+
+        <input name="category" type="hidden" value="title"/>
+        <!--<span id="subtitle">제목찾기</span> <span class="sep">:</span>-->
+        <input name="keyword" type="text"/>
+        <input name="submit" type="submit" value="검색"/>
+    </form>
+</div>
+
+</div> <!-- end of menu -->
+

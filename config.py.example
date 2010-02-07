@@ -1,0 +1,10 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+db_host = "noah.kaist.ac.kr"
+db_port = "3305"
+db_type = "mysql"
+db_name = "DB_NAME"
+db_prefix = ""
+db_user= "DB_USER"
+db_password = "DB_PASSWORD"

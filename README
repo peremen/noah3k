@@ -1,0 +1,4 @@
+필요한 파이썬 모듈
+* web.py
+* SQLAlchemy
+* mako

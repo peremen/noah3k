@@ -1,0 +1,392 @@
+a.button {
+    text-decoration: none;
+    color: black;
+    border: 1px outset silver; 
+    background: white; 
+    padding: 3px 3px 1px 2px;
+    margin: 1px;
+    font-size: 1.0em;
+    height: 0.9em;
+}
+a.button:hover { background: gray; color: white }
+
+table    { width:100%; margin-bottom: 10px }
+table.list     { border-bottom: 2px solid #3C78B5; }
+table.list td     { border-right: 1px solid silver }
+table.list th     { font-weight: bold; border-bottom: 2px solid #3C78B5; padding-top: 8px; border-right: 1px solid silver }
+table.list tr    { font-size: 1em }
+table.list tr.even    { background: rgb(237,243,254); }
+table.list tr.odd  { background: #FFFFFF; }
+table.list tr span#commentCount { 
+    color: #666666;
+    padding-left: 5px;
+    font-size: 80%; 
+}
+
+hr {
+    color: #3C78B5;
+    background-color: #3C78B5;
+    height: 2px;
+    border: 0;
+}
+
+body {
+    margin: 15px 10px 10px 10px;
+}
+
+/* to work-around for browser-specific bugs */
+.area {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.spacer {
+    font-size: 1px;
+    clear: both;
+}
+
+a.servicelink        { text-decoration: none; color: black }
+a.servicelink:hover    { text-decoration: none; color: red }
+a.favlink            { text-decoration: none; color: orange; font-weight: bold }
+a.favlink:hover        { text-decoration: underline }
+a.dirlink            { text-decoration: none; color: orange; font-weight: bold }
+a.dirlink:hover        { text-decoration: underline }
+a.boardlink            { text-decoration: none; color: black }
+a.boardlink:hover    { background-color: #E0E0FF }
+a.listlink            { text-decoration: none; color: black }
+a.listlink:hover    { color: red }
+a.articlelink        { text-decoration: none; color: black }
+a.articlelink:hover    { text-decoration: underline }
+a.filelink            { font-weight: bold; text-decoration: none; color: gray }
+a.filelink:hover    { font-weight: bold; text-decoration: underline; color: red }
+
+img.type {
+    vertical-align: text-bottom;
+}
+
+/* header --------------------------------------------- */
+div#header {
+    border-bottom: solid 1px #003399;
+    font-size: 0.8em;
+    padding-bottom: 2px;
+}
+
+div#header div#logo {
+    margin-right: 10px;
+    float: left;
+}
+
+div#header div#menu {
+    float: right;
+    width: 19em;
+}
+
+div#header div#menu ul { 
+    list-style: none;
+    margin: 0 0 18px 0;
+    padding-left: 0;
+    float: right;
+}
+
+div#header div#menu li {
+    float: left;
+    padding: 0px 6px 0 0;
+    margin: 0px 1px 0 0;
+}
+
+div#header div#menu div#shortcut {
+    clear: right;
+    text-align: right;
+}
+
+div#header div#menu div#shortcut form {
+    margin: 0;
+    padding: 0;
+}
+
+div#header div#services {
+    height: 2.9em;
+    margin-left: 220px;
+}
+
+div#header div#title {
+    vertical-align: bottom;
+    font-size: 1.6em;
+    height: 1.4em;
+    margin-left: 220px;
+}
+
+div#header div#histnav {
+    margin-left: 220px;
+}
+
+div#header div#title a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;    
+}
+
+div#header div#title a:hover {
+    text-decoration: underline;
+}
+
+div#header div#children {
+    float: right;
+    text-align: right;
+}
+
+/* side --------------------------------------------- */
+div#sidemenuOut {
+    float: left;
+    width: 216px;
+    margin: 10px 0 0px 0;
+}
+
+/* only for non-IE browsers */
+div#sidemenuOut:after {
+    content: " ";
+    display: block;
+    height: 14px;
+}
+
+div#sidemenu {
+    padding-right: 16px;
+    border-right: 1px dashed #3C78B5;
+    line-height: 160%;
+    font-size: 0.76em;
+}
+
+div#sidemenu br {
+    line-height: 100%;
+}
+
+div#sidemenu div#box {
+    border: 1px solid #C0C0C0;
+}
+
+div#sidemenu div.heading {
+    font-weight: bold;
+    border-bottom: 1px solid #3C78B5;
+    background-color: #F0F0F0;
+    padding: 3px;
+}
+
+div#sidemenu ul {
+    list-style: none;
+    margin: 0px 0px 0px 0px;
+    padding: 3px;
+}
+
+div#sidemenu li {
+    overflow: hidden;
+    height: 1.5em;
+    margin: 2px 0px 2px 0px;
+}
+
+div#feeds {
+    text-align: center;
+}
+
+a.feed {
+    border:1px solid;
+    border-color:#FC9 #630 #330 #F96;
+    padding:0 3px;
+    font:bold 10px verdana,sans-serif;
+    color:#FFF;
+    background: #F60;
+    text-decoration: none;
+    margin: 4px;
+}
+
+/* body --------------------------------------------- */
+div#body {
+    margin: 10px 0px 10px 216px;
+    padding: 0px 0px 0px 16px;
+    font-size: 0.8em;
+}
+
+div#body .heading {
+    font-weight: bold;
+    border-bottom: 2px solid #3C78B5;
+    text-align: center;
+    padding: 3px;
+    padding-top: 8px;
+    margin-bottom: 4px;
+}
+
+div#row {
+    color: #000000;
+    margin-bottom: 0.3em;
+     padding: 0;
+     line-height: 1.5em;
+}
+
+div.left-container {
+    float: left;
+    width: 10em;
+    background-color: #F0F0F0;
+    padding: 2px 10px 0px 0;
+    margin: 0 15px 0 0;
+    text-align: right;
+    font-size: 0.9em;
+    font-weight: bold;
+    border-right: 1px solid #C0C0C0;
+}
+
+span#attachment {
+    font-weight: bold;
+}
+
+div#content {
+    border-top: 1px solid #3C78B5;
+    padding: 10px 15px 10px 15px;
+    font-size: 1.0em;
+    margin-top: 10px;
+    text-align: justify;
+    line-height: 150%;
+}
+
+div#content div#images {
+    font-size: 0.9em;
+    font-weight: bold;
+    color: gray;
+    margin-bottom: 25px;
+}
+
+div#images img.image {
+}
+
+div#content div#re {
+    border: 1px solid #3C78B5;
+    margin-left: 20px;
+    margin-top: 2px;
+    padding: 5px 5px 5px 5px;
+}
+
+div#article {
+    border-bottom: 1px solid #3C78B5;
+    margin-bottom: 10px;
+}
+
+.emphasized a, #article .emphasized {
+    color: red;
+}
+
+/* comment ------------------------------------------ */
+div#comment {
+}
+
+div#comment div#list{
+    border-top: 1px solid #C0C0C0;
+    padding-top: 10px;
+}
+
+div#comment div#input {
+    text-align: center;
+    padding: 5px 10px 5px 10px;
+    border: 1px solid #c0c0c0;
+    background-color: #F0F0F0;
+    margin: 10px 100px 10px 100px;
+}
+div#comment table {
+    font-size: 1.0em;
+}
+div#comment tr {
+    padding: 5px;
+}
+div#comment td#writer {
+    width: 8em;
+    padding: 0px 2em 0px 0px;
+    font-size: 0.9em;
+    color: gray;
+    text-align: right;
+}
+div#comment td#content {
+    font-size: 1.0em;
+    padding-left: 10px;
+}
+div#comment td#writetime {
+    width: 12em;
+    font-size: 0.9em;
+    padding-right: 5px;
+    text-align: center;
+    color: gray;
+}
+div#comment td#button {
+    text-align: center;
+    font-size: 0.9em;
+    width: 5em;
+}
+
+div#body span#search {
+    margin: 0 10px 10px 10px;
+    text-align: right;
+    float: right;
+}
+
+div#body div#menu ul { 
+    list-style: none;
+    float: right;
+}
+
+div#body div#menu li {
+    float: left;
+    padding: 0px 6px 0px 0px;
+    margin: 0px 1px 0px 0px;
+}
+
+div#body .sep {
+    display: none;
+    margin: 0 1px 0 0;
+}
+
+div#body div#errorbox {
+    margin: 0 auto;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    width: 600px;
+    text-align: left;
+}
+
+/* footer ------------------------------------------ */
+div#footer {
+    clear: both;
+    margin: 0px;
+    border-top: solid 1px #003399;
+    padding-top: 8px;
+    font-size: 0.76em;
+}
+
+div#footer div#banner {
+    float: left;
+    padding: 0;
+    margin: 0;
+    width: 40%;
+}
+div#footer div#menu {
+    float: right;
+    margin: 0;
+    padding: 0;
+    width: 40%;
+}
+div#footer div#menu ul { 
+    float: right;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+div#footer div#menu li {
+    float: left;
+    padding: 0px 6px 0 0;
+    margin: 0px 1px 0 0;
+}
+div.desc {
+        width: 6em; 
+        float: left; 
+        background-color: #F0F0F0; 
+        margin-right: 10px; 
+        padding-right: 10px;
+        text-align: right;
+}
+
