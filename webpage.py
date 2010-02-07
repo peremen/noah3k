@@ -9,18 +9,19 @@ from board import board
 urls = (
     '/(m/|)', 'main_page',
  #   '/(m/|)\*', 'board_list', 
-    '/(m/|)\+join/', 'join',
-    '/(m/|)\+login/', 'login',
-    '/(m/|)\+logout/', 'logout',
+    '/(m/|)\+join', 'join',
+    '/(m/|)\+login', 'login',
+    '/(m/|)\+logout', 'logout',
     '/(m/|)\+u/(\S*)/', 'personal_page',
-    '/(m/|)\+u/(\S*)/settings/', 'personal_settings',
-    '/(m/|)\+u/(\S*)/favorites/', 'personal_favorites',
-    '/(m/|)\+u/(\S*)/recent(\?\S*|)/', 'personal_recent',
-    '/(m/|)\+help/(\S*)/', 'help',
-    '/(m/|)\+credits/', 'credits',
+    '/(m/|)\+u/(\S*)/settings', 'personal_settings',
+    '/(m/|)\+u/(\S*)/favorites', 'personal_favorites',
+    '/(m/|)\+u/(\S*)/recent', 'personal_recent',
+    '/(m/|)\+help/(\S*)', 'help',
+    '/(m/|)\+credits', 'credits',
 # 다른 모든 action은 view_board 위로 올라가야 함.
+    '/(m/|)(\S*)/+read/(\d*)', 'read_article',
     '/(m/|)(\S*)/\*', 'view_subboard_list',
-    '/(m/|)(\S*)(\?\S*|)', 'view_board',
+    '/(m/|)(\S*)', 'view_board',
 )
 
 app = web.application(urls, globals(), autoreload = True)
@@ -37,10 +38,12 @@ mobile_render = render_mako(
 
 class main_page:
     def GET(self, mobile):
-        if not mobile:
-            return desktop_render.main(title = "Noah3K", lang="ko")
-        else:
-            return mobile_render.main()
+        v = view_subboard_list()
+        return v.GET(mobile, "")
+#        if not mobile:
+#            return desktop_render.main(title = "Noah3K", lang="ko")
+#        else:
+#            return mobile_render.main()
 
 class join:
     def GET(self, mobile):
@@ -54,7 +57,8 @@ class join:
 class login:
     def GET(self, mobile):
         if not mobile:
-            return desktop_render.login(title = u"로그인 - Noah3K", lang="ko")
+            return desktop_render.login(title = u"로그인 - Noah3K", board_desc=u"로그인",
+                    lang="ko")
         else:
             return mobile_render.login()
     def POST(self, mobile):
@@ -82,7 +86,7 @@ class credits:
             return mobile_render.credits()
 
 class view_board:
-    def GET(self, mobile, board_name, query_string):
+    def GET(self, mobile, board_name):
         b = board()
         board_id = b._get_board_id_from_path(board_name)
         if board_id < 0:
@@ -99,18 +103,26 @@ class view_board:
 
 class view_subboard_list:
     def GET(self, mobile, board_name):
-        print "view_subboard_list"
         b = board()
         board_id = b._get_board_id_from_path(board_name)
-        if board_id < 0:
+        if board_id < -1:
             return # No such board
         board_info = b.get_board_info(board_id)
         child_board = b.get_child(board_id)
+        if board_name == "":
+            board_name = u"초기 화면"
+            board_path = ""
+        else:
+            board_path = board_info.bName[1:]
         if not mobile:
-            return desktop_render.view_subboard_list(title = u"%s - Noah3K" % board_name, board_path = board_info.bName[1:],
+            return desktop_render.view_subboard_list(title = u"%s - Noah3K" % board_name, board_path = board_path,
                     board_desc = board_info.bDescription, child_boards = child_board, lang="ko")
         else:
             return mobile_render.view_subboard_list()
 
+
+class read_article:
+    def GET(self, mobile, board_name, article_id):
+        pass
 if __name__ == "__main__":
     app.run()

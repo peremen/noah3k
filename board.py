@@ -14,11 +14,12 @@ class board:
                 host=config.db_host, port=int(config.db_port))
 
     def _get_board_id_from_path(self, path):
-        path = '/%s' % path
+        if path != "":
+            path = '/%s' % path
         val = dict(board_path = path)
         result = self.db.select('Boards', val, where="bName = $board_path")
         try:
-            retvalue = result[0].bSerial
+            retvalue = result[0]["bSerial"]
         except:
             return -1
         else:

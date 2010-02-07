@@ -1,6 +1,8 @@
 ﻿<div id="menu">
     <ul>
-        <li><a href="/+help/context/">현재 화면 도움말</a></li>
+%if help_context is not UNDEFINED:
+        <li><a href="/+help/${help_context}/">현재 화면 도움말</a></li>
+% endif
         <li><a href="/+credits/">개발자 정보</a></li>
     </ul>
 </div>
