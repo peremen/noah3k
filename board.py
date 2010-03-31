@@ -48,17 +48,26 @@ class board:
     def get_child(self, board_id):
         # board_id 보드의 자식 보드를 가져온다.
         val = dict(board_id = board_id)
-        result = self.db.select('Boards', val, where="bParent = $board_id", order="bName ASC")
+        result = self.db.select('Boards', val, where='bParent = $board_id', order='bName ASC')
         return result
 
     def get_parent(self, board_id):
-        pass
+        val = dict(board_id = board_id)
+        result = self.db.select('Boards', val, what='bParent', where='bSerial = $board_id')
+        try:
+            retvalue = result[0]
+        except:
+            return None
+        else:
+            return retvalue['bParent']
 
     def get_article_list(self, session_key, board_id, page_size, page_number):
         pass
 
     def get_article(self, session_key, board_id, article_id):
-        pass
+        val = dict(board_id = board_id, article_id = article_id)
+        result = self.db.select('Articles', val, where='bSerial = $board_id AND aSerial = $article_id')
+        return result
 
     def write_article(self, session_key, board_id, article):
         pass

@@ -1,10 +1,17 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import config
+import web
+
 class user:
     """
     사용자 로그인, 로그아웃, 세션을 관리한다.
     """
+    def __init__(self):
+        self.db = web.database(dbn=config.db_type, user=config.db_user,
+                pw = config.db_password, db = config.db_name,
+                host=config.db_host, port=int(config.db_port))
     
     def login(username, password):
         """
@@ -54,7 +61,7 @@ class user:
         """
         pass
 
-    def get_user(uid):
+    def get_user(self, uid):
         """
         사용자 정보를 가져온다. 사용자 UID를 사용하므로, 사용자
         이름이나 세션으로 조회하려면 L{_get_uid_from_username},
@@ -65,7 +72,14 @@ class user:
         @rtype tuple
         @return: 사용자 존재 여부(T/F)와 사용자 정보 딕셔너리(성공 시) 또는 오류 코드(실패 시)를 포함하는 튜플.
         """
-        pass
+        val = dict(uid = uid)
+        result = self.db.select('Users', val, where="uSerial = $uid")
+        try:
+            retvalue = result[0]
+        except:
+            return (False, {})
+        else:
+            return (True, retvalue)
 
     def modify_user(session_key, username, member):
         """
@@ -95,6 +109,14 @@ class user:
         @rtype int
         @return: 이름에 해당하는 사용자 ID. 
         """
+        val = dict(username = username)
+        result = self.db.select('Users', val, where="uId = $username")
+        try:
+            retvalue = result[0]['uSerial']
+        except:
+            return ""
+        else:
+            return retvalue
         pass
 
     def _get_uid_from_session_key(session_key):

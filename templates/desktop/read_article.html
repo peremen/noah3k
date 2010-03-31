@@ -1,0 +1,96 @@
+<%inherit file="base.html" />
+<%
+from user import user
+def get_formatted_username(uid):
+    k = user()
+    u = k.get_user(uid)[1]
+    return "%(id)s (%(nick)s)" % {'id': u['uId'], 'nick':u['uNick']}
+%>
+
+<div id="article">
+
+    % for a in article:
+    <!-- 글 -->
+    <div id="row">
+        <div class="left-container">제목</div>
+        <span class="sep">:</span>
+        <span  id="title">${a.aTitle}</span>
+    </div>
+    <div id="row">
+        <div class="left-container">글쓴이</div>
+        <span class="sep">:</span>
+        <span id="writer">${get_formatted_username(a.uSerial)}</span>
+    </div>
+    <div id="row">
+        <div class="left-container">시간</div>
+        <span class="sep">:</span>
+        <span id="writetime">${a.aDatetime}</span>
+    </div>
+    % if a.aEditedDatetime:
+    <div id="row">
+        <div class="left-container">수정</div>
+        <span class="sep">:</span>
+        <span id="edittime">${a.aEditedDatetime}</span>
+    </div>
+    % endif
+
+    <div id="content">
+${a.aContent}
+    </div>
+    <!-- 코멘트 -->
+    <div id="comment">
+        <div id="list">
+            <div class="area">
+                <table border="0" cellspacing="0" cellpadding="4" style="width: 100%">
+                % if comments:
+                % for comment in comments:
+                <tr>
+                    <td id="writer">${comment.author}</td>
+                    <td id="content">${comment.body}</td>
+                    <td id="writetime">${comment.time}</td>
+                    <td id="button"><a class="button" href="javascript:delconfirm2('/${board_path}/+comment_delete/${comment.id}')">삭제</a></td>
+                </tr>
+                % endfor
+                % endif
+                </table>
+            </div>
+        </div>
+
+    <div id="input">
+    댓글을 쓰시려면 <a href="/+login">로그인</a>을 해주세요
+    <form name="comment" method="post" action="${board_path}/+comment/${a.aSerial}">
+    댓글 쓰기
+    <input name="comment" type="text" maxlength="255" style="width: 30em">
+    <input type="submit" name="Submit" value="확인">
+    </form>
+    </div>
+
+    </div> <!-- end of comment -->
+    % endfor
+
+</div> <!-- end of article -->
+
+
+<!-- 버튼: 목록/글쓰기/답글/메일답신/수정/삭제 -->
+<div id="menu">
+    <ul>
+        <li> <a class="button" href="/${board_path}">목록</a></li>
+    <!-- 쓰기 권한 -->	
+    <!-- 로그인 --> 
+    <!-- 삭제 권한 --> 
+    <!-- 강조 권한 --> 
+    </ul>
+
+    <!-- 이전글/다음글 -->
+    <div id="row">
+    <div class="left-container">이전글</div>
+    <span class="sep">: </span>
+    <span id="title"><a class="articlelink" href="/${board_path}/+read/id-1">이전글 제목</a></span> 
+    </div>
+    <div id="row">
+
+    <div class="left-container">다음글</div>
+    <span class="sep">: </span>
+    <span id="title"><a class="articlelink" href="/${board_path}/+read/id+1">다음글 제목</a></span> 
+    </div>
+</div> <!-- end of menu -->

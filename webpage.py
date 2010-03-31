@@ -5,23 +5,24 @@ import os
 import web
 from web.contrib.template import render_mako
 from board import board
+from user import user
 
 urls = (
-    '/(m/|)', 'main_page',
+    r'/(m/|)', 'main_page',
  #   '/(m/|)\*', 'board_list', 
-    '/(m/|)\+join', 'join',
-    '/(m/|)\+login', 'login',
-    '/(m/|)\+logout', 'logout',
-    '/(m/|)\+u/(\S*)/', 'personal_page',
-    '/(m/|)\+u/(\S*)/settings', 'personal_settings',
-    '/(m/|)\+u/(\S*)/favorites', 'personal_favorites',
-    '/(m/|)\+u/(\S*)/recent', 'personal_recent',
-    '/(m/|)\+help/(\S*)', 'help',
-    '/(m/|)\+credits', 'credits',
+    r'/(m/|)\+join', 'join',
+    r'/(m/|)\+login', 'login',
+    r'/(m/|)\+logout', 'logout',
+    r'/(m/|)\+u/(\S*)', 'personal_page',
+    r'/(m/|)\+u/(\S*)/settings', 'personal_settings',
+    r'/(m/|)\+u/(\S*)/favorites', 'personal_favorites',
+    r'/(m/|)\+u/(\S*)/recent', 'personal_recent',
+    r'/(m/|)\+help/(\S*)', 'help',
+    r'/(m/|)\+credits', 'credits',
 # 다른 모든 action은 view_board 위로 올라가야 함.
-    '/(m/|)(\S*)/+read/(\d*)', 'read_article',
-    '/(m/|)(\S*)/\*', 'view_subboard_list',
-    '/(m/|)(\S*)', 'view_board',
+    r'/(m/|)(\S*)/\+read/(\d*)', 'read_article',
+    r'/(m/|)(\S*)/\*', 'view_subboard_list',
+    r'/(m/|)(\S*)', 'view_board',
 )
 
 app = web.application(urls, globals(), autoreload = True)
@@ -123,6 +124,27 @@ class view_subboard_list:
 
 class read_article:
     def GET(self, mobile, board_name, article_id):
-        pass
+        b = board()
+        board_id = b._get_board_id_from_path(board_name)
+        if board_id < -1:
+            return
+        board_info = b.get_board_info(board_id)
+        board_path = board_info.bName[1:]
+        board_desc = board_info.bDescription
+        article = b.get_article(0, board_id, int(article_id))
+        # aSerial: 글 UID bSerial: 글이 있는 보드 aIndex: 게시판에 보이는 가상 글 번호 aTitle: 제목
+        # aId: 글쓴이 ID aNick: 글쓴이의 당시 닉네임 
+        # uSerial: 글쓴이의 UID (여기서 aId/aNick 유도 가능)
+        # aContent: 본문 aLastGuest: 모름 aHit: 조회 수
+        # aEmphasis: 강조 여부 aDatetime: 최초 작성 시간 aEditedDatetime: 수정 시간, 없으면 NULL
+        # aLevel: 글 깊이 aParent: aLevel > 0의 경우 바로 윗 부모 글. assert(aLevel == 0 && aParent == NULL)
+        # aRoot: 깊이가 계속 깊어져 갔을 때 최종적인 부모. aParent == NULL인 경우 자기 자신.
+        if not mobile:
+            return desktop_render.read_article(article = article,
+                title = u"%s - Noah3K" % board_name,
+                board_path = board_path, board_desc = board_desc,
+                comments = None, lang="ko")
+        else:
+            return mobile_render.read_article()
 if __name__ == "__main__":
     app.run()
