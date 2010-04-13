@@ -6,6 +6,7 @@ import web
 from web.contrib.template import render_mako
 from board import board
 from user import user
+from cgi import parse_qs
 
 urls = (
     r'/(m/|)', 'main_page',
@@ -88,17 +89,28 @@ class credits:
 
 class view_board:
     def GET(self, mobile, board_name):
+        page_size = 20
         b = board()
         board_id = b._get_board_id_from_path(board_name)
         if board_id < 0:
             return # No such board
         board_info = b.get_board_info(board_id)
+        qs = web.ctx.query
+        if len(qs) > 0:
+            qs = qs[1:]
+            qs = parse_qs(qs)
+
+        if qs:
+            page = int(qs['page'][0])
+        else:
+            page = b._get_total_page_count(board_id, page_size)
         # bSerial: board_id, bName: 전체 경로, uSerial: 보대, bParent: 부모 보드, bDescription: 보드 짧은 설명
         # bDatetime: 개설 시간, bInformation: 보드 긴 설명, bType = 디렉터리/보드/블로그,
         # bReply: bWrite: bComment: 모름
         if not mobile:
             return desktop_render.view_board(title = u"%s - Noah3K" % board_info.bName, board_path = board_info.bName[1:],
-                    board_desc = board_info.bDescription, lang="ko")
+                board_desc = board_info.bDescription, lang="ko", articles=b.get_article_list(0, board_id, page_size, page), page=page,
+                total_page = b._get_total_page_count(board_id, page_size))
         else:
             return mobile_render.view_board()
 

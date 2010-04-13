@@ -25,6 +25,15 @@ class board:
         else:
             return retvalue
 
+    def _get_article_count(self, board_id):
+        val = dict(board_id = board_id)
+        result = self.db.query('SELECT COUNT(*) AS article_count FROM Articles WHERE bSerial=$board_id', val);
+        return result[0].article_count
+
+    def _get_total_page_count(self, board_id, page_size):
+        total_article = self._get_article_count(board_id)
+        return  (total_article + page_size -1) / page_size
+
     def create_board(self, session_key, parent, settings):
         pass
 
@@ -62,7 +71,22 @@ class board:
             return retvalue['bParent']
 
     def get_article_list(self, session_key, board_id, page_size, page_number):
-        pass
+        total_article = self._get_article_count(board_id)
+        last_page = self._get_total_page_count(board_id, page_size)
+        assert(page_number >= 1 and page_number <= last_page)
+        end_index = total_article - ((total_article + page_size - 1)/page_size - page_number) * page_size
+        if(end_index > total_article):
+            end_index = total_article
+        begin_index = end_index - page_size + 1
+        if(begin_index < 1):
+            end_index += (1-begin_index)
+            begin_index = 1
+            if(end_index > total_article):
+                end_index = total_article
+        val = dict(board_id = board_id, begin_index = begin_index, end_index = end_index)
+        result = self.db.select('Articles', val, where='bSerial = $board_id AND aIndex >= $begin_index AND aIndex <= $end_index')
+        return result
+
 
     def get_article(self, session_key, board_id, article_id):
         val = dict(board_id = board_id, article_id = article_id)

@@ -1,10 +1,16 @@
 <%inherit file="base.html" />
 <%
 from user import user
+from pygments import highlight
+from pygments.lexers import BBCodeLexer
+from pygments.formatters import HtmlFormatter
 def get_formatted_username(uid):
     k = user()
     u = k.get_user(uid)[1]
     return "%(id)s (%(nick)s)" % {'id': u['uId'], 'nick':u['uNick']}
+
+def format(original):
+    return highlight(original, BBCodeLexer(), HtmlFormatter())
 %>
 
 <div id="article">
@@ -35,7 +41,7 @@ def get_formatted_username(uid):
     % endif
 
     <div id="content">
-${a.aContent}
+${format(a.aContent)}
     </div>
     <!-- 코멘트 -->
     <div id="comment">

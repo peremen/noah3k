@@ -1,6 +1,9 @@
 <%inherit file="base.html" />
 <!-- 글 -->
 <table border="0" cellspacing="0" cellpadding="4" style="width: 100%; margin-bottom: 10px; " class="list">
+    %if len(articles) == 0:
+    글 없음
+    %else:
     <tr align="center" class="head">
         <th>글번호</th>
         <th>제목</th>
@@ -8,40 +11,30 @@
         <th>날짜</th>
         <th>조회수</th>
     </tr>
-
-    <tr class="odd">
-        <!-- 글번호 -->
-        <td align="center"><a href="/${board_path}/+read/523641" class="articlelink">16428</a></td>
-        <!-- 제목 --> 
-        <td  width="55%">
-        <img src="/static/image/thread.gif" alt="thread" style="margin-left: 32px" />
-        <a href="/${board_path}/+read/523641" class="articlelink">[공지] 네오플 도서 전달 및 저녁식사 (목 : 17:30) </a>
-        </td>
-        <!-- 글쓴이 -->
-        <td style="padding-left: 1em">jinsung23</td>
-        <!-- 날짜 -->
-        <td align="center">2010-01-05</td>
-        <!-- 조회수 -->
-        <td align="center">18</td>
-    </tr>
-
-
+    <% i = 1 %>
+    % for article in articles:
+    % if i%2 == 0:
     <tr class="even">
+    % else:
+    <tr class="odd">
+    % endif
+    <% i = i + 1 %>
         <!-- 글번호 -->
-        <td align="center"><a href="/${board_path}/+read/523643" class="articlelink">16429</a></td>
+        <td align="center"><a href="/${board_path}/+read/${article.aSerial}" class="articlelink">${article.aIndex}</a></td>
         <!-- 제목 --> 
         <td  width="55%">
-        <img src="/static/image/thread.gif" alt="thread" style="margin-left: 56px" />
-        <a href="/${board_path}/+read/523643" class="articlelink">[공지] 네오플 도서 전달 및 저녁식사 (목 : 17:30)
-        </a>
+            <!--<img src="/static/image/thread.gif" alt="thread" style="margin-left: 32px" /> -->
+            <a href="/${board_path}/+read/${article.aSerial}" class="articlelink">${article.aTitle}</a>
         </td>
         <!-- 글쓴이 -->
-        <td style="padding-left: 1em">yjh0502</td>
+        <td style="padding-left: 1em">${article.uSerial}</td>
         <!-- 날짜 -->
-        <td align="center">2010-01-05</td>
+        <td align="center">${article.aDatetime}</td>
         <!-- 조회수 -->
-        <td align="center">19</td>
+        <td align="center">${article.aHit}</td>
     </tr>
+    % endfor
+    % endif
 
 </table>
 
@@ -58,9 +51,31 @@
 <a class="button" href="/${board_path}/+configure" title="이 보드의 관리 메뉴를 봅니다">관리</a> 
 
 <center>
+    % if page > 11:
     <a href="/${board_path}?page=1"><img src="/static/image/arrows/first.png" alt="first" border="0" style="vertical-align: top" /></a>&nbsp;
-    <a href="/${board_path}?page=904"><img src="/static/image/arrows/more_prev.png" alt="more_prev" border="0" style="vertical-align: top" /></a>&nbsp;
-    <a href="/${board_path}?page=913"><img src="/static/image/arrows/prev.png" alt="prev" border="0" style="vertical-align: top" /></a>&nbsp; <a class="listlink" href="/${board_path}?page=911">911</a>  <a class="listlink" href="/${board_path}?page=912">912</a>  <a class="listlink" href="/${board_path}?page=913">913</a>  <b>914</b> 
+    % endif
+    % if page > 2:
+    <a href="/${board_path}?page=${max(1, page-10)}"><img src="/static/image/arrows/more_prev.png" alt="more_prev" border="0" style="vertical-align: top" /></a>&nbsp;
+    % endif
+    % if page > 1:
+    <a href="/${board_path}?page=${page-1}"><img src="/static/image/arrows/prev.png" alt="prev" border="0" style="vertical-align: top" /> </a>&nbsp;
+    % endif
+    % for i in range(((page-1)/10)*10+1, min(total_page, ((page-1)/10*10+10))+1):
+    % if i == page:
+    <b>${i}</b>
+    % else:
+    <a class="listlink" href="/${board_path}?page=${i}">${i}</a>
+    % endif
+    % endfor
+    % if page < total_page - 1:
+    <a href="/${board_path}?page=${page+1}"><img src="/static/image/arrows/next.png" alt="next" border="0" style="vertical-align: top" /></a>&nbsp;
+    % endif
+    % if page < total_page - 2:
+    <a href="/${board_path}?page=${min(total_page, page+10)}"><img src="/static/image/arrows/more_next.png" alt="more_next" border="0" style="vertical-align: top" /></a>&nbsp;
+    % endif
+    % if page < total_page - 11:
+    <a href="/${board_path}?page=${total_page}"><img src="/static/image/arrows/last.png" alt="last" border="0" style="vertical-align: top" /></a>&nbsp;
+    % endif
 </center>
 
 <!-- 검색 -->				
