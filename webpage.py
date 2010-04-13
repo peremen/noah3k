@@ -95,6 +95,10 @@ class view_board:
         if board_id < 0:
             return # No such board
         board_info = b.get_board_info(board_id)
+        if board_info.bType == 0: # 디렉터리
+            v = view_subboard_list()
+            return v.GET(mobile, board_name)
+
         qs = web.ctx.query
         if len(qs) > 0:
             qs = qs[1:]
