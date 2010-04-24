@@ -27,6 +27,11 @@ urls = (
 )
 
 app = web.application(urls, globals(), autoreload = True)
+if web.config.get('_session') is None:
+    session = web.session.Session(app, web.session.DiskStore('sessions'), {'count':0})
+    web.config._session = session
+else:
+    session = web.config._session
 
 desktop_render = render_mako(
     directories = [os.path.join(os.path.dirname(__file__), 'templates/desktop/').replace('\\','/'),],
@@ -50,7 +55,7 @@ class main_page:
 class join:
     def GET(self, mobile):
         if not mobile:
-            return desktop_render.join(title = u"회원 가입 - Noah3K", lang="ko")
+            return desktop_render.join(title = u"회원 가입 - Noah3K", lang="ko", board_desc=u"회원 가입",)
         else:
             return mobile_render.join()
     def POST(self, mobile):
@@ -64,7 +69,13 @@ class login:
         else:
             return mobile_render.login()
     def POST(self, mobile):
-        pass
+        username, password = web.input().user, web.input().password
+        if u.login(username, password)[0]:
+            # 로그인 성공. referer로 돌아감.
+            return
+        else:
+            # 로그인 실패
+            return
 
 class logout:
     def GET(self, mobile):
@@ -83,7 +94,7 @@ class help:
 class credits:
     def GET(self, mobile):
         if not mobile:
-            return desktop_render.credits(title = u"개발자 정보 - Noah3K", lang="ko")
+            return desktop_render.credits(title = u"개발자 정보 - Noah3K", lang="ko", board_desc=u"개발자 정보")
         else:
             return mobile_render.credits()
 
