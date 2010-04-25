@@ -38,13 +38,13 @@ class board:
         total_article = self._get_article_count(board_id)
         return  (total_article + page_size -1) / page_size
 
-    def create_board(self, session_key, parent, settings):
+    def create_board(self, parent, settings):
         pass
 
-    def edit_board(self, session_key, board_id, settings):
+    def edit_board(self, board_id, settings):
         pass
 
-    def delete_board(self, session_key, board_id):
+    def delete_board(self, board_id):
         pass
 
     def get_board_info(self, board_id):
@@ -74,7 +74,7 @@ class board:
         else:
             return retvalue['bParent']
 
-    def get_article_list(self, session_key, board_id, page_size, page_number):
+    def get_article_list(self, board_id, page_size, page_number):
         total_article = self._get_article_count(board_id)
         last_page = self._get_total_page_count(board_id, page_size)
         assert(page_number >= 1 and page_number <= last_page)
@@ -92,23 +92,23 @@ class board:
         return result
 
 
-    def get_article(self, session_key, board_id, article_id):
+    def get_article(self, board_id, article_id):
         val = dict(board_id = board_id, article_id = article_id)
         result = self.db.select('Articles', val, where='bSerial = $board_id AND aSerial = $article_id')
         return result
 
-    def write_article(self, session_key, board_id, article):
+    def write_article(self, board_id, article):
         pass
 
-    def edit_article(self, session_key, article_id, article):
+    def edit_article(self, article_id, article):
         pass
 
-    def delete_article(self, session_key, article_id):
+    def delete_article(self, article_id):
         pass
 
-    def write_comment(self, session_key, article_id, comment):
+    def write_comment(self, article_id, comment):
         pass
 
-    def delete_comment(self, session_key, comment_id):
+    def delete_comment(self, comment_id):
         pass
 

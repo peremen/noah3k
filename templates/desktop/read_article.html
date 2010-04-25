@@ -13,9 +13,9 @@ def format(original):
     return highlight(original, BBCodeLexer(), HtmlFormatter())
 %>
 
+% for a in article:
 <div id="article">
 
-    % for a in article:
     <!-- 글 -->
     <div id="row">
         <div class="left-container">제목</div>
@@ -72,7 +72,6 @@ ${format(a.aContent)}
     </div>
 
     </div> <!-- end of comment -->
-    % endfor
 
 </div> <!-- end of article -->
 
@@ -81,10 +80,20 @@ ${format(a.aContent)}
 <div id="menu">
     <ul>
         <li> <a class="button" href="/${board_path}">목록</a></li>
+% if session.has_key('uid'):
     <!-- 쓰기 권한 -->	
+    <li><a class="button" href="/${board_path}/+write">글쓰기</a></li>
+    <li><a class="button" href="/${board_path}/+reply/${a.aSerial}">답글</a></li>
+% endif
+%if session.has_key('uid') and session.uid == a.uSerial:
     <!-- 로그인 --> 
+    <li><a class="button" href="/${board_path}/+modify/${a.aSerial}">수정</a></li>
+% endif
     <!-- 삭제 권한 --> 
-    <!-- 강조 권한 --> 
+    <li><a class="button" href="/${board_path}/+delete/${a.aSerial}">삭제</a></li>
+
+   <!-- 강조 권한 --> 
+    <li><a class="button" href="/${board_path}/+mark/${a.aSerial}">강조</a></li>
     </ul>
 
     <!-- 이전글/다음글 -->
@@ -100,3 +109,4 @@ ${format(a.aContent)}
     <span id="title"><a class="articlelink" href="/${board_path}/+read/id+1">다음글 제목</a></span> 
     </div>
 </div> <!-- end of menu -->
+% endfor

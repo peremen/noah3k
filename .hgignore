@@ -4,3 +4,4 @@ syntax: glob
 *.swp
 noah2k9/*
 config.py
+sessions/*

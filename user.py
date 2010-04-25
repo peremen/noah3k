@@ -90,17 +90,6 @@ class user:
         #    update_password(user.uSerial, password)
         return (True, 'LOGIN_SUCCESS')
 
-    def logout(self_session_key):
-        """
-        로그아웃 처리. 세션 키를 지정하면, 그 세션을 로그아웃시킨다.
-
-        @type session_key: string
-        @param session_key: login() 함수가 만들어 준 세션 키.
-        @rtype tuple
-        @return: 로그아웃 성공 여부(T/F)와 오류 코드(실패 시)를 포함하는 튜플.
-        """
-        pass
-
     def register(self, member):
         """
         회원 등록. 회원 정보를 포함하고 있는 딕셔너리를 던져 주면
@@ -142,7 +131,7 @@ class user:
         else:
             return (True, retvalue)
 
-    def modify_user(session_key, username, member):
+    def modify_user(self, username, member):
         """
         회원 정보 수정. 세션 키를 통해서 현재 사용자를 확인하며,
         C{username}으로 지정한 사용자와 같아야 한다. 단 시삽은 임의
@@ -180,13 +169,3 @@ class user:
             return retvalue
         pass
 
-    def _get_uid_from_session_key(self, session_key):
-        """
-        세션에 연결된 사용자 UID를 가져온다.
-
-        @type session_key: string
-        @param session_key: 세션 키
-        @rtype int
-        @return: 세션을 사용하는 사용자 ID. 
-        """
-        pass

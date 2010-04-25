@@ -157,7 +157,7 @@ class view_board:
         # bReply: bWrite: bComment: 모름
         if not mobile:
             return desktop_render.view_board(title = u"%s - Noah3K" % board_info.bName, board_path = board_info.bName[1:],
-                board_desc = board_info.bDescription, lang="ko", articles=b.get_article_list(0, board_id, page_size, page), page=page,
+                board_desc = board_info.bDescription, lang="ko", articles=b.get_article_list(board_id, page_size, page), page=page,
                 total_page = b._get_total_page_count(board_id, page_size),
                 session = session)
         else:
@@ -192,7 +192,7 @@ class read_article:
         board_info = b.get_board_info(board_id)
         board_path = board_info.bName[1:]
         board_desc = board_info.bDescription
-        article = b.get_article(0, board_id, int(article_id))
+        article = b.get_article(board_id, int(article_id))
         # aSerial: 글 UID bSerial: 글이 있는 보드 aIndex: 게시판에 보이는 가상 글 번호 aTitle: 제목
         # aId: 글쓴이 ID aNick: 글쓴이의 당시 닉네임 
         # uSerial: 글쓴이의 UID (여기서 aId/aNick 유도 가능)
