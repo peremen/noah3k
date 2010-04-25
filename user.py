@@ -10,9 +10,13 @@ class user:
     사용자 로그인, 로그아웃, 세션을 관리한다.
     """
     def __init__(self):
-        self.db = web.database(dbn=config.db_type, user=config.db_user,
-                pw = config.db_password, db = config.db_name,
-                host=config.db_host, port=int(config.db_port))
+        if web.config.get('_database') is None:
+            self.db = web.database(dbn=config.db_type, user=config.db_user,
+                    pw = config.db_password, db = config.db_name,
+                    host=config.db_host, port=int(config.db_port))
+            web.config._database = self.db
+        else:
+            self.db = web.config._database
     
     def _verify_noah1k_password(self, to_verify, password):
         # UNIX crypt 함수. password가 seed, username이 텍스트.
@@ -72,6 +76,7 @@ class user:
         @rtype tuple
         @return: 로그인 성공 여부(T/F)와 세션 키(성공 시) 또는 오류 코드(실패 시)를 포함하는 튜플.
         """
+        print '"%s"' % username
         val = dict(username = username)
         result = self.db.select('Users', val, where='uId = $username')
         user = None
@@ -79,12 +84,11 @@ class user:
             user = result[0]
         except:
             return (False, 'NO_SUCH_USER')
-        if password_set[len(user.uPasswd)](user.uPasswd):
+        if not self.password_set[len(user.uPasswd)](self, user.uPasswd, password):
             return (False, 'WRONG_PASSWORD')
         #if len(user.uPassword) < 40:
         #    update_password(user.uSerial, password)
-        session.login = 1
-        return (True)
+        return (True, 'LOGIN_SUCCESS')
 
     def logout(self_session_key):
         """
@@ -169,9 +173,9 @@ class user:
         val = dict(username = username)
         result = self.db.select('Users', val, where="uId = $username")
         try:
-            retvalue = result[0]['uSerial']
+            retvalue = int(result[0]['uSerial'])
         except:
-            return ""
+            return -1
         else:
             return retvalue
         pass

@@ -4,6 +4,7 @@
 import os
 import web
 from web.contrib.template import render_mako
+import config
 from board import board
 from user import user
 from cgi import parse_qs
@@ -43,6 +44,14 @@ mobile_render = render_mako(
     input_encoding = 'utf-8', output_encoding = 'utf-8',
 )
 
+if web.config.get('_database') is None:
+    db = web.database(dbn=config.db_type, user=config.db_user,
+            pw = config.db_password, db = config.db_name,
+            host=config.db_host, port=int(config.db_port))
+    web.config._database = db
+else:
+    db = web.config._database
+
 class main_page:
     def GET(self, mobile):
         v = view_subboard_list()
@@ -55,7 +64,8 @@ class main_page:
 class join:
     def GET(self, mobile):
         if not mobile:
-            return desktop_render.join(title = u"회원 가입 - Noah3K", lang="ko", board_desc=u"회원 가입",)
+            return desktop_render.join(title = u"회원 가입 - Noah3K",
+                   lang="ko", board_desc=u"회원 가입", session = session)
         else:
             return mobile_render.join()
     def POST(self, mobile):
@@ -63,38 +73,61 @@ class join:
 
 class login:
     def GET(self, mobile):
+        referer = web.ctx.env.get('HTTP_REFERER', '/')
         if not mobile:
             return desktop_render.login(title = u"로그인 - Noah3K", board_desc=u"로그인",
-                    lang="ko")
+                    lang="ko", session = session, referer = referer)
         else:
             return mobile_render.login()
     def POST(self, mobile):
-        username, password = web.input().user, web.input().password
-        if u.login(username, password)[0]:
-            # 로그인 성공. referer로 돌아감.
-            return
+        username, password = '', ''
+        err = ''
+        valid = True
+        login = False
+        username, password = web.input().username, web.input().password
+        referer = web.input().url
+        username, password = username.strip(), password.strip()
+        if username == '' or password == '':
+            err = u"사용자 이름이나 암호를 입력하지 않았습니다."
+            valid = False
+
+        if valid:
+            login = user().login(username, password)
+            if login[0]:
+                # 로그인 성공. referer로 돌아감.
+                err = u"로그인 성공"
+                session.uid = user()._get_uid_from_username(username)
+                login = True
+            else:
+                # 로그인 실패
+                err = login[1]
+        if not login:
+            return desktop_render.login(title = u"로그인 - Noah3K", board_desc=u"로그인",
+                    lang="ko", session = session,
+                    error = err, referer = referer)
         else:
-            # 로그인 실패
-            return
+            raise web.seeother(web.input().url)
+            # 이전 페이지로 '묻지 않고' 되돌림
 
 class logout:
     def GET(self, mobile):
-        if not mobile:
-            return desktop_render.logout(title = u"로그아웃 - Noah3K", lang="ko")
-        else:
-            return mobile_render.logout()
+        session.uid = 0
+        session.kill()
+        referer = web.ctx.env.get('HTTP_REFERER', '/')
+        raise web.seeother(referer)
 
 class help:
     def GET(self, mobile, context):
         if not mobile:
-            return desktop_render.help(title = u"도움말: %s - Noah3K" % context, lang="ko")
+            return desktop_render.help(title = u"도움말: %s - Noah3K" % context, lang="ko", session = session)
         else:
             return mobile_render.help()
 
 class credits:
     def GET(self, mobile):
         if not mobile:
-            return desktop_render.credits(title = u"개발자 정보 - Noah3K", lang="ko", board_desc=u"개발자 정보")
+            return desktop_render.credits(title = u"개발자 정보 - Noah3K",
+                   lang="ko", board_desc=u"개발자 정보", session = session)
         else:
             return mobile_render.credits()
 
@@ -125,7 +158,8 @@ class view_board:
         if not mobile:
             return desktop_render.view_board(title = u"%s - Noah3K" % board_info.bName, board_path = board_info.bName[1:],
                 board_desc = board_info.bDescription, lang="ko", articles=b.get_article_list(0, board_id, page_size, page), page=page,
-                total_page = b._get_total_page_count(board_id, page_size))
+                total_page = b._get_total_page_count(board_id, page_size),
+                session = session)
         else:
             return mobile_render.view_board()
 
@@ -144,7 +178,7 @@ class view_subboard_list:
             board_path = board_info.bName[1:]
         if not mobile:
             return desktop_render.view_subboard_list(title = u"%s - Noah3K" % board_name, board_path = board_path,
-                    board_desc = board_info.bDescription, child_boards = child_board, lang="ko")
+                    board_desc = board_info.bDescription, child_boards = child_board, lang="ko", session = session)
         else:
             return mobile_render.view_subboard_list()
 
@@ -170,7 +204,7 @@ class read_article:
             return desktop_render.read_article(article = article,
                 title = u"%s - Noah3K" % board_name,
                 board_path = board_path, board_desc = board_desc,
-                comments = None, lang="ko")
+                comments = None, lang="ko", session = session)
         else:
             return mobile_render.read_article()
 if __name__ == "__main__":

@@ -5,9 +5,12 @@
 <div id="menu">
     <ul>
         ## 로그인을 비롯한 다른 버튼들을 여기로.
+% if session.has_key('uid'):
+        <li><a class="button" href="/+logout">로그아웃</a></li>
+% else:
         <li><a class="button" href="/+join">회원 가입</a></li>
         <li><a class="button" href="/+login">로그인</a></li>
-        <li><a class="button" href="/+logout">로그아웃</a></li>
+% endif
     </ul>
     <div id="shortcut">
         <form name="shortcut" method="get" action="/+goto">

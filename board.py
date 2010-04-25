@@ -9,9 +9,13 @@ class board:
     게시판 클래스. 데이터베이스 상에 저장된 게시판에 접근한다.
     """
     def __init__(self):
-        self.db = web.database(dbn=config.db_type, user=config.db_user,
-                pw = config.db_password, db = config.db_name,
-                host=config.db_host, port=int(config.db_port))
+        if web.config.get('_database') is None:
+            self.db = web.database(dbn=config.db_type, user=config.db_user,
+                    pw = config.db_password, db = config.db_name,
+                    host=config.db_host, port=int(config.db_port))
+            web.config._database = self.db
+        else:
+            self.db = web.config._database
 
     def _get_board_id_from_path(self, path):
         if path != "":
