@@ -23,7 +23,12 @@ urls = (
     r'/(m/|)\+credits', 'credits',
 # 다른 모든 action은 view_board 위로 올라가야 함.
     r'/(m/|)(\S*)/\+read/(\d*)', 'read_article',
+    r'/(m/|)(\S*)/\+modify/(\d*)', 'modify_article',
+    r'/(m/|)(\S*)/\+write', 'write_article',
+    r'/(m/|)(\S*)/\+delete/(\d*)', 'delete_article',
     r'/(m/|)(\S*)/\*', 'view_subboard_list',
+    r'/(m/|)(\S*)/\+cover', 'view_cover',
+    r'/(m/|)(\S*)/\+admin', 'view_admin',
     r'/(m/|)(\S*)', 'view_board',
 )
 
@@ -167,7 +172,7 @@ class view_subboard_list:
     def GET(self, mobile, board_name):
         b = board()
         board_id = b._get_board_id_from_path(board_name)
-        if board_id < -1:
+        if board_id < 0:
             return # No such board
         board_info = b.get_board_info(board_id)
         child_board = b.get_child(board_id)
@@ -187,7 +192,7 @@ class read_article:
     def GET(self, mobile, board_name, article_id):
         b = board()
         board_id = b._get_board_id_from_path(board_name)
-        if board_id < -1:
+        if board_id < 0:
             return
         board_info = b.get_board_info(board_id)
         board_path = board_info.bName[1:]
@@ -207,5 +212,44 @@ class read_article:
                 comments = None, lang="ko", session = session)
         else:
             return mobile_render.read_article()
+
+class write_article:
+    def GET(self, mobile, board_name):
+        try:
+            current_uid = session.uid
+        except:
+            return desktop_render.error(lang="ko", error_message = u"로그인되지 않음" )
+        if current_uid < 1:
+            return desktop_render.error(lang="ko", error_message = u"잘못된 사용자 ID" )
+
+        b = board()
+        board_id = b._get_board_id_from_path(board_name)
+        if board_id < 0:
+            return
+        board_info = b.get_board_info(board_id)
+        board_path = board_info.bName[1:]
+        board_desc = board_info.bDescription
+        if not mobile:
+            return desktop_render.write_article(title = u"글 쓰기 - %s - Noah3K" % board_name,
+                    board_path = board_path, board_desc = board_desc,
+                    lang="ko", session = session)
+
+    def POST(self, mobile, board_name):
+        try:
+            current_uid = session.uid
+        except:
+            return
+        pass
+        article = dict(title = web.input().title, body = web.input().content)
+        b = board()
+        board_id = b._get_board_id_from_path(board_name)
+        board_info = b.get_board_info(board_id)
+        board_path = board_info.bName[1:]
+        if board_id < 0:
+            return
+        ret = b.write_article(current_uid, board_id, article)
+        if ret[0] == True:
+            raise web.seeother('/%s/+read/%s' % (board_path, ret[1]))
+
 if __name__ == "__main__":
     app.run()

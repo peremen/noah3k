@@ -4,6 +4,8 @@
 import config
 import web
 
+from user import user
+
 class board:
     """
     게시판 클래스. 데이터베이스 상에 저장된 게시판에 접근한다.
@@ -97,18 +99,64 @@ class board:
         result = self.db.select('Articles', val, where='bSerial = $board_id AND aSerial = $article_id')
         return result
 
-    def write_article(self, board_id, article):
+    def write_article(self, uid, board_id, article):
+        u = user()
+        current_user = u.get_user(uid)
+        if current_user[0] == False:
+            return (False, 'NO_SUCH_USER')
+        current_user = current_user[1]
+        # check_acl(uid, board_id, 'WRITE')
+        # if not acl: return (False, 'ACL_VIOLATION')
+        if(article['title'].strip() == ""):
+            return (False, 'EMPTY_TITLE')
+
+        if(article['body'].strip() == ""):
+            return (False, 'EMPTY_BODY')
+
+        val = dict(board_id = board_id)
+        result = self.db.select('Boards', val, where='bSerial = $board_id', what='bType, bWrite')
+        board_info = None
+        try:
+            board_info = result[0]
+        except:
+            return (False, 'NO=_SUCH_BOARD')
+        if board_info.bType == 0:
+            return (False, 'FOLDER')
+
+        index = self._get_article_count(board_id) + 1
+
+        val = dict(index = index)
+        ret = self.db.insert('Articles', bSerial = board_id, aIndex = index,
+                aTitle = article['title'], aContent = article['body'],
+                aId = current_user.uId, aNick = current_user.uNick, 
+                aDatetime = web.SQLLiteral("NOW()"), uSerial = uid)
+
+        val = dict(index = index)
+        ret = self.db.update('Articles', vars = val, where = 'aIndex = $index',
+                aRoot = web.SQLLiteral("aSerial"), _test = True)
+
+        val = dict(uid = uid)
+        ret = self.db.update('Users', vars = val, where='uSerial = $uid',
+            uNumPost = web.SQLLiteral('uNumPost + 1'))
+
+        val = dict(index = index, board_id = board_id)
+        ret = self.db.select('Articles', val, where = 'bSerial = $board_id AND aIndex = $index',
+                what = 'aSerial')
+        ret = ret[0].aSerial
+        print ret
+
+        return (True, ret)
+
+
+    def edit_article(self, uid, article_id, article):
         pass
 
-    def edit_article(self, article_id, article):
+    def delete_article(self, uid, article_id):
         pass
 
-    def delete_article(self, article_id):
+    def write_comment(self, uid, article_id, comment):
         pass
 
-    def write_comment(self, article_id, comment):
-        pass
-
-    def delete_comment(self, comment_id):
+    def delete_comment(self, uid, comment_id):
         pass
 

@@ -2,7 +2,11 @@
    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="${lang}">
 <head>
+    % if title is UNDEFINED:
+    <title>오류</title>
+    % else:
     <title>${title}</title>
+    % endif
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--	<link rel="alternate" type="application/rss+xml"> -->
 	<link rel="stylesheet" type="text/css" href="/static/style/default.css">		

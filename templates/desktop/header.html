@@ -5,11 +5,14 @@
 <div id="menu">
     <ul>
         ## 로그인을 비롯한 다른 버튼들을 여기로.
-% if session.has_key('uid'):
-        <li><a class="button" href="/+logout">로그아웃</a></li>
-% else:
+%if session is UNDEFINED:
         <li><a class="button" href="/+join">회원 가입</a></li>
         <li><a class="button" href="/+login">로그인</a></li>
+%elif not session.has_key('uid'):
+        <li><a class="button" href="/+join">회원 가입</a></li>
+        <li><a class="button" href="/+login">로그인</a></li>
+% else:
+        <li><a class="button" href="/+logout">로그아웃</a></li>
 % endif
     </ul>
     <div id="shortcut">
@@ -26,9 +29,11 @@
 ## 보드 설명
 <div id="title">
 %if board_path is UNDEFINED:
+    %if board_desc is UNDEFINED:
+    <a href="#">오류</a>
+    %else:
     <a href="#">${board_desc}</a>
-%elif board_path is "":
-    <a href="#">${board_desc}</a>
+    %endif
 %else:
     <a href="/${board_path}/+cover">${board_desc}</a>
 %endif
