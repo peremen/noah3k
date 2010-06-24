@@ -1,3 +1,39 @@
+<%
+from board import board
+def traverse_board_path(path):
+    ret = ""
+    b = board()
+    id = b._get_board_id_from_path(path)
+    while id != 1:
+        i = b.get_board_info(id)
+        if i.bType == 0:
+            ret = '&nbsp;&gt;&nbsp;<a class="dirlink" href="%s">%s</a>' % (i.bName, i.bName.split('/')[-1]) + ret
+        else:
+            ret = '&nbsp;&gt;&nbsp;<a class="boardlink" href="%s">%s</a>' % (i.bName, i.bName.split('/')[-1]) + ret
+        id = b.get_parent(id)
+    ret = u'<a class="dirlink" href="/">게시판</a>' + ret
+    return ret
+
+def traverse_child_board(path):
+    sep = '&nbsp;|&nbsp;'
+    ret = ""
+    b = board()
+    id = b._get_board_id_from_path(path)
+    children = b.get_child(id)
+    for child in children:
+        if child.bType == 0:
+            ret = ret + '<a class="boardlink" href="%s"><img class="type" src="/static/image/folder.png" />&nbsp;%s</a>%s' % (child.bName, child.bDescription, sep)
+        else:
+            ret = ret + '<a class="boardlink" href="%s"><img class="type" src="/static/image/board.png" />&nbsp;%s</a>%s' % (child.bName, child.bDescription, sep)
+    return ret[0:-len(sep)]
+
+def get_type(path):
+    b = board()
+    id = b._get_board_id_from_path(path)
+    data = b.get_board_info(id)
+    return data.bType
+
+%>
 <div id="logo">
     <a href="/"><img src="/static/image/logo.png" border="0" /></a>
 </div>
@@ -40,6 +76,19 @@
 </div>
 
 ## 자식 보드
+% if board_path is not UNDEFINED:
+    % if get_type(board_path) > 0:
+    <div id="children">
+        ${traverse_child_board(board_path)}
+    </div>
+    % endif
+% endif
+
+## 부모 보드
 <div id="histnav">
+%if board_path is not UNDEFINED:
+    ${traverse_board_path(board_path)}
+%else:
     <a class="dirlink" href="/">게시판</a>
+%endif
 </div>

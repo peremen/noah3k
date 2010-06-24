@@ -21,7 +21,8 @@ class board:
 
     def _get_board_id_from_path(self, path):
         if path != "":
-            path = '/%s' % path
+            if path[0] != '/':
+                path = '/%s' % path
         val = dict(board_path = path)
         result = self.db.select('Boards', val, where="bName = $board_path")
         try:

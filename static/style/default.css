@@ -389,4 +389,7 @@ div.desc {
         padding-right: 10px;
         text-align: right;
 }
-
+img.type {
+    border: 0;
+    vertical-align: text-bottom;
+}
