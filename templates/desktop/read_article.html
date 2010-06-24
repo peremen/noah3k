@@ -88,9 +88,9 @@ ${format(a.aContent)}
 %if session.has_key('uid') and session.uid == a.uSerial:
     <!-- 로그인 --> 
     <li><a class="button" href="/${board_path}/+modify/${a.aSerial}">수정</a></li>
-% endif
     <!-- 삭제 권한 --> 
     <li><a class="button" href="/${board_path}/+delete/${a.aSerial}">삭제</a></li>
+% endif
 
    <!-- 강조 권한 --> 
     <li><a class="button" href="/${board_path}/+mark/${a.aSerial}">강조</a></li>

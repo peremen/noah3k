@@ -22,14 +22,16 @@ urls = (
     r'/(m/|)\+help/(\S*)', 'help',
     r'/(m/|)\+credits', 'credits',
 # 다른 모든 action은 view_board 위로 올라가야 함.
-    r'/(m/|)(\S*)/\+read/(\d*)', 'read_article',
-    r'/(m/|)(\S*)/\+modify/(\d*)', 'modify_article',
-    r'/(m/|)(\S*)/\+write', 'write_article',
-    r'/(m/|)(\S*)/\+delete/(\d*)', 'delete_article',
-    r'/(m/|)(\S*)/\+reply/(\d*)', 'reply_to_article',
-    r'/(m/|)(\S*)/\*', 'view_subboard_list',
-    r'/(m/|)(\S*)/\+cover', 'view_cover',
-    r'/(m/|)(\S*)/\+admin', 'view_admin',
+#    r'/(m/|)(\S*)/\+read/(\d*)', 'read_article',
+#    r'/(m/|)(\S*)/\+modify/(\d*)', 'modify_article',
+#    r'/(m/|)(\S*)/\+write', 'write_article',
+#    r'/(m/|)(\S*)/\+delete/(\d*)', 'delete_article',
+#    r'/(m/|)(\S*)/\+reply/(\d*)', 'reply_to_article',
+    r'/(m/|)(\S*)/\+(\w*)/(\d*)', 'article_actions',
+#    r'/(m/|)(\S*)/\*', 'view_subboard_list',
+#    r'/(m/|)(\S*)/\+cover', 'view_cover',
+#    r'/(m/|)(\S*)/\+admin', 'view_admin',
+    r'/(m/|)(\S*)/(\+(\w*)|\*)', 'board_actions',
     r'/(m/|)(\S*)', 'view_board',
 )
 
@@ -60,8 +62,8 @@ else:
 
 class main_page:
     def GET(self, mobile):
-        v = view_subboard_list()
-        return v.GET(mobile, "")
+        v = board_actions()
+        return v.subboard_list_get(mobile, "")
 #        if not mobile:
 #            return desktop_render.main(title = "Noah3K", lang="ko")
 #        else:
@@ -146,8 +148,8 @@ class view_board:
             return # No such board
         board_info = b.get_board_info(board_id)
         if board_info.bType == 0: # 디렉터리
-            v = view_subboard_list()
-            return v.GET(mobile, board_name)
+            v = board_actions()
+            return v.subboard_list_get(mobile, board_name)
 
         qs = web.ctx.query
         if len(qs) > 0:
@@ -169,14 +171,163 @@ class view_board:
         else:
             return mobile_render.view_board()
 
-class view_subboard_list:
-    def GET(self, mobile, board_name):
-        b = board()
-        board_id = b._get_board_id_from_path(board_name)
+class article_actions:
+    b = board()
+
+    def read_get(self, mobile, board_name, article_id):
+        board_id = self.b._get_board_id_from_path(board_name)
+        if board_id < 0:
+            return
+        board_info = self.b.get_board_info(board_id)
+        board_path = board_info.bName[1:]
+        board_desc = board_info.bDescription
+        article = self.b.get_article(board_id, int(article_id))
+        if not mobile:
+            return desktop_render.read_article(article = article,
+                title = u"%s - Noah3K" % board_name,
+                board_path = board_path, board_desc = board_desc,
+                comments = None, lang="ko", session = session)
+        else:
+            return mobile_render.read_article()
+
+    def reply_get(self, mobile, board_name, article_id):
+        try:
+            current_uid = session.uid
+        except:
+            return desktop_render.error(lang="ko", error_message = u"로그인되지 않음" )
+        if current_uid < 1:
+            return desktop_render.error(lang="ko", error_message = u"잘못된 사용자 ID" )
+
+        board_id = self.b._get_board_id_from_path(board_name)
+        if board_id < 0:
+            return
+        board_info = self.b.get_board_info(board_id)
+        board_path = board_info.bName[1:]
+        board_desc = board_info.bDescription
+        if not mobile:
+            return desktop_render.editor(title = u"답글 쓰기 - %s - Noah3K" % board_name,
+                    action='reply/%s' % article_id, action_name = u"답글 쓰기",
+                    board_path = board_path, board_desc = board_desc,
+                    lang="ko", session = session)
+
+    def reply_post(self, mobile, board_name, article_id):
+        try:
+            current_uid = session.uid
+        except:
+            return
+        pass
+        reply = dict(title = web.input().title, body = web.input().content)
+        board_id = self.b._get_board_id_from_path(board_name)
+        board_info = self.b.get_board_info(board_id)
+        board_path = board_info.bName[1:]
+        if board_id < 0:
+            return
+        ret = self.b.reply_article(current_uid, board_id, article_id, reply)
+        if ret[0] == True:
+            raise web.seeother('/%s/+read/%s' % (board_path, ret[1]))
+        else:
+            return desktop_render.error(lang='ko', error_message = ret[1])
+
+    def modify_get(self, mobile, board_name, article_id):
+        try:
+            current_uid = session.uid
+        except:
+            return desktop_render.error(lang="ko", error_message = u"로그인되지 않음" )
+        if current_uid < 1:
+            return desktop_render.error(lang="ko", error_message = u"잘못된 사용자 ID" )
+
+        board_id = self.b._get_board_id_from_path(board_name)
+        if board_id < 0:
+            return
+        board_info = self.b.get_board_info(board_id)
+        board_path = board_info.bName[1:]
+        board_desc = board_info.bDescription
+        article = self.b.get_article(board_id, article_id)
+        article = article[0]
+        if not mobile:
+            return desktop_render.editor(title = u"글 수정하기 - %s - Noah3K" % board_name,
+                    action='modify/%s' % article_id, action_name = u"글 수정하기",
+                    board_path = board_path, board_desc = board_desc,
+                    article_title = article.aTitle, body = article.aContent,
+                    lang="ko", session = session)
+
+    def modify_post(self, mobile, board_name, article_id):
+        try:
+            current_uid = session.uid
+        except:
+            return
+        pass
+        article = dict(title = web.input().title, body = web.input().content)
+        board_id = self.b._get_board_id_from_path(board_name)
+        board_info = self.b.get_board_info(board_id)
+        board_path = board_info.bName[1:]
+        if board_id < 0:
+            return
+        ret = self.b.modify_article(current_uid, board_id, article_id, article)
+        if ret[0] == True:
+            raise web.seeother('/%s/+read/%s' % (board_path, ret[1]))
+        else:
+            return desktop_render.error(lang='ko', error_message = ret[1])
+
+    def GET(self, mobile, board_name, action, article_id):
+        try:
+            return eval('self.'+action+'_get')(mobile, board_name, article_id)
+        except:
+            return
+
+    def POST(self, mobile, board_name, action, article_id):
+        try:
+            return eval('self.'+action+'_post')(mobile, board_name, article_id)
+        except:
+            pass
+
+class board_actions:
+    b = board()
+
+    def write_get(self, mobile, board_name):
+        try:
+            current_uid = session.uid
+        except:
+            return desktop_render.error(lang="ko", error_message = u"로그인되지 않음" )
+        if current_uid < 1:
+            return desktop_render.error(lang="ko", error_message = u"잘못된 사용자 ID" )
+
+        board_id = self.b._get_board_id_from_path(board_name)
+        if board_id < 0:
+            return
+        board_info = self.b.get_board_info(board_id)
+        board_path = board_info.bName[1:]
+        board_desc = board_info.bDescription
+        if not mobile:
+            return desktop_render.editor(title = u"글 쓰기 - %s - Noah3K" % board_name,
+                    action='write', action_name = u"글 쓰기",
+                    board_path = board_path, board_desc = board_desc,
+                    lang="ko", session = session)
+
+    def write_post(self, mobile, board_name):
+        try:
+            current_uid = session.uid
+        except:
+            return
+        pass
+        article = dict(title = web.input().title, body = web.input().content)
+        board_id = self.b._get_board_id_from_path(board_name)
+        board_info = self.b.get_board_info(board_id)
+        board_path = board_info.bName[1:]
+        if board_id < 0:
+            return
+        ret = self.b.write_article(current_uid, board_id, article)
+        if ret[0] == True:
+            raise web.seeother('/%s/+read/%s' % (board_path, ret[1]))
+        else:
+            return desktop_render.error(lang='ko', error_message = ret[1])
+
+    def subboard_list_get(self, mobile, board_name):
+        board_id = self.b._get_board_id_from_path(board_name)
         if board_id < 0:
             return # No such board
-        board_info = b.get_board_info(board_id)
-        child_board = b.get_child(board_id)
+        board_info = self.b.get_board_info(board_id)
+        child_board = self.b.get_child(board_id)
         if board_name == "":
             board_name = u"초기 화면"
             board_path = ""
@@ -188,157 +339,17 @@ class view_subboard_list:
         else:
             return mobile_render.view_subboard_list()
 
+    def GET(self, mobile, board_name, action, dummy):
+        if action[0] == '+':
+            action = dummy
+        if action == '*':
+            action = 'subboard_list'
+        return eval('self.'+action+'_get')(mobile, board_name)
 
-class read_article:
-    def GET(self, mobile, board_name, article_id):
-        b = board()
-        board_id = b._get_board_id_from_path(board_name)
-        if board_id < 0:
-            return
-        board_info = b.get_board_info(board_id)
-        board_path = board_info.bName[1:]
-        board_desc = board_info.bDescription
-        article = b.get_article(board_id, int(article_id))
-        # aSerial: 글 UID bSerial: 글이 있는 보드 aIndex: 게시판에 보이는 가상 글 번호 aTitle: 제목
-        # aId: 글쓴이 ID aNick: 글쓴이의 당시 닉네임 
-        # uSerial: 글쓴이의 UID (여기서 aId/aNick 유도 가능)
-        # aContent: 본문 aLastGuest: 모름 aHit: 조회 수
-        # aEmphasis: 강조 여부 aDatetime: 최초 작성 시간 aEditedDatetime: 수정 시간, 없으면 NULL
-        # aLevel: 글 깊이 aParent: aLevel > 0의 경우 바로 윗 부모 글. assert(aLevel == 0 && aParent == NULL)
-        # aRoot: 깊이가 계속 깊어져 갔을 때 최종적인 부모. aParent == NULL인 경우 자기 자신.
-        if not mobile:
-            return desktop_render.read_article(article = article,
-                title = u"%s - Noah3K" % board_name,
-                board_path = board_path, board_desc = board_desc,
-                comments = None, lang="ko", session = session)
-        else:
-            return mobile_render.read_article()
-
-class write_article:
-    def GET(self, mobile, board_name):
-        try:
-            current_uid = session.uid
-        except:
-            return desktop_render.error(lang="ko", error_message = u"로그인되지 않음" )
-        if current_uid < 1:
-            return desktop_render.error(lang="ko", error_message = u"잘못된 사용자 ID" )
-
-        b = board()
-        board_id = b._get_board_id_from_path(board_name)
-        if board_id < 0:
-            return
-        board_info = b.get_board_info(board_id)
-        board_path = board_info.bName[1:]
-        board_desc = board_info.bDescription
-        if not mobile:
-            return desktop_render.editor(title = u"글 쓰기 - %s - Noah3K" % board_name,
-                    action='write', action_name = u"글 쓰기",
-                    board_path = board_path, board_desc = board_desc,
-                    lang="ko", session = session)
-
-    def POST(self, mobile, board_name):
-        try:
-            current_uid = session.uid
-        except:
-            return
-        pass
-        article = dict(title = web.input().title, body = web.input().content)
-        b = board()
-        board_id = b._get_board_id_from_path(board_name)
-        board_info = b.get_board_info(board_id)
-        board_path = board_info.bName[1:]
-        if board_id < 0:
-            return
-        ret = b.write_article(current_uid, board_id, article)
-        if ret[0] == True:
-            raise web.seeother('/%s/+read/%s' % (board_path, ret[1]))
-        else:
-            return desktop_render.error(lang='ko', error_message = ret[1])
-
-class reply_to_article:
-    def GET(self, mobile, board_name, article_id):
-        try:
-            current_uid = session.uid
-        except:
-            return desktop_render.error(lang="ko", error_message = u"로그인되지 않음" )
-        if current_uid < 1:
-            return desktop_render.error(lang="ko", error_message = u"잘못된 사용자 ID" )
-
-        b = board()
-        board_id = b._get_board_id_from_path(board_name)
-        if board_id < 0:
-            return
-        board_info = b.get_board_info(board_id)
-        board_path = board_info.bName[1:]
-        board_desc = board_info.bDescription
-        if not mobile:
-            return desktop_render.editor(title = u"답글 쓰기 - %s - Noah3K" % board_name,
-                    action='reply/%s' % article_id, action_name = u"답글 쓰기",
-                    board_path = board_path, board_desc = board_desc,
-                    lang="ko", session = session)
-
-    def POST(self, mobile, board_name, article_id):
-        try:
-            current_uid = session.uid
-        except:
-            return
-        pass
-        reply = dict(title = web.input().title, body = web.input().content)
-        b = board()
-        board_id = b._get_board_id_from_path(board_name)
-        board_info = b.get_board_info(board_id)
-        board_path = board_info.bName[1:]
-        if board_id < 0:
-            return
-        ret = b.reply_article(current_uid, board_id, article_id, reply)
-        if ret[0] == True:
-            raise web.seeother('/%s/+read/%s' % (board_path, ret[1]))
-        else:
-            return desktop_render.error(lang='ko', error_message = ret[1])
-
-class modify_article:
-    def GET(self, mobile, board_name, article_id):
-        try:
-            current_uid = session.uid
-        except:
-            return desktop_render.error(lang="ko", error_message = u"로그인되지 않음" )
-        if current_uid < 1:
-            return desktop_render.error(lang="ko", error_message = u"잘못된 사용자 ID" )
-
-        b = board()
-        board_id = b._get_board_id_from_path(board_name)
-        if board_id < 0:
-            return
-        board_info = b.get_board_info(board_id)
-        board_path = board_info.bName[1:]
-        board_desc = board_info.bDescription
-        article = b.get_article(board_id, article_id)
-        article = article[0]
-        if not mobile:
-            return desktop_render.editor(title = u"글 수정하기 - %s - Noah3K" % board_name,
-                    action='modify/%s' % article_id, action_name = u"글 수정하기",
-                    board_path = board_path, board_desc = board_desc,
-                    article_title = article.aTitle, body = article.aContent,
-                    lang="ko", session = session)
-
-    def POST(self, mobile, board_name, article_id):
-        try:
-            current_uid = session.uid
-        except:
-            return
-        pass
-        article = dict(title = web.input().title, body = web.input().content)
-        b = board()
-        board_id = b._get_board_id_from_path(board_name)
-        board_info = b.get_board_info(board_id)
-        board_path = board_info.bName[1:]
-        if board_id < 0:
-            return
-        ret = b.modify_article(current_uid, board_id, article_id, article)
-        if ret[0] == True:
-            raise web.seeother('/%s/+read/%s' % (board_path, ret[1]))
-        else:
-            return desktop_render.error(lang='ko', error_message = ret[1])
+    def POST(self, mobile, board_name, action, dummy):
+        if action[0] == '+':
+            action = dummy
+        return eval('self.'+action+'_post')(mobile, board_name)
 
 if __name__ == "__main__":
     app.run()
