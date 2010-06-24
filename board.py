@@ -269,3 +269,30 @@ class board:
     def delete_comment(self, uid, comment_id):
         pass
 
+    def get_attachment(self, article_id):
+        # 데이터베이스: Supplement
+        # sSerial: 파일 ID
+        # aSerial: article_id
+        # sFilename: 첨부파일 이름
+        val = dict(article_id = article_id)
+        result = self.db.select('Supplement', val, where='aSerial = $article_id')
+        return result
+
+    def get_comment(self, article_id):
+        # 데이터베이스: Comments
+        # cSerial: 커멘트 ID (삭제할 때 사용)
+        # bSerial: 게시판 ID
+        # aSerial: 글 ID
+        # uSerial: 커멘트 남긴 사람 ID (NULL이면 게스트 모드)
+        # cId: 커멘트 남긴 사람 ID (이름으로 저장됨)
+        # cContent: 커멘트 내용
+        # cDatetime: 날짜 및 시간
+        # cPasswd: 게스트로 남길 때 암호
+        # cHomepage: 게스트로 남길 때 홈페이지
+        # 더 이상 게스트로 커멘트 남기기는 지원하지 않으나, 과거 DB 파싱은 필요함
+        # NULL인 레코드 총 58개
+        val = dict(article_id = article_id)
+        result = self.db.select('Comments', val, where='aSerial = $article_id',
+                order = 'cDatetime ASC')
+        return result
+
