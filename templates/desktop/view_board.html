@@ -1,4 +1,11 @@
 <%inherit file="base.html" />
+<%
+from user import user
+def get_formatted_username(uid):
+    k = user()
+    u = k.get_user(uid)[1]
+    return "%(id)s" % {'id': u['uId']}
+%>
 <!-- 글 -->
 <table border="0" cellspacing="0" cellpadding="4" style="width: 100%; margin-bottom: 10px; " class="list">
     %if len(articles) == 0:
@@ -23,13 +30,15 @@
         <td align="center"><a href="/${board_path}/+read/${article.aSerial}" class="articlelink">${article.aIndex}</a></td>
         <!-- 제목 --> 
         <td  width="55%">
-            <!--<img src="/static/image/thread.gif" alt="thread" style="margin-left: 32px" /> -->
-            <a href="/${board_path}/+read/${article.aSerial}" class="articlelink">${article.aTitle}</a>
+%if article.aLevel > 0:
+        <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (article.aLevel-1)}px" />
+%endif
+        <a href="/${board_path}/+read/${article.aSerial}" class="articlelink">${article.aTitle}</a>
         </td>
         <!-- 글쓴이 -->
-        <td style="padding-left: 1em">${article.uSerial}</td>
+        <td style="padding-left: 1em">${get_formatted_username(article.uSerial)}</td>
         <!-- 날짜 -->
-        <td align="center">${article.aDatetime}</td>
+        <td align="center">${article.aDatetime.strftime('%Y-%m-%d')}</td>
         <!-- 조회수 -->
         <td align="center">${article.aHit}</td>
     </tr>
