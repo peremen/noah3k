@@ -227,7 +227,37 @@ class board:
         pass
 
 
-    def edit_article(self, uid, board_id, article_id, article):
+    def modify_article(self, uid, board_id, article_id, article):
+        u = user()
+        current_user = u.get_user(uid)
+        if current_user[0] == False:
+            return (False, 'NO_SUCH_USER')
+        current_user = current_user[1]
+        # check_acl(uid, board_id, 'MODIFY')
+        # if not acl: return (False, 'ACL_VIOLATION')
+        if(article['title'].strip() == ""):
+            return (False, 'EMPTY_TITLE')
+
+        if(article['body'].strip() == ""):
+            return (False, 'EMPTY_BODY')
+
+        val = dict(article_id = article_id)
+        result = self.db.select('Articles', val, where='aSerial = $article_id',
+                what='uSerial')
+        article_info = None
+        try:
+            article_info = result[0]
+        except:
+            return (False, 'NO_SUCH_ARTICLE')
+        if article_info.uSerial != uid:
+            return (False, 'ACL_VIOLATION')
+
+        val = dict(article_id = article_id, title = article['title'], body = article['body'])
+        ret = self.db.update('Articles', vars = val, where = 'aSerial = $article_id',
+                aTitle = article['title'], aContent = article['body'],
+                aEditedDatetime = web.SQLLiteral('NOW()'))
+
+        return (True, article_id)
         pass
 
     def delete_article(self, uid, article_id):

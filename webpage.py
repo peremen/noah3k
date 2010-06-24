@@ -296,5 +296,49 @@ class reply_to_article:
         else:
             return desktop_render.error(lang='ko', error_message = ret[1])
 
+class modify_article:
+    def GET(self, mobile, board_name, article_id):
+        try:
+            current_uid = session.uid
+        except:
+            return desktop_render.error(lang="ko", error_message = u"로그인되지 않음" )
+        if current_uid < 1:
+            return desktop_render.error(lang="ko", error_message = u"잘못된 사용자 ID" )
+
+        b = board()
+        board_id = b._get_board_id_from_path(board_name)
+        if board_id < 0:
+            return
+        board_info = b.get_board_info(board_id)
+        board_path = board_info.bName[1:]
+        board_desc = board_info.bDescription
+        article = b.get_article(board_id, article_id)
+        article = article[0]
+        if not mobile:
+            return desktop_render.editor(title = u"글 수정하기 - %s - Noah3K" % board_name,
+                    action='modify/%s' % article_id, action_name = u"글 수정하기",
+                    board_path = board_path, board_desc = board_desc,
+                    article_title = article.aTitle, body = article.aContent,
+                    lang="ko", session = session)
+
+    def POST(self, mobile, board_name, article_id):
+        try:
+            current_uid = session.uid
+        except:
+            return
+        pass
+        article = dict(title = web.input().title, body = web.input().content)
+        b = board()
+        board_id = b._get_board_id_from_path(board_name)
+        board_info = b.get_board_info(board_id)
+        board_path = board_info.bName[1:]
+        if board_id < 0:
+            return
+        ret = b.modify_article(current_uid, board_id, article_id, article)
+        if ret[0] == True:
+            raise web.seeother('/%s/+read/%s' % (board_path, ret[1]))
+        else:
+            return desktop_render.error(lang='ko', error_message = ret[1])
+
 if __name__ == "__main__":
     app.run()
