@@ -119,7 +119,7 @@ class board:
         try:
             board_info = result[0]
         except:
-            return (False, 'NO=_SUCH_BOARD')
+            return (False, 'NO_SUCH_BOARD')
         if board_info.bType == 0:
             return (False, 'FOLDER')
 
@@ -147,8 +147,87 @@ class board:
 
         return (True, ret)
 
+    def reply_article(self, uid, board_id, article_id, reply):
+        u = user()
+        current_user = u.get_user(uid)
+        if current_user[0] == False:
+            return (False, 'NO_SUCH_USER')
+        current_user = current_user[1]
+        # check_acl(uid, board_id, 'WRITE')
+        # if not acl: return (False, 'ACL_VIOLATION')
+        if(reply['title'].strip() == ""):
+            return (False, 'EMPTY_TITLE')
 
-    def edit_article(self, uid, article_id, article):
+        if(reply['body'].strip() == ""):
+            return (False, 'EMPTY_BODY')
+
+        val = dict(board_id = board_id)
+        result = self.db.select('Boards', val, where='bSerial = $board_id', what='bType, bWrite')
+        board_info = None
+        try:
+            board_info = result[0]
+        except:
+            return (False, 'NO_SUCH_BOARD')
+        if board_info.bType == 0:
+            return (False, 'FOLDER')
+
+        val = dict(board_id = board_id, article_id = article_id)
+        ret = self.db.select('Articles', val, where='bSerial = $board_id AND aSerial = $article_id',
+                what = 'aIndex, aLevel, aRoot')
+        ret = ret[0]
+        parent_index = ret.aIndex
+        level = ret.aLevel + 1
+        root = ret.aRoot
+
+        val = dict(board_id = board_id, root = root)
+        ret = self.db.select('Articles', val, where='bSerial = $board_id AND aRoot = $root',
+                what = 'aSerial, aIndex, aLevel', order = 'aIndex ASC')
+
+        index = 0
+        lastindex = 0
+        for r in ret:
+            # 원글보다 아래쪽에 있으면서 레벨이 더 낮은 글을 발견하면 그 위치에 답글이 들어간다.
+            if r.aIndex > parent_index and r.aLevel < level:
+                index = r.aIndex
+                break
+            lastindex = r.aIndex
+
+        if index == 0:
+            # 발견 못했다면 그 스레드의 가장 마지막 글 다음으로.
+            index = lastindex + 1
+
+        # 아래쪽 글들의 index를 뒤로 미룬다
+        val = dict(board_id = board_id, index = index)
+        # XXX: web.py bug #598080, 고쳐질 때까지 작동 안함
+        # https://bugs.launchpad.net/webpy/+bug/598080
+        ret = self.db.update('Articles', vars = val, where = 'bSerial = $board_id AND aIndex >= $index',
+                order = 'aIndex DESC', aIndex = web.SQLLiteral('aIndex + 1'))
+
+        ret = self.db.insert('Articles', bSerial = board_id, aIndex = index,
+                aTitle = reply['title'], aContent = reply['body'],
+                aId = current_user.uId, aNick = current_user.uNick, 
+                aDatetime = web.SQLLiteral("NOW()"), uSerial = uid,
+                aLevel = level, aParent = article_id, aRoot = root)
+
+        val = dict(index = index)
+        ret = self.db.update('Articles', vars = val, where = 'aIndex = $index',
+                aRoot = web.SQLLiteral("aSerial"), _test = True)
+
+        val = dict(uid = uid)
+        ret = self.db.update('Users', vars = val, where='uSerial = $uid',
+            uNumPost = web.SQLLiteral('uNumPost + 1'))
+
+        val = dict(index = index, board_id = board_id)
+        ret = self.db.select('Articles', val, where = 'bSerial = $board_id AND aIndex = $index',
+                what = 'aSerial')
+        ret = ret[0].aSerial
+        print ret
+
+        return (True, ret)
+        pass
+
+
+    def edit_article(self, uid, board_id, article_id, article):
         pass
 
     def delete_article(self, uid, article_id):
