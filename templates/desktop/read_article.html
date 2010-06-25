@@ -50,7 +50,10 @@ ${format(article['aContent'])}
                     <td id="writer">${comment['cId']}</td>
                     <td id="content">${comment['cContent']}</td>
                     <td id="writetime">${comment['cDatetime']}</td>
-                    <td id="button"><a class="button" href="/${board_path}/+comment_delete/${comment['cSerial']}">삭제</a></td>
+%if session.has_key('uid') and session.uid == comment['uSerial']:
+                    <td id="button">
+                        <a class="button" href="/${board_path}/+comment_delete/${comment['cSerial']}">삭제</a></td>
+% endif
                 </tr>
                 % endfor
                 % endif
