@@ -103,9 +103,14 @@ class board:
         # aEmphasis: 강조 여부 aDatetime: 최초 작성 시간 aEditedDatetime: 수정 시간, 없으면 NULL
         # aLevel: 글 깊이 aParent: aLevel > 0의 경우 바로 윗 부모 글. assert(aLevel == 0 && aParent == NULL)
         # aRoot: 깊이가 계속 깊어져 갔을 때 최종적인 부모. aParent == NULL인 경우 자기 자신.
-        val = dict(board_id = board_id, article_id = article_id)
+        val = dict(board_id = board_id, article_id = int(article_id))
         result = self.db.select('Articles', val, where='bSerial = $board_id AND aSerial = $article_id')
-        return result
+        try:
+            retvalue = result[0]
+        except:
+            return None
+        else:
+            return retvalue
 
     def write_article(self, uid, board_id, article):
         u = user()
@@ -282,7 +287,7 @@ class board:
         # sSerial: 파일 ID
         # aSerial: article_id
         # sFilename: 첨부파일 이름
-        val = dict(article_id = article_id)
+        val = dict(article_id = int(article_id))
         result = self.db.select('Supplement', val, where='aSerial = $article_id')
         return result
 
@@ -299,8 +304,12 @@ class board:
         # cHomepage: 게스트로 남길 때 홈페이지
         # 더 이상 게스트로 커멘트 남기기는 지원하지 않으나, 과거 DB 파싱은 필요함
         # NULL인 레코드 총 58개
-        val = dict(article_id = article_id)
+        val = dict(article_id = int(article_id))
         result = self.db.select('Comments', val, where='aSerial = $article_id',
                 order = 'cDatetime ASC')
         return result
 
+    def get_comment_count(self, article_id):
+        val = dict(article_id = int(article_id))
+        result = self.db.query('SELECT COUNT(*) AS comment_count FROM Comments WHERE aSerial=$article_id', val);
+        return result[0].comment_count

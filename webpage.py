@@ -181,12 +181,15 @@ class article_actions:
         board_info = self.b.get_board_info(board_id)
         board_path = board_info.bName[1:]
         board_desc = board_info.bDescription
-        article = self.b.get_article(board_id, int(article_id))
+        article = self.b.get_article(board_id, article_id)
+        comment = self.b.get_comment(article_id)
+        if not article:
+            return desktop_render.error(lang="ko", error_message = u"글 없음" )
         if not mobile:
             return desktop_render.read_article(article = article,
                 title = u"%s - Noah3K" % board_name,
                 board_path = board_path, board_desc = board_desc,
-                comments = None, lang="ko", session = session)
+                comments = comment, lang="ko", session = session)
         else:
             return mobile_render.read_article()
 
