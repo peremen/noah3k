@@ -243,7 +243,6 @@ class article_actions:
         board_path = board_info.bName[1:]
         board_desc = board_info.bDescription
         article = board.get_article(board_id, article_id)
-        article = article[0]
         if not mobile:
             return desktop_render.editor(title = u"글 수정하기 - %s - Noah3K" % board_name,
                     action='modify/%s' % article_id, action_name = u"글 수정하기",
