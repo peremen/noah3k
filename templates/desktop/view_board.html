@@ -1,15 +1,12 @@
 <%inherit file="base.html" />
 <%
-from user import user
-from board import board
+import user, board
 def get_formatted_username(uid):
-    k = user()
-    u = k.get_user(uid)[1]
+    u = user.get_user(uid)[1]
     return "%(id)s" % {'id': u['uId']}
 
 def get_comment_count(article_id):
-    b = board()
-    return b.get_comment_count(article_id)
+    return board.get_comment_count(article_id)
 %>
 <!-- 글 -->
 <table border="0" cellspacing="0" cellpadding="4" style="width: 100%; margin-bottom: 10px; " class="list">

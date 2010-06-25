@@ -1,12 +1,11 @@
 <%inherit file="base.html" />
 <%
-from user import user
+import user
 from pygments import highlight
 from pygments.lexers import BBCodeLexer
 from pygments.formatters import HtmlFormatter
 def get_formatted_username(uid):
-    k = user()
-    u = k.get_user(uid)[1]
+    u = user.get_user(uid)[1]
     return "%(id)s (%(nick)s)" % {'id': u['uId'], 'nick':u['uNick']}
 
 def format(original):
@@ -60,12 +59,15 @@ ${format(article['aContent'])}
         </div>
 
     <div id="input">
+% if not session.has_key('uid'):
     댓글을 쓰시려면 <a href="/+login">로그인</a>을 해주세요
+% else:
     <form name="comment" method="post" action="${board_path}/+comment/${article['aSerial']}">
     댓글 쓰기
     <input name="comment" type="text" maxlength="255" style="width: 30em">
     <input type="submit" name="Submit" value="확인">
     </form>
+% endif
     </div>
 
     </div> <!-- end of comment -->
