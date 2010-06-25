@@ -62,7 +62,7 @@ ${format(article['aContent'])}
 % if not session.has_key('uid'):
     댓글을 쓰시려면 <a href="/+login">로그인</a>을 해주세요
 % else:
-    <form name="comment" method="post" action="${board_path}/+comment/${article['aSerial']}">
+    <form name="comment" method="post" action="/${board_path}/+comment/${article['aSerial']}">
     댓글 쓰기
     <input name="comment" type="text" maxlength="255" style="width: 30em">
     <input type="submit" name="Submit" value="확인">

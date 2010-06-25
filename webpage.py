@@ -270,7 +270,21 @@ class article_actions:
             return desktop_render.error(lang='ko', error_message = ret[1])
 
     def comment_post(self, mobile, board_name, article_id):
-        pass
+        try:
+            current_uid = session.uid
+        except:
+            return
+        comment = web.input().comment
+        board_id = board._get_board_id_from_path(board_name)
+        board_info = board.get_board_info(board_id)
+        board_path = board_info.bName[1:]
+        if board_id < 0:
+            return
+        ret = board.write_comment(current_uid, board_id, article_id, comment)
+        if ret[0] == True:
+            raise web.seeother('/%s/+read/%s' % (board_name, article_id))
+        else:
+            return desktop_render.error(lang='ko', error_message = ret[1])
 
     def GET(self, mobile, board_name, action, article_id):
         try:

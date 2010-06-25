@@ -272,8 +272,29 @@ def modify_article(uid, board_id, article_id, article):
 def delete_article(uid, article_id):
     pass
 
-def write_comment(uid, article_id, comment):
-    pass
+def write_comment(uid, board_id, article_id, comment):
+    current_user = user.get_user(uid)
+    if current_user[0] == False:
+        return (False, 'NO_SUCH_USER')
+    current_user = current_user[1]
+    # check_acl(uid, board_id, 'COMMENT')
+    # if not acl: return (False, 'ACL_VIOLATION')
+    if(comment.strip() == ""):
+        return (False, 'EMPTY_COMMENT')
+
+    article_id = int(article_id)
+    val = dict(article_id = article_id)
+    result = db.select('Articles', val, where='aSerial = $article_id',
+            what='uSerial')
+    try:
+        article_info = result[0]
+    except:
+        return (False, 'NO_SUCH_ARTICLE')
+
+    result = db.insert('Comments', bSerial = board_id, aSerial = article_id, uSerial = uid,
+            cId = current_user.uId, cContent = comment, cDatetime = web.SQLLiteral('NOW()'))
+    return (True, article_id)
+
 
 def delete_comment(uid, comment_id):
     pass
