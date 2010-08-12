@@ -266,10 +266,46 @@ def modify_article(uid, board_id, article_id, article):
             aEditedDatetime = web.SQLLiteral('NOW()'))
 
     return (True, article_id)
-    pass
 
 def delete_article(uid, article_id):
-    pass
+    current_user = user.get_user(uid)
+    if current_user[0] == False:
+        return (False, 'NO_SUCH_USER')
+    current_user = current_user[1]
+    # check_acl(uid, board_id, 'MODIFY')
+    # if not acl: return (False, 'ACL_VIOLATION')
+
+    article_id = int(article_id)
+    val = dict(article_id = article_id)
+    result = db.select('Articles', val, where='aSerial = $article_id',
+            what='uSerial, bSerial, aIndex')
+    article_info = None
+    try:
+        article_info = result[0]
+    except:
+        return (False, 'NO_SUCH_ARTICLE')
+
+    if article_info.uSerial != uid:
+        return (False, 'ACL_VIOLATION')
+
+    try:
+        val = dict(article_id = article_id, board_id = article_info.bSerial,
+                article_index = article_info.aIndex)
+        print val
+
+        result = db.query('SELECT COUNT(*) AS reply_count FROM Articles WHERE bSerial = $board_id AND aIndex = $article_index + 1 AND aParent = $article_id', val)
+        reply_count = result[0].reply_count
+        if reply_count > 0:
+            return (False, 'HAS_REPLY')
+
+        ret = db.delete('Articles', vars = val, where = 'aSerial = $article_id')
+
+        ret = db.update('Articles', vars = val, where='bSerial = $board_id AND aIndex > $article_index',
+                aIndex = web.SQLLiteral('aIndex - 1'))
+    except Exception as e:
+        return ('False', e)
+
+    return (True, 'SUCCESS')
 
 def write_comment(uid, board_id, article_id, comment):
     current_user = user.get_user(uid)

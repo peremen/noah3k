@@ -255,7 +255,6 @@ class article_actions:
             current_uid = session.uid
         except:
             return
-        pass
         article = dict(title = web.input().title, body = web.input().content)
         board_id = board._get_board_id_from_path(board_name)
         board_info = board.get_board_info(board_id)
@@ -282,6 +281,17 @@ class article_actions:
         ret = board.write_comment(current_uid, board_id, article_id, comment)
         if ret[0] == True:
             raise web.seeother('/%s/+read/%s' % (board_name, article_id))
+        else:
+            return desktop_render.error(lang='ko', error_message = ret[1])
+
+    def delete_get(self, mobile, board_name, article_id):
+        try:
+            current_uid = session.uid
+        except:
+            return
+        ret = board.delete_article(current_uid, article_id)
+        if ret[0] == True:
+            raise web.seeother('/%s' % (board_name))
         else:
             return desktop_render.error(lang='ko', error_message = ret[1])
 
