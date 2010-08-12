@@ -90,7 +90,8 @@ def get_article_list(board_id, page_size, page_number):
         if(end_index > total_article):
             end_index = total_article
     val = dict(board_id = board_id, begin_index = begin_index, end_index = end_index)
-    result = db.select('Articles', val, where='bSerial = $board_id AND aIndex >= $begin_index AND aIndex <= $end_index')
+    result = db.select('Articles', val, where='bSerial = $board_id AND aIndex >= $begin_index AND aIndex <= $end_index',
+            order = 'aIndex ASC')
     return result
 
 
@@ -208,10 +209,8 @@ def reply_article(uid, board_id, article_id, reply):
 
     # 아래쪽 글들의 index를 뒤로 미룬다
     val = dict(board_id = board_id, index = index)
-    # XXX: web.py bug #598080, 고쳐질 때까지 작동 안함
-    # https://bugs.launchpad.net/webpy/+bug/598080
     ret = db.update('Articles', vars = val, where = 'bSerial = $board_id AND aIndex >= $index',
-            order = 'aIndex DESC', aIndex = web.SQLLiteral('aIndex + 1'))
+            aIndex = web.SQLLiteral('aIndex + 1'))#, order='aIndex DESC')
 
     ret = db.insert('Articles', bSerial = board_id, aIndex = index,
             aTitle = reply['title'], aContent = reply['body'],
