@@ -2,14 +2,20 @@
    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="${lang}">
 <head>
-    % if title is UNDEFINED:
+% if title is UNDEFINED:
     <title>오류</title>
-    % else:
+% else:
     <title>${title}</title>
-    % endif
+% endif
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--	<link rel="alternate" type="application/rss+xml"> -->
 	<link rel="stylesheet" type="text/css" href="/static/style/default.css">		
+% if board_path is not UNDEFINED:
+% if feed is not UNDEFINED:
+<link rel="alternate" type="application/rss+xml" href="/${board_path}/+rss" title="RSS 피드 (/${board_path})" />
+<link rel="alternate" type="application/atom+xml" href="/${board_path}/+atom" title="Atom 피드 (/${board_path})" />
+% endif
+% endif
 </head>
 
 <body>

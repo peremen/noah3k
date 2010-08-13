@@ -7,6 +7,7 @@ from web.contrib.template import render_mako
 import config
 import board, user
 from cgi import parse_qs
+from datetime import datetime
 
 urls = (
     r'/(m/|)', 'main_page',
@@ -165,7 +166,7 @@ class view_board:
             return desktop_render.view_board(title = u"%s - Noah3K" % board_info.bName, board_path = board_info.bName[1:],
                 board_desc = board_info.bDescription, lang="ko", articles=board.get_article_list(board_id, page_size, page), page=page,
                 total_page = board._get_total_page_count(board_id, page_size),
-                session = session)
+                session = session, feed = True)
         else:
             return mobile_render.view_board()
 
@@ -197,7 +198,7 @@ class article_actions:
                 title = u"%s - %s - Noah3K" % (article.aIndex, article.aTitle),
                 board_path = board_path, board_desc = board_desc,
                 comments = comment, lang="ko", session = session,
-                prev_id = prev_id, next_id = next_id)
+                prev_id = prev_id, next_id = next_id, feed = True)
         else:
             return mobile_render.read_article()
 
@@ -385,6 +386,40 @@ class board_actions:
                     board_desc = board_info.bDescription, child_boards = child_board, lang="ko", session = session)
         else:
             return mobile_render.view_subboard_list()
+
+    def rss_get(self, mobile, board_name):
+        page_size = 20
+        board_id = board._get_board_id_from_path(board_name)
+        if board_id < 0:
+            return # No such board
+        board_info = board.get_board_info(board_id)
+        if board_info.bType == 0: # 디렉터리
+            return
+
+        date = datetime.today()
+        page = board._get_total_page_count(board_id, page_size)
+        articles = board.get_article_list(board_id, page_size, page)
+        web.header('Content-Type', 'application/rss+xml')
+        return desktop_render.rss(board_path = board_info.bName[1:],
+                board_desc = board_info.bDescription,
+                articles=articles, today=date)
+
+    def atom_get(self, mobile, board_name):
+        page_size = 20
+        board_id = board._get_board_id_from_path(board_name)
+        if board_id < 0:
+            return # No such board
+        board_info = board.get_board_info(board_id)
+        if board_info.bType == 0: # 디렉터리
+            return
+
+        date = datetime.today()
+        page = board._get_total_page_count(board_id, page_size)
+        articles = board.get_article_list(board_id, page_size, page)
+        web.header('Content-Type', 'application/atom+xml')
+        return desktop_render.atom(board_path = board_info.bName[1:],
+                board_desc = board_info.bDescription,
+                articles=articles, today=date)
 
     def GET(self, mobile, board_name, action, dummy):
         if action[0] == '+':

@@ -1,0 +1,32 @@
+<% from datetime import datetime
+def rfc822(dt):
+    return "%s, %02d %s %04d %02d:%02d:%02d +0900" % (
+        ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"][dt.weekday()],
+        dt.day,
+        ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][dt.month-1],
+        dt.year, dt.hour, dt.minute, dt.second) %><?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title>RSS 피드 - /${board_path}</title>
+        <link>http://noah.kaist.ac.kr/${board_path}</link>
+        <description>${board_desc}</description>
+        <language>ko-kr</language>
+        <pubDate>${rfc822(today)}</pubDate>
+        <lastBuildDate>${rfc822(today)}</lastBuildDate>
+        <generator>Noah3K</generator>
+        <managingEditor>noah@haje.org (HAJE)</managingEditor>
+        <webMaster>noah@haje.org (HAJE)</webMaster>
+
+% for article in articles:
+        <item>
+            <title>${article.aTitle}</title>
+            <link>http://noah.kaist.ac.kr/${board_path}/+read/${article.aSerial}</link>
+            <description>${article.aContent|x}</description>
+            <pubDate>${rfc822(article.aDatetime)}</pubDate>
+            <guid>http://noah.kaist.ac.kr/${board_path}/+read/${article.aSerial}</guid>
+        </item>
+% endfor
+    </channel>
+</rss>
+

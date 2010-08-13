@@ -1,0 +1,36 @@
+<% from datetime import datetime
+import user
+def get_formatted_username(uid):
+    u = user.get_user(uid)[1]
+    return "%(id)s (%(nick)s)" % {'id': u['uId'], 'nick':u['uNick']} %><?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title type="text">Atom 피드 - /${board_path}</title>
+    <subtitle type="text">${board_desc}</subtitle>
+    <updated>${today.isoformat()}+09:00</updated>
+    <id>tag:noah.kaist.ac.kr,2010:board/${board_path}</id>
+    <link rel="alternate" type="text/html" hreflang="ko" href="http://noah.kaist.ac.kr/${board_path}" />
+    <link rel="self" type="application/atom+xml" href="http://noah.kaist.ac.kr/${board_path}/+atom" />
+    <rights>Copyrights are belong to the individual authors.</rights>
+    <generator uri="http://noah.kaist.ac.kr/" version="3.0">Noah3K</generator>
+
+% for article in articles:
+    <entry>
+        <title>${article.aTitle}</title>
+        <link rel="alternate" type="text/html" href="http://noah.kaist.ac.kr/${board_path}/+read/${article.aSerial}"/>
+        <id>tag:noah.kaist.ac.kr,2010:article${article.aSerial}</id>
+        <published>${article.aDatetime.isoformat()}+09:00</published>
+% if article.aEditedDatetime:
+        <updated>${article.aEditedDatetime.isoformat()}+09:00</updated>
+% else:
+        <updated>${article.aDatetime.isoformat()}+09:00</updated>
+% endif
+        <author>
+            <name>${get_formatted_username(article.uSerial)}</name>
+            <uri>http://noah.kaist.ac.kr/+u/${article.uSerial}</uri>
+        </author>
+        <content type="html">
+${article.aContent|h}
+        </content>
+    </entry>
+% endfor
+</feed>
