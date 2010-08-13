@@ -184,7 +184,7 @@ class article_actions:
             return desktop_render.error(lang="ko", error_message = u"글 없음" )
         if not mobile:
             return desktop_render.read_article(article = article,
-                title = u"%s - Noah3K" % board_name,
+                title = u"%s - Noah3K" % article.aTitle,
                 board_path = board_path, board_desc = board_desc,
                 comments = comment, lang="ko", session = session)
         else:
@@ -292,6 +292,17 @@ class article_actions:
         ret = board.delete_article(current_uid, article_id)
         if ret[0] == True:
             raise web.seeother('/%s' % (board_name))
+        else:
+            return desktop_render.error(lang='ko', error_message = ret[1])
+
+    def comment_delete_get(self, mobile, board_name, comment_id):
+        try:
+            current_uid = session.uid
+        except:
+            return
+        ret = board.delete_comment(current_uid, comment_id)
+        if ret[0] == True:
+            raise web.seeother('/%s/+read/%s' % (board_name, ret[1]))
         else:
             return desktop_render.error(lang='ko', error_message = ret[1])
 

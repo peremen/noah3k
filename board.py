@@ -332,7 +332,27 @@ def write_comment(uid, board_id, article_id, comment):
 
 
 def delete_comment(uid, comment_id):
-    pass
+    #current_user = user.get_user(uid)
+    #if current_user[0] == False:
+    #    return (False, 'NO_SUCH_USER')
+    #current_user = current_user[1]
+    # check_acl(uid, board_id, 'COMMENT')
+    # if not acl: return (False, 'ACL_VIOLATION')
+    val = dict(comment_id = comment_id)
+    result = db.select('Comments', vars=val, what='uSerial, aSerial', where = 'cSerial = $comment_id')
+    try:
+        comment_info = result[0]
+    except:
+        return (False, 'NO_SUCH_COMMENT')
+
+    if uid != comment_info.uSerial:
+        return (False, 'ACL_VIOLATION')
+    try:
+        result = db.delete('Comments', vars=val, where='cSerial = $comment_id')
+    except:
+        return (False, 'DATABASE_ERROR')
+
+    return (True, comment_info.aSerial)
 
 def get_attachment(article_id):
     # 데이터베이스: Supplement
