@@ -1,6 +1,7 @@
 <%inherit file="base.html" />
 <%
 import user
+import board
 from pygments import highlight
 from pygments.lexers import BBCodeLexer
 from pygments.formatters import HtmlFormatter
@@ -99,15 +100,18 @@ ${format(article['aContent'])}
     </ul>
 
     <!-- 이전글/다음글 -->
+% if prev_id > 0:
     <div id="row">
     <div class="left-container">이전글</div>
     <span class="sep">: </span>
-    <span id="title"><a class="articlelink" href="/${board_path}/+read/id-1">이전글 제목</a></span> 
+    <span id="title"><a class="articlelink" href="/${board_path}/+read/${prev_id}">${board.get_title(prev_id)}</a></span> 
     </div>
+% endif
+% if next_id > 0:
     <div id="row">
-
     <div class="left-container">다음글</div>
     <span class="sep">: </span>
-    <span id="title"><a class="articlelink" href="/${board_path}/+read/id+1">다음글 제목</a></span> 
+    <span id="title"><a class="articlelink" href="/${board_path}/+read/${next_id}">${board.get_title(next_id)}</a></span> 
     </div>
+% endif
 </div> <!-- end of menu -->

@@ -180,13 +180,24 @@ class article_actions:
         board_desc = board_info.bDescription
         article = board.get_article(board_id, article_id)
         comment = board.get_comment(article_id)
+
+        prev_id = -1
+        next_id = -1
+
         if not article:
             return desktop_render.error(lang="ko", error_message = u"글 없음" )
+
+        if article.aIndex > 1:
+            prev_id = board.get_article_id_by_index(board_id, article.aIndex - 1)
+        if article.aIndex < board._get_article_count(board_id):
+            next_id = board.get_article_id_by_index(board_id, article.aIndex + 1)
+
         if not mobile:
             return desktop_render.read_article(article = article,
-                title = u"%s - Noah3K" % article.aTitle,
+                title = u"%s - %s - Noah3K" % (article.aIndex, article.aTitle),
                 board_path = board_path, board_desc = board_desc,
-                comments = comment, lang="ko", session = session)
+                comments = comment, lang="ko", session = session,
+                prev_id = prev_id, next_id = next_id)
         else:
             return mobile_render.read_article()
 
@@ -205,7 +216,7 @@ class article_actions:
         board_path = board_info.bName[1:]
         board_desc = board_info.bDescription
         if not mobile:
-            return desktop_render.editor(title = u"답글 쓰기 - %s - Noah3K" % board_name,
+            return desktop_render.editor(title = u"답글 쓰기 - /%s - Noah3K" % board_name,
                     action='reply/%s' % article_id, action_name = u"답글 쓰기",
                     board_path = board_path, board_desc = board_desc,
                     lang="ko", session = session)
@@ -244,7 +255,7 @@ class article_actions:
         board_desc = board_info.bDescription
         article = board.get_article(board_id, article_id)
         if not mobile:
-            return desktop_render.editor(title = u"글 수정하기 - %s - Noah3K" % board_name,
+            return desktop_render.editor(title = u"글 수정하기 - /%s - Noah3K" % board_name,
                     action='modify/%s' % article_id, action_name = u"글 수정하기",
                     board_path = board_path, board_desc = board_desc,
                     article_title = article.aTitle, body = article.aContent,
@@ -308,13 +319,13 @@ class article_actions:
 
     def GET(self, mobile, board_name, action, article_id):
         try:
-            return eval('self.'+action+'_get')(mobile, board_name, article_id)
+            return eval('self.'+action+'_get')(mobile, board_name, int(article_id))
         except:
             return
 
     def POST(self, mobile, board_name, action, article_id):
         try:
-            return eval('self.'+action+'_post')(mobile, board_name, article_id)
+            return eval('self.'+action+'_post')(mobile, board_name, int(article_id))
         except:
             pass
 

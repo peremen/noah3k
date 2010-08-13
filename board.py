@@ -94,6 +94,27 @@ def get_article_list(board_id, page_size, page_number):
             order = 'aIndex ASC')
     return result
 
+def get_article_id_by_index(board_id, index):
+    # 글 번호와 article_id(DB: aSerial) 매핑.
+    # 없거나 오류가 난 경우 -1 돌려줌.
+    val = dict(board_id = board_id, index = index)
+    result = db.select('Articles', val, what='aSerial', where='bSerial = $board_id AND aIndex = $index')
+    try:
+        retvalue = result[0].aSerial
+    except:
+        return -1
+    return retvalue
+
+def get_title(article_id):
+    print 'a'
+    val = dict(article_id = int(article_id))
+    result = db.select('Articles', val, where='aSerial = $article_id')
+    try:
+        retvalue = result[0]
+    except:
+        return None
+    else:
+        return retvalue.aTitle
 
 def get_article(board_id, article_id):
     # aSerial: 글 UID bSerial: 글이 있는 보드 aIndex: 게시판에 보이는 가상 글 번호 aTitle: 제목
