@@ -22,15 +22,7 @@ urls = (
     r'/(m/|)\+help/(\S*)', 'help',
     r'/(m/|)\+credits', 'credits',
 # 다른 모든 action은 view_board 위로 올라가야 함.
-#    r'/(m/|)(\S*)/\+read/(\d*)', 'read_article',
-#    r'/(m/|)(\S*)/\+modify/(\d*)', 'modify_article',
-#    r'/(m/|)(\S*)/\+write', 'write_article',
-#    r'/(m/|)(\S*)/\+delete/(\d*)', 'delete_article',
-#    r'/(m/|)(\S*)/\+reply/(\d*)', 'reply_to_article',
     r'/(m/|)(\S*)/\+(\w*)/(\d*)', 'article_actions',
-#    r'/(m/|)(\S*)/\*', 'view_subboard_list',
-#    r'/(m/|)(\S*)/\+cover', 'view_cover',
-#    r'/(m/|)(\S*)/\+admin', 'view_admin',
     r'/(m/|)(\S*)/(\+(\w*)|\*)', 'board_actions',
     r'/(m/|)(\S*)', 'view_board',
 )
@@ -331,7 +323,6 @@ class article_actions:
             pass
 
 class board_actions:
-
     def write_get(self, mobile, board_name):
         try:
             current_uid = session.uid
@@ -420,6 +411,16 @@ class board_actions:
         return desktop_render.atom(board_path = board_info.bName[1:],
                 board_desc = board_info.bDescription,
                 articles=articles, today=date)
+
+    def summary_get(self, mobile, board_name):
+        board_id = board._get_board_id_from_path(board_name)
+        if board_id < 0:
+            return
+        board_info = board.get_board_info(board_id)
+        return desktop_render.board_summary(board_info = board_info,
+                board_path = board_info.bName[1:],
+                board_desc = board_info.bDescription, lang='ko',
+                title = u'보드 설정 - %s - Noah3k' % board_info.bName)
 
     def GET(self, mobile, board_name, action, dummy):
         if action[0] == '+':

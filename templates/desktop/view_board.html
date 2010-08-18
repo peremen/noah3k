@@ -64,7 +64,7 @@ def get_comment_count(article_id):
 <a class="button" href="/${board_path}/+subscribe" title="새글읽기 기능을 토글합니다.">구독하기</a> 
 <a class="button" href="/${board_path}/+mark_as_read_all" title="읽지 않은 글들을 봅니다">새글없애기</a>
 <!-- 보드 관리 -->
-<a class="button" href="/${board_path}/+configure" title="이 보드의 관리 메뉴를 봅니다">관리</a> 
+<a class="button" href="/${board_path}/+summary" title="이 보드의 정보를 보거나 수정합니다">정보</a> 
 
 <center>
     % if page > 11:
@@ -97,7 +97,6 @@ def get_comment_count(article_id):
 <!-- 검색 -->				
 <div id="search">
     <form name="search_form" method="post" style="margin: 0; padding: 0;" action="/${board_path}/+search">
-        <!--        <input name="${board_path}" type="hidden" value="27"/>-->
 
         <input name="category" type="hidden" value="title"/>
         <!--<span id="subtitle">제목찾기</span> <span class="sep">:</span>-->

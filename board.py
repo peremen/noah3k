@@ -41,6 +41,17 @@ def _get_total_page_count(board_id, page_size):
     return  (total_article + page_size -1) / page_size
 
 def create_board(parent, settings):
+    # bName: 보드 전체 경로
+    # uSerial: 보대
+    # bParent: 부모 보드 ID
+    # bDescription: 보드 짧은 설명
+    # bDatetime: 생성 시간. NOW()
+    # bInformation: 긴 설명, cover에 들어가는 내용
+    # bType: 0 - 폴더, 1 - 게시판
+    # bReply: 0 - 답글이 평면으로, 1 - 답글이 스레드로
+    # bWrite: 쓰기 가능/불가능
+    # bComment: 0 - 불가능, 1 - 가능
+    # bSerial: 자동 증가
     pass
 
 def edit_board(board_id, settings):
