@@ -68,19 +68,26 @@ def edit_board(board_id, settings):
     if original_board_info == None:
         return (False, 'NO_SUCH_BOARD')
     settings['board_id'] = board_id
-    if settings['path'] != posixpath.dirname(original_board_info.bName):
-        return (False, 'NOT_IMPLEMENTED')
     new_path = posixpath.join(settings['path'], settings['name'])
+    old_path = original_board_info.bName
     result = db.update('Boards', vars=settings, where='bSerial = $board_id',
             bInformation = settings['cover'], bDescription = settings['description'],
             bType = settings['board_type'], bReply = 1, bComment = settings['can_comment'],
             bWrite = settings['can_write_by_other'], uSerial = settings['owner'],
             bName = new_path)
+    result = move_child_boards(board_id, old_path, new_path)
     return (True, new_path)
 
-def move_child_boards(board_id, new_path):
+def move_child_boards(board_id, old_path, new_path):
     # board_id 보드의 자식 보드가 속해 있는 경로를 new_path로 이동한다.
-    pass
+    val = dict(old_path = old_path + r'%')
+    result = db.select('Boards', val, where = 'bName LIKE $old_path')
+    for r in result:
+        if not r.bName.startswith(old_path):
+            continue
+        val2 = dict(board_id = r.bSerial)
+        update = db.update('Boards', vars = val2, where = 'bSerial = $board_id',
+                bName = new_path + r.bName[len(old_path):])
 
 def delete_board(board_id):
     pass
