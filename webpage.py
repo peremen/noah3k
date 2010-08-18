@@ -151,6 +151,7 @@ class view_board:
             page = int(qs['page'][0])
         else:
             page = board._get_total_page_count(board_id, page_size)
+
         # bSerial: board_id, bName: 전체 경로, uSerial: 보대, bParent: 부모 보드, bDescription: 보드 짧은 설명
         # bDatetime: 개설 시간, bInformation: 보드 긴 설명, bType = 디렉터리/보드/블로그,
         # bReply: bWrite: bComment: 모름

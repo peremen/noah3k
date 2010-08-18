@@ -122,7 +122,8 @@ def get_parent(board_id):
 def get_article_list(board_id, page_size, page_number):
     total_article = _get_article_count(board_id)
     last_page = _get_total_page_count(board_id, page_size)
-    assert(page_number >= 1 and page_number <= last_page)
+    if not (page_number >= 1 and page_number <= last_page):
+        return []
     end_index = total_article - ((total_article + page_size - 1)/page_size - page_number) * page_size
     if(end_index > total_article):
         end_index = total_article
