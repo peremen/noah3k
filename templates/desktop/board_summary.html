@@ -61,21 +61,21 @@ def format(original):
 <div id="row">
 <div class="left-container">유형</div>
 <span class="sep">:</span>
-<span>${board_info.bType|h}</span>
+<span>${[u'폴더', u'게시판'][board_info.bType]}</span>
 </div>
 
 <!-- 커멘트 여부 -->
 <div id="row">
 <div class="left-container">커멘트</div>
 <span class="sep">:</span>
-<span>${board_info.bComment}</span>
+<span>${[u'불가', u'가능'][board_info.bComment]}</span>
 </div>
 
 <!-- 글쓰기 여부 -->
 <div id="row">
 <div class="left-container">타인 글쓰기</div>
 <span class="sep">:</span>
-<span>${board_info.bWrite}</span>
+<span>${[u'불가', u'가능'][board_info.bWrite]}</span>
 </div>
 
 <!-- 답글 달기 여부 -->
