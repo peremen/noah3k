@@ -348,7 +348,6 @@ class board_actions:
             current_uid = session.uid
         except:
             return
-        pass
         article = dict(title = web.input().title, body = web.input().content)
         board_id = board._get_board_id_from_path(board_name)
         board_info = board.get_board_info(board_id)
@@ -420,7 +419,56 @@ class board_actions:
         return desktop_render.board_summary(board_info = board_info,
                 board_path = board_info.bName[1:],
                 board_desc = board_info.bDescription, lang='ko',
-                title = u'보드 설정 - %s - Noah3k' % board_info.bName)
+                title = u'정보 - %s - Noah3k' % board_info.bName)
+
+    def modify_get(self, mobile, board_name):
+        try:
+            current_uid = session.uid
+        except:
+            return desktop_render.error(lang='ko', error_message='NOT_LOGGED_IN')
+        board_id = board._get_board_id_from_path(board_name)
+        if board_id < 0:
+            return desktop_render.error(lang='ko', error_message='INVALID_BOARD')
+        # if !acl.get_permission(modify_board, user):
+        board_info = board.get_board_info(board_id)
+        if current_uid != board_info.uSerial:
+            return desktop_render.error(lang='ko', error_message='NO_PERMISSION')
+        return desktop_render.board_editor(action='modify', board_info = board_info,
+                board_path = board_info.bName[1:],
+                board_desc = board_info.bDescription, lang='ko',
+                title = u'정보 수정 - %s - Noah3k' % board_info.bName)
+
+    def modify_post(self, mobile, board_name):
+        try:
+            current_uid = session.uid
+        except:
+            return desktop_render.error(lang='ko', error_message='NOT_LOGGED_IN')
+        board_id = board._get_board_id_from_path(board_name)
+        if board_id < 0:
+            return desktop_render.error(lang='ko', error_message='INVALID_BOARD')
+        # if !acl.get_permission(modify_board, user):
+        board_info = board.get_board_info(board_id)
+        if current_uid != board_info.uSerial:
+            return desktop_render.error(lang='ko', error_message='NO_PERMISSION')
+        comment, write_by_other = 0, 0 # XXX: DB 스키마를 BOOLEAN으로 바꿔야 함
+        if web.input().commentable.strip() == 'yes':
+            comment = 1
+        if web.input().writable.strip() == 'yes':
+            write_by_other = 1
+        owner_uid = user._get_uid_from_username(web.input().owner)
+        if owner_uid < 0:
+            return desktop_render.error(lang='ko', error_message='NO_SUCH_USER_FOR_BOARD_ADMIN')
+
+        board_info = dict(path = web.input().path, name = web.input().name,
+                owner = owner_uid, board_type = web.input().type,
+                can_comment = comment, can_write_by_other = write_by_other,
+                description = web.input().description,
+                cover = web.input().information)
+        result = board.edit_board(board_id, board_info)
+        if result[0] == False:
+            return desktop_render.error(lang='ko', error_message = result[1])
+        else:
+            raise web.seeother('%s/+summary' % result[1])
 
     def GET(self, mobile, board_name, action, dummy):
         if action[0] == '+':

@@ -5,6 +5,7 @@ import config
 import web
 
 import user
+import posixpath
 
 """
 게시판 클래스. 데이터베이스 상에 저장된 게시판에 접근한다.
@@ -55,6 +56,30 @@ def create_board(parent, settings):
     pass
 
 def edit_board(board_id, settings):
+    # settings로 넘어오는 내용
+    # path, name: 보드 전체 경로
+    # description: 보드 짧은 설명
+    # owner: 보대 ID. uid로 변환해야 함.
+    # cover: 긴 설명, cover에 들어가는 내용
+    # board_type: 0 - 폴더, 1 - 게시판
+    # can_write_by_other: 쓰기 가능/불가능
+    # can_comment: 0 - 불가능, 1 - 가능
+    original_board_info = get_board_info(board_id)
+    if original_board_info == None:
+        return (False, 'NO_SUCH_BOARD')
+    settings['board_id'] = board_id
+    if settings['path'] != posixpath.dirname(original_board_info.bName):
+        return (False, 'NOT_IMPLEMENTED')
+    new_path = posixpath.join(settings['path'], settings['name'])
+    result = db.update('Boards', vars=settings, where='bSerial = $board_id',
+            bInformation = settings['cover'], bDescription = settings['description'],
+            bType = settings['board_type'], bReply = 1, bComment = settings['can_comment'],
+            bWrite = settings['can_write_by_other'], uSerial = settings['owner'],
+            bName = new_path)
+    return (True, new_path)
+
+def move_child_boards(board_id, new_path):
+    # board_id 보드의 자식 보드가 속해 있는 경로를 new_path로 이동한다.
     pass
 
 def delete_board(board_id):
