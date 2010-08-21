@@ -471,6 +471,20 @@ class board_actions:
         else:
             raise web.seeother('%s/+summary' % result[1])
 
+    def delete_get(self, mobile, board_name):
+        try:
+            current_uid = session.uid
+        except:
+            return
+        board_id = board._get_board_id_from_path(board_name)
+        if board_id < 0:
+            return desktop_render.error(lang='ko', error_message='INVALID_BOARD')
+        ret = board.delete_board(current_uid, board_id)
+        if ret[0] == True:
+            raise web.seeother('%s' % (ret[1]))
+        else:
+            return desktop_render.error(lang='ko', error_message = ret[1])
+
     def GET(self, mobile, board_name, action, dummy):
         if action[0] == '+':
             action = dummy

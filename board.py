@@ -89,8 +89,29 @@ def move_child_boards(board_id, old_path, new_path):
         update = db.update('Boards', vars = val2, where = 'bSerial = $board_id',
                 bName = new_path + r.bName[len(old_path):])
 
-def delete_board(board_id):
-    pass
+def delete_board(current_uid, board_id):
+    original_board_info = get_board_info(board_id)
+    old_path = original_board_info.bName
+    if current_uid != original_board_info.uSerial:
+        return (False, 'NO_PERMISSION')
+    val = dict(old_path = old_path + r'/%')
+    has_child = False
+    result = db.select('Boards', val, where = 'bName LIKE $old_path')
+    for r in result:
+        if not r.bName.startswith(old_path):
+            continue
+        has_child = True
+    if has_child:
+        return (False, 'HAS_CHILD')
+    val = dict(board_id = board_id)
+    result = db.delete('Boards', vars=val, where='bSerial = $board_id')
+    delete_all_article(board_id)
+    return (True, posixpath.dirname(old_path))
+
+def delete_all_article(board_id):
+    val = dict(board_id = board_id)
+    result = db.delete('Articles', vars=val, where='bSerial = $board_id')
+    return result
 
 def get_board_info(board_id):
     # board_id 보드의 정보를 가져온다.
