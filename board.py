@@ -41,7 +41,7 @@ def _get_total_page_count(board_id, page_size):
     total_article = _get_article_count(board_id)
     return  (total_article + page_size -1) / page_size
 
-def create_board(parent, settings):
+def create_board(parent_id, settings):
     # bName: 보드 전체 경로
     # uSerial: 보대
     # bParent: 부모 보드 ID
@@ -53,7 +53,26 @@ def create_board(parent, settings):
     # bWrite: 쓰기 가능/불가능
     # bComment: 0 - 불가능, 1 - 가능
     # bSerial: 자동 증가
-    pass
+    # current_uid: 보드를 생성하려고 한 사용자 ID
+    original_board_info = get_board_info(parent_id)
+    if original_board_info == None:
+        return (False, 'NO_SUCH_BOARD')
+    check = _get_board_id_from_path(settings['path'])
+    if check > 0:
+        return (False, 'BOARD_ALREADY_EXIST')
+    if original_board_info.uSerial != settings['current_uid']:
+        return (False, 'NO_PERMISSION')
+
+    ret = db.insert('Boards', bName = settings['path'],
+            uSerial = settings['board_owner'],
+            bParent = parent_id, bDatetime = web.SQLLiteral('NOW()'),
+            bInformation = settings['cover'],
+            bDescription = settings['description'],
+            bType = settings['type'],
+            bReply = 1, bWrite = settings['guest_write'],
+            bComment = settings['can_comment'])
+
+    return (True, 'SUCCESS')
 
 def edit_board(board_id, settings):
     # settings로 넘어오는 내용

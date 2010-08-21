@@ -63,7 +63,7 @@ checked="checked" \
         %endif 
         />
 % elif action == 'create_board':
-        <input id="radio_board" type="radio" name="type" onclick="boardclick()" value="1" checked>
+        <input id="radio_board" type="radio" name="type" onclick="boardclick()" value="1" checked="checked">
 % endif
         <label for="radio_board">게시판</label>
         </span>
@@ -81,7 +81,7 @@ checked="checked" \
         %endif 
         />
 % elif action == 'create_board':
-        <input id="radio_comyes" type="radio" name="commentable" value="yes" checked />
+        <input id="radio_comyes" type="radio" name="commentable" value="yes" checked="checked" />
 % endif
         <label for="radio_comyes">허용</label>
 % if action == 'modify':
@@ -109,7 +109,7 @@ checked="checked" \
 %endif 
 />
 % elif action == 'create_board':
-        <input id="radio_comyes" type="radio" name="writable" value="yes" checked />
+        <input id="radio_comyes" type="radio" name="writable" value="yes" checked="checked" />
 % endif
         <label for="radio_comyes">허용</label>
 % if action == 'modify':
@@ -130,14 +130,24 @@ checked="checked" \
     <div id="row">
         <div class="left-container">한줄 설명</div>
         <span class="sep">:</span>
-        <span><input name="description" type="text" maxlength="255" style="width:300px" value="${board_info.bDescription}" /></span>
+        <span><input name="description" type="text" maxlength="255" style="width:300px"
+% if action == 'modify':
+value="${board_info.bDescription}" /> \
+% else:
+/> \
+% endif
+</span>
     </div>
 
     <!-- 한바닥 설명 -->
     <div id="row">
         <div class="left-container">한 바닥 설명</div>
         <span class="sep">:</span>
-        <textarea name="information" style="font-size: 0.9em; width: 500px; height: 360px">${board_info.bInformation}</textarea>
+        <textarea name="information" style="font-size: 0.9em; width: 500px; height: 360px">
+            % if action == 'modify':
+            ${board_info.bInformation}
+            % endif
+        </textarea>
         </div>
     </div>
 
