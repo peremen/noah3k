@@ -10,12 +10,6 @@ from cgi import parse_qs
 from datetime import datetime
 import posixpath
 
-if web.config.get('_session') is None:
-    session = web.session.Session(app, web.session.DiskStore('sessions'), {'count':0})
-    web.config._session = session
-else:
-    session = web.config._session
-
 desktop_render = render_mako(
     directories = [os.path.join(os.path.dirname(__file__), 'templates/desktop/').replace('\\','/'),],
     input_encoding = 'utf-8', output_encoding = 'utf-8',
@@ -36,11 +30,11 @@ class article_actions:
     def caller(self, mobile, board_name, action, article_id, method):
         board_id = board._get_board_id_from_path(board_name)
         if board_id < 0:
-            return desktop_render.error(lang='ko', error_message = 'INVALID_BOARD')
+            raise web.notfound(desktop_render.error(lang='ko', error_message = 'INVALID_BOARD'))
         try:
             return eval('self.%s_%s' % (action, method))(mobile, board_name, int(article_id))
         except:
-            return desktop_render.error(lang='ko', error_message = 'INVALID_ACTION')
+            raise web.notfound(desktop_render.error(lang='ko', error_message = 'INVALID_ACTION'))
 
     def read_get(self, mobile, board_name, article_id):
         try:
@@ -68,7 +62,7 @@ class article_actions:
                 return desktop_render.read_article(article = a,
                     title = u"%s - %s - Noah3K" % (a.aIndex, a.aTitle),
                     board_path = board_path, board_desc = board_desc,
-                    comments = comment, lang="ko", session = session,
+                    comments = comment, lang="ko", 
                     prev_id = prev_id, next_id = next_id, feed = True)
             else:
                 return mobile_render.read_article()
@@ -77,7 +71,7 @@ class article_actions:
 
     def reply_get(self, mobile, board_name, article_id):
         try:
-            current_uid = session.uid
+            current_uid = web.ctx.session.uid
         except:
             return desktop_render.error(lang="ko", error_message = u"로그인되지 않음" )
         if current_uid < 1:
@@ -93,11 +87,11 @@ class article_actions:
             return desktop_render.editor(title = u"답글 쓰기 - /%s - Noah3K" % board_name,
                     action='reply/%s' % article_id, action_name = u"답글 쓰기",
                     board_path = board_path, board_desc = board_desc,
-                    lang="ko", session = session)
+                    lang="ko", )
 
     def reply_post(self, mobile, board_name, article_id):
         try:
-            current_uid = session.uid
+            current_uid = web.ctx.session.uid
         except:
             return
         pass
@@ -115,7 +109,7 @@ class article_actions:
 
     def modify_get(self, mobile, board_name, article_id):
         try:
-            current_uid = session.uid
+            current_uid = web.ctx.session.uid
         except:
             return desktop_render.error(lang="ko", error_message = u"로그인되지 않음" )
         if current_uid < 1:
@@ -133,11 +127,11 @@ class article_actions:
                     action='modify/%s' % article_id, action_name = u"글 수정하기",
                     board_path = board_path, board_desc = board_desc,
                     article_title = article_.aTitle, body = article_.aContent,
-                    lang="ko", session = session)
+                    lang="ko", )
 
     def modify_post(self, mobile, board_name, article_id):
         try:
-            current_uid = session.uid
+            current_uid = web.ctx.session.uid
         except:
             return
         article = dict(title = web.input().title, body = web.input().content)
@@ -154,7 +148,7 @@ class article_actions:
 
     def delete_get(self, mobile, board_name, article_id):
         try:
-            current_uid = session.uid
+            current_uid = web.ctx.session.uid
         except:
             return
         ret = article.delete_article(current_uid, article_id)
@@ -165,7 +159,7 @@ class article_actions:
 
     def comment_post(self, mobile, board_name, article_id):
         try:
-            current_uid = session.uid
+            current_uid = web.ctx.session.uid
         except:
             return
         comment = web.input().comment
@@ -182,7 +176,7 @@ class article_actions:
 
     def comment_delete_get(self, mobile, board_name, comment_id):
         try:
-            current_uid = session.uid
+            current_uid = web.ctx.session.uid
         except:
             return
         ret = article.delete_comment(current_uid, comment_id)

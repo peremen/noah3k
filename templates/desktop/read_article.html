@@ -2,6 +2,7 @@
 <%
 import user
 import article as A
+from web import ctx
 from pygments import highlight
 from pygments.lexers import BBCodeLexer
 from pygments.formatters import HtmlFormatter
@@ -51,7 +52,7 @@ ${format(article['aContent'])}
                     <td id="writer">${comment['cId']}</td>
                     <td id="content">${comment['cContent']}</td>
                     <td id="writetime">${comment['cDatetime']}</td>
-%if session.has_key('uid') and session.uid == comment['uSerial']:
+%if ctx.session.has_key('uid') and ctx.session.uid == comment['uSerial']:
                     <td id="button">
                         <a class="button" href="/${board_path}/+comment_delete/${comment['cSerial']}">삭제</a></td>
 % endif
@@ -63,7 +64,7 @@ ${format(article['aContent'])}
         </div>
 
     <div id="input">
-% if not session.has_key('uid'):
+% if not ctx.session.has_key('uid'):
     댓글을 쓰시려면 <a href="/+login">로그인</a>을 해주세요
 % else:
     <form name="comment" method="post" action="/${board_path}/+comment/${article['aSerial']}">
@@ -83,12 +84,12 @@ ${format(article['aContent'])}
 <div id="menu">
     <ul>
         <li> <a class="button" href="/${board_path}">목록</a></li>
-% if session.has_key('uid'):
+% if ctx.session.has_key('uid'):
     <!-- 쓰기 권한 -->	
     <li><a class="button" href="/${board_path}/+write">글쓰기</a></li>
     <li><a class="button" href="/${board_path}/+reply/${article['aSerial']}">답글</a></li>
 % endif
-%if session.has_key('uid') and session.uid == article.uSerial:
+%if ctx.session.has_key('uid') and ctx.session.uid == article.uSerial:
     <!-- 로그인 --> 
     <li><a class="button" href="/${board_path}/+modify/${article['aSerial']}">수정</a></li>
     <!-- 삭제 권한 --> 

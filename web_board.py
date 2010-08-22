@@ -10,12 +10,6 @@ from cgi import parse_qs
 from datetime import datetime
 import posixpath
 
-if web.config.get('_session') is None:
-    session = web.session.Session(app, web.session.DiskStore('sessions'), {'count':0})
-    web.config._session = session
-else:
-    session = web.config._session
-
 desktop_render = render_mako(
     directories = [os.path.join(os.path.dirname(__file__), 'templates/desktop/').replace('\\','/'),],
     input_encoding = 'utf-8', output_encoding = 'utf-8',
@@ -32,25 +26,25 @@ class board_actions:
             action = dummy
         if action == '*':
             action = 'subboard_list'
-        return self.caller(mobile, action, 'get')
+        return self.caller(mobile, board_name, action, 'get')
 
     def POST(self, mobile, board_name, action, dummy):
         if action[0] == '+':
             action = dummy
-        return self.caller(mobile, action, 'post')
+        return self.caller(mobile, board_name, action, 'post')
 
     def caller(self, mobile, board_name, action, method):
         board_id = board._get_board_id_from_path(board_name)
         if board_id < 0:
-            return desktop_render.error(lang='ko', error_message = 'INVALID_BOARD')
+            raise web.notfound(desktop_render.error(lang='ko', error_message = 'INVALID_BOARD'))
         try:
             return eval('self.%s_%s' % (action, method))(mobile, board_name)
         except:
-            return desktop_render.error(lang='ko', error_message = 'INVALID_ACTION')
+            raise web.notfound(desktop_render.error(lang='ko', error_message = 'INVALID_ACTION'))
 
     def write_get(self, mobile, board_name):
         try:
-            current_uid = session.uid
+            current_uid = web.ctx.session.uid
         except:
             return desktop_render.error(lang="ko", error_message = u"로그인되지 않음" )
         if current_uid < 1:
@@ -66,11 +60,11 @@ class board_actions:
             return desktop_render.editor(title = u"글 쓰기 - %s - Noah3K" % board_name,
                     action='write', action_name = u"글 쓰기",
                     board_path = board_path, board_desc = board_desc,
-                    lang="ko", session = session)
+                    lang="ko", )
 
     def write_post(self, mobile, board_name):
         try:
-            current_uid = session.uid
+            current_uid = web.ctx.session.uid
         except:
             return
         a = dict(title = web.input().title, body = web.input().content)
@@ -128,7 +122,7 @@ class board_actions:
                 board_path = board_info.bName[1:],
                 board_desc = board_info.bDescription, lang='ko',
                 title = u'정보 - %s - Noah3k' % board_info.bName,
-                session = session)
+                )
 
     def subboard_list_get(self, mobile, board_name):
         board_id = board._get_board_id_from_path(board_name)
@@ -143,13 +137,13 @@ class board_actions:
             board_path = board_info.bName[1:]
         if not mobile:
             return desktop_render.view_subboard_list(title = u"%s - Noah3K" % board_name, board_path = board_path,
-                    board_desc = board_info.bDescription, child_boards = child_board, lang="ko", session = session)
+                    board_desc = board_info.bDescription, child_boards = child_board, lang="ko", )
         else:
             return mobile_render.view_subboard_list()
 
     def create_board_get(self, mobile, board_name):
         try:
-            current_uid = session.uid
+            current_uid = web.ctx.session.uid
         except:
             return desktop_render.error(lang='ko', error_message='NOT_LOGGED_IN')
         board_id = board._get_board_id_from_path(board_name)
@@ -166,7 +160,7 @@ class board_actions:
 
     def create_board_post(self, mobile, board_name):
         try:
-            current_uid = session.uid
+            current_uid = web.ctx.session.uid
         except:
             return desktop_render.error(lang='ko', error_message='NOT_LOGGED_IN')
         board_id = board._get_board_id_from_path(board_name)
@@ -205,7 +199,7 @@ class board_actions:
 
     def modify_get(self, mobile, board_name):
         try:
-            current_uid = session.uid
+            current_uid = web.ctx.session.uid
         except:
             return desktop_render.error(lang='ko', error_message='NOT_LOGGED_IN')
         board_id = board._get_board_id_from_path(board_name)
@@ -222,7 +216,7 @@ class board_actions:
 
     def modify_post(self, mobile, board_name):
         try:
-            current_uid = session.uid
+            current_uid = web.ctx.session.uid
         except:
             return desktop_render.error(lang='ko', error_message='NOT_LOGGED_IN')
         board_id = board._get_board_id_from_path(board_name)
@@ -254,7 +248,7 @@ class board_actions:
 
     def delete_get(self, mobile, board_name):
         try:
-            current_uid = session.uid
+            current_uid = web.ctx.session.uid
         except:
             return
         board_id = board._get_board_id_from_path(board_name)

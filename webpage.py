@@ -37,6 +37,10 @@ if web.config.get('_session') is None:
 else:
     session = web.config._session
 
+def session_hook():
+    web.ctx.session = session
+app.add_processor(web.loadhook(session_hook))
+
 desktop_render = render_mako(
     directories = [os.path.join(os.path.dirname(__file__), 'templates/desktop/').replace('\\','/'),],
     input_encoding = 'utf-8', output_encoding = 'utf-8',
@@ -139,7 +143,7 @@ class view_board:
         page_size = 20
         board_id = board._get_board_id_from_path(board_name)
         if board_id < 0:
-            return desktop_render.error(lang='ko', error_message = 'INVALID_BOARD')
+            raise web.notfound(desktop_render.error(lang='ko', error_message='INVALID_BOARD'))
         board_info = board.get_board_info(board_id)
         if board_info.bType == 0: # 디렉터리
             v = board_actions()

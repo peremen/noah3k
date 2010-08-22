@@ -1,5 +1,6 @@
 <%
 import board
+from web import ctx
 def traverse_board_path(path):
     ret = ""
     id = board._get_board_id_from_path(path)
@@ -38,10 +39,10 @@ def get_type(path):
 <div id="menu">
     <ul>
         ## 로그인을 비롯한 다른 버튼들을 여기로.
-%if session is UNDEFINED:
+%if ctx.session is UNDEFINED:
         <li><a class="button" href="/+join">회원 가입</a></li>
         <li><a class="button" href="/+login">로그인</a></li>
-%elif not session.has_key('uid'):
+%elif not ctx.session.has_key('uid'):
         <li><a class="button" href="/+join">회원 가입</a></li>
         <li><a class="button" href="/+login">로그인</a></li>
 % else:
