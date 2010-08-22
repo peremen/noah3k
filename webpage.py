@@ -13,6 +13,7 @@ from web_article import article_actions
 from web_board import board_actions
 
 urls = (
+    '/(.*)/', 'redirect',
     r'/(m/|)', 'main_page',
  #   '/(m/|)\*', 'board_list', 
     r'/(m/|)\+join', 'join',
@@ -58,6 +59,12 @@ if web.config.get('_database') is None:
     web.config._database = db
 else:
     db = web.config._database
+
+class redirect:
+    def GET(self, path):
+        raise web.seeother('/' + path)
+    def POST(self, path):
+        raise web.seeother('/'+path)
 
 class main_page:
     def GET(self, mobile):
