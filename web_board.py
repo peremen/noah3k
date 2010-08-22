@@ -38,7 +38,7 @@ class board_actions:
         if board_id < 0:
             raise web.notfound(desktop_render.error(lang='ko', error_message = 'INVALID_BOARD'))
         try:
-            return eval('self.%s_%s' % (action, method))(mobile, board_name)
+            return eval('self.%s_%s' % (action, method))(mobile, board_name, board_id)
         except NameError:
             raise web.notfound(desktop_render.error(lang='ko', error_message = 'INVALID_ACTION'))
 
@@ -51,11 +51,8 @@ class board_actions:
             raise web.internalerror(desktop_render.error(lang="ko", error_message = u"INVALID_UID"))
         return current_uid
 
-    def write_get(self, mobile, board_name):
+    def write_get(self, mobile, board_name, board_id):
         current_uid = self.session_helper(mobile)
-        board_id = board._get_board_id_from_path(board_name)
-        if board_id < 0:
-            return
         board_info = board.get_board_info(board_id)
         board_path = board_info.bName[1:]
         board_desc = board_info.bDescription
@@ -65,25 +62,19 @@ class board_actions:
                     board_path = board_path, board_desc = board_desc,
                     lang="ko", )
 
-    def write_post(self, mobile, board_name):
+    def write_post(self, mobile, board_name, board_id):
         current_uid = self.session_helper(mobile)
         a = dict(title = web.input().title, body = web.input().content)
-        board_id = board._get_board_id_from_path(board_name)
         board_info = board.get_board_info(board_id)
         board_path = board_info.bName[1:]
-        if board_id < 0:
-            return
         ret = article.write_article(current_uid, board_id, a)
         if ret[0] == True:
             raise web.seeother('/%s/+read/%s' % (board_path, ret[1]))
         else:
             return desktop_render.error(lang='ko', error_message = ret[1])
 
-    def rss_get(self, mobile, board_name):
+    def rss_get(self, mobile, board_name, board_id):
         page_size = 20
-        board_id = board._get_board_id_from_path(board_name)
-        if board_id < 0:
-            return # No such board
         board_info = board.get_board_info(board_id)
         if board_info.bType == 0: # 디렉터리
             return
@@ -96,11 +87,8 @@ class board_actions:
                 board_desc = board_info.bDescription,
                 articles=articles, today=date)
 
-    def atom_get(self, mobile, board_name):
+    def atom_get(self, mobile, board_name, board_id):
         page_size = 20
-        board_id = board._get_board_id_from_path(board_name)
-        if board_id < 0:
-            return # No such board
         board_info = board.get_board_info(board_id)
         if board_info.bType == 0: # 디렉터리
             return
@@ -113,10 +101,7 @@ class board_actions:
                 board_desc = board_info.bDescription,
                 articles=articles, today=date)
 
-    def summary_get(self, mobile, board_name):
-        board_id = board._get_board_id_from_path(board_name)
-        if board_id < 0:
-            return
+    def summary_get(self, mobile, board_name, board_id):
         board_info = board.get_board_info(board_id)
         return desktop_render.board_summary(board_info = board_info,
                 board_path = board_info.bName[1:],
@@ -124,10 +109,7 @@ class board_actions:
                 title = u'정보 - %s - Noah3k' % board_info.bName,
                 )
 
-    def subboard_list_get(self, mobile, board_name):
-        board_id = board._get_board_id_from_path(board_name)
-        if board_id < 0:
-            return # No such board
+    def subboard_list_get(self, mobile, board_name = '', board_id = 1):
         board_info = board.get_board_info(board_id)
         child_board = board.get_child(board_id)
         if board_name == "":
@@ -141,11 +123,8 @@ class board_actions:
         else:
             return mobile_render.view_subboard_list()
 
-    def create_board_get(self, mobile, board_name):
+    def create_board_get(self, mobile, board_name, board_id):
         current_uid = self.session_helper(mobile)
-        board_id = board._get_board_id_from_path(board_name)
-        if board_id < 0:
-            return desktop_render.error(lang='ko', error_message='INVALID_BOARD')
         # if !acl.get_permission(modify_board, user):
         board_info = board.get_board_info(board_id)
         if current_uid != board_info.uSerial:
@@ -155,11 +134,8 @@ class board_actions:
                 board_desc = board_info.bDescription, lang='ko',
                 title = u'하위 게시판 만들기 - %s - Noah3k' % board_info.bName)
 
-    def create_board_post(self, mobile, board_name):
+    def create_board_post(self, mobile, board_name, board_id):
         current_uid = self.session_helper(mobile)
-        board_id = board._get_board_id_from_path(board_name)
-        if board_id < 0:
-            return desktop_render.error(lang='ko', error_message='INVALID_BOARD')
         # if !acl.get_permission(modify_board, user):
         board_info = board.get_board_info(board_id)
         if current_uid != board_info.uSerial:
@@ -191,11 +167,8 @@ class board_actions:
             return desktop_render.error(lang='ko', error_message = ret[1])
         raise web.seeother('%s' % (new_path))
 
-    def modify_get(self, mobile, board_name):
+    def modify_get(self, mobile, board_name, board_id):
         current_uid = self.session_helper(mobile)
-        board_id = board._get_board_id_from_path(board_name)
-        if board_id < 0:
-            return desktop_render.error(lang='ko', error_message='INVALID_BOARD')
         # if !acl.get_permission(modify_board, user):
         board_info = board.get_board_info(board_id)
         if current_uid != board_info.uSerial:
@@ -205,11 +178,8 @@ class board_actions:
                 board_desc = board_info.bDescription, lang='ko',
                 title = u'정보 수정 - %s - Noah3k' % board_info.bName)
 
-    def modify_post(self, mobile, board_name):
+    def modify_post(self, mobile, board_name, board_id):
         current_uid = self.session_helper(mobile)
-        board_id = board._get_board_id_from_path(board_name)
-        if board_id < 0:
-            return desktop_render.error(lang='ko', error_message='INVALID_BOARD')
         # if !acl.get_permission(modify_board, user):
         board_info = board.get_board_info(board_id)
         if current_uid != board_info.uSerial:
@@ -234,11 +204,8 @@ class board_actions:
         else:
             raise web.seeother('%s/+summary' % result[1])
 
-    def delete_get(self, mobile, board_name):
+    def delete_get(self, mobile, board_name, board_id):
         current_uid = self.session_helper(mobile)
-        board_id = board._get_board_id_from_path(board_name)
-        if board_id < 0:
-            return desktop_render.error(lang='ko', error_message='INVALID_BOARD')
         ret = board.delete_board(current_uid, board_id)
         if ret[0] == True:
             raise web.seeother('%s' % (ret[1]))

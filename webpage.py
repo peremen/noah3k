@@ -62,7 +62,7 @@ else:
 class main_page:
     def GET(self, mobile):
         v = board_actions()
-        return v.subboard_list_get(mobile, "")
+        return v.subboard_list_get(mobile)
 #        if not mobile:
 #            return desktop_render.main(title = "Noah3K", lang="ko")
 #        else:
@@ -147,7 +147,7 @@ class view_board:
         board_info = board.get_board_info(board_id)
         if board_info.bType == 0: # 디렉터리
             v = board_actions()
-            return v.subboard_list_get(mobile, board_name)
+            return v.subboard_list_get(mobile, board_name, board_id)
 
         qs = web.ctx.query
         if len(qs) > 0:

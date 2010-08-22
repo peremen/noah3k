@@ -32,7 +32,7 @@ class article_actions:
         if board_id < 0:
             raise web.notfound(desktop_render.error(lang='ko', error_message = 'INVALID_BOARD'))
         try:
-            return eval('self.%s_%s' % (action, method))(mobile, board_name, int(article_id))
+            return eval('self.%s_%s' % (action, method))(mobile, board_name, board_id, int(article_id))
         except NameError:
             raise web.notfound(desktop_render.error(lang='ko', error_message = 'INVALID_ACTION'))
 
@@ -45,10 +45,7 @@ class article_actions:
             raise web.internalerror(desktop_render.error(lang="ko", error_message = u"INVALID_UID"))
         return current_uid
 
-    def read_get(self, mobile, board_name, article_id):
-        board_id = board._get_board_id_from_path(board_name)
-        if board_id < 0:
-            return
+    def read_get(self, mobile, board_name, board_id, article_id):
         board_info = board.get_board_info(board_id)
         board_path = board_info.bName[1:]
         board_desc = board_info.bDescription
@@ -75,11 +72,8 @@ class article_actions:
         else:
             return mobile_render.read_article()
 
-    def reply_get(self, mobile, board_name, article_id):
+    def reply_get(self, mobile, board_name, board_id, article_id):
         current_uid = self.session_helper(mobile)
-        board_id = board._get_board_id_from_path(board_name)
-        if board_id < 0:
-            return
         board_info = board.get_board_info(board_id)
         board_path = board_info.bName[1:]
         board_desc = board_info.bDescription
@@ -89,26 +83,20 @@ class article_actions:
                     board_path = board_path, board_desc = board_desc,
                     lang="ko", )
 
-    def reply_post(self, mobile, board_name, article_id):
+    def reply_post(self, mobile, board_name, board_id, article_id):
         current_uid = self.session_helper(mobile)
         reply = dict(title = web.input().title, body = web.input().content)
-        board_id = board._get_board_id_from_path(board_name)
         board_info = board.get_board_info(board_id)
         board_path = board_info.bName[1:]
-        if board_id < 0:
-            return
         ret = article.reply_article(current_uid, board_id, article_id, reply)
         if ret[0] == True:
             raise web.seeother('/%s/+read/%s' % (board_path, ret[1]))
         else:
             return desktop_render.error(lang='ko', error_message = ret[1])
 
-    def modify_get(self, mobile, board_name, article_id):
+    def modify_get(self, mobile, board_name, board_id, article_id):
         current_uid = self.session_helper(mobile)
 
-        board_id = board._get_board_id_from_path(board_name)
-        if board_id < 0:
-            return
         board_info = board.get_board_info(board_id)
         board_path = board_info.bName[1:]
         board_desc = board_info.bDescription
@@ -120,21 +108,18 @@ class article_actions:
                     article_title = article_.aTitle, body = article_.aContent,
                     lang="ko", )
 
-    def modify_post(self, mobile, board_name, article_id):
+    def modify_post(self, mobile, board_name, board_id, article_id):
         current_uid = self.session_helper(mobile)
         a = dict(title = web.input().title, body = web.input().content)
-        board_id = board._get_board_id_from_path(board_name)
         board_info = board.get_board_info(board_id)
         board_path = board_info.bName[1:]
-        if board_id < 0:
-            return
         ret = article.modify_article(current_uid, board_id, article_id, a)
         if ret[0] == True:
             raise web.seeother('/%s/+read/%s' % (board_path, ret[1]))
         else:
             return desktop_render.error(lang='ko', error_message = ret[1])
 
-    def delete_get(self, mobile, board_name, article_id):
+    def delete_get(self, mobile, board_name, board_id, article_id):
         current_uid = self.session_helper(mobile)
         ret = article.delete_article(current_uid, article_id)
         if ret[0] == True:
@@ -142,21 +127,18 @@ class article_actions:
         else:
             return desktop_render.error(lang='ko', error_message = ret[1])
 
-    def comment_post(self, mobile, board_name, article_id):
+    def comment_post(self, mobile, board_name, board_id, article_id):
         current_uid = self.session_helper(mobile)
         comment = web.input().comment
-        board_id = board._get_board_id_from_path(board_name)
         board_info = board.get_board_info(board_id)
         board_path = board_info.bName[1:]
-        if board_id < 0:
-            return
         ret = article.write_comment(current_uid, board_id, article_id, comment)
         if ret[0] == True:
             raise web.seeother('/%s/+read/%s' % (board_name, article_id))
         else:
             return desktop_render.error(lang='ko', error_message = ret[1])
 
-    def comment_delete_get(self, mobile, board_name, comment_id):
+    def comment_delete_get(self, mobile, board_name, board_id, comment_id):
         current_uid = self.session_helper(mobile)
         ret = article.delete_comment(current_uid, comment_id)
         if ret[0] == True:
