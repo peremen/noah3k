@@ -11,21 +11,17 @@ from datetime import datetime
 import posixpath
 from web_article import article_actions
 from web_board import board_actions
+from web_user import personal_page, personal_actions
+from web_main import main_actions
 
 urls = (
+# 다른 모든 action은 view_board 위로 올라가야 함.
     '/(.*)/', 'redirect',
     r'/(m/|)', 'main_page',
- #   '/(m/|)\*', 'board_list', 
-    r'/(m/|)\+join', 'join',
-    r'/(m/|)\+login', 'login',
-    r'/(m/|)\+logout', 'logout',
-    r'/(m/|)\+u/(\S*)', 'personal_page',
-    r'/(m/|)\+u/(\S*)/settings', 'personal_settings',
-    r'/(m/|)\+u/(\S*)/favorites', 'personal_favorites',
-    r'/(m/|)\+u/(\S*)/recent', 'personal_recent',
     r'/(m/|)\+help/(\S*)', 'help',
-    r'/(m/|)\+credits', 'credits',
-# 다른 모든 action은 view_board 위로 올라가야 함.
+    r'/(m/|)\+u/(\S*)/\+(\w*)', 'personal_actions',
+    r'/(m/|)\+u/(\S*)', 'personal_page',
+    r'/(m/|)\+(\w*)', 'main_actions',
     r'/(m/|)(\S*)/\+(\w*)/(\d*)', 'article_actions',
     r'/(m/|)(\S*)/(\+(\w*)|\*)', 'board_actions',
     r'/(m/|)(\S*)', 'view_board',
@@ -75,75 +71,12 @@ class main_page:
 #        else:
 #            return mobile_render.main()
 
-class join:
-    def GET(self, mobile):
-        if not mobile:
-            return desktop_render.join(title = u"회원 가입 - Noah3K",
-                   lang="ko", board_desc=u"회원 가입", session = session)
-        else:
-            return mobile_render.join()
-    def POST(self, mobile):
-        pass
-
-class login:
-    def GET(self, mobile):
-        referer = web.ctx.env.get('HTTP_REFERER', '/')
-        if not mobile:
-            return desktop_render.login(title = u"로그인 - Noah3K", board_desc=u"로그인",
-                    lang="ko", session = session, referer = referer)
-        else:
-            return mobile_render.login()
-    def POST(self, mobile):
-        username, password = '', ''
-        err = ''
-        valid = True
-        login = False
-        username, password = web.input().username, web.input().password
-        referer = web.input().url
-        username, password = username.strip(), password.strip()
-        if username == '' or password == '':
-            err = u"사용자 이름이나 암호를 입력하지 않았습니다."
-            valid = False
-
-        if valid:
-            login = user.login(username, password)
-            if login[0]:
-                # 로그인 성공. referer로 돌아감.
-                err = u"로그인 성공"
-                session.uid = user._get_uid_from_username(username)
-                login = True
-            else:
-                # 로그인 실패
-                err = login[1]
-        if not login:
-            return desktop_render.login(title = u"로그인 - Noah3K", board_desc=u"로그인",
-                    lang="ko", session = session,
-                    error = err, referer = referer)
-        else:
-            raise web.seeother(web.input().url)
-            # 이전 페이지로 '묻지 않고' 되돌림
-
-class logout:
-    def GET(self, mobile):
-        session.uid = 0
-        session.kill()
-        referer = web.ctx.env.get('HTTP_REFERER', '/')
-        raise web.seeother(referer)
-
 class help:
     def GET(self, mobile, context):
         if not mobile:
             return desktop_render.help(title = u"도움말: %s - Noah3K" % context, lang="ko", session = session)
         else:
             return mobile_render.help()
-
-class credits:
-    def GET(self, mobile):
-        if not mobile:
-            return desktop_render.credits(title = u"개발자 정보 - Noah3K",
-                   lang="ko", board_desc=u"개발자 정보", session = session)
-        else:
-            return mobile_render.credits()
 
 class view_board:
     def GET(self, mobile, board_name):
