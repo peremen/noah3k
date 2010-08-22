@@ -5,7 +5,7 @@ import os
 import web
 from web.contrib.template import render_mako
 import config
-import board, user
+import board, user, article
 from cgi import parse_qs
 from datetime import datetime
 import posixpath
@@ -151,50 +151,52 @@ class view_board:
         if qs:
             page = int(qs['page'][0])
         else:
-            page = board._get_total_page_count(board_id, page_size)
+            page = article._get_total_page_count(board_id, page_size)
 
         # bSerial: board_id, bName: 전체 경로, uSerial: 보대, bParent: 부모 보드, bDescription: 보드 짧은 설명
         # bDatetime: 개설 시간, bInformation: 보드 긴 설명, bType = 디렉터리/보드/블로그,
         # bReply: bWrite: bComment: 모름
         if not mobile:
             return desktop_render.view_board(title = u"%s - Noah3K" % board_info.bName, board_path = board_info.bName[1:],
-                board_desc = board_info.bDescription, lang="ko", articles=board.get_article_list(board_id, page_size, page), page=page,
-                total_page = board._get_total_page_count(board_id, page_size),
+                board_desc = board_info.bDescription, lang="ko", articles=article.get_article_list(board_id, page_size, page), page=page,
+                total_page = article._get_total_page_count(board_id, page_size),
                 session = session, feed = True)
         else:
             return mobile_render.view_board()
 
 class article_actions:
-
     def read_get(self, mobile, board_name, article_id):
-        board_id = board._get_board_id_from_path(board_name)
-        if board_id < 0:
-            return
-        board_info = board.get_board_info(board_id)
-        board_path = board_info.bName[1:]
-        board_desc = board_info.bDescription
-        article = board.get_article(board_id, article_id)
-        comment = board.get_comment(article_id)
+        try:
+            board_id = board._get_board_id_from_path(board_name)
+            if board_id < 0:
+                return
+            board_info = board.get_board_info(board_id)
+            board_path = board_info.bName[1:]
+            board_desc = board_info.bDescription
+            a = article.get_article(board_id, article_id)
+            comment = article.get_comment(article_id)
 
-        prev_id = -1
-        next_id = -1
+            prev_id = -1
+            next_id = -1
 
-        if not article:
-            return desktop_render.error(lang="ko", error_message = u"글 없음" )
+            if not a:
+                return desktop_render.error(lang="ko", error_message = u"글 없음" )
 
-        if article.aIndex > 1:
-            prev_id = board.get_article_id_by_index(board_id, article.aIndex - 1)
-        if article.aIndex < board._get_article_count(board_id):
-            next_id = board.get_article_id_by_index(board_id, article.aIndex + 1)
+            if a.aIndex > 1:
+                prev_id = article.get_article_id_by_index(board_id, a.aIndex - 1)
+            if a.aIndex < article._get_article_count(board_id):
+                next_id = article.get_article_id_by_index(board_id, a.aIndex + 1)
 
-        if not mobile:
-            return desktop_render.read_article(article = article,
-                title = u"%s - %s - Noah3K" % (article.aIndex, article.aTitle),
-                board_path = board_path, board_desc = board_desc,
-                comments = comment, lang="ko", session = session,
-                prev_id = prev_id, next_id = next_id, feed = True)
-        else:
-            return mobile_render.read_article()
+            if not mobile:
+                return desktop_render.read_article(article = a,
+                    title = u"%s - %s - Noah3K" % (a.aIndex, a.aTitle),
+                    board_path = board_path, board_desc = board_desc,
+                    comments = comment, lang="ko", session = session,
+                    prev_id = prev_id, next_id = next_id, feed = True)
+            else:
+                return mobile_render.read_article()
+        except Exception as e:
+            print e
 
     def reply_get(self, mobile, board_name, article_id):
         try:
@@ -228,7 +230,7 @@ class article_actions:
         board_path = board_info.bName[1:]
         if board_id < 0:
             return
-        ret = board.reply_article(current_uid, board_id, article_id, reply)
+        ret = article.reply_article(current_uid, board_id, article_id, reply)
         if ret[0] == True:
             raise web.seeother('/%s/+read/%s' % (board_path, ret[1]))
         else:
@@ -248,12 +250,12 @@ class article_actions:
         board_info = board.get_board_info(board_id)
         board_path = board_info.bName[1:]
         board_desc = board_info.bDescription
-        article = board.get_article(board_id, article_id)
+        article_ = article.get_article(board_id, article_id)
         if not mobile:
             return desktop_render.editor(title = u"글 수정하기 - /%s - Noah3K" % board_name,
                     action='modify/%s' % article_id, action_name = u"글 수정하기",
                     board_path = board_path, board_desc = board_desc,
-                    article_title = article.aTitle, body = article.aContent,
+                    article_title = article_.aTitle, body = article_.aContent,
                     lang="ko", session = session)
 
     def modify_post(self, mobile, board_name, article_id):
@@ -267,7 +269,7 @@ class article_actions:
         board_path = board_info.bName[1:]
         if board_id < 0:
             return
-        ret = board.modify_article(current_uid, board_id, article_id, article)
+        ret = article.modify_article(current_uid, board_id, article_id, article)
         if ret[0] == True:
             raise web.seeother('/%s/+read/%s' % (board_path, ret[1]))
         else:
@@ -284,7 +286,7 @@ class article_actions:
         board_path = board_info.bName[1:]
         if board_id < 0:
             return
-        ret = board.write_comment(current_uid, board_id, article_id, comment)
+        ret = article.write_comment(current_uid, board_id, article_id, comment)
         if ret[0] == True:
             raise web.seeother('/%s/+read/%s' % (board_name, article_id))
         else:
@@ -295,7 +297,7 @@ class article_actions:
             current_uid = session.uid
         except:
             return
-        ret = board.delete_article(current_uid, article_id)
+        ret = article.delete_article(current_uid, article_id)
         if ret[0] == True:
             raise web.seeother('/%s' % (board_name))
         else:
@@ -306,7 +308,7 @@ class article_actions:
             current_uid = session.uid
         except:
             return
-        ret = board.delete_comment(current_uid, comment_id)
+        ret = article.delete_comment(current_uid, comment_id)
         if ret[0] == True:
             raise web.seeother('/%s/+read/%s' % (board_name, ret[1]))
         else:
@@ -316,13 +318,13 @@ class article_actions:
         try:
             return eval('self.'+action+'_get')(mobile, board_name, int(article_id))
         except:
-            return
+            return desktop_render.error(lang='ko', error_message = 'INVALID_ACTION')
 
     def POST(self, mobile, board_name, action, article_id):
         try:
             return eval('self.'+action+'_post')(mobile, board_name, int(article_id))
         except:
-            pass
+            return desktop_render.error(lang='ko', error_message = 'INVALID_ACTION')
 
 class board_actions:
     def write_get(self, mobile, board_name):
@@ -350,13 +352,13 @@ class board_actions:
             current_uid = session.uid
         except:
             return
-        article = dict(title = web.input().title, body = web.input().content)
+        a = dict(title = web.input().title, body = web.input().content)
         board_id = board._get_board_id_from_path(board_name)
         board_info = board.get_board_info(board_id)
         board_path = board_info.bName[1:]
         if board_id < 0:
             return
-        ret = board.write_article(current_uid, board_id, article)
+        ret = article.write_article(current_uid, board_id, a)
         if ret[0] == True:
             raise web.seeother('/%s/+read/%s' % (board_path, ret[1]))
         else:
@@ -389,8 +391,8 @@ class board_actions:
             return
 
         date = datetime.today()
-        page = board._get_total_page_count(board_id, page_size)
-        articles = board.get_article_list(board_id, page_size, page)
+        page = article._get_total_page_count(board_id, page_size)
+        articles = article.get_article_list(board_id, page_size, page)
         web.header('Content-Type', 'application/rss+xml')
         return desktop_render.rss(board_path = board_info.bName[1:],
                 board_desc = board_info.bDescription,
@@ -406,8 +408,8 @@ class board_actions:
             return
 
         date = datetime.today()
-        page = board._get_total_page_count(board_id, page_size)
-        articles = board.get_article_list(board_id, page_size, page)
+        page = article._get_total_page_count(board_id, page_size)
+        articles = article.get_article_list(board_id, page_size, page)
         web.header('Content-Type', 'application/atom+xml')
         return desktop_render.atom(board_path = board_info.bName[1:],
                 board_desc = board_info.bDescription,

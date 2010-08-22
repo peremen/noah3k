@@ -1,12 +1,10 @@
 <%inherit file="base.html" />
 <%
-import user, board
+import user, article
 def get_formatted_username(uid):
     u = user.get_user(uid)[1]
     return "%(id)s" % {'id': u['uId']}
 
-def get_comment_count(article_id):
-    return board.get_comment_count(article_id)
 %>
 %if len(articles) == 0:
 <div align="center">
@@ -28,7 +26,7 @@ def get_comment_count(article_id):
         <th>조회수</th>
     </tr>
     <% i = 1 %>
-    % for article in articles:
+    % for a in articles:
     % if i%2 == 0:
     <tr class="even">
     % else:
@@ -36,25 +34,25 @@ def get_comment_count(article_id):
     % endif
     <% i = i + 1 %>
         <!-- 글번호 -->
-        <td align="center"><a href="/${board_path}/+read/${article.aSerial}" class="articlelink">${article.aIndex}</a></td>
+        <td align="center"><a href="/${board_path}/+read/${a.aSerial}" class="articlelink">${a.aIndex}</a></td>
         <!-- 제목 --> 
         <td  width="55%">
-    %if article.aLevel > 0:
-        <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (article.aLevel-1)}px" />
+    %if a.aLevel > 0:
+        <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (a.aLevel-1)}px" />
     %endif
-        <a href="/${board_path}/+read/${article.aSerial}" class="articlelink">${article.aTitle}
-<% cmt_cnt = get_comment_count(article.aSerial) %>
+        <a href="/${board_path}/+read/${a.aSerial}" class="articlelink">${a.aTitle}
+<% cmt_cnt = article.get_comment_count(a.aSerial) %>
     % if cmt_cnt > 0:
             [${cmt_cnt}]
     % endif
         </a>
         </td>
         <!-- 글쓴이 -->
-        <td style="padding-left: 1em">${get_formatted_username(article.uSerial)}</td>
+        <td style="padding-left: 1em">${get_formatted_username(a.uSerial)}</td>
         <!-- 날짜 -->
-        <td align="center">${article.aDatetime.strftime('%Y-%m-%d')}</td>
+        <td align="center">${a.aDatetime.strftime('%Y-%m-%d')}</td>
         <!-- 조회수 -->
-        <td align="center">${article.aHit}</td>
+        <td align="center">${a.aHit}</td>
     </tr>
     % endfor
 </table>
