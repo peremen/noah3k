@@ -39,7 +39,7 @@ class board_actions:
             raise web.notfound(desktop_render.error(lang='ko', error_message = 'INVALID_BOARD'))
         try:
             return eval('self.%s_%s' % (action, method))(mobile, board_name, board_id)
-        except NameError:
+        except AttributeError:
             raise web.notfound(desktop_render.error(lang='ko', error_message = 'INVALID_ACTION'))
 
     def session_helper(self, mobile):

@@ -108,11 +108,16 @@ def edit_board(board_id, settings):
     settings['board_id'] = board_id
     new_path = posixpath.join(settings['path'], settings['name'])
     old_path = original_board_info.bName
+    old_directory = posixpath.dirname(old_path)
+    new_directory = settings['path']
+    if _get_board_id_from_path(new_path) > 0:
+        return (False, 'BOARD_EXISTS')
+    new_parent_id = _get_board_id_from_path(settings['path'])
     result = db.update('Boards', vars=settings, where='bSerial = $board_id',
             bInformation = settings['cover'], bDescription = settings['description'],
             bType = settings['board_type'], bReply = 1, bComment = settings['can_comment'],
             bWrite = settings['can_write_by_other'], uSerial = settings['owner'],
-            bName = new_path)
+            bName = new_path, bParent = new_parent_id)
     result = move_child_boards(board_id, old_path, new_path)
     return (True, new_path)
 
