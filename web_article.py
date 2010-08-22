@@ -33,7 +33,7 @@ class article_actions:
             raise web.notfound(desktop_render.error(lang='ko', error_message = 'INVALID_BOARD'))
         try:
             return eval('self.%s_%s' % (action, method))(mobile, board_name, int(article_id))
-        except:
+        except NameError:
             raise web.notfound(desktop_render.error(lang='ko', error_message = 'INVALID_ACTION'))
 
     def read_get(self, mobile, board_name, article_id):
@@ -133,14 +133,16 @@ class article_actions:
         try:
             current_uid = web.ctx.session.uid
         except:
-            return
-        article = dict(title = web.input().title, body = web.input().content)
+            return desktop_render.error(lang="ko", error_message = u"로그인되지 않음" )
+        if current_uid < 1:
+            return desktop_render.error(lang="ko", error_message = u"잘못된 사용자 ID" )
+        a = dict(title = web.input().title, body = web.input().content)
         board_id = board._get_board_id_from_path(board_name)
         board_info = board.get_board_info(board_id)
         board_path = board_info.bName[1:]
         if board_id < 0:
             return
-        ret = article.modify_article(current_uid, board_id, article_id, article)
+        ret = article.modify_article(current_uid, board_id, article_id, a)
         if ret[0] == True:
             raise web.seeother('/%s/+read/%s' % (board_path, ret[1]))
         else:
