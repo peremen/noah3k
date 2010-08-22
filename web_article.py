@@ -47,7 +47,6 @@ class article_actions:
 
     def read_get(self, mobile, board_name, board_id, article_id):
         board_info = board.get_board_info(board_id)
-        board_path = board_info.bName[1:]
         board_desc = board_info.bDescription
         a = article.get_article(board_id, article_id)
         comment = article.get_comment(article_id)
@@ -66,7 +65,7 @@ class article_actions:
         if not mobile:
             return desktop_render.read_article(article = a,
                 title = u"%s - %s - Noah3K" % (a.aIndex, a.aTitle),
-                board_path = board_path, board_desc = board_desc,
+                board_path = board_name, board_desc = board_desc,
                 comments = comment, lang="ko", 
                 prev_id = prev_id, next_id = next_id, feed = True)
         else:
@@ -75,22 +74,20 @@ class article_actions:
     def reply_get(self, mobile, board_name, board_id, article_id):
         current_uid = self.session_helper(mobile)
         board_info = board.get_board_info(board_id)
-        board_path = board_info.bName[1:]
         board_desc = board_info.bDescription
         if not mobile:
             return desktop_render.editor(title = u"답글 쓰기 - /%s - Noah3K" % board_name,
                     action='reply/%s' % article_id, action_name = u"답글 쓰기",
-                    board_path = board_path, board_desc = board_desc,
+                    board_path = board_name, board_desc = board_desc,
                     lang="ko", )
 
     def reply_post(self, mobile, board_name, board_id, article_id):
         current_uid = self.session_helper(mobile)
         reply = dict(title = web.input().title, body = web.input().content)
         board_info = board.get_board_info(board_id)
-        board_path = board_info.bName[1:]
         ret = article.reply_article(current_uid, board_id, article_id, reply)
         if ret[0] == True:
-            raise web.seeother('/%s/+read/%s' % (board_path, ret[1]))
+            raise web.seeother('/%s/+read/%s' % (board_name, ret[1]))
         else:
             return desktop_render.error(lang='ko', error_message = ret[1])
 
@@ -98,13 +95,12 @@ class article_actions:
         current_uid = self.session_helper(mobile)
 
         board_info = board.get_board_info(board_id)
-        board_path = board_info.bName[1:]
         board_desc = board_info.bDescription
         article_ = article.get_article(board_id, article_id)
         if not mobile:
             return desktop_render.editor(title = u"글 수정하기 - /%s - Noah3K" % board_name,
                     action='modify/%s' % article_id, action_name = u"글 수정하기",
-                    board_path = board_path, board_desc = board_desc,
+                    board_path = board_name, board_desc = board_desc,
                     article_title = article_.aTitle, body = article_.aContent,
                     lang="ko", )
 
@@ -112,10 +108,9 @@ class article_actions:
         current_uid = self.session_helper(mobile)
         a = dict(title = web.input().title, body = web.input().content)
         board_info = board.get_board_info(board_id)
-        board_path = board_info.bName[1:]
         ret = article.modify_article(current_uid, board_id, article_id, a)
         if ret[0] == True:
-            raise web.seeother('/%s/+read/%s' % (board_path, ret[1]))
+            raise web.seeother('/%s/+read/%s' % (board_name, ret[1]))
         else:
             return desktop_render.error(lang='ko', error_message = ret[1])
 
@@ -131,7 +126,6 @@ class article_actions:
         current_uid = self.session_helper(mobile)
         comment = web.input().comment
         board_info = board.get_board_info(board_id)
-        board_path = board_info.bName[1:]
         ret = article.write_comment(current_uid, board_id, article_id, comment)
         if ret[0] == True:
             raise web.seeother('/%s/+read/%s' % (board_name, article_id))

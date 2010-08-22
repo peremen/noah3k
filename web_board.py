@@ -54,22 +54,19 @@ class board_actions:
     def write_get(self, mobile, board_name, board_id):
         current_uid = self.session_helper(mobile)
         board_info = board.get_board_info(board_id)
-        board_path = board_info.bName[1:]
         board_desc = board_info.bDescription
         if not mobile:
             return desktop_render.editor(title = u"글 쓰기 - %s - Noah3K" % board_name,
                     action='write', action_name = u"글 쓰기",
-                    board_path = board_path, board_desc = board_desc,
-                    lang="ko", )
+                    board_path = board_name, board_desc = board_desc, lang="ko", )
 
     def write_post(self, mobile, board_name, board_id):
         current_uid = self.session_helper(mobile)
         a = dict(title = web.input().title, body = web.input().content)
         board_info = board.get_board_info(board_id)
-        board_path = board_info.bName[1:]
         ret = article.write_article(current_uid, board_id, a)
         if ret[0] == True:
-            raise web.seeother('/%s/+read/%s' % (board_path, ret[1]))
+            raise web.seeother('/%s/+read/%s' % (board_name, ret[1]))
         else:
             return desktop_render.error(lang='ko', error_message = ret[1])
 
@@ -83,7 +80,7 @@ class board_actions:
         page = article._get_total_page_count(board_id, page_size)
         articles = article.get_article_list(board_id, page_size, page)
         web.header('Content-Type', 'application/rss+xml')
-        return desktop_render.rss(board_path = board_info.bName[1:],
+        return desktop_render.rss(board_path = board_name,
                 board_desc = board_info.bDescription,
                 articles=articles, today=date)
 
@@ -97,14 +94,14 @@ class board_actions:
         page = article._get_total_page_count(board_id, page_size)
         articles = article.get_article_list(board_id, page_size, page)
         web.header('Content-Type', 'application/atom+xml')
-        return desktop_render.atom(board_path = board_info.bName[1:],
+        return desktop_render.atom(board_path = board_name,
                 board_desc = board_info.bDescription,
                 articles=articles, today=date)
 
     def summary_get(self, mobile, board_name, board_id):
         board_info = board.get_board_info(board_id)
         return desktop_render.board_summary(board_info = board_info,
-                board_path = board_info.bName[1:],
+                board_path = board_name,
                 board_desc = board_info.bDescription, lang='ko',
                 title = u'정보 - %s - Noah3k' % board_info.bName,
                 )
@@ -116,7 +113,7 @@ class board_actions:
             board_name = u"초기 화면"
             board_path = ""
         else:
-            board_path = board_info.bName[1:]
+            board_path = board_name
         if not mobile:
             return desktop_render.view_subboard_list(title = u"%s - Noah3K" % board_name, board_path = board_path,
                     board_desc = board_info.bDescription, child_boards = child_board, lang="ko", )
@@ -130,8 +127,7 @@ class board_actions:
         if current_uid != board_info.uSerial:
             return desktop_render.error(lang='ko', error_message='NO_PERMISSION')
         return desktop_render.board_editor(action='create_board', board_info = board_info,
-                board_path = board_info.bName[1:],
-                board_desc = board_info.bDescription, lang='ko',
+                board_path = board_name, board_desc = board_info.bDescription, lang='ko',
                 title = u'하위 게시판 만들기 - %s - Noah3k' % board_info.bName)
 
     def create_board_post(self, mobile, board_name, board_id):
@@ -174,8 +170,7 @@ class board_actions:
         if current_uid != board_info.uSerial:
             return desktop_render.error(lang='ko', error_message='NO_PERMISSION')
         return desktop_render.board_editor(action='modify', board_info = board_info,
-                board_path = board_info.bName[1:],
-                board_desc = board_info.bDescription, lang='ko',
+                board_path = board_name, board_desc = board_info.bDescription, lang='ko',
                 title = u'정보 수정 - %s - Noah3k' % board_info.bName)
 
     def modify_post(self, mobile, board_name, board_id):
