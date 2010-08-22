@@ -36,47 +36,47 @@ class article_actions:
         except NameError:
             raise web.notfound(desktop_render.error(lang='ko', error_message = 'INVALID_ACTION'))
 
-    def read_get(self, mobile, board_name, article_id):
-        try:
-            board_id = board._get_board_id_from_path(board_name)
-            if board_id < 0:
-                return
-            board_info = board.get_board_info(board_id)
-            board_path = board_info.bName[1:]
-            board_desc = board_info.bDescription
-            a = article.get_article(board_id, article_id)
-            comment = article.get_comment(article_id)
-
-            prev_id = -1
-            next_id = -1
-
-            if not a:
-                return desktop_render.error(lang="ko", error_message = u"글 없음" )
-
-            if a.aIndex > 1:
-                prev_id = article.get_article_id_by_index(board_id, a.aIndex - 1)
-            if a.aIndex < article._get_article_count(board_id):
-                next_id = article.get_article_id_by_index(board_id, a.aIndex + 1)
-
-            if not mobile:
-                return desktop_render.read_article(article = a,
-                    title = u"%s - %s - Noah3K" % (a.aIndex, a.aTitle),
-                    board_path = board_path, board_desc = board_desc,
-                    comments = comment, lang="ko", 
-                    prev_id = prev_id, next_id = next_id, feed = True)
-            else:
-                return mobile_render.read_article()
-        except Exception as e:
-            print e
-
-    def reply_get(self, mobile, board_name, article_id):
+    def session_helper(self, mobile):
         try:
             current_uid = web.ctx.session.uid
         except:
-            return desktop_render.error(lang="ko", error_message = u"로그인되지 않음" )
+            raise web.unauthorized(desktop_render.error(lang="ko", error_message = u"NOT_LOGGED_IN"))
         if current_uid < 1:
-            return desktop_render.error(lang="ko", error_message = u"잘못된 사용자 ID" )
+            raise web.internalerror(desktop_render.error(lang="ko", error_message = u"INVALID_UID"))
+        return current_uid
 
+    def read_get(self, mobile, board_name, article_id):
+        board_id = board._get_board_id_from_path(board_name)
+        if board_id < 0:
+            return
+        board_info = board.get_board_info(board_id)
+        board_path = board_info.bName[1:]
+        board_desc = board_info.bDescription
+        a = article.get_article(board_id, article_id)
+        comment = article.get_comment(article_id)
+
+        prev_id = -1
+        next_id = -1
+
+        if not a:
+            return desktop_render.error(lang="ko", error_message = u"글 없음" )
+
+        if a.aIndex > 1:
+            prev_id = article.get_article_id_by_index(board_id, a.aIndex - 1)
+        if a.aIndex < article._get_article_count(board_id):
+            next_id = article.get_article_id_by_index(board_id, a.aIndex + 1)
+
+        if not mobile:
+            return desktop_render.read_article(article = a,
+                title = u"%s - %s - Noah3K" % (a.aIndex, a.aTitle),
+                board_path = board_path, board_desc = board_desc,
+                comments = comment, lang="ko", 
+                prev_id = prev_id, next_id = next_id, feed = True)
+        else:
+            return mobile_render.read_article()
+
+    def reply_get(self, mobile, board_name, article_id):
+        current_uid = self.session_helper(mobile)
         board_id = board._get_board_id_from_path(board_name)
         if board_id < 0:
             return
@@ -90,11 +90,7 @@ class article_actions:
                     lang="ko", )
 
     def reply_post(self, mobile, board_name, article_id):
-        try:
-            current_uid = web.ctx.session.uid
-        except:
-            return
-        pass
+        current_uid = self.session_helper(mobile)
         reply = dict(title = web.input().title, body = web.input().content)
         board_id = board._get_board_id_from_path(board_name)
         board_info = board.get_board_info(board_id)
@@ -108,12 +104,7 @@ class article_actions:
             return desktop_render.error(lang='ko', error_message = ret[1])
 
     def modify_get(self, mobile, board_name, article_id):
-        try:
-            current_uid = web.ctx.session.uid
-        except:
-            return desktop_render.error(lang="ko", error_message = u"로그인되지 않음" )
-        if current_uid < 1:
-            return desktop_render.error(lang="ko", error_message = u"잘못된 사용자 ID" )
+        current_uid = self.session_helper(mobile)
 
         board_id = board._get_board_id_from_path(board_name)
         if board_id < 0:
@@ -130,12 +121,7 @@ class article_actions:
                     lang="ko", )
 
     def modify_post(self, mobile, board_name, article_id):
-        try:
-            current_uid = web.ctx.session.uid
-        except:
-            return desktop_render.error(lang="ko", error_message = u"로그인되지 않음" )
-        if current_uid < 1:
-            return desktop_render.error(lang="ko", error_message = u"잘못된 사용자 ID" )
+        current_uid = self.session_helper(mobile)
         a = dict(title = web.input().title, body = web.input().content)
         board_id = board._get_board_id_from_path(board_name)
         board_info = board.get_board_info(board_id)
@@ -149,10 +135,7 @@ class article_actions:
             return desktop_render.error(lang='ko', error_message = ret[1])
 
     def delete_get(self, mobile, board_name, article_id):
-        try:
-            current_uid = web.ctx.session.uid
-        except:
-            return
+        current_uid = self.session_helper(mobile)
         ret = article.delete_article(current_uid, article_id)
         if ret[0] == True:
             raise web.seeother('/%s' % (board_name))
@@ -160,10 +143,7 @@ class article_actions:
             return desktop_render.error(lang='ko', error_message = ret[1])
 
     def comment_post(self, mobile, board_name, article_id):
-        try:
-            current_uid = web.ctx.session.uid
-        except:
-            return
+        current_uid = self.session_helper(mobile)
         comment = web.input().comment
         board_id = board._get_board_id_from_path(board_name)
         board_info = board.get_board_info(board_id)
@@ -177,10 +157,7 @@ class article_actions:
             return desktop_render.error(lang='ko', error_message = ret[1])
 
     def comment_delete_get(self, mobile, board_name, comment_id):
-        try:
-            current_uid = web.ctx.session.uid
-        except:
-            return
+        current_uid = self.session_helper(mobile)
         ret = article.delete_comment(current_uid, comment_id)
         if ret[0] == True:
             raise web.seeother('/%s/+read/%s' % (board_name, ret[1]))

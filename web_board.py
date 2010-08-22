@@ -42,14 +42,17 @@ class board_actions:
         except NameError:
             raise web.notfound(desktop_render.error(lang='ko', error_message = 'INVALID_ACTION'))
 
-    def write_get(self, mobile, board_name):
+    def session_helper(self, mobile):
         try:
             current_uid = web.ctx.session.uid
         except:
-            return desktop_render.error(lang="ko", error_message = u"로그인되지 않음" )
+            raise web.unauthorized(desktop_render.error(lang="ko", error_message = u"NOT_LOGGED_IN"))
         if current_uid < 1:
-            return desktop_render.error(lang="ko", error_message = u"잘못된 사용자 ID" )
+            raise web.internalerror(desktop_render.error(lang="ko", error_message = u"INVALID_UID"))
+        return current_uid
 
+    def write_get(self, mobile, board_name):
+        current_uid = self.session_helper(mobile)
         board_id = board._get_board_id_from_path(board_name)
         if board_id < 0:
             return
@@ -63,10 +66,7 @@ class board_actions:
                     lang="ko", )
 
     def write_post(self, mobile, board_name):
-        try:
-            current_uid = web.ctx.session.uid
-        except:
-            return
+        current_uid = self.session_helper(mobile)
         a = dict(title = web.input().title, body = web.input().content)
         board_id = board._get_board_id_from_path(board_name)
         board_info = board.get_board_info(board_id)
@@ -142,10 +142,7 @@ class board_actions:
             return mobile_render.view_subboard_list()
 
     def create_board_get(self, mobile, board_name):
-        try:
-            current_uid = web.ctx.session.uid
-        except:
-            return desktop_render.error(lang='ko', error_message='NOT_LOGGED_IN')
+        current_uid = self.session_helper(mobile)
         board_id = board._get_board_id_from_path(board_name)
         if board_id < 0:
             return desktop_render.error(lang='ko', error_message='INVALID_BOARD')
@@ -159,10 +156,7 @@ class board_actions:
                 title = u'하위 게시판 만들기 - %s - Noah3k' % board_info.bName)
 
     def create_board_post(self, mobile, board_name):
-        try:
-            current_uid = web.ctx.session.uid
-        except:
-            return desktop_render.error(lang='ko', error_message='NOT_LOGGED_IN')
+        current_uid = self.session_helper(mobile)
         board_id = board._get_board_id_from_path(board_name)
         if board_id < 0:
             return desktop_render.error(lang='ko', error_message='INVALID_BOARD')
@@ -198,10 +192,7 @@ class board_actions:
         raise web.seeother('%s' % (new_path))
 
     def modify_get(self, mobile, board_name):
-        try:
-            current_uid = web.ctx.session.uid
-        except:
-            return desktop_render.error(lang='ko', error_message='NOT_LOGGED_IN')
+        current_uid = self.session_helper(mobile)
         board_id = board._get_board_id_from_path(board_name)
         if board_id < 0:
             return desktop_render.error(lang='ko', error_message='INVALID_BOARD')
@@ -215,10 +206,7 @@ class board_actions:
                 title = u'정보 수정 - %s - Noah3k' % board_info.bName)
 
     def modify_post(self, mobile, board_name):
-        try:
-            current_uid = web.ctx.session.uid
-        except:
-            return desktop_render.error(lang='ko', error_message='NOT_LOGGED_IN')
+        current_uid = self.session_helper(mobile)
         board_id = board._get_board_id_from_path(board_name)
         if board_id < 0:
             return desktop_render.error(lang='ko', error_message='INVALID_BOARD')
@@ -247,10 +235,7 @@ class board_actions:
             raise web.seeother('%s/+summary' % result[1])
 
     def delete_get(self, mobile, board_name):
-        try:
-            current_uid = web.ctx.session.uid
-        except:
-            return
+        current_uid = self.session_helper(mobile)
         board_id = board._get_board_id_from_path(board_name)
         if board_id < 0:
             return desktop_render.error(lang='ko', error_message='INVALID_BOARD')
