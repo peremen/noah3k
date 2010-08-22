@@ -139,7 +139,7 @@ class view_board:
         page_size = 20
         board_id = board._get_board_id_from_path(board_name)
         if board_id < 0:
-            return # No such board
+            return desktop_render.error(lang='ko', error_message = 'INVALID_BOARD')
         board_info = board.get_board_info(board_id)
         if board_info.bType == 0: # 디렉터리
             v = board_actions()

@@ -26,26 +26,27 @@ mobile_render = render_mako(
     input_encoding = 'utf-8', output_encoding = 'utf-8',
 )
 
-if web.config.get('_database') is None:
-    db = web.database(dbn=config.db_type, user=config.db_user,
-            pw = config.db_password, db = config.db_name,
-            host=config.db_host, port=int(config.db_port))
-    web.config._database = db
-else:
-    db = web.config._database
-
 class board_actions:
     def GET(self, mobile, board_name, action, dummy):
         if action[0] == '+':
             action = dummy
         if action == '*':
             action = 'subboard_list'
-        return eval('self.'+action+'_get')(mobile, board_name)
+        return self.caller(mobile, action, 'get')
 
     def POST(self, mobile, board_name, action, dummy):
         if action[0] == '+':
             action = dummy
-        return eval('self.'+action+'_post')(mobile, board_name)
+        return self.caller(mobile, action, 'post')
+
+    def caller(self, mobile, board_name, action, method):
+        board_id = board._get_board_id_from_path(board_name)
+        if board_id < 0:
+            return desktop_render.error(lang='ko', error_message = 'INVALID_BOARD')
+        try:
+            return eval('self.%s_%s' % (action, method))(mobile, board_name)
+        except:
+            return desktop_render.error(lang='ko', error_message = 'INVALID_ACTION')
 
     def write_get(self, mobile, board_name):
         try:
