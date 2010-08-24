@@ -2,8 +2,11 @@
 <%
 import user, article
 def get_formatted_username(uid):
-    u = user.get_user(uid)[1]
-    return "%(id)s" % {'id': u['uId']}
+    u = user.get_user(uid)
+    if u[0]:
+        return "%(id)s" % {'id': u[1]['uId']}
+    else:
+        return u"탈퇴한 회원"
 
 %>
 %if len(articles) == 0:

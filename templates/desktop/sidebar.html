@@ -26,11 +26,17 @@ ${my_board.bDescription}\
 </ul>
 <br />
 
+<div class="heading">즐겨찾기 <span style="color: black; font-size:0.9em; font-weight: normal;"><a class="favlink"\
+% if board_path is not UNDEFINED:
 % if user.is_favorite(ctx.session.uid, board._get_board_id_from_path(board_path)):
-<div class="heading">즐겨찾기 <a class="favlink" href=""><span style="color: black; font-size:0.9em; font-weight: normal;">(삭제)</span></a></div>
+ href="/${board_path}/+remove_from_favorites">(삭제)\
 % else:
-<div class="heading">즐겨찾기 <a class="favlink" href=""><span style="color: black; font-size:0.9em; font-weight: normal;">(추가)</span></a></div>
+ href="/${board_path}/+add_to_favorites">(추가)\
 % endif
+% else:
+ href="#">(사용할 수 없음)\
+% endif
+</a></span></div>
 <ul>
 <% not_has_fav_board = True %>
 % for fav_board in user.get_favorite_board(ctx.session.uid):
@@ -60,14 +66,14 @@ ${my_board.bDescription}\
 <div class="heading">학과</div>
 <ul>
     <li>
-        <a class="boardlink" href="/">공지</a> / 
-        <a class="boardlink" href="/">건의</a> / 
-        <a class="boardlink" href="/">과기계실</a>
+        <a class="boardlink" href="/divisionCS/Notice">공지</a> / 
+        <a class="boardlink" href="/divisionCS/HowAbout">건의</a> / 
+        <a class="boardlink" href="/divisionCS/EastOfEden">과기계실</a>
     </li>
     <li>
-        <a class="boardlink" href="/">구인/구직</a> / 
-        <a class="boardlink" href="/">스포츠</a> / 
-        <a class="boardlink" href="/">입시&amp;랩배정</a>
+        <a class="boardlink" href="/divisionCS/JobOffer">구인/구직</a> / 
+        <a class="boardlink" href="/divisionCS/sportsCS">스포츠</a> / 
+        <a class="boardlink" href="/divisionCS/entrExamLabAsgn">입시&amp;랩배정</a>
     </li>
 </ul>
 <br />
@@ -83,10 +89,24 @@ ${my_board.bDescription}\
 <div id="box">
     <div class="heading">
         <span style="color: black">개설 교과목</span>
-        <span style="color: black; font-size: 0.9em; font-weight: normal">(예전)</span>
+        <span style="color: black; font-size: 0.9em; font-weight: normal"><a href="/OldCourse">(예전)</a></span>
     </div>
     <ul>
-        <li>없음</li>
+<% not_has_subject_board = True %>
+% for my_board in board.get_child(board._get_board_id_from_path('/course')):
+    <li><a class="boardlink" href="${my_board.bName}">\
+    % if my_board.bDescription.strip() == '':
+${my_board.bName}\
+    % else:
+${my_board.bDescription}\
+    % endif
+</a></li>
+    <% not_has_subject_board = False %>
+% else:
+    % if not_has_subject_board:
+    <li>과목 게시판이 없습니다</li>
+    % endif
+% endfor
     </ul>
 </div>
 <br />
