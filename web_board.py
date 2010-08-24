@@ -115,7 +115,7 @@ class board_actions:
         else:
             board_path = board_name
         if not mobile:
-            return desktop_render.view_subboard_list(title = u"%s - Noah3K" % board_name, board_path = board_path,
+            return desktop_render.view_subboard_list(title = u"/%s - Noah3K" % board_name, board_path = board_path,
                     board_desc = board_info.bDescription, child_boards = child_board, lang="ko", )
         else:
             return mobile_render.view_subboard_list()
