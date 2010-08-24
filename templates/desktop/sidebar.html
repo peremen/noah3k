@@ -1,5 +1,17 @@
 ﻿<% from web import ctx
-import user, board %>
+import user, board
+from datetime import datetime
+def get_friend_boards(type):
+    friend_list = []
+    current_year = datetime.now().year
+    while len(friend_list) < 7:
+        bdesc_prefix = '%%[%s%02d%%' % (type, current_year % 100)
+        result = board.search_board(bdesc_prefix)
+        if result:
+            friend_list.insert(0, dict(year = '%02d' % (current_year % 100), board = result[0]))
+        current_year = current_year - 1
+    return friend_list
+%>
 % if ctx.session.has_key('uid'):
 <div class="heading">내 게시판</div>
 <ul>
@@ -80,8 +92,16 @@ ${my_board.bDescription}\
 
 <div class="heading"><a class="dirlink" href="/friends"><span style="color: black">친목</a></a></div>
 <ul>		
-    <li><span style="color: #3C78B5; font-weight: bold">학부</span></li>
-    <li><span style="color: #3C78B5; font-weight: bold">석사</span></li>
+    <li><span style="color: #3C78B5; font-weight: bold">학부</span>
+% for b in get_friend_boards(u'학부'):
+<a class="boardlink" href="${b['board'].bName}">'${b['year']}</a> \
+% endfor
+    </li>
+    <li><span style="color: #3C78B5; font-weight: bold">석사</span>
+% for b in get_friend_boards(u'석사'):
+<a class="boardlink" href="${b['board'].bName}">'${b['year']}</a> \
+% endfor
+    </li>
 </ul>
 <br />
 

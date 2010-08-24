@@ -156,3 +156,14 @@ def delete_all_article(board_id):
     result = db.delete('Articles', vars=val, where='bSerial = $board_id')
     return result
 
+def search_board(description):
+    # 사이드바의 학번별 보드를 검색하기 위해서 만들어졌음.
+    # 타 용도로 사용 금지!
+    val = dict(desc = description)
+    result = db.select('Boards', val, where="bDescription LIKE $desc")
+    try:
+        retvalue = result
+    except:
+        return None
+    else:
+        return retvalue
