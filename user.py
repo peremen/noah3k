@@ -50,6 +50,25 @@ password_set = {13: _verify_noah1k_password,
                 16: _verify_noah2k_password,
                 40: _verify_noah3k_password, }
 
+def _get_uid_from_username(username):
+    """
+    사용자 이름을 UID로 변환한다.
+
+    @type username: string
+    @param username: 사용자 이름
+    @rtype int
+    @return: 이름에 해당하는 사용자 ID. 
+    """
+    val = dict(username = username)
+    result = db.select('Users', val, where="uId = $username")
+    try:
+        retvalue = int(result[0]['uSerial'])
+    except:
+        return -1
+    else:
+        return retvalue
+    pass
+
 def update_password(uid, password):
     val = dict(uid = uid)
     result = db.select('Users', val, where='uSerial = $uid')
@@ -88,6 +107,52 @@ def login(username, password):
     #    update_password(user.uSerial, password)
     return (True, 'LOGIN_SUCCESS')
 
+def get_owned_board(uid):
+    # 모든 정보가 돌아옴.
+    val = dict(uid = uid)
+    result = db.select('Boards', val, where='uSerial = $uid', order = 'bName')
+    return result
+
+def get_favorite_board(uid):
+    # bSerial만 돌아오므로 적절한 가공이 필요함.
+    val = dict(uid = uid)
+    result = db.select('Favorites', val, where='uSerial = $uid')
+    return result
+
+def is_favorite(uid, board_id):
+    val = dict(uid = uid, board_id = board_id)
+    result = db.query('SELECT COUNT(*) AS f FROM Favorites WHERE uSerial=$uid AND bSerial=$board_id', val);
+    return result[0].f > 0
+
+def add_favorite_board(uid, board_id):
+    result = db.insert('Favorites', val, uSerial = uid, bSerial = board_id)
+    return result
+
+def remove_favorite_board(uid, board_id):
+    val = dict(uid = uid, board_id = board_id)
+    result = db.delete('Favorites', vars=val, where='uSerial = $uid AND bSerial = $board_id')
+    return result
+
+def get_user(uid):
+    """
+    사용자 정보를 가져온다. 사용자 UID를 사용하므로, 사용자
+    이름이나 세션으로 조회하려면 L{_get_uid_from_username},
+    L{_get_uid_from_session_key} 같은 함수를 써서 UID로 변환해야 한다.
+
+    @type uid: int
+    @param uid: 사용자 UID.
+    @rtype tuple
+    @return: 사용자 존재 여부(T/F)와 사용자 정보 딕셔너리(성공 시) 또는 오류 코드(실패 시)를 포함하는 튜플.
+    """
+    val = dict(uid = uid)
+    result = db.select('Users', val, where="uSerial = $uid")
+    try:
+        retvalue = result[0]
+    except:
+        return (False, 'NO_SUCH_USER')
+    else:
+        return (True, retvalue)
+
 def register(member):
     """
     회원 등록. 회원 정보를 포함하고 있는 딕셔너리를 던져 주면
@@ -109,30 +174,10 @@ def register(member):
     """
     pass
 
-def get_user(uid):
-    """
-    사용자 정보를 가져온다. 사용자 UID를 사용하므로, 사용자
-    이름이나 세션으로 조회하려면 L{_get_uid_from_username},
-    L{_get_uid_from_session_key} 같은 함수를 써서 UID로 변환해야 한다.
-
-    @type uid: int
-    @param uid: 사용자 UID.
-    @rtype tuple
-    @return: 사용자 존재 여부(T/F)와 사용자 정보 딕셔너리(성공 시) 또는 오류 코드(실패 시)를 포함하는 튜플.
-    """
-    val = dict(uid = uid)
-    result = db.select('Users', val, where="uSerial = $uid")
-    try:
-        retvalue = result[0]
-    except:
-        return (False, {})
-    else:
-        return (True, retvalue)
 
 def modify_user(username, member):
     """
-    회원 정보 수정. 세션 키를 통해서 현재 사용자를 확인하며,
-    C{username}으로 지정한 사용자와 같아야 한다. 단 시삽은 임의
+    회원 정보 수정. frontend에서 접근 권한을 통제해야 한다. 시삽은 임의
     회원의 정보를 수정할 수 있다. C{member} 딕셔너리는 수정할 정보로,
     형식은 L{register}를 참고한다. 빈 값이 들어오면 삭제를 의미하므로,
     기존 정보를 수정하려면 정보를 그대로 넘겨줘야 한다.
@@ -146,24 +191,5 @@ def modify_user(username, member):
     @rtype tuple
     @return: 정보 수정 성공 여부(T/F)와 오류 코드(실패 시)를 포함하는 튜플.
     """
-    pass
-
-def _get_uid_from_username(username):
-    """
-    사용자 이름을 UID로 변환한다.
-
-    @type username: string
-    @param username: 사용자 이름
-    @rtype int
-    @return: 이름에 해당하는 사용자 ID. 
-    """
-    val = dict(username = username)
-    result = db.select('Users', val, where="uId = $username")
-    try:
-        retvalue = int(result[0]['uSerial'])
-    except:
-        return -1
-    else:
-        return retvalue
     pass
 
