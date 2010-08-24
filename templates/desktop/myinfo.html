@@ -1,0 +1,123 @@
+<% import user as user_ 
+from web import ctx %>
+<%inherit file="base.html" />
+<!-- 완료/취소 버튼 -->			
+<div>
+    <a href="/+u/${username}/+my_posts">내가 쓴 글</a>
+    <a href="/+u/${username}/+modify">수정</a>
+    <a href="/+u/${username}/+leave">회원 탈퇴</a>
+</div>
+
+<div style="width: 640px">
+    <div class="heading">개인 정보</div>
+    <div id="row">
+        <div class="left-container">아이디</div>
+        <span class="sep">:</span>
+        <span>${user.uId}</span>
+    </div>
+    <div id="row">
+        <div class="left-container">별명</div>
+        <span class="sep">:</span>
+%if user.uNick is UNDEFINED:
+        <span style='color: #aaaaaa'>없음</span>
+%elif user.uNick.strip() == '':
+        <span style='color: #aaaaaa'>없음</span>
+% else:
+        <span>${user.uNick}</span>
+% endif
+    </div>
+    <div id="row">
+        <div class="left-container">이메일 주소</div>
+        <span class="sep">:</span>
+%if user.uEmail is UNDEFINED:
+        <span style='color: #aaaaaa'>없음</span>
+%elif user.uEmail.strip() == '':
+        <span style='color: #aaaaaa'>없음</span>
+% else:
+        <span>${user.uEmail}</span>
+% endif
+    </div>
+    <div id="row">
+        <div class="left-container">홈페이지 주소</div>
+        <span class="sep">:</span>
+%if user.uHomepage is UNDEFINED:
+        <span style="text-color: #aaaaaa">없음</span>
+% elif user.uHomepage.strip() == '':
+        <span style="text-color: #aaaaaa">없음</span>
+%else:
+        <span>${user.uHomepage}</span>
+% endif
+    </div>
+    <div id="row">
+        <div class="left-container">시그</div>
+        <span class="sep">:</span>
+        <div style="border: solid 1px lightgray; margin-left:9em">
+%if user.uSig is UNDEFINED:
+            <span style="font-size: 0.9em; color: #aaaaaa">없음</span>
+%elif user.uSig.strip() == '':
+            <span style="font-size: 0.9em; color: #aaaaaa">없음</span>
+% else:
+            <span style="font-size: 0.9em">${user.uSig}</span>
+% endif
+        </div>
+    </div>
+    <div id="row">
+        <div class="left-container">자기소개</div>
+        <span class="sep">:</span>
+        <div style="border: solid 1px lightgray; margin-left: 9em">
+%if user.uPlan is UNDEFINED:
+            <span style="font-size: 0.9em; color: #aaaaaa">없음</span>
+%elif user.uPlan.strip() == '':
+            <span style="font-size: 0.9em; color: #aaaaaa">없음</span>
+% else:
+            <span style="font-size: 0.9em">${user.uPlan}</span>
+% endif
+        </div>
+    </div>
+
+    <div class="heading">접속 정보</div>
+    <div id="row">
+        <div class="left-container">가입한 시간</div>
+        <span class="sep">:</span>
+        <span>${user.uDatetime}</span>
+    </div>
+    <div id="row"> 
+        <div class="left-container">로그인 수</div>
+        <span class="sep">:</span>
+        <span>${user.uNumLogin}</span>
+    </div>
+    <div id="row"> 
+        <div class="left-container">쓴 글 수</div>
+        <span class="sep">:</span>
+        <span>${user_.get_post_count(user_id)}</span>
+    </div>
+    <div id="row"> 
+        <div class="left-container">남긴 댓글 수</div>
+        <span class="sep">:</span>
+        <span>${user_.get_comment_count(user_id)}</span>
+    </div>
+%if ctx.session is not UNDEFINED and ctx.session.has_key('uid'):
+% if ctx.session.uid == 1 or ctx.session.uid == user_id:
+    <div id="row">
+        <div class="left-container">마지막 로그인</div>
+        <span class="sep">:</span>
+%if user.uLastLogin is UNDEFINED:
+        <span style='color: #aa0000'>알 수 없음</span>
+% else:
+        <span>${user.uLastLogin}</span>
+% endif
+    </div>
+    <div id="row"> 
+        <div class="left-container">마지막 접속 장소</div>
+        <span class="sep">:</span>
+%if user.uLastHost is UNDEFINED:
+        <span style='color: #aa0000'>알 수 없음</span>
+%elif user.uLastHost.strip() == '':
+        <span style='color: #aa0000'>알 수 없음</span>
+% else:
+        <span>${user.uLastHost}</span>
+% endif
+    </div>
+% endif
+% endif
+</div>

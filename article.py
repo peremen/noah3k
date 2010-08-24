@@ -69,13 +69,6 @@ def get_article_id_by_index(board_id, index):
     return retvalue
 
 def get_article(board_id, article_id):
-    # aSerial: 글 UID bSerial: 글이 있는 보드 aIndex: 게시판에 보이는 가상 글 번호 aTitle: 제목
-    # aId: 글쓴이 ID aNick: 글쓴이의 당시 닉네임 
-    # uSerial: 글쓴이의 UID (여기서 aId/aNick 유도 가능)
-    # aContent: 본문 aLastGuest: 모름 aHit: 조회 수
-    # aEmphasis: 강조 여부 aDatetime: 최초 작성 시간 aEditedDatetime: 수정 시간, 없으면 NULL
-    # aLevel: 글 깊이 aParent: aLevel > 0의 경우 바로 윗 부모 글. assert(aLevel == 0 && aParent == NULL)
-    # aRoot: 깊이가 계속 깊어져 갔을 때 최종적인 부모. aParent == NULL인 경우 자기 자신.
     val = dict(board_id = board_id, article_id = int(article_id))
     result = db.select('Articles', val, where='bSerial = $board_id AND aSerial = $article_id')
     try:
@@ -284,18 +277,6 @@ def get_comment_count(article_id):
     return result[0].comment_count
 
 def get_comment(article_id):
-    # 데이터베이스: Comments
-    # cSerial: 커멘트 ID (삭제할 때 사용)
-    # bSerial: 게시판 ID
-    # aSerial: 글 ID
-    # uSerial: 커멘트 남긴 사람 ID (NULL이면 게스트 모드)
-    # cId: 커멘트 남긴 사람 ID (이름으로 저장됨)
-    # cContent: 커멘트 내용
-    # cDatetime: 날짜 및 시간
-    # cPasswd: 게스트로 남길 때 암호
-    # cHomepage: 게스트로 남길 때 홈페이지
-    # 더 이상 게스트로 커멘트 남기기는 지원하지 않으나, 과거 DB 파싱은 필요함
-    # NULL인 레코드 총 58개
     val = dict(article_id = int(article_id))
     result = db.select('Comments', val, where='aSerial = $article_id',
             order = 'cDatetime ASC')

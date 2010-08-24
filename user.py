@@ -18,11 +18,13 @@ else:
 
 def _verify_noah1k_password(to_verify, password):
     # UNIX crypt 함수. password가 seed, username이 텍스트.
+    # 더 이상 생성할 필요도 이유도 없음.
     pass1 = crypt.crypt(password, password)
     return to_verify == crypt.crypt(password, p1)
 
-def _verify_noah2k_password(to_verify, password):
+def _generate_noah2k_password(password):
     # MySQL <4.1.1 password() 함수의 파이썬 구현.
+    # noah3k 런칭 이전까지는 생성할 필요가 있음.
     nr = 1345345333
     add = 7
     nr2 = 0x12345671
@@ -37,11 +39,17 @@ def _verify_noah2k_password(to_verify, password):
 
     out_a = nr & ((1<<31)-1)
     out_b = nr2 & ((1<<31)-1)
-    return to_verify == "%08x%08x" % (out_a, out_b)
+    return "%08x%08x" % (out_a, out_b)
+
+def _verify_noah2k_password(to_verify, password):
+    return to_verify == _generate_noah2k_password(password)
 
 def _generate_noah3k_password(to_verify, password):
     hm = hmac.new('tokigunbapsot', password, hashlib.sha1)
     return hm.hexdigest()
+
+def generate_password(password):
+    return _generate_noah2k_password(password)
 
 def _verify_noah3k_password(to_verify, password):
     return to_verify == _generate_noah3k_password(password)
@@ -78,6 +86,14 @@ def update_password(uid, password):
     except:
         return False
     return db.update('Users', where = 'uSerial = $uid', uPasswd = _generate_noah3k_password(password)) > 0
+
+def verify_password(uid, password):
+    user = get_user(uid)
+    if not user[0]:
+        return False
+    if password_set[len(user[1].uPasswd)](user[1].uPasswd, password):
+        return True
+    return False
 
 def login(username, password):
     """
@@ -153,6 +169,16 @@ def get_user(uid):
     else:
         return (True, retvalue)
 
+def get_post_count(uid):
+    val = dict(uid = uid)
+    result = db.query('SELECT COUNT(*) AS a FROM Articles WHERE uSerial=$uid', val);
+    return result[0].a
+
+def get_comment_count(uid):
+    val = dict(uid = uid)
+    result = db.query('SELECT COUNT(*) AS c FROM Comments WHERE uSerial=$uid', val);
+    return result[0].c
+
 def register(member):
     """
     회원 등록. 회원 정보를 포함하고 있는 딕셔너리를 던져 주면
@@ -175,21 +201,31 @@ def register(member):
     pass
 
 
-def modify_user(username, member):
+def modify_user(uid, member):
     """
     회원 정보 수정. frontend에서 접근 권한을 통제해야 한다. 시삽은 임의
     회원의 정보를 수정할 수 있다. C{member} 딕셔너리는 수정할 정보로,
     형식은 L{register}를 참고한다. 빈 값이 들어오면 삭제를 의미하므로,
     기존 정보를 수정하려면 정보를 그대로 넘겨줘야 한다.
 
-    @type session_key: string
-    @param session_key: 세션 키.
-    @type username: string
-    @param username: 수정할 회원의 사용자 이름.
+    @type uid: int
+    @param uid: 수정할 회원의 사용자 ID.
     @type member: dict
-    @param member: 회원 정보 딕셔너리.
+    @param member: 회원 정보 딕셔너리. (password: 암호, email: E-Mail,
+    homepage: 홈페이지, sig: 시그, introduction: 자기 소개)
     @rtype tuple
     @return: 정보 수정 성공 여부(T/F)와 오류 코드(실패 시)를 포함하는 튜플.
     """
-    pass
+    result = db.update('Users', vars=member, where='uSerial = $user_id',
+            uNick = member['nick'], uEmail = member['email'],
+            uSig = member['sig'], uPlan = member['introduction'],
+            uPasswd = generate_password(member['password']))
+    return result
 
+def update_last_login(uid, ip_address):
+    val = dict(uid = uid, ip_address = ip_address)
+    result = db.update('Users', vars=val, where = 'uSerial = $uid',
+            uNumLogin = web.SQLLiteral('uNumLogin + 1'),
+            uLastLogin = web.SQLLiteral('NOW()'),
+            uLastHost = ip_address)
+    return result

@@ -74,7 +74,10 @@ class main_actions:
             if login[0]:
                 # 로그인 성공. referer로 돌아감.
                 err = u"로그인 성공"
-                web.ctx.session.uid = user._get_uid_from_username(username)
+                uid = user._get_uid_from_username(username)
+                web.ctx.session.uid = uid
+                web.ctx.session.username = username
+                user.update_last_login(uid, web.ctx.ip)
                 login = True
             else:
                 # 로그인 실패
