@@ -98,6 +98,14 @@ class board_actions:
                 board_desc = board_info.bDescription,
                 articles=articles, today=date)
 
+    def add_to_favorites_get(self, mobile, board_name, board_id):
+        user.add_favorite_board(web.ctx.session.uid, board_id)
+        raise web.seeother('/%s' % board_name)
+
+    def remove_from_favorites_get(self, mobile, board_name, board_id):
+        user.remove_favorite_board(web.ctx.session.uid, board_id)
+        raise web.seeother('/%s' % board_name)
+
     def summary_get(self, mobile, board_name, board_id):
         board_info = board.get_board_info(board_id)
         return desktop_render.board_summary(board_info = board_info,

@@ -125,7 +125,7 @@ def is_favorite(uid, board_id):
     return result[0].f > 0
 
 def add_favorite_board(uid, board_id):
-    result = db.insert('Favorites', val, uSerial = uid, bSerial = board_id)
+    result = db.insert('Favorites', uSerial = uid, bSerial = board_id)
     return result
 
 def remove_favorite_board(uid, board_id):
