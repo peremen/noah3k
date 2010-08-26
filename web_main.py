@@ -9,6 +9,7 @@ import board, user, article
 from cgi import parse_qs
 from datetime import datetime
 import posixpath
+import util
 
 desktop_render = render_mako(
     directories = [os.path.join(os.path.dirname(__file__), 'templates/desktop/').replace('\\','/'),],
@@ -36,9 +37,35 @@ class main_actions:
     def join_get(self, mobile):
         if not mobile:
             return desktop_render.join(title = u"회원 가입 - Noah3K",
-                   lang="ko", board_desc=u"회원 가입", )
+                   lang="ko", board_desc=u"회원 가입",
+                   referer = web.ctx.env.get('HTTP_REFERER', '/'))
         else:
             return mobile_render.join()
+
+    @util.confirmation_helper
+    def join_post(self, mobile):
+        data = web.input()
+        username = data.id
+        if user._get_uid_from_username(username) > 0:
+            return desktop_render.error(lang='ko',
+                    error_message = 'ID_ALREADY_EXISTS')
+        if data.password1 != data.password2:
+            return desktop_render.error(lang='ko',
+                    error_message = 'PASSWORD_DO_NOT_MATCH')
+        if len(data.password1) < 6:
+            return desktop_render.error(lang='ko',
+                    error_message = 'PASSWORD_TOO_SHORT')
+        nick = data.nick
+        email = data.email
+        password = data.password1
+        ret = user.join(locals())
+        if not ret[0]:
+            return desktop_render.error(lang='ko', error_message = ret[1])
+        uid = user._get_uid_from_username(username)
+        web.ctx.session.uid = uid
+        web.ctx.session.username = username
+        user.update_last_login(uid, web.ctx.ip)
+        raise web.seeother('/')
 
     def login_get(self, mobile):
         referer = web.ctx.env.get('HTTP_REFERER', '/')

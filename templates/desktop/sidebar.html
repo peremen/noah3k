@@ -15,7 +15,7 @@ def get_friend_boards(type):
 % if ctx.session.has_key('uid'):
 <div class="heading">내 게시판</div>
 <ul>
-<% not_has_my_board = False %>
+<% not_has_my_board = True %>
 % for my_board in user.get_owned_board(ctx.session.uid):
     <li><a class="boardlink" href="${my_board.bName}">\
     % if my_board.bType == 0:

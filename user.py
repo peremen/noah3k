@@ -179,7 +179,7 @@ def get_comment_count(uid):
     result = db.query('SELECT COUNT(*) AS c FROM Comments WHERE uSerial=$uid', val);
     return result[0].c
 
-def register(member):
+def join(member):
     """
     회원 등록. 회원 정보를 포함하고 있는 딕셔너리를 던져 주면
     회원 등록을 시도한다. 실패했을 경우 상황에 따른 오류 코드를 반환한다.
@@ -187,18 +187,23 @@ def register(member):
     member에 오는 키와 값은 다음과 같다.
 
     - username: 사용자 ID
-    - password: 사용자 암호. 두 번 입력받는 걸 검증하는 역할은 프론트엔드에서 담당한다.
-    - nickname: 별명.
+    - password: 사용자 암호. 두 번 입력받는 걸 검증하는 역할은 프론트엔드에서 담당한다. 암호화되지 않음.
+    - nick: 별명.
+    - email: 이메일 주소.
     - signature: 글 뒤에 붙는 시그.
     - introduction: 회원 정보 페이지에 뜨는 자기 소개.
-    - avatar: 아바타 파일이 저장되어 있는 디스크 상 경로.
 
     @type member: dict
     @param member: 회원 정보 딕셔너리.
     @rtype tuple
     @return: 회원 등록 성공 여부(T/F)와 오류 코드(실패 시)를 포함하는 튜플.
     """
-    pass
+    if _get_uid_from_username(member['username']) > 0:
+        return (False, 'ID_ALREADY_EXISTS')
+    result = db.insert('Users', uNick = member['nick'], uEmail = member['email'],
+            uId = member['username'], uPasswd = generate_password(member['password']),
+            uDatetime = web.SQLLiteral('NOW()'), uSig = '', uPlan = '')
+    return (True, '')
 
 
 def modify_user(uid, member):

@@ -1,12 +1,12 @@
 <%inherit file="base.html" />
 <div style="border: 1px solid #C0C0C0; padding:15px; margin: 20px 0 20px 0; width: 33em; font-size: 10pt; font-family: monospace;">
-    Noah2k에 새 아이디를 만듭니다.<br />
-    Noah2k는 KAIST 전산학전공은 물론 KAIST 모든 구성원들에게 자유롭게 열려 있습니다.<br />
+    노아에 새 아이디를 만듭니다.<br />
+    노아는 KAIST 전산학과는 물론 KAIST 모든 구성원들에게 자유롭게 열려 있습니다.<br />
 
-    Noah2k는 개인 정보를 BBS 운영 이외의 목적에 사용하지 않습니다.<br />
+    노아는 개인 정보를 BBS 운영 이외의 목적에 사용하지 않습니다.<br />
     다음의 항목들을 정확하게 기입하여 주십시오.
 </div>
-<form name="newaccount_form" method="post" action="/+join/">
+<form name="join_form" method="post" action="/+join">
     <div style="width: 37em;">
         <hr />
         <div id="row">
@@ -16,14 +16,14 @@
         </div>
         <hr />
         <div id="row">
-            <div class="left-container">비밀번호</div>
+            <div class="left-container">암호</div>
             <span class="sep">:</span>
-            <span><input name="password1" type="password" maxlength="16" style="width: 8em"></span>
+            <span><input name="password1" type="password" style="width: 8em"></span>
         </div>
         <div id="row">
-            <div class="left-container">재확인</div>
+            <div class="left-container">암호 확인</div>
             <span class="sep">:</span>
-            <span><input name="password2" type="password" maxlength="16" style="width: 8em"></span>
+            <span><input name="password2" type="password" style="width: 8em"></span>
         </div>
         <hr />
         <div id="row">
@@ -38,7 +38,9 @@
         </div>
         <hr />
         <div align="right">
-            <input type="submit" name="Submit" value="가입">
+            <input type="submit" name="ok" value="가입">
+            <input type="submit" name="cancel" value="취소">
+            <input type="hidden" name="referer" value="${referer}">
         </div>
     </div>
 </form>
