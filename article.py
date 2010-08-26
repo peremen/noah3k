@@ -188,6 +188,7 @@ def delete_article(uid, article_id):
             return (False, 'HAS_REPLY')
 
         ret = db.delete('Articles', vars = val, where = 'aSerial = $article_id')
+        ret = db.delete('Comments', vars=val, where='aSerial = $article_id')
 
         ret = db.update('Articles', vars = val, where='bSerial = $board_id AND aIndex > $article_index',
                 aIndex = web.SQLLiteral('aIndex - 1'))

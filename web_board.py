@@ -9,6 +9,7 @@ import board, user, article
 from cgi import parse_qs
 from datetime import datetime
 import posixpath
+import util
 
 desktop_render = render_mako(
     directories = [os.path.join(os.path.dirname(__file__), 'templates/desktop/').replace('\\','/'),],
@@ -209,6 +210,14 @@ class board_actions:
             raise web.seeother('%s/+summary' % result[1])
 
     def delete_get(self, mobile, board_name, board_id):
+        default_referer = os.path.join('/', board_name, '+summary')
+        return desktop_render.question(lang='ko', question=u'이 게시판을 삭제하시겠습니까?',
+                board_path = board_name, board_desc = u'확인', title=u'확인',
+                action=os.path.join('/', board_name, '+delete'),
+                referer=web.ctx.env.get('HTTP_REFERER', default_referer))
+
+    @util.confirmation_helper
+    def delete_post(self, mobile, board_name, board_id):
         current_uid = self.session_helper(mobile)
         ret = board.delete_board(current_uid, board_id)
         if ret[0] == True:

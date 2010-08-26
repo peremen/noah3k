@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import os
+import os, sys, traceback
 import web
 from web.contrib.template import render_mako
 import config
@@ -9,6 +9,7 @@ import board, user, article
 from cgi import parse_qs
 from datetime import datetime
 import posixpath
+import util
 
 desktop_render = render_mako(
     directories = [os.path.join(os.path.dirname(__file__), 'templates/desktop/').replace('\\','/'),],
@@ -115,6 +116,14 @@ class article_actions:
             return desktop_render.error(lang='ko', error_message = ret[1])
 
     def delete_get(self, mobile, board_name, board_id, article_id):
+        default_referer = os.path.join('/', board_name, '+read', str(article_id))
+        return desktop_render.question(lang='ko', question=u'글을 삭제하시겠습니까?',
+                board_path = board_name, board_desc = u'확인', title=u'확인',
+                action=os.path.join('/', board_name, '+delete', str(article_id)),
+                referer=web.ctx.env.get('HTTP_REFERER', default_referer))
+
+    @util.confirmation_helper
+    def delete_post(self, mobile, board_name, board_id, article_id):
         current_uid = self.session_helper(mobile)
         ret = article.delete_article(current_uid, article_id)
         if ret[0] == True:
