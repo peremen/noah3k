@@ -98,8 +98,8 @@ def edit_board(board_id, settings):
     old_path = original_board_info.bName
     old_directory = posixpath.dirname(old_path)
     new_directory = settings['path']
-    if _get_board_id_from_path(new_path) > 0:
-        return (False, 'BOARD_EXISTS')
+    if _get_board_id_from_path(new_path) > 0 and old_path != new_path:
+        return (False, 'BOARD_ALREADY_EXIST')
     new_parent_id = _get_board_id_from_path(settings['path'])
     result = db.update('Boards', vars=settings, where='bSerial = $board_id',
             bInformation = settings['cover'], bDescription = settings['description'],

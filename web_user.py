@@ -22,17 +22,8 @@ mobile_render = render_mako(
 )
 
 class personal_page:
-    def session_helper(self, mobile):
-        try:
-            current_uid = web.ctx.session.uid
-        except:
-            raise web.unauthorized(desktop_render.error(lang="ko", error_message = u"NOT_LOGGED_IN"))
-        if current_uid < 1:
-            raise web.internalerror(desktop_render.error(lang="ko", error_message = u"INVALID_UID"))
-        return current_uid
-
-    def GET(self, mobile, username):
-        user_id = self.session_helper(mobile)
+    @util.session_helper
+    def GET(self, mobile, username, current_uid = -1):
         user_id = user._get_uid_from_username(username)
         if user_id < 0:
             raise web.notfound(desktop_render.error(lang='ko', error_message = 'INVALID_USER'))
@@ -57,17 +48,10 @@ class personal_actions:
         except AttributeError:
             raise web.notfound(desktop_render.error(lang='ko', error_message = 'INVALID_ACTION'))
 
-    def session_helper(self, mobile):
-        try:
-            current_uid = web.ctx.session.uid
-        except:
-            raise web.unauthorized(desktop_render.error(lang="ko", error_message = u"NOT_LOGGED_IN"))
-        if current_uid < 1:
-            raise web.internalerror(desktop_render.error(lang="ko", error_message = u"INVALID_UID"))
-        return current_uid
-
-    def modify_get(self, mobile, username, user_id):
-        self.session_helper(mobile)
+    @util.session_helper
+    def modify_get(self, mobile, username, user_id, current_uid = -1):
+        if user_id != current_uid:
+            return desktop_render.error(lang='ko', error_message='MODIFYING_OTHERS_INFORMATION')
         return desktop_render.myinfo_edit(user = user.get_user(user_id)[1],
                 username = username, user_id = user_id,
                 lang='ko', title = u'내 정보 수정',
@@ -75,8 +59,8 @@ class personal_actions:
                 referer = os.path.join('/', '+u', username))
 
     @util.confirmation_helper
-    def modify_post(self, mobile, username, user_id):
-        self.session_helper(mobile)
+    @util.session_helper
+    def modify_post(self, mobile, username, user_id, current_uid = -1):
         data = web.input()
         if not user.verify_password(user_id, data.oldpass):
             return desktop_render.error(lang='ko',

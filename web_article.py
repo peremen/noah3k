@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import os, sys, traceback
+import os
 import web
 from web.contrib.template import render_mako
 import config
@@ -37,15 +37,6 @@ class article_actions:
         except AttributeError:
             raise web.notfound(desktop_render.error(lang='ko', error_message = 'INVALID_ACTION'))
 
-    def session_helper(self, mobile):
-        try:
-            current_uid = web.ctx.session.uid
-        except:
-            raise web.unauthorized(desktop_render.error(lang="ko", error_message = u"NOT_LOGGED_IN"))
-        if current_uid < 1:
-            raise web.internalerror(desktop_render.error(lang="ko", error_message = u"INVALID_UID"))
-        return current_uid
-
     def read_get(self, mobile, board_name, board_id, article_id):
         board_info = board.get_board_info(board_id)
         board_desc = board_info.bDescription
@@ -72,8 +63,8 @@ class article_actions:
         else:
             return mobile_render.read_article()
 
-    def reply_get(self, mobile, board_name, board_id, article_id):
-        current_uid = self.session_helper(mobile)
+    @util.session_helper
+    def reply_get(self, mobile, board_name, board_id, article_id, current_uid = -1):
         board_info = board.get_board_info(board_id)
         board_desc = board_info.bDescription
         if not mobile:
@@ -82,8 +73,8 @@ class article_actions:
                     board_path = board_name, board_desc = board_desc,
                     lang="ko", )
 
-    def reply_post(self, mobile, board_name, board_id, article_id):
-        current_uid = self.session_helper(mobile)
+    @util.session_helper
+    def reply_post(self, mobile, board_name, board_id, article_id, current_uid = -1):
         reply = dict(title = web.input().title, body = web.input().content)
         board_info = board.get_board_info(board_id)
         ret = article.reply_article(current_uid, board_id, article_id, reply)
@@ -92,9 +83,8 @@ class article_actions:
         else:
             return desktop_render.error(lang='ko', error_message = ret[1])
 
-    def modify_get(self, mobile, board_name, board_id, article_id):
-        current_uid = self.session_helper(mobile)
-
+    @util.session_helper
+    def modify_get(self, mobile, board_name, board_id, article_id, current_uid = -1):
         board_info = board.get_board_info(board_id)
         board_desc = board_info.bDescription
         article_ = article.get_article(board_id, article_id)
@@ -105,7 +95,8 @@ class article_actions:
                     article_title = article_.aTitle, body = article_.aContent,
                     lang="ko", )
 
-    def modify_post(self, mobile, board_name, board_id, article_id):
+    @util.session_helper
+    def modify_post(self, mobile, board_name, board_id, article_id, current_uid = -1):
         current_uid = self.session_helper(mobile)
         a = dict(title = web.input().title, body = web.input().content)
         board_info = board.get_board_info(board_id)
@@ -115,7 +106,8 @@ class article_actions:
         else:
             return desktop_render.error(lang='ko', error_message = ret[1])
 
-    def delete_get(self, mobile, board_name, board_id, article_id):
+    @util.session_helper
+    def delete_get(self, mobile, board_name, board_id, article_id, current_uid = -1):
         default_referer = os.path.join('/', board_name, '+read', str(article_id))
         return desktop_render.question(lang='ko', question=u'글을 삭제하시겠습니까?',
                 board_path = board_name, board_desc = u'확인', title=u'확인',
@@ -123,16 +115,16 @@ class article_actions:
                 referer=web.ctx.env.get('HTTP_REFERER', default_referer))
 
     @util.confirmation_helper
-    def delete_post(self, mobile, board_name, board_id, article_id):
-        current_uid = self.session_helper(mobile)
+    @util.session_helper
+    def delete_post(self, mobile, board_name, board_id, article_id, current_uid = -1):
         ret = article.delete_article(current_uid, article_id)
         if ret[0] == True:
             raise web.seeother('/%s' % (board_name))
         else:
             return desktop_render.error(lang='ko', error_message = ret[1])
 
-    def comment_post(self, mobile, board_name, board_id, article_id):
-        current_uid = self.session_helper(mobile)
+    @util.session_helper
+    def comment_post(self, mobile, board_name, board_id, article_id, current_uid = -1):
         comment = web.input().comment
         board_info = board.get_board_info(board_id)
         ret = article.write_comment(current_uid, board_id, article_id, comment)
@@ -141,8 +133,8 @@ class article_actions:
         else:
             return desktop_render.error(lang='ko', error_message = ret[1])
 
-    def comment_delete_get(self, mobile, board_name, board_id, comment_id):
-        current_uid = self.session_helper(mobile)
+    @util.session_helper
+    def comment_delete_get(self, mobile, board_name, board_id, comment_id, current_uid = -1):
         ret = article.delete_comment(current_uid, comment_id)
         if ret[0] == True:
             raise web.seeother('/%s/+read/%s' % (board_name, ret[1]))

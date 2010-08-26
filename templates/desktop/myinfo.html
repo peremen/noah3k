@@ -2,9 +2,15 @@
 from web import ctx %>
 <%inherit file="base.html" />
 <div>
+%if ctx.session.username == username:
     <a href="/+u/${username}/+my_posts">내가 쓴 글</a>
+%else:
+    <a href="/+u/${username}/+my_posts">이 사용자가 쓴 글</a>
+% endif
+%if ctx.session.username == username:
     <a href="/+u/${username}/+modify">수정</a>
     <a href="/+u/${username}/+leave">회원 탈퇴</a>
+% endif
 </div>
 
 <div style="width: 640px">

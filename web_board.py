@@ -43,17 +43,8 @@ class board_actions:
         except AttributeError:
             raise web.notfound(desktop_render.error(lang='ko', error_message = 'INVALID_ACTION'))
 
-    def session_helper(self, mobile):
-        try:
-            current_uid = web.ctx.session.uid
-        except:
-            raise web.unauthorized(desktop_render.error(lang="ko", error_message = u"NOT_LOGGED_IN"))
-        if current_uid < 1:
-            raise web.internalerror(desktop_render.error(lang="ko", error_message = u"INVALID_UID"))
-        return current_uid
-
-    def write_get(self, mobile, board_name, board_id):
-        current_uid = self.session_helper(mobile)
+    @util.session_helper
+    def write_get(self, mobile, board_name, board_id, current_uid = -1):
         board_info = board.get_board_info(board_id)
         board_desc = board_info.bDescription
         if not mobile:
@@ -61,8 +52,8 @@ class board_actions:
                     action='write', action_name = u"글 쓰기",
                     board_path = board_name, board_desc = board_desc, lang="ko", )
 
-    def write_post(self, mobile, board_name, board_id):
-        current_uid = self.session_helper(mobile)
+    @util.session_helper
+    def write_post(self, mobile, board_name, board_id, current_uid = -1):
         a = dict(title = web.input().title, body = web.input().content)
         board_info = board.get_board_info(board_id)
         ret = article.write_article(current_uid, board_id, a)
@@ -99,12 +90,14 @@ class board_actions:
                 board_desc = board_info.bDescription,
                 articles=articles, today=date)
 
-    def add_to_favorites_get(self, mobile, board_name, board_id):
-        user.add_favorite_board(web.ctx.session.uid, board_id)
+    @util.session_helper
+    def add_to_favorites_get(self, mobile, board_name, board_id, current_uid = -1):
+        user.add_favorite_board(current_uid, board_id)
         raise web.seeother('/%s' % board_name)
 
-    def remove_from_favorites_get(self, mobile, board_name, board_id):
-        user.remove_favorite_board(web.ctx.session.uid, board_id)
+    @util.session_helper
+    def remove_from_favorites_get(self, mobile, board_name, board_id, current_uid = -1):
+        user.remove_favorite_board(current_uid, board_id)
         raise web.seeother('/%s' % board_name)
 
     def summary_get(self, mobile, board_name, board_id):
@@ -130,8 +123,8 @@ class board_actions:
         else:
             return mobile_render.view_subboard_list()
 
-    def create_board_get(self, mobile, board_name, board_id):
-        current_uid = self.session_helper(mobile)
+    @util.session_helper
+    def create_board_get(self, mobile, board_name, board_id, current_uid = -1):
         # if !acl.get_permission(modify_board, user):
         board_info = board.get_board_info(board_id)
         if current_uid != board_info.uSerial:
@@ -142,8 +135,8 @@ class board_actions:
                 referer = os.path.join('/', board_name, '+summary'))
 
     @util.confirmation_helper
-    def create_board_post(self, mobile, board_name, board_id):
-        current_uid = self.session_helper(mobile)
+    @util.session_helper
+    def create_board_post(self, mobile, board_name, board_id, current_uid = -1):
         # if !acl.get_permission(modify_board, user):
         board_info = board.get_board_info(board_id)
         if current_uid != board_info.uSerial:
@@ -175,18 +168,20 @@ class board_actions:
             return desktop_render.error(lang='ko', error_message = ret[1])
         raise web.seeother('%s' % (new_path))
 
-    def modify_get(self, mobile, board_name, board_id):
-        current_uid = self.session_helper(mobile)
+    @util.session_helper
+    def modify_get(self, mobile, board_name, board_id, current_uid = -1):
         # if !acl.get_permission(modify_board, user):
         board_info = board.get_board_info(board_id)
         if current_uid != board_info.uSerial:
             return desktop_render.error(lang='ko', error_message='NO_PERMISSION')
         return desktop_render.board_editor(action='modify', board_info = board_info,
                 board_path = board_name, board_desc = board_info.bDescription, lang='ko',
-                title = u'정보 수정 - %s - Noah3k' % board_info.bName)
+                title = u'정보 수정 - %s - Noah3k' % board_info.bName,
+                referer = os.path.join('/', board_name, '+summary'))
 
-    def modify_post(self, mobile, board_name, board_id):
-        current_uid = self.session_helper(mobile)
+    @util.session_helper
+    @util.confirmation_helper
+    def modify_post(self, mobile, board_name, board_id, current_uid = -1):
         # if !acl.get_permission(modify_board, user):
         board_info = board.get_board_info(board_id)
         if current_uid != board_info.uSerial:
@@ -211,16 +206,17 @@ class board_actions:
         else:
             raise web.seeother('%s/+summary' % result[1])
 
-    def delete_get(self, mobile, board_name, board_id):
+    @util.session_helper
+    def delete_get(self, mobile, board_name, board_id, current_uid = -1):
         default_referer = os.path.join('/', board_name, '+summary')
         return desktop_render.question(lang='ko', question=u'이 게시판을 삭제하시겠습니까?',
                 board_path = board_name, board_desc = u'확인', title=u'확인',
                 action=os.path.join('/', board_name, '+delete'),
                 referer=web.ctx.env.get('HTTP_REFERER', default_referer))
 
+    @util.session_helper
     @util.confirmation_helper
-    def delete_post(self, mobile, board_name, board_id):
-        current_uid = self.session_helper(mobile)
+    def delete_post(self, mobile, board_name, board_id, current_uid = -1):
         ret = board.delete_board(current_uid, board_id)
         if ret[0] == True:
             raise web.seeother('%s' % (ret[1]))

@@ -33,15 +33,6 @@ class main_actions:
         except AttributeError:
             raise web.notfound(desktop_render.error(lang='ko', error_message = 'INVALID_ACTION'))
 
-    def session_helper(self, mobile):
-        try:
-            current_uid = web.ctx.session.uid
-        except:
-            raise web.unauthorized(desktop_render.error(lang="ko", error_message = u"NOT_LOGGED_IN"))
-        if current_uid < 1:
-            raise web.internalerror(desktop_render.error(lang="ko", error_message = u"INVALID_UID"))
-        return current_uid
-
     def join_get(self, mobile):
         if not mobile:
             return desktop_render.join(title = u"회원 가입 - Noah3K",
