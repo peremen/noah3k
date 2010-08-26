@@ -40,11 +40,13 @@ ${my_board.bDescription}\
 
 <div class="heading">즐겨찾기 <span style="color: black; font-size:0.9em; font-weight: normal;"><a class="favlink"\
 % if board_path is not UNDEFINED:
-% if user.is_favorite(ctx.session.uid, board._get_board_id_from_path(board_path)):
+    % if board_path == '':
+ href="#">(사용할 수 없음)\
+    % elif user.is_favorite(ctx.session.uid, board._get_board_id_from_path(board_path)):
  href="/${board_path}/+remove_from_favorites">(삭제)\
-% else:
+    % else:
  href="/${board_path}/+add_to_favorites">(추가)\
-% endif
+    % endif
 % else:
  href="#">(사용할 수 없음)\
 % endif
