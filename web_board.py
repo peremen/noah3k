@@ -138,8 +138,10 @@ class board_actions:
             return desktop_render.error(lang='ko', error_message='NO_PERMISSION')
         return desktop_render.board_editor(action='create_board', board_info = board_info,
                 board_path = board_name, board_desc = board_info.bDescription, lang='ko',
-                title = u'하위 게시판 만들기 - %s - Noah3k' % board_info.bName)
+                title = u'하위 게시판 만들기 - %s - Noah3k' % board_info.bName,
+                referer = os.path.join('/', board_name, '+summary'))
 
+    @util.confirmation_helper
     def create_board_post(self, mobile, board_name, board_id):
         current_uid = self.session_helper(mobile)
         # if !acl.get_permission(modify_board, user):

@@ -25,7 +25,7 @@ def traverse_child_board(path):
         else:
             child_image = '/static/image/board.png'
         if child.bDescription.strip() == '':
-            child_desc = posixpath.basename(path)
+            child_desc = posixpath.basename(child.bName)
         else:
             child_desc = child.bDescription
         ret = ret + '<a class="boardlink" href="%s"><img class="type" src="%s" />&nbsp;%s</a>%s' % (child.bName, child_image, child_desc, sep)
