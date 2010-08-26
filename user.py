@@ -45,7 +45,7 @@ def _verify_noah2k_password(to_verify, password):
     return to_verify == _generate_noah2k_password(password)
 
 def _generate_noah3k_password(to_verify, password):
-    hm = hmac.new('tokigunbapsot', password, hashlib.sha1)
+    hm = hmac.new(config.hmac_key, password, hashlib.sha1)
     return hm.hexdigest()
 
 def generate_password(password):

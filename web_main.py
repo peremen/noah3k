@@ -89,7 +89,6 @@ class main_actions:
 
         if valid:
             login = user.login(username, password)
-            print login
             if login[0]:
                 # 로그인 성공. referer로 돌아감.
                 err = u"로그인 성공"
@@ -97,7 +96,6 @@ class main_actions:
                 web.ctx.session.uid = uid
                 web.ctx.session.username = username
                 user.update_last_login(uid, web.ctx.ip)
-                login = True
             else:
                 # 로그인 실패
                 err = login[1]
