@@ -89,6 +89,7 @@ class main_actions:
 
         if valid:
             login = user.login(username, password)
+            print login
             if login[0]:
                 # 로그인 성공. referer로 돌아감.
                 err = u"로그인 성공"
@@ -100,7 +101,7 @@ class main_actions:
             else:
                 # 로그인 실패
                 err = login[1]
-        if not login:
+        if not login[0]:
             return desktop_render.login(title = u"로그인 - Noah3K", board_desc=u"로그인",
                     lang="ko", error = err, referer = referer)
         else:

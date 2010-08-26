@@ -121,7 +121,6 @@ def write_article(uid, board_id, article):
     ret = db.select('Articles', val, where = 'bSerial = $board_id AND aIndex = $index',
             what = 'aSerial')
     ret = ret[0].aSerial
-    print ret
 
     return (True, ret)
 
@@ -180,8 +179,6 @@ def delete_article(uid, article_id):
     try:
         val = dict(article_id = article_id, board_id = article_info.bSerial,
                 article_index = article_info.aIndex)
-        print val
-
         result = db.query('SELECT COUNT(*) AS reply_count FROM Articles WHERE bSerial = $board_id AND aIndex = $article_index + 1 AND aParent = $article_id', val)
         reply_count = result[0].reply_count
         if reply_count > 0:
@@ -189,7 +186,6 @@ def delete_article(uid, article_id):
 
         ret = db.delete('Articles', vars = val, where = 'aSerial = $article_id')
         ret = db.delete('Comments', vars=val, where='aSerial = $article_id')
-
         ret = db.update('Articles', vars = val, where='bSerial = $board_id AND aIndex > $article_index',
                 aIndex = web.SQLLiteral('aIndex - 1'))
     except Exception as e:
@@ -268,7 +264,6 @@ def reply_article(uid, board_id, article_id, reply):
     ret = db.select('Articles', val, where = 'bSerial = $board_id AND aIndex = $index',
             what = 'aSerial')
     ret = ret[0].aSerial
-    print ret
 
     return (True, ret)
 

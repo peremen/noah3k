@@ -109,7 +109,6 @@ def login(username, password):
     @rtype tuple
     @return: 로그인 성공 여부(T/F)와 세션 키(성공 시) 또는 오류 코드(실패 시)를 포함하는 튜플.
     """
-    print '"%s"' % username
     val = dict(username = username)
     result = db.select('Users', val, where='uId = $username')
     user = None
@@ -226,6 +225,26 @@ def modify_user(uid, member):
             uSig = member['sig'], uPlan = member['introduction'],
             uPasswd = generate_password(member['password']))
     return result
+
+def delete_user(uid):
+    """
+    회원 정보 삭제.
+    """
+    result = get_owned_board(uid)
+    has_board = False
+    for b in result:
+        has_board = True
+    if has_board:
+        return (False, 'HAS_BOARD')
+
+    # 즐겨찾는 보드 삭제
+    result = get_favorite_board(uid)
+    for b in result:
+        remove_favorite_board(uid, b.bSerial)
+
+    val = dict(user_id = uid)
+    result = db.delete('Users', vars=val, where='uSerial = $user_id')
+    return (True, 'SUCCESS')
 
 def update_last_login(uid, ip_address):
     val = dict(uid = uid, ip_address = ip_address)

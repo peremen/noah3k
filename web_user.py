@@ -82,3 +82,26 @@ class personal_actions:
         introduction = data.introduction
         ret = user.modify_user(user_id, locals())
         raise web.seeother('/+u/%s' % username)
+
+    @util.session_helper
+    def leave_get(self, mobile, username, user_id, current_uid = -1):
+        if user_id != current_uid:
+            return desktop_render.error(lang='ko', error_message='MODIFYING_OTHERS_INFORMATION')
+        default_referer = os.path.join('/', '+u', username)
+        return desktop_render.leave(lang='ko', board_desc = u'회원 탈퇴',
+                title=u'회원 탈퇴', username = username,
+                referer = web.ctx.env.get('HTTP_REFERER', default_referer),)
+
+    @util.confirmation_helper
+    @util.session_helper
+    def leave_post(self, mobile, username, user_id, current_uid = -1):
+        password = web.input().password
+        if not user.verify_password(user_id, password):
+            return desktop_render.error(lang='ko', error_message='WRONG_PASSWORD')
+
+        result = user.delete_user(user_id)
+        if not result[0]:
+            return desktop_render.error(lang='ko', error_message = result[1])
+        web.ctx.session.uid = 0
+        web.ctx.session.kill()
+        raise web.seeother('/')
