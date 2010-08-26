@@ -2,8 +2,9 @@
 <form name="modify_form" method="post" action="/+u/${username}/+modify">
 <!-- 완료/취소 버튼 -->			
 <div>
-    <input type="submit" name="submit" value="완료" style="margin: 6px">
-    <a href="/+u/${username}">취소</a>
+    <input type="submit" name="ok" value="완료" style="margin: 6px" />
+    <input type="submit" name="cancel" value="취소" style="margin: 6px" />
+    <input type="hidden" name="referer" value="${referer}" />
 </div>
 
 <div style="width: 640px">

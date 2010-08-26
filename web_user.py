@@ -9,6 +9,7 @@ import board, user, article
 from cgi import parse_qs
 from datetime import datetime
 import posixpath
+import util
 
 desktop_render = render_mako(
     directories = [os.path.join(os.path.dirname(__file__), 'templates/desktop/').replace('\\','/'),],
@@ -70,8 +71,10 @@ class personal_actions:
         return desktop_render.myinfo_edit(user = user.get_user(user_id)[1],
                 username = username, user_id = user_id,
                 lang='ko', title = u'내 정보 수정',
-                board_desc = u'내 정보 수정')
+                board_desc = u'내 정보 수정',
+                referer = os.path.join('/', '+u', username))
 
+    @util.confirmation_helper
     def modify_post(self, mobile, username, user_id):
         self.session_helper(mobile)
         data = web.input()
