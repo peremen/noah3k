@@ -8,13 +8,17 @@
     <title>${title}</title>
 % endif
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <!--	<link rel="alternate" type="application/rss+xml"> -->
 	<link rel="stylesheet" type="text/css" href="/static/style/default.css">		
 % if board_path is not UNDEFINED:
 % if feed is not UNDEFINED:
-<link rel="alternate" type="application/rss+xml" href="/${board_path}/+rss" title="RSS 피드 (/${board_path})" />
-<link rel="alternate" type="application/atom+xml" href="/${board_path}/+atom" title="Atom 피드 (/${board_path})" />
+    <link rel="alternate" type="application/rss+xml" href="/${board_path}/+rss" title="RSS 피드 (/${board_path})" />
+    <link rel="alternate" type="application/atom+xml" href="/${board_path}/+atom" title="Atom 피드 (/${board_path})" />
 % endif
+% endif
+%if feeds is not UNDEFINED:
+%for f in feeds:
+    <link rel="alternate" type="application/${f.type}+xml" href="${f.path}" title="${f.title}" />
+% endfor
 % endif
 </head>
 

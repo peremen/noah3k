@@ -181,17 +181,15 @@ div#sidemenu li {
 
 div#feeds {
     text-align: center;
+    margin: 10px;
 }
 
 a.feed {
-    border:1px solid;
-    border-color:#FC9 #630 #330 #F96;
-    padding:0 3px;
-    font:bold 10px verdana,sans-serif;
-    color:#FFF;
-    background: #F60;
+    border-style: none;
     text-decoration: none;
+    color:#000;
     margin: 4px;
+    padding: 0 3px;
 }
 
 /* body --------------------------------------------- */

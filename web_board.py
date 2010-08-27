@@ -123,6 +123,11 @@ class board_actions:
         else:
             return mobile_render.view_subboard_list()
 
+    def cover_get(self, mobile, board_name, board_id):
+        board_info = board.get_board_info(board_id)
+        return desktop_render.cover(title = u'%s - Noah3K' % board_name,
+                board_cover = board_info.bInformation)
+
     @util.session_helper
     def create_board_get(self, mobile, board_name, board_id, current_uid = -1):
         # if !acl.get_permission(modify_board, user):
