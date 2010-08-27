@@ -77,6 +77,13 @@ def _get_uid_from_username(username):
         return retvalue
     pass
 
+def _get_username_from_uid(uid):
+    u = get_user(uid)
+    if not u[0]:
+        return ''
+    else:
+        return u[1]['uId']
+
 def update_password(uid, password):
     val = dict(uid = uid)
     result = db.select('Users', val, where='uSerial = $uid')
@@ -146,6 +153,29 @@ def add_favorite_board(uid, board_id):
 def remove_favorite_board(uid, board_id):
     val = dict(uid = uid, board_id = board_id)
     result = db.delete('Favorites', vars=val, where='uSerial = $uid AND bSerial = $board_id')
+    return result
+
+def get_favorite_board_feed(uid, feed_size):
+    """
+    사용자가 즐겨찾기로 추가한 게시판을 모아서 최신 글을 출력한다.
+
+    @type uid: int
+    @param uid: 사용자 UID.
+    @type feed_size: int
+    @param feed_size: 피드로 보여줄 글 갯수.
+    @rtype list
+    @return: 지정한 피드 크기보다 작거나 같은 전체 글 목록.
+    """
+    board_id_list = []
+    for f in get_favorite_board(uid):
+        board_id_list.append(str(f.bSerial))
+    if len(board_id_list) == 0:
+        return []
+    where_clause = ' OR bSerial='.join(board_id_list)
+    val = dict(c = where_clause)
+
+    result = db.query('SELECT * FROM Articles WHERE bSerial = %s ORDER BY aSerial DESC LIMIT %s' % \
+            (where_clause, feed_size))
     return result
 
 def get_user(uid):

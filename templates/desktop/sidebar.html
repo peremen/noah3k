@@ -71,6 +71,8 @@ ${my_board.bDescription}\
 % else:
     % if not_has_fav_board:
     <li>등록한 게시판이 없습니다</li>
+    % else:
+    <li><img src="/static/image/feed.png" /> 피드: <a href="/+u/${ctx.session.username}/+favorite_rss">RSS</a>, <a href="/+u/${ctx.session.username}/+favorite_atom">Atom</a></li>
     % endif
 % endfor
 </ul>
@@ -132,10 +134,13 @@ ${my_board.bDescription}\
     </ul>
 </div>
 
+%if board_path is not UNDEFINED:
+%if feed is not UNDEFINED:
 <!-- 피드 (for Google Chrome) -->
 <div id="feeds"> 
     <a href="/${board_path}/+rss" class="feed"><img style="border-style: none;" src="/static/image/feed.png" /> RSS</a> 
     <a href="/${board_path}/+atom" class="feed"><img style="border-style: none;" src="/static/image/feed.png" /> Atom</a> 
 </div> 
 <br />
-
+% endif
+% endif

@@ -33,6 +33,15 @@ def _get_board_id_from_path(path):
     else:
         return retvalue
 
+def _get_path_from_board_id(board_id):
+    result = db.select('Boards', locals(), where='bSerial = $board_id')
+    try:
+        retvalue = result[0]['bName']
+    except:
+        return ''
+    else:
+        return retvalue
+
 def get_parent(board_id):
     val = dict(board_id = board_id)
     result = db.select('Boards', val, what='bParent', where='bSerial = $board_id')

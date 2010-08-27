@@ -17,7 +17,7 @@
 % endif
 %if feeds is not UNDEFINED:
 %for f in feeds:
-    <link rel="alternate" type="application/${f.type}+xml" href="${f.path}" title="${f.title}" />
+    <link rel="alternate" type="application/${f['type']}+xml" href="${f['path']}" title="${f['name']}" />
 % endfor
 % endif
 </head>

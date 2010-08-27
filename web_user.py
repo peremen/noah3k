@@ -27,10 +27,12 @@ class personal_page:
         user_id = user._get_uid_from_username(username)
         if user_id < 0:
             raise web.notfound(desktop_render.error(lang='ko', error_message = 'INVALID_USER'))
+        f = [{'type':'rss', 'path':'/+u/%s/+favorite_rss' % username, 'name':u'즐겨찾기 피드 (RSS)'},
+             {'type':'atom', 'path':'/+u/%s/+favorite_atom' % username, 'name':u'즐겨찾기 피드 (Atom)'},]
         return desktop_render.myinfo(user = user.get_user(user_id)[1],
                 username = username, user_id = user_id,
-                lang='ko', title = u'내 정보',
-                board_desc = u'내 정보')
+                lang='ko', title = u'내 정보', board_desc = u'내 정보',
+                feeds = f)
 
 class personal_actions:
     def GET(self, mobile, username, action):
@@ -47,6 +49,23 @@ class personal_actions:
             return eval('self.%s_%s' % (action, method))(mobile, username, user_id)
         except AttributeError:
             raise web.notfound(desktop_render.error(lang='ko', error_message = 'INVALID_ACTION'))
+
+    def favorite_rss_get(self, mobile, username, user_id):
+        articles = user.get_favorite_board_feed(user_id, 30)
+        date = datetime.today()
+        return desktop_render.rss(today = date,
+                articles = articles, board_path="+u/%s/+favorite_rss" % username,
+                board_desc = u'%s의 즐겨찾는 보드 피드' % username,
+                link_address = 'http://noah.kaist.ac.kr/+u/%s' % username)
+
+    def favorite_atom_get(self, mobile, username, user_id):
+        articles = user.get_favorite_board_feed(user_id, 30)
+        date = datetime.today()
+        return desktop_render.atom(today = date,
+                articles = articles, board_path="+u/%s/+favorite_atom" % username,
+                board_desc = u'%s의 즐겨찾는 보드 피드' % username,
+                self_address = 'http://noah.kaist.ac.kr/+u/%s/+favorite_atom' % username,
+                href_address = 'http://noah.kaist.ac.kr/+u/%s' % username)
 
     @util.session_helper
     def modify_get(self, mobile, username, user_id, current_uid = -1):
