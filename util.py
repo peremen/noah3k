@@ -62,7 +62,7 @@ def format(original):
 def process_noah12k_quote(original):
     # noah 1k/2k의 인용구를 BBCode 형태로 바꿔 줌.
     # 반드시 HTML로 변환하기 전에 호출해야 함.
-    header = [u'"에서: "',u'"에서 : ']
+    header = [u'"에서: ',u'"에서 : ']
     lines = original.split('\n')
     levels = []
     ret = u''
@@ -100,16 +100,19 @@ def process_noah12k_quote(original):
             prevLevel = levels[i-1]
         while levels[i] != prevLevel:
             if levels[i] > prevLevel:
-                ret += '[quote]\n'
+                if lines[i-1].endswith(header[0]) or lines[i-1].endswith(header[1]):
+                    ret += '[quote=%s]\n' % lines[i-1]
+                else:
+                    ret += '[quote]\n'
                 prevLevel = prevLevel + 1
             if levels[i] < prevLevel:
                 ret +='[/quote]\n'
                 prevLevel = prevLevel - 1
         if lines[i] != '':
-            if lines[i].find(header[0]) > 0 or lines[i].find(header[1]) > 0:
+            if not( lines[i].endswith(header[0]) or lines[i].endswith(header[1])):
                 ret +=lines[i]
             else:
-                ret +=lines[i]
+                continue
         if i < len(lines)-1:
             ret +='\n'
     return ret

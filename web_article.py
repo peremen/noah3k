@@ -68,10 +68,13 @@ class article_actions:
     def reply_get(self, mobile, board_name, board_id, article_id, current_uid = -1):
         board_info = board.get_board_info(board_id)
         board_desc = board_info.bDescription
+        article_ = article.get_article(board_id, article_id)
+        quote_text = u'%s님의 글 "%s"에서:' % (user._get_username_from_uid(article_.uSerial), article_.aTitle)
+        body = '\n\n\n[quote=%s]%s\n[/quote]' % (quote_text, article_.aContent)
         return render[mobile].editor(title = u"답글 쓰기 - /%s - Noah3K" % board_name,
                 action='reply/%s' % article_id, action_name = u"답글 쓰기",
                 board_path = board_name, board_desc = board_desc,
-                lang="ko", )
+                lang="ko", body = body, article_title = article_.aTitle)
 
     @util.session_helper
     def reply_post(self, mobile, board_name, board_id, article_id, current_uid = -1):
@@ -80,9 +83,9 @@ class article_actions:
         ret = article.reply_article(current_uid, board_id, article_id, reply)
         if ret[0] == True:
             if mobile:
-                raise web.seeother('/m/%s/+read/%s' % (board_name, article_id))
+                raise web.seeother('/m/%s/+read/%s' % (board_name, ret[1]))
             else:
-                raise web.seeother('/%s/+read/%s' % (board_name, article_id))
+                raise web.seeother('/%s/+read/%s' % (board_name, ret[1]))
         else:
             return render[mobile].error(lang='ko', error_message = ret[1])
 
@@ -104,9 +107,9 @@ class article_actions:
         ret = article.modify_article(current_uid, board_id, article_id, a)
         if ret[0] == True:
             if mobile:
-                raise web.seeother('/m/%s/+read/%s' % (board_name, article_id))
+                raise web.seeother('/m/%s/+read/%s' % (board_name, ret[1]))
             else:
-                raise web.seeother('/%s/+read/%s' % (board_name, article_id))
+                raise web.seeother('/%s/+read/%s' % (board_name, ret[1]))
         else:
             return render[mobile].error(lang='ko', error_message = ret[1])
 
@@ -114,11 +117,13 @@ class article_actions:
     def delete_get(self, mobile, board_name, board_id, article_id, current_uid = -1):
         if mobile:
             default_referer = os.path.join('/m', board_name, '+read', str(article_id))
+            action=os.path.join('/m', board_name, '+delete', str(article_id))
         else:
             default_referer = os.path.join('/', board_name, '+read', str(article_id))
+            action=os.path.join('/', board_name, '+delete', str(article_id))
         return render[mobile].question(lang='ko', question=u'글을 삭제하시겠습니까?',
                 board_path = board_name, board_desc = u'확인', title=u'확인',
-                action=os.path.join('/m', board_name, '+delete', str(article_id)),
+                action = action,
                 referer=web.ctx.env.get('HTTP_REFERER', default_referer))
 
     @util.confirmation_helper
@@ -127,9 +132,9 @@ class article_actions:
         ret = article.delete_article(current_uid, article_id)
         if ret[0] == True:
             if mobile:
-                raise web.seeother('/m/%s/+read/%s' % (board_name, article_id))
+                raise web.seeother('/m/%s' % (board_name))
             else:
-                raise web.seeother('/%s/+read/%s' % (board_name, article_id))
+                raise web.seeother('/%s' % (board_name))
         else:
             return render[mobile].error(lang='ko', error_message = ret[1])
 

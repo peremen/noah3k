@@ -231,7 +231,7 @@ span#attachment {
     font-weight: bold;
 }
 
-div#content {
+#content {
     border-top: 1px solid #3C78B5;
     padding: 10px 15px 10px 15px;
     font-size: 1.0em;
@@ -240,7 +240,7 @@ div#content {
     line-height: 150%;
 }
 
-div#content div#images {
+#content div#images {
     font-size: 0.9em;
     font-weight: bold;
     color: gray;
@@ -253,6 +253,10 @@ div#content div#images {
     margin-top: 2px;
     padding: 5px 5px 5px 5px;
     margin-right: 0px;
+}
+
+#content em {
+    font-style: normal;
 }
 
 div#article {
@@ -280,31 +284,31 @@ div#comment div#input {
     background-color: #F0F0F0;
     margin: 10px 100px 10px 100px;
 }
-div#comment table {
+#comment table {
     font-size: 1.0em;
 }
-div#comment tr {
+#comment tr {
     padding: 5px;
 }
-div#comment td#writer {
+#comment td.writer {
     width: 8em;
     padding: 0px 2em 0px 0px;
     font-size: 0.9em;
     color: gray;
     text-align: right;
 }
-div#comment td#content {
+#comment td.content {
     font-size: 1.0em;
     padding-left: 10px;
 }
-div#comment td#writetime {
+#comment td.writetime {
     width: 12em;
     font-size: 0.9em;
     padding-right: 5px;
     text-align: center;
     color: gray;
 }
-div#comment td#button {
+#comment td.button {
     text-align: center;
     font-size: 0.9em;
     width: 5em;
