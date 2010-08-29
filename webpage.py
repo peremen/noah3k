@@ -17,7 +17,7 @@ from web_main import main_actions
 urls = (
 # 다른 모든 action은 view_board 위로 올라가야 함.
     '/(.*)/', 'redirect',
-    r'/(m/|)', 'main_page',
+    r'/(m|)', 'main_page',
     r'/(m/|)\+help/(\S*)', 'help',
     r'/(m/|)\+u/(\S*)/\+(\w*)', 'personal_actions',
     r'/(m/|)\+u/(\S*)', 'personal_page',
@@ -42,11 +42,11 @@ desktop_render = render_mako(
     directories = [os.path.join(os.path.dirname(__file__), 'templates/desktop/').replace('\\','/'),],
     input_encoding = 'utf-8', output_encoding = 'utf-8',
 )
-
 mobile_render = render_mako(
     directories = [os.path.join(os.path.dirname(__file__), 'templates/mobile/').replace('\\','/'),],
     input_encoding = 'utf-8', output_encoding = 'utf-8',
 )
+render = {False: desktop_render, True: mobile_render}
 
 if web.config.get('_database') is None:
     db = web.database(dbn=config.db_type, user=config.db_user,
@@ -64,26 +64,31 @@ class redirect:
 
 class main_page:
     def GET(self, mobile):
+        if mobile:
+            mobile = True
+        else:
+            mobile = False
         v = board_actions()
         return v.subboard_list_get(mobile)
-#        if not mobile:
-#            return desktop_render.main(title = "Noah3K", lang="ko")
-#        else:
-#            return mobile_render.main()
 
 class help:
     def GET(self, mobile, context):
-        if not mobile:
-            return desktop_render.help(title = u"도움말: %s - Noah3K" % context, lang="ko", session = session)
+        if mobile:
+            mobile = True
         else:
-            return mobile_render.help()
+            mobile = False
+        return render[mobile].help(title = u"도움말: %s - Noah3K" % context, lang="ko", session = session)
 
 class view_board:
     def GET(self, mobile, board_name):
+        if mobile:
+            mobile = True
+        else:
+            mobile = False
         page_size = 20
         board_id = board._get_board_id_from_path(board_name)
         if board_id < 0:
-            raise web.notfound(desktop_render.error(lang='ko', error_message='INVALID_BOARD'))
+            raise web.notfound(render[mobile].error(lang='ko', error_message='INVALID_BOARD'))
         board_info = board.get_board_info(board_id)
         if board_info.bType == 0: # 디렉터리
             v = board_actions()
@@ -102,13 +107,16 @@ class view_board:
         # bSerial: board_id, bName: 전체 경로, uSerial: 보대, bParent: 부모 보드, bDescription: 보드 짧은 설명
         # bDatetime: 개설 시간, bInformation: 보드 긴 설명, bType = 디렉터리/보드/블로그,
         # bReply: bWrite: bComment: 모름
-        if not mobile:
-            return desktop_render.view_board(title = u"%s - Noah3K" % board_info.bName, board_path = board_info.bName[1:],
-                board_desc = board_info.bDescription, lang="ko", articles=article.get_article_list(board_id, page_size, page), page=page,
-                total_page = article._get_total_page_count(board_id, page_size),
-                session = session, feed = True)
-        else:
-            return mobile_render.view_board()
+        a = article.get_article_list(board_id, page_size, page)
+        t = article._get_total_page_count(board_id, page_size)
+        return render[mobile].view_board(lang="ko",
+            title = u"%s - Noah3K" % board_info.bName,
+            board_path = board_info.bName[1:],
+            board_desc = board_info.bDescription,
+            articles=a,
+            total_page = t,
+            page = page,
+            feed = True)
 
 if __name__ == "__main__":
     app.run()

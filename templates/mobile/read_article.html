@@ -1,0 +1,87 @@
+<%inherit file="base.html" />
+<%
+import user
+import article as A
+from web import ctx
+from pygments import highlight
+from pygments.lexers import BBCodeLexer
+from pygments.formatters import HtmlFormatter
+def get_formatted_username(uid):
+    u = user.get_user(uid)
+    if u[0]:
+        return "%(id)s (%(nick)s)" % {'id': u[1]['uId'], 'nick':u[1]['uNick']}
+    else:
+        return u"탈퇴한 회원"
+
+def format(original):
+    return highlight(original, BBCodeLexer(), HtmlFormatter())
+%>
+<div id="article">
+    <h3>${article['aTitle']}</h3>
+    <span class="writer">${get_formatted_username(article['uSerial'])}</span>
+    % if article.aEditedDatetime:
+    <span class="last_modified">수정: ${article['aEditedDatetime'].strftime('%Y-%m-%d %H:%M')}</span>
+    % else:
+    <span class="last_modified">작성: ${article['aDatetime'].strftime('%Y-%m-%d %H:%M')}</span>
+    % endif
+    <div style="clear: both;" />
+</div> <!-- end of article -->
+<hr />
+${format(article['aContent'])}
+<hr />
+
+<!-- 코멘트 -->
+<table id="comment_list" border="0" cellspacing="0" style="width: 100%">
+% if comments:
+% for comment in comments:
+<tr>
+    <td class="writer">${comment['cId']}</td>
+    <td class="content"><span title="${comment['cDatetime']}">${comment['cContent']}</span></td>
+%if ctx.session.has_key('uid') and ctx.session.uid == comment['uSerial']:
+    <td class="button">
+        <a class="button" href="/m/${board_path}/+comment_delete/${comment['cSerial']}">X</a></td>
+% endif
+</tr>
+% endfor
+% endif
+</table>
+
+<div id="input">
+% if not ctx.session.has_key('uid'):
+댓글을 쓰시려면 <a href="/m/+login">로그인</a>을 해주세요
+% else:
+<form name="comment" method="post" action="/m/${board_path}/+comment/${article['aSerial']}">
+댓글 쓰기
+<input name="comment" type="text" style="width: 80%;"/>
+<input type="submit" name="Submit" value="확인" />
+</form>
+% endif
+</div>
+
+<!-- 이전글/다음글 -->
+% if prev_id > 0:
+<span style="color: grey">이전</span> <a class="articlelink" href="/m/${board_path}/+read/${prev_id}">${A.get_title(prev_id)}</a><br />
+% endif
+% if next_id > 0:
+<span style="color: grey">다음</span> <a class="articlelink" href="/m/${board_path}/+read/${next_id}">${A.get_title(next_id)}</a><br />
+% endif
+<br />
+
+<!-- 버튼: 목록/글쓰기/답글/메일답신/수정/삭제 -->
+<ul class="buttonlist">
+    <li> <a class="button" href="/m/${board_path}">목록</a></li>
+% if ctx.session.has_key('uid'):
+    <!-- 쓰기 권한 -->	
+    <li><a class="button" href="/m/${board_path}/+write">글쓰기</a></li>
+    <li><a class="button" href="/m/${board_path}/+reply/${article['aSerial']}">답글</a></li>
+% endif
+%if ctx.session.has_key('uid') and ctx.session.uid == article.uSerial:
+    <!-- 로그인 --> 
+    <li><a class="button" href="/m/${board_path}/+modify/${article['aSerial']}">수정</a></li>
+    <!-- 삭제 권한 --> 
+    <li><a class="button" href="/m/${board_path}/+delete/${article['aSerial']}">삭제</a></li>
+% endif
+    <!-- 강조 권한 --> 
+    <li><a class="button" href="/m/${board_path}/+mark/${article['aSerial']}">강조</a></li>
+</ul>
+

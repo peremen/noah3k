@@ -20,16 +20,21 @@ mobile_render = render_mako(
     directories = [os.path.join(os.path.dirname(__file__), 'templates/mobile/').replace('\\','/'),],
     input_encoding = 'utf-8', output_encoding = 'utf-8',
 )
+render = {False: desktop_render, True: mobile_render}
 
 class personal_page:
     @util.session_helper
     def GET(self, mobile, username, current_uid = -1):
+        if mobile:
+            mobile = True
+        else:
+            mobile = False
         user_id = user._get_uid_from_username(username)
         if user_id < 0:
-            raise web.notfound(desktop_render.error(lang='ko', error_message = 'INVALID_USER'))
+            raise web.notfound(render[mobile].error(lang='ko', error_message = 'INVALID_USER'))
         f = [{'type':'rss', 'path':'/+u/%s/+favorite_rss' % username, 'name':u'즐겨찾기 피드 (RSS)'},
              {'type':'atom', 'path':'/+u/%s/+favorite_atom' % username, 'name':u'즐겨찾기 피드 (Atom)'},]
-        return desktop_render.myinfo(user = user.get_user(user_id)[1],
+        return render[mobile].myinfo(user = user.get_user(user_id)[1],
                 username = username, user_id = user_id,
                 lang='ko', title = u'내 정보', board_desc = u'내 정보',
                 feeds = f)
@@ -42,13 +47,17 @@ class personal_actions:
         return self.caller(mobile, username, action, 'post')
 
     def caller(self, mobile, username, action, method):
+        if mobile:
+            mobile = True
+        else:
+            mobile = False
         user_id = user._get_uid_from_username(username)
         if user_id < 0:
-            raise web.notfound(desktop_render.error(lang='ko', error_message = 'INVALID_USER'))
+            raise web.notfound(render[mobile].error(lang='ko', error_message = 'INVALID_USER'))
         try:
             return eval('self.%s_%s' % (action, method))(mobile, username, user_id)
         except AttributeError:
-            raise web.notfound(desktop_render.error(lang='ko', error_message = 'INVALID_ACTION'))
+            raise web.notfound(render[mobile].error(lang='ko', error_message = 'INVALID_ACTION'))
 
     def favorite_rss_get(self, mobile, username, user_id):
         articles = user.get_favorite_board_feed(user_id, 30)
@@ -70,26 +79,26 @@ class personal_actions:
     @util.session_helper
     def modify_get(self, mobile, username, user_id, current_uid = -1):
         if user_id != current_uid:
-            return desktop_render.error(lang='ko', error_message='MODIFYING_OTHERS_INFORMATION')
-        return desktop_render.myinfo_edit(user = user.get_user(user_id)[1],
+            return render[mobile].error(lang='ko', error_message='MODIFYING_OTHERS_INFORMATION')
+        referer = posixpath.join('/', '+u', username)
+        if mobile:
+            referer = posixpath.join('/m', referer)
+        return render[mobile].myinfo_edit(user = user.get_user(user_id)[1],
                 username = username, user_id = user_id,
                 lang='ko', title = u'내 정보 수정',
                 board_desc = u'내 정보 수정',
-                referer = os.path.join('/', '+u', username))
+                referer = web.ctx.env.get('HTTP_REFERER', referer))
 
     @util.confirmation_helper
     @util.session_helper
     def modify_post(self, mobile, username, user_id, current_uid = -1):
         data = web.input()
         if not user.verify_password(user_id, data.oldpass):
-            return desktop_render.error(lang='ko',
-                    error_message='INVALID_PASSWORD')
+            return render[mobile].error(lang='ko', error_message='INVALID_PASSWORD')
         if data.newpass1 != data.newpass2:
-            return desktop_render.error(lang='ko',
-                    error_message = 'PASSWORD_DO_NOT_MATCH')
+            return render[mobile].error(lang='ko', error_message = 'PASSWORD_DO_NOT_MATCH')
         if len(data.newpass1) > 0 and len(data.newpass1) < 6:
-            return desktop_render.error(lang='ko',
-                    error_message = 'PASSWORD_TOO_SHORT')
+            return render[mobile].error(lang='ko', error_message = 'PASSWORD_TOO_SHORT')
         if len(data.newpass1) == 0:
             password = data.oldpass
         else:
@@ -100,14 +109,17 @@ class personal_actions:
         sig = data.sig
         introduction = data.introduction
         ret = user.modify_user(user_id, locals())
-        raise web.seeother('/+u/%s' % username)
+        if mobile:
+            raise web.seeother('/m/+u/%s' % username)
+        else:
+            raise web.seeother('/+u/%s' % username)
 
     @util.session_helper
     def leave_get(self, mobile, username, user_id, current_uid = -1):
         if user_id != current_uid:
-            return desktop_render.error(lang='ko', error_message='MODIFYING_OTHERS_INFORMATION')
-        default_referer = os.path.join('/', '+u', username)
-        return desktop_render.leave(lang='ko', board_desc = u'회원 탈퇴',
+            return render[mobile].error(lang='ko', error_message='MODIFYING_OTHERS_INFORMATION')
+        default_referer = posixpath.join('/', '+u', username)
+        return render[mobile].leave(lang='ko', board_desc = u'회원 탈퇴',
                 title=u'회원 탈퇴', username = username,
                 referer = web.ctx.env.get('HTTP_REFERER', default_referer),)
 
@@ -116,11 +128,14 @@ class personal_actions:
     def leave_post(self, mobile, username, user_id, current_uid = -1):
         password = web.input().password
         if not user.verify_password(user_id, password):
-            return desktop_render.error(lang='ko', error_message='WRONG_PASSWORD')
+            return render[mobile].error(lang='ko', error_message='WRONG_PASSWORD')
 
         result = user.delete_user(user_id)
         if not result[0]:
-            return desktop_render.error(lang='ko', error_message = result[1])
+            return render[mobile].error(lang='ko', error_message = result[1])
         web.ctx.session.uid = 0
         web.ctx.session.kill()
-        raise web.seeother('/')
+        if mobile:
+            raise web.seeother('/m')
+        else:
+            raise web.seeother('/')

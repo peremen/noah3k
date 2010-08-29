@@ -1,0 +1,34 @@
+<%inherit file="base.html" />
+<p>${action_name}</p>
+<form name="write_form" method="POST" action="/${board_path}/+${action}">
+<div id="row">
+    <div class="left-container">제목</div>
+    <span class="sep">:</span>
+%if article_title is UNDEFINED:
+    <input name="title" type="text" maxlength="255" style="font-size: 0.9em; width: 500px; height: 1.6em" value="">
+%else:
+    <input name="title" type="text" maxlength="255" style="font-size: 0.9em; width: 500px; height: 1.6em" value="${article_title}">
+%endif
+</div>
+
+<div id="row">
+    <div class="left-container">내용</div>
+    <span class="sep">:</span>
+%if body is UNDEFINED:
+    <textarea name="content" style="font-size: 0.9em; width: 550px; height: 360px"></textarea>
+%else:
+    <textarea name="content" style="font-size: 0.9em; width: 550px; height: 360px">${body}</textarea>
+%endif
+</div>
+<div id="row">
+    <div class="left-container">첨부 #</div>
+    <span class="sep">:</span>
+    <input name="moreattach1" type="file">
+</div>
+
+<div style="text-align: right; width: 52em;">
+    <input type="submit" name="ok" value="확인">
+    <input type="button" value="돌아가기" onclick="history.back()">
+</div>
+</form>
+<iframe id="sessionKeeper" src="sessionkeeper.jsp" scrolling="no" frameborder="0" width="1px" height="1px"></iframe>			

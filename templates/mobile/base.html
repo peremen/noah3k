@@ -1,0 +1,119 @@
+<% from web import ctx 
+import board
+def traverse_board_path(path):
+    ret = ""
+    id = board._get_board_id_from_path(path)
+    while id != 1:
+        i = board.get_board_info(id)
+        if i.bType == 0:
+            ret = '&nbsp;&gt;&nbsp;<a class="dirlink" href="/m%s">%s</a>' % (i.bName, i.bName.split('/')[-1]) + ret
+        else:
+            ret = '&nbsp;&gt;&nbsp;<a class="boardlink" href="/m%s">%s</a>' % (i.bName, i.bName.split('/')[-1]) + ret
+        id = board.get_parent(id)
+    ret = u'<a class="dirlink" href="/m">게시판</a>' + ret
+    return ret
+
+def traverse_child_board(path):
+    sep = '&nbsp;|&nbsp;'
+    ret = ""
+    id = board._get_board_id_from_path(path)
+    children = board.get_child(id)
+    for child in children:
+        if child.bType == 0:
+            child_image = '/static/image/folder.png'
+        else:
+            child_image = '/static/image/board.png'
+        if child.bDescription.strip() == '':
+            child_desc = posixpath.basename(child.bName)
+        else:
+            child_desc = child.bDescription
+        ret = ret + '<a class="boardlink" href="/m%s"><img class="type" src="%s" />&nbsp;%s</a>%s' % (child.bName, child_image, child_desc, sep)
+    return ret[0:-len(sep)]
+
+def get_type(path):
+    id = board._get_board_id_from_path(path)
+    data = board.get_board_info(id)
+    return data.bType
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="${lang}">
+<head>
+% if title is UNDEFINED:
+    <title>오류</title>
+% else:
+    <title>${title}</title>
+% endif
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="/static/style/mobile.css">		
+% if board_path is not UNDEFINED:
+% if feed is not UNDEFINED:
+    <link rel="alternate" type="application/rss+xml" href="/${board_path}/+rss" title="RSS 피드 (/${board_path})" />
+    <link rel="alternate" type="application/atom+xml" href="/${board_path}/+atom" title="Atom 피드 (/${board_path})" />
+% endif
+% endif
+%if feeds is not UNDEFINED:
+%for f in feeds:
+    <link rel="alternate" type="application/${f['type']}+xml" href="${f['path']}" title="${f['name']}" />
+% endfor
+% endif
+</head>
+
+<body>
+<div id="header">
+    <a href="/m"><img src="/static/image/logo.png" alt="메인 화면" /></a>
+    <br />
+%if board_path is UNDEFINED:
+    %if board_desc is UNDEFINED:
+    <a class="title" href="#">오류</a>
+    %else:
+    <a class="title" href="#">${board_desc}</a>
+    %endif
+%else:
+    <a class="title" href="/m/${board_path}/+cover" target="_blank">${board_desc}</a>
+%endif
+    <br />
+## 부모 보드
+%if board_path is not UNDEFINED:
+    ${traverse_board_path(board_path)}
+%else:
+    <a class="dirlink" href="/m">게시판</a>
+%endif
+<br />
+## 자식 보드
+% if board_path is not UNDEFINED:
+    % if get_type(board_path) > 0:
+    ${traverse_child_board(board_path)}
+    % endif
+% endif
+
+</div>
+
+<div id="body">
+    ${next.body()}
+</div> <!-- end of body -->
+
+<div id="footer">
+    <a href="/m/divisionCS">전산학과</a> |
+    <a href="/m/friends">친목</a> |
+    <a href="/m/course">개설 교과목</a>
+    <br />
+        ## 로그인을 비롯한 다른 버튼들을 여기로.
+%if ctx.session is UNDEFINED:
+    <a href="/m/+join">회원 가입</a> |
+    <a href="/m/+login">로그인</a>
+%elif not ctx.session.has_key('uid'):
+    <a href="/m/+join">회원 가입</a> |
+    <a href="/m/+login">로그인</a>
+% else:
+    <a href="/m/+u/${ctx.session.username}/+my_board">내 게시판</a> |
+    <a href="/m/+u/${ctx.session.username}/+favorites">즐겨찾기</a> |
+    <a href="/m/+u/${ctx.session.username}">내 정보</a> |
+    <a href="/m/+logout">로그아웃</a>
+% endif
+    <br />
+    노아는 동아리 <a href="http://haje.org">하제</a>에서 관리합니다. <a href="/m/+credits">개발자 정보</a>
+</div>
+    
+</body>
+</html>

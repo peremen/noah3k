@@ -1,0 +1,150 @@
+hr {
+    color: #3C78B5;
+    background-color: #3C78B5;
+    height: 2px;
+    border: 0;
+}
+
+body {
+    font-size: 140%;
+    line-height: 160%;
+    margin: 0;
+    padding: 0;
+}
+
+a.servicelink        { text-decoration: none; color: black }
+a.servicelink:hover    { text-decoration: none; color: red }
+a.favlink            { text-decoration: none; color: orange; font-weight: bold }
+a.favlink:hover        { text-decoration: underline }
+a.dirlink            { text-decoration: none; color: orange; font-weight: bold }
+a.dirlink:hover        { text-decoration: underline }
+a.boardlink            { text-decoration: none; color: black }
+a.boardlink:hover    { background-color: #E0E0FF }
+a.listlink            { text-decoration: none; color: black }
+a.listlink:hover    { color: red }
+a.articlelink        { text-decoration: none; color: black }
+a.articlelink:hover    { text-decoration: underline }
+a.filelink            { font-weight: bold; text-decoration: none; color: gray }
+a.filelink:hover    { font-weight: bold; text-decoration: underline; color: red }
+
+img{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: middle;
+}
+
+#header img {
+    margin-bottom: 5px;
+}
+#header .title {
+    font-size: 1.6em;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+#footer {
+    background-color: rgb(237, 243, 254);
+    text-align: center;
+}
+
+#footer a {
+    text-decoration: none;
+    color: #555;
+
+}
+
+#footer a:hover {
+    color: #999;
+}
+
+table    { width:100%; margin-bottom: 10px }
+table.list     { border-bottom: 2px solid #3C78B5; }
+table.list td     { border-right: 0px;}
+table.list th     { font-weight: bold; border-bottom: 2px solid #3C78B5; padding-top: 8px; border-right: 0px; }
+table.list tr    { font-size: 1em }
+table.list tr.even    { background: rgb(237,243,254); }
+table.list tr.odd  { background: #FFFFFF; }
+table.list tr span#commentCount { 
+    color: #666666;
+    padding-left: 5px;
+    font-size: 80%; 
+}
+
+a.button {
+    text-decoration: none;
+    background-color:#555;
+    color: #fff;
+    font-size:1em;
+    margin:0.3em 0.5em 0.5em 0em;
+    padding:0.4em 0.6em 0.4em 0.6em;
+
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+
+}
+a.button:hover { 
+    background-color: #999;
+ }
+
+ul.buttonlist {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    text-align: center;
+}
+
+ul.buttonlist li {
+    display: inline;
+}
+
+#article h3 {
+    font-size: 1.1em;
+    font-weight: normal;
+    margin: 0;
+    padding: 0.5em 0.5em;
+    background-color: #eee;
+    color: #000;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+#article .writer {
+    display: block;
+    float: left;
+}
+
+#article .last_modified {
+    display: block;
+    float: right;
+}
+
+.emphasized a, #article .emphasized {
+    color: red;
+}
+
+#comment_list{
+    padding-top: 5px;
+}
+
+#comment_list td.writer {
+    color: gray;
+    text-align: right;
+    font-size: 90%;
+    width: 4em;
+}
+
+#comment_list .button a{
+    padding: 0.2em;
+}
+
+#input {
+    text-align: center;
+    padding: 5px 10px 5px 10px;
+    border: 1px solid #c0c0c0;
+    background-color: #F0F0F0;
+    margin: 10px 0 10px 0;
+}
