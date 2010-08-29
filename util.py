@@ -1,14 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import os
 import web
 from web.contrib.template import render_mako
 import config
-import board, user, article
-from cgi import parse_qs
-from datetime import datetime
-import posixpath
+import os, re
 
 desktop_render = render_mako(
     directories = [os.path.join(os.path.dirname(__file__), 'templates/desktop/').replace('\\','/'),],
@@ -42,3 +38,16 @@ def confirmation_helper(func):
             raise web.seeother(i.referer)
     return _exec
 
+def validate_username(name):
+    match = re.search(r'\W+', name)
+    if match == None:
+        return True
+    else:
+        return False
+
+def validate_boardname(name):
+    match = re.search(r'[^\w/]+', name)
+    if match == None:
+        return True
+    else:
+        return False

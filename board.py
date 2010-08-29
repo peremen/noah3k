@@ -3,8 +3,7 @@
 
 import config
 import web
-
-import user
+import user, util
 import posixpath
 
 """
@@ -73,6 +72,8 @@ def create_board(parent_id, settings):
     original_board_info = get_board_info(parent_id)
     if original_board_info == None:
         return (False, 'NO_SUCH_BOARD')
+    if not util.validate_boardname(settings['path']):
+        return (False, 'INVALID_BOARDNAME')
     check = _get_board_id_from_path(settings['path'])
     if check > 0:
         return (False, 'BOARD_ALREADY_EXIST')
@@ -104,6 +105,8 @@ def edit_board(board_id, settings):
         return (False, 'NO_SUCH_BOARD')
     settings['board_id'] = board_id
     new_path = posixpath.join(settings['path'], settings['name'])
+    if not util.validate_boardname(new_path):
+        return (False, 'INVALID_BOARDNAME')
     old_path = original_board_info.bName
     old_directory = posixpath.dirname(old_path)
     new_directory = settings['path']

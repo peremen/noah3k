@@ -4,6 +4,7 @@
 import config
 import web
 import crypt, hashlib, hmac
+import util
 
 """
 사용자 로그인, 로그아웃, 세션을 관리한다.
@@ -227,6 +228,8 @@ def join(member):
     @rtype tuple
     @return: 회원 등록 성공 여부(T/F)와 오류 코드(실패 시)를 포함하는 튜플.
     """
+    if not util.validate_username(member['username']):
+        return (False, 'INVALID_USERNAME')
     if _get_uid_from_username(member['username']) > 0:
         return (False, 'ID_ALREADY_EXISTS')
     result = db.insert('Users', uNick = member['nick'], uEmail = member['email'],
