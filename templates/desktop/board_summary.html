@@ -1,37 +1,32 @@
 <%inherit file="base.html" />
 <%
-import user
-import board
+import user, board, util
 import posixpath
-from pygments import highlight
-from pygments.lexers import BBCodeLexer
-from pygments.formatters import HtmlFormatter
+from web import ctx
 def get_formatted_username(uid):
     u = user.get_user(uid)[1]
     return "%(id)s (%(nick)s)" % {'id': u['uId'], 'nick':u['uNick']}
-
-def format(original):
-    return highlight(original, BBCodeLexer(), HtmlFormatter())
 %>
 <div>
     <div style="float: left; margin: 0 5px 0 5px;">
+% if ctx.session.has_key('uid') and ctx.session.uid == board_info.uSerial:
         <!-- 게시판 수정 -->
-        <a href="/${board_path}/+modify">고치기</a>
+        <a class="button" href="/${board_path}/+modify">고치기</a>
         <!-- 게시판 백업 -->
-        <a href="/${board_path}/+backup">백업</a>
+        <a class="button" href="/${board_path}/+backup">백업</a>
         <!-- 게시판 통계 -->
-        <a href="/${board_path}/+statistics">통계</a>
+% endif
+        <a class="button" href="/${board_path}/+statistics">통계</a>
     </div>
 
+% if ctx.session.has_key('uid') and ctx.session.uid == board_info.uSerial:
     <!-- 게시판 삭제 -->
     <div style="float: right; margin: 0 5px 0 5px;">
-        <a href="/${board_path}/+delete">이 게시판 없애기</a>
-    </div>
-
+        <a class="button" href="/${board_path}/+delete">이 게시판 없애기</a>
     <!-- 게시판 생성  -->
-    <div style="float: right; margin: 0 5px 0 5px;">
-        <a href="/${board_path}/+create_board">하위 게시판 만들기</a>
+        <a class="button" href="/${board_path}/+create_board">하위 게시판 만들기</a>
     </div>
+% endif
     </form>
 </div>
 <br />
@@ -94,7 +89,7 @@ def format(original):
         <div class="left-container">한 바닥 설명</div>
         <span class="sep">:</span>
         <div style="border: solid 1px lightgray; margin-left:9em">
-            <span style="font-size: 0.9em">${board_info.bInformation}</span>
+            <span style="font-size: 0.9em">${util.format(board_info.bInformation)}</span>
         </div>
     </div>
 </div>

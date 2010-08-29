@@ -66,10 +66,6 @@ def get_formatted_username(uid):
 <div id="listmenu">
 <!-- 글쓰기 -->
 <a class="button" href="/${board_path}/+write" title="새 글을 작성합니다">글쓰기</a> 
-<!-- 안 읽은 글 -->
-<a class="button" href="/${board_path}/+new_article" title="읽지 않은 글들을 봅니다">안읽은글</a> 
-<a class="button" href="/${board_path}/+subscribe" title="새글읽기 기능을 토글합니다.">구독하기</a> 
-<a class="button" href="/${board_path}/+mark_as_read_all" title="읽지 않은 글들을 봅니다">새글없애기</a>
 <!-- 보드 관리 -->
 <a class="button" href="/${board_path}/+summary" title="이 보드의 정보를 보거나 수정합니다">정보</a> 
 
@@ -102,17 +98,6 @@ def get_formatted_username(uid):
     % endif
 % endif
 </center>
-
-<!-- 검색 -->				
-<div id="search">
-    <form name="search_form" method="post" style="margin: 0; padding: 0;" action="/${board_path}/+search">
-
-        <input name="category" type="hidden" value="title"/>
-        <!--<span id="subtitle">제목찾기</span> <span class="sep">:</span>-->
-        <input name="keyword" type="text"/>
-        <input name="submit" type="submit" value="검색"/>
-    </form>
-</div>
 
 </div> <!-- end of menu -->
 

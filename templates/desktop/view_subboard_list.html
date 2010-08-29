@@ -32,6 +32,7 @@
     </tr>
     % endfor
     % endif
-
 </table>
-
+%if board_path != '':
+<p> <a class="button" href="/${board_path}/+summary">정보</a> </p> 
+% endif
