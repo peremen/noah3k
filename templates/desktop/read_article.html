@@ -3,9 +3,7 @@
 import user
 import article as A
 from web import ctx
-from pygments import highlight
-from pygments.lexers import BBCodeLexer
-from pygments.formatters import HtmlFormatter
+import util
 def get_formatted_username(uid):
     u = user.get_user(uid)
     if u[0]:
@@ -13,8 +11,6 @@ def get_formatted_username(uid):
     else:
         return u"탈퇴한 회원"
 
-def format(original):
-    return highlight(original, BBCodeLexer(), HtmlFormatter())
 %>
 <div id="article">
     <!-- 글 -->
@@ -42,7 +38,7 @@ def format(original):
     % endif
 
     <div id="content">
-${format(article['aContent'])}
+${util.format(article['aContent'])}
     </div>
     <!-- 코멘트 -->
     <div id="comment">

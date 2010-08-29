@@ -3,18 +3,13 @@
 import user
 import article as A
 from web import ctx
-from pygments import highlight
-from pygments.lexers import BBCodeLexer
-from pygments.formatters import HtmlFormatter
+import util
 def get_formatted_username(uid):
     u = user.get_user(uid)
     if u[0]:
         return "%(id)s (%(nick)s)" % {'id': u[1]['uId'], 'nick':u[1]['uNick']}
     else:
         return u"탈퇴한 회원"
-
-def format(original):
-    return highlight(original, BBCodeLexer(), HtmlFormatter())
 %>
 <div id="article">
     <h3>${article['aTitle']}</h3>
@@ -27,7 +22,7 @@ def format(original):
     <div style="clear: both;" />
 </div> <!-- end of article -->
 <hr />
-${format(article['aContent'])}
+${util.format(article['aContent'])}
 <hr />
 
 <!-- 코멘트 -->

@@ -99,7 +99,6 @@ class article_actions:
 
     @util.session_helper
     def modify_post(self, mobile, board_name, board_id, article_id, current_uid = -1):
-        current_uid = self.session_helper(mobile)
         a = dict(title = web.input().title, body = web.input().content)
         board_info = board.get_board_info(board_id)
         ret = article.modify_article(current_uid, board_id, article_id, a)

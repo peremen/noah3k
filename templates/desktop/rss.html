@@ -1,5 +1,5 @@
 <% from datetime import datetime
-import board
+import board, util
 def rfc822(dt):
     return "%s, %02d %s %04d %02d:%02d:%02d +0900" % (
         ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"][dt.weekday()],
@@ -29,7 +29,7 @@ def rfc822(dt):
         <item>
             <title>${article.aTitle}</title>
             <link>http://noah.kaist.ac.kr${board._get_path_from_board_id(article.bSerial)}/+read/${article.aSerial}</link>
-            <description>${article.aContent|x}</description>
+            <description>${util.format(article.aContent)|x}</description>
             <pubDate>${rfc822(article.aDatetime)}</pubDate>
             <guid>http://noah.kaist.ac.kr${board._get_path_from_board_id(article.bSerial)}/+read/${article.aSerial}</guid>
         </item>
