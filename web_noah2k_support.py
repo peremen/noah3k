@@ -99,3 +99,6 @@ class noah2k_support:
         else:
             raise web.notfound(desktop_render.error(lang='ko', error_message = 'NO_ATTACHMENT_SPECIFIED'))
         return # TODO: 첨부 파일 URL scheme 정할 것
+
+    def index(self, query_string):
+        raise web.seeother('/')
