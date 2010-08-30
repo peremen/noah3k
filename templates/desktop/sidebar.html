@@ -13,7 +13,14 @@ def get_friend_boards(type):
     return friend_list
 %>
 % if ctx.session.has_key('uid'):
-<div class="heading">내 게시판</div>
+<div class="heading">내 게시판
+    <div style="float: right;">
+        <span style="color: black; font-size: 0.9em; font-weight: normal;">
+            <a style="color: black; text-decoration: none;" href="#" id="fold_my_boards" onclick="fold('my_boards', 'fold_my_boards');">(접기)</a>
+        </span>
+    </div>
+</div>
+<div id="my_boards" style="display: inline;">
 <ul>
 <% not_has_my_board = True %>
 % for my_board in user.get_owned_board(ctx.session.uid):
@@ -36,6 +43,7 @@ ${my_board.bDescription}\
     % endif
 % endfor
 </ul>
+</div>
 <br />
 
 <div class="heading">즐겨찾기 <span style="color: black; font-size:0.9em; font-weight: normal;"><a class="favlink"\
@@ -50,7 +58,14 @@ ${my_board.bDescription}\
 % else:
  href="#">(사용할 수 없음)\
 % endif
-</a></span></div>
+</a></span>
+    <div style="float: right;">
+        <span style="color: black; font-size: 0.9em; font-weight: normal;">
+            <a style="color: black; text-decoration: none;" href="#" id="fold_favorites" onclick="fold('favorites', 'fold_favorites');">(접기)</a>
+        </span>
+    </div>
+</div>
+<div id="favorites" style="display: inline;">
 <ul>
 <% not_has_fav_board = True %>
 % for fav_board in user.get_favorite_board(ctx.session.uid):
@@ -76,6 +91,7 @@ ${my_board.bDescription}\
     % endif
 % endfor
 </ul>
+</div>
 <br />
 % endif
 

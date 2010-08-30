@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+<%! scripts = ['/static/scripts/fold.js'] %><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="${lang}">
 <head>
@@ -20,6 +20,7 @@
     <link rel="alternate" type="application/${f['type']}+xml" href="${f['path']}" title="${f['name']}" />
 % endfor
 % endif
+${self.head_scripts()}
 </head>
 
 <body>
@@ -52,3 +53,15 @@
 </div> <!-- end of area -->
 </body>
 </html>
+<%def name="head_scripts()">
+<% 
+    all_scripts = []
+    t = self
+    while t:
+      all_scripts = getattr(t.module, 'scripts', []) + all_scripts
+      t = t.inherits
+%>
+% for script in all_scripts:
+    <script src="${script}" type="text/javascript"></script>
+% endfor
+</%def>
