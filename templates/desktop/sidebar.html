@@ -16,7 +16,7 @@ def get_friend_boards(type):
 <div class="heading">내 게시판
     <div style="float: right;">
         <span style="color: black; font-size: 0.9em; font-weight: normal;">
-            <a style="color: black; text-decoration: none;" href="#" id="fold_my_boards" onclick="fold('my_boards', 'fold_my_boards');">(접기)</a>
+            <a style="color: black; text-decoration: none;" href="#" id="fold_my_boards" onclick="$('#my_boards').toggle('fast');">(접기/펴기)</a>
         </span>
     </div>
 </div>
@@ -61,7 +61,7 @@ ${my_board.bDescription}\
 </a></span>
     <div style="float: right;">
         <span style="color: black; font-size: 0.9em; font-weight: normal;">
-            <a style="color: black; text-decoration: none;" href="#" id="fold_favorites" onclick="fold('favorites', 'fold_favorites');">(접기)</a>
+            <a style="color: black; text-decoration: none;" href="#" id="fold_favorites" onclick="$('#favorites').toggle('fast');">(접기/펴기)</a>
         </span>
     </div>
 </div>

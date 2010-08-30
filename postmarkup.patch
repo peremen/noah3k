@@ -1,5 +1,5 @@
 --- postmarkup.py.orig	2010-08-30 00:19:00.000000000 +0900
-+++ postmarkup.py	2010-08-31 01:59:09.000000000 +0900
++++ postmarkup.py	2010-08-31 02:17:55.000000000 +0900
 @@ -10,6 +10,7 @@
  import re
  from urllib import quote, unquote, quote_plus, urlencode
@@ -54,7 +54,7 @@
          if self.params:
 -            return u'<blockquote><em>%s</em><br/>'%(PostMarkup.standard_replace(self.params))
 +            quote_id = random.randint(0, sys.maxint)
-+            return u'<em><a class="quote" href="#" onclick="fold_without_text(\'quote%s\');">%s</a></em><blockquote id="quote%s">'%(quote_id, PostMarkup.standard_replace(self.params), quote_id)
++            return u'<em><a class="quote" href="#" onclick="$(\'#quote%s\').toggle(\'fast\');">%s</a></em><blockquote id="quote%s">'%(quote_id, PostMarkup.standard_replace(self.params), quote_id)
          else:
              return u'<blockquote>'
  
