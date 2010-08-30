@@ -1,2 +1,73 @@
 <%inherit file="base.html" />
-노아에 오신 것을 환영합니다.
+<table cellpadding="5px">
+    <tr>
+        <td width="50%">
+            <span style="font-size: 1.4em; font-weight: bold;"<a style="color: #000; text-decoration: none;" href="${notice_board_path}">전산학과 공지</a></span>
+    <!-- 학과 공지 -->
+    <table border="0" cellspacing="0" cellpadding="4" style="margin-bottom: 0px" class="list">
+        <tr align="center" class="head">
+            <th>제목</th>
+            <th>날짜</th>
+        </tr>
+        <% i = 1 %>
+        % for a in notice_articles:
+        % if i%2 == 0:
+        <tr class="even">
+        % else:
+        <tr class="odd">
+        % endif
+        <% i = i + 1 %>
+            <!-- 제목 --> 
+            <td>
+        %if a.aLevel > 0:
+            <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (a.aLevel-1)}px" />
+        %endif
+            <a href="${notice_board_path}/+read/${a.aSerial}" class="articlelink">${a.aTitle}
+            </a>
+            </td>
+            <!-- 날짜 -->
+            <td align="center">${a.aDatetime.strftime('%Y-%m-%d')}</td>
+        </tr>
+        % endfor
+    </table>
+</td>
+<td>
+<script src="http://widgets.twimg.com/j/2/widget.js"></script>
+<script>
+new TWTR.Widget({
+  version: 2,
+  type: 'profile',
+  rpp: 4,
+  interval: 6000,
+  width: 'auto',
+  height: 150,
+  theme: {
+    shell: {
+      background: '#edf3fe',
+      color: '#000000'
+    },
+    tweets: {
+      background: '#ffffff',
+      color: '#000000',
+      links: '#ffa500'
+    }
+  },
+  features: {
+    scrollbar: true,
+    loop: false,
+    live: true,
+    hashtags: true,
+    timestamp: true,
+    avatars: false,
+    behavior: 'all'
+  }
+}).render().setUser('kaistcsdept').start();
+</script>
+</td>
+</tr>
+</table>
+
+<span style="font-size: 1.4em; font-weight: bold;">게시판 목록</span>
+<div>
+<%include file="view_subboard_list_content.html" />
+</div>
