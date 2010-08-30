@@ -41,7 +41,10 @@ class board_actions:
             mobile = True
         else:
             mobile = False
-        board_id = board._get_board_id_from_path(board_name)
+        if board_name == '^root':
+            board_id = 1
+        else:
+            board_id = board._get_board_id_from_path(board_name)
         if board_id < 0:
             raise web.notfound(render[mobile].error(lang='ko', error_message = 'INVALID_BOARD'))
         try:

@@ -87,6 +87,9 @@ class view_board:
             mobile = True
         else:
             mobile = False
+        if board_name == '*' or board_name == '^root':
+            v = board_actions()
+            return v.subboard_list_get(mobile)
         page_size = 20
         board_id = board._get_board_id_from_path(board_name)
         if board_id < 0:
