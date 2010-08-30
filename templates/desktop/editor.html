@@ -1,6 +1,7 @@
 <%inherit file="base.html" />
+<%! scripts = ['/static/scripts/jquery-multifile.js'] %>
 <p>${action_name}</p>
-<form name="write_form" method="POST" action="/${board_path}/+${action}">
+<form name="write_form" enctype="multipart/form-data" method="POST" action="/${board_path}/+${action}">
 <div id="row">
     <div class="left-container">제목</div>
     <span class="sep">:</span>
@@ -20,10 +21,21 @@
     <textarea name="content" style="font-size: 0.9em; width: 550px; height: 360px">${body}</textarea>
 %endif
 </div>
+%if attachments is not UNDEFINED:
+<% i = 1 %>
+%for a in attachments:
 <div id="row">
-    <div class="left-container">첨부 #</div>
+    <div class="left-container">기존 첨부 ${i}</div>
     <span class="sep">:</span>
-    <input name="moreattach1" type="file">
+    <input name="new_attachment" class="multi" type="file" />
+</div>
+<% i = i + 1 %>
+% endfor
+% endif
+<div id="row">
+    <div class="left-container">첨부</div>
+    <span class="sep">:</span>
+    <input name="new_attachment" class="multi" type="file" />
 </div>
 
 <div style="text-align: right; width: 52em;">

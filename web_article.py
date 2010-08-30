@@ -69,7 +69,7 @@ class article_actions:
         board_info = board.get_board_info(board_id)
         board_desc = board_info.bDescription
         article_ = article.get_article(board_id, article_id)
-        quote_text = u'%s님의 글 "%s"에서:' % (user._get_username_from_uid(article_.uSerial), article_.aTitle)
+        quote_text = u'%s님의 글 "%s"에서:' % (user._get_username_from_uid(article_.uSerial), util.remove_bracket(article_.aTitle))
         body = '\n\n\n[quote=%s]%s\n[/quote]' % (quote_text, article_.aContent)
         return render[mobile].editor(title = u"답글 쓰기 - /%s - Noah3K" % board_name,
                 action='reply/%s' % article_id, action_name = u"답글 쓰기",

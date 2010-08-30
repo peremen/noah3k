@@ -1,5 +1,5 @@
 --- postmarkup.py.orig	2010-08-30 00:19:00.000000000 +0900
-+++ postmarkup.py	2010-08-31 02:17:55.000000000 +0900
++++ postmarkup.py	2010-08-31 04:23:35.000000000 +0900
 @@ -10,6 +10,7 @@
  import re
  from urllib import quote, unquote, quote_plus, urlencode
@@ -144,11 +144,19 @@
                  pos = end_pos+1
                  continue
  
-@@ -859,7 +878,11 @@
+@@ -858,8 +877,19 @@
+                     if post[end_pos] != '"':
                          end_pos = post_find(u']', end_pos+1)
                          if end_pos == -1:
++                            yield TOKEN_TEXT, post[pos:], pos, len(post)
                              return
 -                        yield TOKEN_TAG, post[pos:end_pos+1], pos, end_pos+1
++                        has_another_open = post_find(u'[', pos+1)
++                        if has_another_open != -1 and has_another_open < end_pos:
++                            if _tag_name(post[pos:end_pos+1]) not in supported_tags:
++                                yield TOKEN_TEXT, post[pos:has_another_open], pos, has_another_open
++                                pos = has_another_open
++                                continue
 +                        token = post[pos:end_pos+1]
 +                        token_type = TOKEN_TAG
 +                        if _tag_name(token) not in supported_tags:
@@ -157,7 +165,7 @@
                      else:
                          end_pos = find_first(post, end_pos, re_quote_end)
                          if end_pos==-1:
-@@ -871,9 +894,17 @@
+@@ -871,9 +901,17 @@
                              end_pos = post_find(u']', end_pos+1)
                              if end_pos == -1:
                                  return
@@ -177,7 +185,7 @@
                      pos = end_pos+1
                  except IndexError:
                      return
-@@ -1164,16 +1195,15 @@
+@@ -1164,16 +1202,15 @@
  
              elif tag_type == TOKEN_TAG:
                  tag_token = tag_token[1:-1].lstrip()

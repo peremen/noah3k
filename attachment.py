@@ -22,6 +22,7 @@ else:
 
 prefix = web.config.attachment_path
 
+# noah2k 첨부 파일 이름 형식: (attachment_id)_(attachment_filename)
  
 def get_attachment(article_id):
     # 데이터베이스: Supplement

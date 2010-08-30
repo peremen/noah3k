@@ -59,20 +59,24 @@ def format(original):
     return b(process_noah12k_quote(original))
     #return b(original)
 
+def remove_bracket(original):
+    # BBCode 파서 안에 [/]이 들어가면 파서가 헷갈리므로
+    # 글 제목에 들어간 [/]을 (/)으로 바꿈.
+    return original.replace('[', '(').replace(']', ')')
+
 def process_noah12k_quote(original):
     # noah 1k/2k의 인용구를 BBCode 형태로 바꿔 줌.
     # 반드시 HTML로 변환하기 전에 호출해야 함.
+    indent = '> '
     header = [u'"에서: ',u'"에서 : ']
     lines = original.split('\n')
     levels = []
     ret = u''
     for i in range(0, len(lines)):
-        last_q = lines[i].rfind('>')
-        lines[i] = lines[i][last_q + 1:]
-        if last_q < 0:
-            last_q = 0
-        else:
-            last_q = last_q / 2 + 1
+        last_q = 0
+        while lines[i].find(indent) == 0:
+            last_q = last_q + 1
+            lines[i] = lines[i][len(indent):]
         levels.append(last_q)
     assert(len(levels) == len(lines))
 
@@ -101,7 +105,7 @@ def process_noah12k_quote(original):
         while levels[i] != prevLevel:
             if levels[i] > prevLevel:
                 if lines[i-1].endswith(header[0]) or lines[i-1].endswith(header[1]):
-                    ret += '[quote=%s]\n' % lines[i-1]
+                    ret += '[quote=%s]\n' % remove_bracket(lines[i-1])
                 else:
                     ret += '[quote]\n'
                 prevLevel = prevLevel + 1
