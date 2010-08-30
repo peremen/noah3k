@@ -13,10 +13,12 @@ from web_article import article_actions
 from web_board import board_actions
 from web_user import personal_page, personal_actions
 from web_main import main_actions
+from web_noah2k_support import noah2k_support
 
 urls = (
 # 다른 모든 action은 view_board 위로 올라가야 함.
-    '/(.*)/', 'redirect',
+    r'/(.*)/', 'redirect',
+    r'/(\w*).jsp', 'noah2k_support',
     r'/(m|)', 'main_page',
     r'/(m/|)\+help/(\S*)', 'help',
     r'/(m/|)\+u/(\S*)/\+(\w*)', 'personal_actions',

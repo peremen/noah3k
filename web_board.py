@@ -186,9 +186,9 @@ class board_actions:
         if ret[0] == False:
             return render[mobile].error(lang='ko', error_message = ret[1])
         if mobile:
-            raise web.seeother('%s' % (new_path))
-        else:
             raise web.seeother('/m%s' % (new_path))
+        else:
+            raise web.seeother('%s' % (new_path))
 
     @util.session_helper
     def modify_get(self, mobile, board_name, board_id, current_uid = -1):
