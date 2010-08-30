@@ -1,6 +1,14 @@
 --- postmarkup.py.orig	2010-08-30 00:19:00.000000000 +0900
-+++ postmarkup.py	2010-08-30 00:18:43.000000000 +0900
-@@ -53,7 +53,7 @@
++++ postmarkup.py	2010-08-31 01:59:09.000000000 +0900
+@@ -10,6 +10,7 @@
+ import re
+ from urllib import quote, unquote, quote_plus, urlencode
+ from urlparse import urlparse, urlunparse
++import random, sys
+ 
+ pygments_available = True
+ try:
+@@ -53,7 +54,7 @@
      if match is None:
          return ""
      excerpt = match.group(0)
@@ -9,7 +17,7 @@
      return _re_remove_markup.sub("", excerpt)
  
  def strip_bbcode(bbcode):
-@@ -64,10 +64,10 @@
+@@ -64,10 +65,10 @@
  
      """
  
@@ -22,7 +30,7 @@
  
      """Create a postmarkup object that converts bbcode to XML snippets. Note
      that creating postmarkup objects is _not_ threadsafe, but rendering the
-@@ -84,7 +84,7 @@
+@@ -84,7 +85,7 @@
  
      """
  
@@ -31,7 +39,7 @@
      postmarkup_add_tag = postmarkup.tag_factory.add_tag
  
      def add_tag(tag_class, name, *args, **kwargs):
-@@ -306,7 +306,7 @@
+@@ -306,7 +307,7 @@
              return u""
  
          if self.domain:
@@ -40,16 +48,24 @@
          else:
              return u""
  
-@@ -345,7 +345,7 @@
+@@ -345,13 +346,14 @@
  
      def render_open(self, parser, node_index):
          if self.params:
 -            return u'<blockquote><em>%s</em><br/>'%(PostMarkup.standard_replace(self.params))
-+            return u'<em>%s</em><blockquote>'%(PostMarkup.standard_replace(self.params))
++            quote_id = random.randint(0, sys.maxint)
++            return u'<em><a class="quote" href="#" onclick="fold_without_text(\'quote%s\');">%s</a></em><blockquote id="quote%s">'%(quote_id, PostMarkup.standard_replace(self.params), quote_id)
          else:
              return u'<blockquote>'
  
-@@ -405,7 +405,7 @@
+ 
+     def render_close(self, parser, node_index):
+-        return u"</blockquote>"
++        return u"</blockquote><br />"
+ 
+ 
+ class SearchTag(TagBase):
+@@ -405,7 +407,7 @@
  
          formatter = HtmlFormatter(linenos=self.line_numbers, cssclass="code")
          hcontents = highlight(contents, lexer, formatter)
@@ -58,7 +74,7 @@
  
          return hcontents
  
-@@ -420,7 +420,7 @@
+@@ -420,7 +422,7 @@
  
          contents = _escape_no_breaks(self.get_contents(parser))
          self.skip_contents(parser)
@@ -67,7 +83,7 @@
  
  
  class ImgTag(TagBase):
-@@ -778,7 +778,7 @@
+@@ -778,7 +780,7 @@
      standard_replace = MultiReplace({   u'<':u'&lt;',
                                          u'>':u'&gt;',
                                          u'&':u'&amp;',
@@ -76,7 +92,7 @@
  
      standard_unreplace = MultiReplace({  u'&lt;':u'<',
                                           u'&gt;':u'>',
-@@ -802,11 +802,10 @@
+@@ -802,11 +804,10 @@
      _re_quote_end = re.compile(u'\"|\]', re.UNICODE)
  
      # I tried to use RE's. Really I did.
@@ -91,7 +107,7 @@
  
          text = True
          pos = 0
-@@ -817,9 +816,23 @@
+@@ -817,9 +818,23 @@
              except AttributeError:
                  return -1
  
@@ -115,7 +131,7 @@
          while True:
  
              brace_pos = post_find(u'[', pos)
-@@ -846,7 +859,11 @@
+@@ -846,7 +861,11 @@
                  continue
  
              if post[end_pos] == ']':
@@ -128,7 +144,7 @@
                  pos = end_pos+1
                  continue
  
-@@ -859,7 +876,11 @@
+@@ -859,7 +878,11 @@
                          end_pos = post_find(u']', end_pos+1)
                          if end_pos == -1:
                              return
@@ -141,7 +157,7 @@
                      else:
                          end_pos = find_first(post, end_pos, re_quote_end)
                          if end_pos==-1:
-@@ -871,9 +892,17 @@
+@@ -871,9 +894,17 @@
                              end_pos = post_find(u']', end_pos+1)
                              if end_pos == -1:
                                  return
@@ -161,7 +177,7 @@
                      pos = end_pos+1
                  except IndexError:
                      return
-@@ -1164,16 +1193,15 @@
+@@ -1164,16 +1195,15 @@
  
              elif tag_type == TOKEN_TAG:
                  tag_token = tag_token[1:-1].lstrip()

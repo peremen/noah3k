@@ -11,3 +11,9 @@ function fold(div_id, a_id){
         }
     }
 }
+
+function fold_without_text(el_id){
+  var el = document.getElementById(el_id);
+  el.style.display = (el.style.display == "") ? "none" : "";
+}
+

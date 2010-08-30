@@ -388,3 +388,8 @@ img.type {
     border: 0;
     vertical-align: text-bottom;
 }
+
+a.quote {
+    text-decoration: none;
+    color: #555;
+}
