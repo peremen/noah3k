@@ -52,16 +52,16 @@ class article_actions:
 
         if not a:
             raise web.notfound(render[mobile].error(lang="ko", error_message = u"NO_SUCH_ARTICLE"))
-
         if a.aIndex > 1:
             prev_id = article.get_article_id_by_index(board_id, a.aIndex - 1)
         if a.aIndex < article._get_article_count(board_id):
             next_id = article.get_article_id_by_index(board_id, a.aIndex + 1)
+        page_no = article.get_page_by_article_id(board_id, article_id, config.page_size)
 
         return render[mobile].read_article(article = a,
             title = u"%s - %s - Noah3K" % (a.aIndex, a.aTitle),
             board_path = board_name, board_desc = board_desc,
-            comments = comment, lang="ko", 
+            comments = comment, lang="ko", page_no = page_no,
             prev_id = prev_id, next_id = next_id, feed = True)
 
     @util.session_helper

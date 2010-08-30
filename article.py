@@ -68,6 +68,19 @@ def get_article_id_by_index(board_id, index):
         return -1
     return retvalue
 
+def get_page_by_article_id(board_id, article_id, page_size):
+    article_count = _get_article_count(board_id)
+    page_count = _get_total_page_count(board_id, page_size)
+    if article_count < 0:
+        return -1
+    result = db.select('Articles', locals(), what='aIndex', where = 'bSerial = $board_id AND aSerial = $article_id')
+    index = -1
+    try:
+        index = result[0].aIndex
+    except:
+        return -1
+    return page_count - (article_count - index) / page_size
+
 def get_article(board_id, article_id):
     val = dict(board_id = board_id, article_id = int(article_id))
     result = db.select('Articles', val, where='bSerial = $board_id AND aSerial = $article_id')

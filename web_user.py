@@ -60,7 +60,7 @@ class personal_actions:
             raise web.notfound(render[mobile].error(lang='ko', error_message = 'INVALID_ACTION'))
 
     def favorite_rss_get(self, mobile, username, user_id):
-        articles = user.get_favorite_board_feed(user_id, 30)
+        articles = user.get_favorite_board_feed(user_id, config.favorite_feed_size)
         date = datetime.today()
         return desktop_render.rss(today = date,
                 articles = articles, board_path="+u/%s/+favorite_rss" % username,
@@ -68,7 +68,7 @@ class personal_actions:
                 link_address = 'http://noah.kaist.ac.kr/+u/%s' % username)
 
     def favorite_atom_get(self, mobile, username, user_id):
-        articles = user.get_favorite_board_feed(user_id, 30)
+        articles = user.get_favorite_board_feed(user_id, config.favorite_feed_size)
         date = datetime.today()
         return desktop_render.atom(today = date,
                 articles = articles, board_path="+u/%s/+favorite_atom" % username,

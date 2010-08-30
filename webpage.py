@@ -97,7 +97,6 @@ class view_board:
         if board_name == '*' or board_name == '^root':
             v = board_actions()
             return v.subboard_list_get(mobile)
-        page_size = 20
         board_id = board._get_board_id_from_path(board_name)
         if board_id < 0:
             raise web.notfound(render[mobile].error(lang='ko', error_message='INVALID_BOARD'))
@@ -114,13 +113,13 @@ class view_board:
         if qs:
             page = int(qs['page'][0])
         else:
-            page = article._get_total_page_count(board_id, page_size)
+            page = article._get_total_page_count(board_id, config.page_size)
 
         # bSerial: board_id, bName: 전체 경로, uSerial: 보대, bParent: 부모 보드, bDescription: 보드 짧은 설명
         # bDatetime: 개설 시간, bInformation: 보드 긴 설명, bType = 디렉터리/보드/블로그,
         # bReply: bWrite: bComment: 모름
-        a = article.get_article_list(board_id, page_size, page)
-        t = article._get_total_page_count(board_id, page_size)
+        a = article.get_article_list(board_id, config.page_size, page)
+        t = article._get_total_page_count(board_id, config.page_size)
         return render[mobile].view_board(lang="ko",
             title = u"%s - Noah3K" % board_info.bName,
             board_path = board_info.bName[1:],
