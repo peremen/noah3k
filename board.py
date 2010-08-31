@@ -27,7 +27,7 @@ def _get_board_id_from_path(path):
     result = db.select('Boards', val, where="bName = $board_path")
     try:
         retvalue = result[0]["bSerial"]
-    except:
+    except IndexError:
         return -1
     else:
         return retvalue
@@ -36,7 +36,7 @@ def _get_path_from_board_id(board_id):
     result = db.select('Boards', locals(), where='bSerial = $board_id')
     try:
         retvalue = result[0]['bName']
-    except:
+    except IndexError:
         return ''
     else:
         return retvalue
@@ -46,7 +46,7 @@ def get_parent(board_id):
     result = db.select('Boards', val, what='bParent', where='bSerial = $board_id')
     try:
         retvalue = result[0]
-    except:
+    except IndexError:
         return None
     else:
         return retvalue['bParent']
@@ -63,7 +63,7 @@ def get_board_info(board_id):
     result = db.select('Boards', val, where="bSerial = $board_id")
     try:
         retvalue = result[0]
-    except:
+    except IndexError:
         return None
     else:
         return retvalue

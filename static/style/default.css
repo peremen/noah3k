@@ -240,11 +240,15 @@ span#attachment {
     line-height: 150%;
 }
 
-#content div#images {
+#content .image {
     font-size: 0.9em;
     font-weight: bold;
     color: gray;
     margin-bottom: 25px;
+    border-style: none;
+}
+#content .image a{
+    border-style: none;
 }
 
 #content blockquote {

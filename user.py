@@ -72,11 +72,10 @@ def _get_uid_from_username(username):
     result = db.select('Users', val, where="uId = $username")
     try:
         retvalue = int(result[0]['uSerial'])
-    except:
+    except IndexError:
         return -1
     else:
         return retvalue
-    pass
 
 def _get_username_from_uid(uid):
     u = get_user(uid)
@@ -91,7 +90,7 @@ def update_password(uid, password):
     user = None
     try:
         user = result[0]
-    except:
+    except IndexError:
         return False
     return db.update('Users', where = 'uSerial = $uid', uPasswd = _generate_noah3k_password(password)) > 0
 
@@ -122,7 +121,7 @@ def login(username, password):
     user = None
     try:
         user = result[0]
-    except:
+    except IndexError:
         return (False, 'NO_SUCH_USER')
     if not password_set[len(user.uPasswd)](user.uPasswd, password):
         return (False, 'WRONG_PASSWORD')
@@ -182,8 +181,7 @@ def get_favorite_board_feed(uid, feed_size):
 def get_user(uid):
     """
     사용자 정보를 가져온다. 사용자 UID를 사용하므로, 사용자
-    이름이나 세션으로 조회하려면 L{_get_uid_from_username},
-    L{_get_uid_from_session_key} 같은 함수를 써서 UID로 변환해야 한다.
+    이름으로 조회하려면 L{_get_uid_from_username} 함수를 써서 UID로 변환해야 한다.
 
     @type uid: int
     @param uid: 사용자 UID.
@@ -194,7 +192,7 @@ def get_user(uid):
     result = db.select('Users', val, where="uSerial = $uid")
     try:
         retvalue = result[0]
-    except:
+    except IndexError:
         return (False, 'NO_SUCH_USER')
     else:
         return (True, retvalue)

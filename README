@@ -1,7 +1,7 @@
 == 필요한 파이썬 모듈 ==
 * web.py
-* SQLAlchemy
 * mako
+* python-magic
 
 == 코딩 레이아웃 ==
 get - write - edit - delete - 기타
@@ -76,6 +76,7 @@ get - write - edit - delete - 기타
 블로그와 관련이 있는 것으로 추정. DEPRECATED.
 
 === Supplement ===
+DEPRECATED. noah3k의 첨부 파일 핸들링은 아래를 참조.
 * sSerial: 첨부 파일 ID
 * aSerial: 첨부 파일이 연결된 글 ID
 * sFilename: 첨부 파일 이름
@@ -95,3 +96,9 @@ get - write - edit - delete - 기타
 * uSig: 시그
 * uPlan: 자기 소개
 
+== 첨부 파일 처리 ==
+static/uploads/(article_id)/filename - 원본 파일.
+      /thumbs_desktop/(article_id)/filename - 데스크톱을 위한 썸네일. 기본 640px.
+      /thumbs_mobile/(article_id)/filename - 모바일을 위한 썸네일. 기본 240px.
+
+* 이미지인 경우에는 업로드와 동시에 썸네일을 생성한다.

@@ -52,7 +52,7 @@ def get_title(article_id):
     result = db.select('Articles', val, where='aSerial = $article_id')
     try:
         retvalue = result[0]
-    except:
+    except IndexError:
         return None
     else:
         return retvalue.aTitle
@@ -64,7 +64,7 @@ def get_article_id_by_index(board_id, index):
     result = db.select('Articles', val, what='aSerial', where='bSerial = $board_id AND aIndex = $index')
     try:
         retvalue = result[0].aSerial
-    except:
+    except IndexError:
         return -1
     return retvalue
 
@@ -77,7 +77,7 @@ def get_page_by_article_id(board_id, article_id, page_size):
     index = -1
     try:
         index = result[0].aIndex
-    except:
+    except IndexError:
         return -1
     return page_count - (article_count - index) / page_size
 
@@ -86,7 +86,7 @@ def get_article(board_id, article_id):
     result = db.select('Articles', val, where='bSerial = $board_id AND aSerial = $article_id')
     try:
         retvalue = result[0]
-    except:
+    except IndexError:
         return None
     else:
         return retvalue
@@ -156,7 +156,7 @@ def modify_article(uid, board_id, article_id, article):
     article_info = None
     try:
         article_info = result[0]
-    except:
+    except IndexError:
         return (False, 'NO_SUCH_ARTICLE')
     if article_info.uSerial != uid:
         return (False, 'ACL_VIOLATION')
@@ -183,7 +183,7 @@ def delete_article(uid, article_id):
     article_info = None
     try:
         article_info = result[0]
-    except:
+    except IndexError:
         return (False, 'NO_SUCH_ARTICLE')
 
     if article_info.uSerial != uid:
@@ -224,7 +224,7 @@ def reply_article(uid, board_id, article_id, reply):
     board_info = None
     try:
         board_info = result[0]
-    except:
+    except IndexError:
         return (False, 'NO_SUCH_BOARD')
     if board_info.bType == 0:
         return (False, 'FOLDER')
@@ -307,7 +307,7 @@ def write_comment(uid, board_id, article_id, comment):
             what='uSerial')
     try:
         article_info = result[0]
-    except:
+    except IndexError:
         return (False, 'NO_SUCH_ARTICLE')
 
     result = db.insert('Comments', bSerial = board_id, aSerial = article_id, uSerial = uid,
@@ -325,7 +325,7 @@ def delete_comment(uid, comment_id):
     result = db.select('Comments', vars=val, what='uSerial, aSerial', where = 'cSerial = $comment_id')
     try:
         comment_info = result[0]
-    except:
+    except IndexError:
         return (False, 'NO_SUCH_COMMENT')
 
     if uid != comment_info.uSerial:

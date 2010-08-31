@@ -10,6 +10,7 @@ from cgi import parse_qs
 from datetime import datetime
 import posixpath
 import util
+import attachment
 
 desktop_render = render_mako(
     directories = [os.path.join(os.path.dirname(__file__), 'templates/desktop/').replace('\\','/'),],
@@ -57,12 +58,15 @@ class article_actions:
         if a.aIndex < article._get_article_count(board_id):
             next_id = article.get_article_id_by_index(board_id, a.aIndex + 1)
         page_no = article.get_page_by_article_id(board_id, article_id, config.page_size)
+        uploads = attachment.get_attachment(article_id)
+        thumbs = attachment.get_thumbnail(article_id, mobile)
 
         return render[mobile].read_article(article = a,
             title = u"%s - %s - Noah3K" % (a.aIndex, a.aTitle),
             board_path = board_name, board_desc = board_desc,
             comments = comment, lang="ko", page_no = page_no,
-            prev_id = prev_id, next_id = next_id, feed = True)
+            prev_id = prev_id, next_id = next_id, feed = True,
+            attachment = uploads, thumbnail = thumbs,)
 
     @util.session_helper
     def reply_get(self, mobile, board_name, board_id, article_id, current_uid = -1):

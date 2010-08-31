@@ -1,9 +1,9 @@
 <%inherit file="base.html" />
 <%
-import user
+import user, config, util
 import article as A
 from web import ctx
-import util
+import attachment as A_
 def get_formatted_username(uid):
     u = user.get_user(uid)
     if u[0]:
@@ -36,8 +36,25 @@ def get_formatted_username(uid):
         <span id="edittime">${article['aEditedDatetime']}</span>
     </div>
     % endif
+%if attachment is not UNDEFINED:
+%for a in attachment:
+    <div id="row">
+        <div class="left-container">첨부</div>
+        <span class="sep">:</span>
+        <span class="attachment"><a class="filelink" href="${config.attachment_web_path}${article['aSerial']}/${a}">${a}</a> (${A_.format_file_size(A_.get_attachment_size(article['aSerial'], a))})</span>
+    </div>
+% endfor 
+% endif
 
     <div id="content">
+%if thumbnail is not UNDEFINED:
+% for t in thumbnail:
+<div class="image">
+    (${t})<br />
+    <a href="${config.attachment_web_path}${article['aSerial']}/${t}" target="_blank"><img class="image" src="${config.thumbnail_desktop_web_path}${article['aSerial']}/${t}" /></a>
+</div>
+% endfor
+% endif
 ${util.format(article['aContent'])}
     </div>
     <!-- 코멘트 -->
