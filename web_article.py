@@ -87,8 +87,11 @@ class article_actions:
         ret = article.reply_article(current_uid, board_id, article_id, reply)
         if ret[0] == True:
             fs = web.ctx.get('_fieldstorage')
-            for f in fs['new_attachment']:
-                attachment.add_attachment(ret[1], f.filename, f.value)
+            try:
+                for f in fs['new_attachment']:
+                    attachment.add_attachment(ret[1], f.filename, f.value)
+            except TypeError:
+                pass
             if mobile:
                 raise web.seeother('/m/%s/+read/%s' % (board_name, ret[1]))
             else:
@@ -111,8 +114,11 @@ class article_actions:
     def modify_post(self, mobile, board_name, board_id, article_id, current_uid = -1):
         data = web.input(new_attachment= {})
         fs = web.ctx.get('_fieldstorage')
-        for f in fs['new_attachment']:
-            attachment.add_attachment(article_id, f.filename, f.value)
+        try:
+            for f in fs['new_attachment']:
+                attachment.add_attachment(article_id, f.filename, f.value)
+        except TypeError:
+            pass
         a = dict(title = data.title, body = data.content)
         board_info = board.get_board_info(board_id)
         ret = article.modify_article(current_uid, board_id, article_id, a)
@@ -173,4 +179,20 @@ class article_actions:
                 raise web.seeother('/%s/+read/%s' % (board_name, ret[1]))
         else:
             return render[mobile].error(lang='ko', error_message = ret[1])
+
+    @util.session_helper
+    def mark_get(self, mobile, board_name, board_id, article_id, current_uid = -1):
+        article.mark_article(article_id)
+        if mobile:
+            raise web.seeother('/m/%s/+read/%s' % (board_name, article_id))
+        else:
+            raise web.seeother('/%s/+read/%s' % (board_name, article_id))
+
+    @util.session_helper
+    def unmark_get(self, mobile, board_name, board_id, article_id, current_uid = -1):
+        article.unmark_article(article_id)
+        if mobile:
+            raise web.seeother('/m/%s/+read/%s' % (board_name, article_id))
+        else:
+            raise web.seeother('/%s/+read/%s' % (board_name, article_id))
 

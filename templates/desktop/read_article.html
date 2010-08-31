@@ -17,7 +17,11 @@ def get_formatted_username(uid):
     <div id="row">
         <div class="left-container">제목</div>
         <span class="sep">:</span>
+% if A.get_mark_status(article['aSerial']):
+        <span class="emphasized" id="title">${article['aTitle']}</span>
+% else:
         <span  id="title">${article['aTitle']}</span>
+% endif
     </div>
     <div id="row">
         <div class="left-container">글쓴이</div>
@@ -115,8 +119,12 @@ ${util.format(article['aContent'])}
         <!-- 삭제 권한 --> 
         <li><a class="button" href="/${board_path}/+delete/${article['aSerial']}">삭제</a></li>
 % endif
+% if A.get_mark_status(article['aSerial']):
        <!-- 강조 권한 --> 
+        <li><a class="button" href="/${board_path}/+unmark/${article['aSerial']}">강조 해제</a></li>
+% else:
         <li><a class="button" href="/${board_path}/+mark/${article['aSerial']}">강조</a></li>
+% endif
     </ul>
 
     <!-- 이전글/다음글 -->

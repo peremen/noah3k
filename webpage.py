@@ -123,12 +123,13 @@ class view_board:
         # bDatetime: 개설 시간, bInformation: 보드 긴 설명, bType = 디렉터리/보드/블로그,
         # bReply: bWrite: bComment: 모름
         a = article.get_article_list(board_id, config.page_size, page)
+        m = article.get_marked_article(board_id)
         t = article._get_total_page_count(board_id, config.page_size)
         return render[mobile].view_board(lang="ko",
             title = u"%s - Noah3K" % board_info.bName,
             board_path = board_info.bName[1:],
             board_desc = board_info.bDescription,
-            articles=a,
+            articles=a, marked_articles = m,
             total_page = t,
             page = page,
             feed = True)

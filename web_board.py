@@ -68,8 +68,11 @@ class board_actions:
         ret = article.write_article(current_uid, board_id, a)
         if ret[0] == True:
             fs = web.ctx.get('_fieldstorage')
-            for f in fs['new_attachment']:
-                attachment.add_attachment(ret[1], f.filename, f.value)
+            try:
+                for f in fs['new_attachment']:
+                    attachment.add_attachment(ret[1], f.filename, f.value)
+            except TypeError:
+                pass
             if mobile:
                 raise web.seeother('/m/%s/+read/%s' % (board_name, ret[1]))
             else:

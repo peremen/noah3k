@@ -47,6 +47,46 @@ def get_article_list(board_id, page_size, page_number):
             order = 'aIndex ASC')
     return result
 
+def get_marked_article(board_id):
+    # 현재 게시판의 강조된 글 목록을 반환함.
+    result = db.select('Articles', locals(), where = 'bSerial = $board_id AND aEmphasis = 1')
+    return result
+
+def mark_article(article_id):
+    # 강조함. 글이 존재하면 True, 존재하지 않으면 False를 반환함.
+    ret = db.update('Articles', vars = locals(), where = 'aSerial = $article_id',
+            aEmphasis = 1)
+    return ret > 0
+
+def unmark_article(article_id):
+    # 강조를 해제함. 글이 존재하면 True, 존재하지 않으면 False를 반환함.
+    ret = db.update('Articles', vars = locals(), where = 'aSerial = $article_id',
+            aEmphasis = 0)
+    return ret > 0
+
+def toggle_marking(article_id):
+    # 강조 상태를 변경한 다음, 변경 이후 강조 상태를 반환함.
+    status = get_mark_status(article_id)
+    if status:
+        unmark_article(article_id)
+        return False
+    else:
+        mark_article(article_id)
+        return True
+
+def get_mark_status(article_id):
+    # 현재 글의 강조 여부를 반환함.
+    ret = db.select('Articles', what='aEmphasis', vars=locals(),
+            where = 'aSerial = $article_id')
+    try:
+        ret = ret[0]
+    except IndexError:
+        return False
+    if ret.aEmphasis == 1:
+        return True
+    else:
+        return False
+
 def get_title(article_id):
     val = dict(article_id = int(article_id))
     result = db.select('Articles', val, where='aSerial = $article_id')
