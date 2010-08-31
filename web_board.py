@@ -10,6 +10,7 @@ from cgi import parse_qs
 from datetime import datetime
 import posixpath
 import util
+import attachment
 
 desktop_render = render_mako(
     directories = [os.path.join(os.path.dirname(__file__), 'templates/desktop/').replace('\\','/'),],
@@ -66,6 +67,9 @@ class board_actions:
         board_info = board.get_board_info(board_id)
         ret = article.write_article(current_uid, board_id, a)
         if ret[0] == True:
+            fs = web.ctx.get('_fieldstorage')
+            for f in fs['new_attachment']:
+                attachment.add_attachment(ret[1], f.filename, f.value)
             if mobile:
                 raise web.seeother('/m/%s/+read/%s' % (board_name, ret[1]))
             else:

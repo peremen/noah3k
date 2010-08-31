@@ -1,7 +1,7 @@
 <%inherit file="base.html" />
 <%! scripts = ['/static/scripts/jquery-multifile.js'] %>
 <p>${action_name}</p>
-<form name="write_form" enctype="multipart/form-data" method="POST" action="/${board_path}/+${action}">
+<form enctype="multipart/form-data" method="POST" action="/${board_path}/+${action}">
 <div id="row">
     <div class="left-container">제목</div>
     <span class="sep">:</span>
@@ -27,7 +27,7 @@
 <div id="row">
     <div class="left-container">기존 첨부 ${i}</div>
     <span class="sep">:</span>
-    <input name="new_attachment" class="multi" type="file" />
+    <input name="old_attachment" class="multi" type="file" />
 </div>
 <% i = i + 1 %>
 % endfor

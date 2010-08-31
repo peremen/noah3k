@@ -70,15 +70,19 @@ class main_page:
             mobile = True
         else:
             mobile = False
-        child_board = board.get_child(1)
-        notice_board_path = '/divisionCS/Notice'
-        notice_board_id = board._get_board_id_from_path(notice_board_path)
-        page = article._get_total_page_count(notice_board_id, 5)
-        a = article.get_article_list(notice_board_id, 5, page)
-        return render[mobile].main(title = u'전산학과 BBS 노아입니다', lang='ko',
-                board_desc = u'[전산학과 BBS]', board_path = '',
-                child_boards = child_board, notice_board_path = notice_board_path,
-                notice_articles = a)
+        if mobile:
+            v = board_actions()
+            return v.subboard_list_get(mobile)
+        else:
+            child_board = board.get_child(1)
+            notice_board_path = '/divisionCS/Notice'
+            notice_board_id = board._get_board_id_from_path(notice_board_path)
+            page = article._get_total_page_count(notice_board_id, 5)
+            a = article.get_article_list(notice_board_id, 5, page)
+            return desktop_render.main(title = u'전산학과 BBS 노아입니다', lang='ko',
+                    board_desc = u'[전산학과 BBS]', board_path = '',
+                    child_boards = child_board, notice_board_path = notice_board_path,
+                    notice_articles = a)
 
 class help:
     def GET(self, mobile, context):

@@ -85,7 +85,7 @@ def add_attachment(article_id, filename, content):
 
     m = magic.Magic(mime = True)
     mime_type = m.from_buffer(content)
-    upload = open(os.path.join(orig_path, filename), 'w')
+    upload = open(os.path.join(orig_path, filename), 'wb')
     upload.write(content)
     upload.close()
     if mime_type.startswith('image'):
@@ -126,13 +126,13 @@ def remove_all_attachment(article_id):
 
     if os.path.isdir(orig_path):
         for filename in os.listdir(orig_path):
-            os.path.unlink(os.path.join(orig_path, filename))
+            os.remove(os.path.join(orig_path, filename))
         os.rmdir(orig_path)
     if os.path.isdir(thumb_path):
         for filename in os.listdir(thumb_path):
-            os.path.unlink(os.path.join(thumb_path, filename))
+            os.remove(os.path.join(thumb_path, filename))
         os.rmdir(thumb_path)
     if os.path.isdir(thumb_m_path):
         for filename in os.listdir(thumb_m_path):
-            os.path.unlink(os.path.join(thumb_m_path, filename))
+            os.remove(os.path.join(thumb_m_path, filename))
         os.rmdir(thumb_m_path)

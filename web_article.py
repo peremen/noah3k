@@ -86,6 +86,9 @@ class article_actions:
         board_info = board.get_board_info(board_id)
         ret = article.reply_article(current_uid, board_id, article_id, reply)
         if ret[0] == True:
+            fs = web.ctx.get('_fieldstorage')
+            for f in fs['new_attachment']:
+                attachment.add_attachment(ret[1], f.filename, f.value)
             if mobile:
                 raise web.seeother('/m/%s/+read/%s' % (board_name, ret[1]))
             else:
@@ -106,7 +109,11 @@ class article_actions:
 
     @util.session_helper
     def modify_post(self, mobile, board_name, board_id, article_id, current_uid = -1):
-        a = dict(title = web.input().title, body = web.input().content)
+        data = web.input(new_attachment= {})
+        fs = web.ctx.get('_fieldstorage')
+        for f in fs['new_attachment']:
+            attachment.add_attachment(article_id, f.filename, f.value)
+        a = dict(title = data.title, body = data.content)
         board_info = board.get_board_info(board_id)
         ret = article.modify_article(current_uid, board_id, article_id, a)
         if ret[0] == True:
@@ -133,6 +140,7 @@ class article_actions:
     @util.confirmation_helper
     @util.session_helper
     def delete_post(self, mobile, board_name, board_id, article_id, current_uid = -1):
+        attachment.remove_all_attachment(article_id)
         ret = article.delete_article(current_uid, article_id)
         if ret[0] == True:
             if mobile:
