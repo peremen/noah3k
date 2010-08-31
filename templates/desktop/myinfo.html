@@ -1,15 +1,16 @@
 <% import user as user_ 
+import util
 from web import ctx %>
 <%inherit file="base.html" />
 <div>
 %if ctx.session.username == username:
-    <a href="/+u/${username}/+my_posts">내가 쓴 글</a>
+    <a class="button" href="/+u/${username}/+my_posts">내가 쓴 글</a>
 %else:
-    <a href="/+u/${username}/+my_posts">이 사용자가 쓴 글</a>
+    <a class="button" href="/+u/${username}/+my_posts">이 사용자가 쓴 글</a>
 % endif
 %if ctx.session.username == username:
-    <a href="/+u/${username}/+modify">수정</a>
-    <a href="/+u/${username}/+leave">회원 탈퇴</a>
+    <a class="button" href="/+u/${username}/+modify">수정</a>
+    <a class="button" href="/+u/${username}/+leave">회원 탈퇴</a>
 % endif
 </div>
 
@@ -62,7 +63,7 @@ from web import ctx %>
 %elif user.uSig.strip() == '':
             <span style="font-size: 0.9em; color: #aaaaaa">없음</span>
 % else:
-            <span style="font-size: 0.9em">${user.uSig}</span>
+            <span style="font-size: 0.9em">${util.format(user.uSig)}</span>
 % endif
         </div>
     </div>
@@ -75,7 +76,7 @@ from web import ctx %>
 %elif user.uPlan.strip() == '':
             <span style="font-size: 0.9em; color: #aaaaaa">없음</span>
 % else:
-            <span style="font-size: 0.9em">${user.uPlan}</span>
+            <span style="font-size: 0.9em">${util.format(user.uPlan)}</span>
 % endif
         </div>
     </div>
