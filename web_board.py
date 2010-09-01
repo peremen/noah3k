@@ -57,9 +57,11 @@ class board_actions:
     def write_get(self, mobile, board_name, board_id, current_uid = -1):
         board_info = board.get_board_info(board_id)
         board_desc = board_info.bDescription
+        user_info = user.get_user(current_uid)[1]
         return render[mobile].editor(title = u"글 쓰기 - %s - Noah3K" % board_name,
                 action='write', action_name = u"글 쓰기",
-                board_path = board_name, board_desc = board_desc, lang="ko", )
+                board_path = board_name, board_desc = board_desc, lang="ko",
+                body = '\n\n\n%s' % user_info['uSig'])
 
     @util.error_catcher
     @util.session_helper
@@ -133,9 +135,9 @@ class board_actions:
     def remove_from_favorites_get(self, mobile, board_name, board_id, current_uid = -1):
         user.remove_favorite_board(current_uid, board_id)
         if mobile:
-            raise web.seeother('/%s' % board_name)
-        else:
             raise web.seeother('/m/%s' % board_name)
+        else:
+            raise web.seeother('/%s' % board_name)
 
     @util.error_catcher
     def summary_get(self, mobile, board_name, board_id):

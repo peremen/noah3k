@@ -77,9 +77,10 @@ class article_actions:
             return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION')
         board_info = board.get_board_info(board_id)
         board_desc = board_info.bDescription
+        user_info = user.get_user(current_uid)[1]
         article_ = article.get_article(board_id, article_id)
         quote_text = u'%s님의 글 "%s"에서:' % (user._get_username_from_uid(article_.uSerial), util.remove_bracket(article_.aTitle))
-        body = '\n\n\n[quote=%s]%s\n[/quote]' % (quote_text, article_.aContent)
+        body = '\n\n\n[quote=%s]%s\n[/quote]\n\n%s' % (quote_text, article_.aContent, user_info.uSig)
         return render[mobile].editor(title = u"답글 쓰기 - /%s - Noah3K" % board_name,
                 action='reply/%s' % article_id, action_name = u"답글 쓰기",
                 board_path = board_name, board_desc = board_desc,
