@@ -1,7 +1,18 @@
 == 필요한 파이썬 모듈 ==
+=== easy_install로 설치 가능 ===
 * web.py
 * mako
+* PIL
 * python-magic
+* postmarkup
+** postmarkup은 자체 패치를 여러 번 했으므로, 차후 소스 코드에 포함시킬 예정.
+
+=== 배포판 패키지로 설치해야 함 ===
+* python-mysqldb (데비안 계열 기준)
+
+=== non-UNIX 계열에서의 구동 ===
+* python-magic 모듈은 리눅스에 있는 mime.magic 데이터를 필요로 한다. (사용 불가능한 경우 썸네일 생성이 안 됨)
+* crypt 모듈은 유닉스 계열에서만 작동한다. (사용 불가능한 경우 noah1k 로그인이 불가능)
 
 == 코딩 레이아웃 ==
 get - write - edit - delete - 기타
