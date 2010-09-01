@@ -1,4 +1,6 @@
-<%! scripts = ['/static/scripts/jquery-1.4.2.min.js'] %><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+<%! scripts = ['/static/scripts/jquery-1.4.2.min.js'] 
+import user as U
+from web import ctx %><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="${lang}">
 <head>
@@ -38,8 +40,8 @@ ${self.head_scripts()}
     </div>
 
     <div id="body">
-        <div class="area">
-            ${next.body()}
+        <div class="area"> \
+${next.body()}
         </div> <!-- end of area -->
     </div> <!-- end of body -->
 

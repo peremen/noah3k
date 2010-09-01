@@ -4,7 +4,6 @@
 import os
 import web
 from web.contrib.template import render_mako
-from mako import exceptions
 import config
 import board, user, article
 from cgi import parse_qs
@@ -64,15 +63,12 @@ class article_actions:
         uploads = attachment.get_attachment(article_id)
         thumbs = attachment.get_thumbnail(article_id, mobile)
 
-        try:
-            return render[mobile].read_article(article = a,
-                title = u"%s - %s - Noah3K" % (a.aIndex, a.aTitle),
-                board_path = board_name, board_desc = board_desc,
-                comments = comment, lang="ko", page_no = page_no,
-                prev_id = prev_id, next_id = next_id, feed = True,
-                attachment = uploads, thumbnail = thumbs,)
-        except:
-            return exceptions.html_error_template().render()
+        return render[mobile].read_article(article = a,
+            title = u"%s - %s - Noah3K" % (a.aIndex, a.aTitle),
+            board_path = board_name, board_desc = board_desc,
+            comments = comment, lang="ko", page_no = page_no,
+            prev_id = prev_id, next_id = next_id, feed = True,
+            attachment = uploads, thumbnail = thumbs,)
 
     @util.session_helper
     def reply_get(self, mobile, board_name, board_id, article_id, current_uid = -1):

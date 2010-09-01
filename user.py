@@ -21,7 +21,7 @@ def _verify_noah1k_password(to_verify, password):
     # UNIX crypt 함수. password가 seed, username이 텍스트.
     # 더 이상 생성할 필요도 이유도 없음.
     pass1 = crypt.crypt(password, password)
-    return to_verify == crypt.crypt(password, p1)
+    return to_verify == crypt.crypt(password, pass1)
 
 def _generate_noah2k_password(password):
     # MySQL <4.1.1 password() 함수의 파이썬 구현.
@@ -45,8 +45,8 @@ def _generate_noah2k_password(password):
 def _verify_noah2k_password(to_verify, password):
     return to_verify == _generate_noah2k_password(password)
 
-def _generate_noah3k_password(to_verify, password):
-    hm = hmac.new(config.hmac_key, password, hashlib.sha1)
+def _generate_noah3k_password(password):
+    hm = hmac.new(config.hmac_key, password, hashlib.sha256)
     return hm.hexdigest()
 
 def generate_password(password):
@@ -57,7 +57,7 @@ def _verify_noah3k_password(to_verify, password):
 
 password_set = {13: _verify_noah1k_password,
                 16: _verify_noah2k_password,
-                40: _verify_noah3k_password, }
+                64: _verify_noah3k_password, }
 
 def _get_uid_from_username(username):
     """
@@ -103,7 +103,7 @@ def verify_password(uid, password):
     return False
 
 def get_password_strength(uid):
-    strength = {13: 0, 16: 1, 40:2}
+    strength = {13: 0, 16: 1, 64: 2}
     user = get_user(uid)
     if not user[0]:
         return -1
@@ -132,7 +132,7 @@ def login(username, password):
         return (False, 'NO_SUCH_USER')
     if not password_set[len(user.uPasswd)](user.uPasswd, password):
         return (False, 'WRONG_PASSWORD')
-    #if len(user.uPassword) < 40:
+    #if len(user.uPassword) < 64:
     #    update_password(user.uSerial, password)
     return (True, 'LOGIN_SUCCESS')
 
