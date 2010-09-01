@@ -3,11 +3,11 @@ import util
 from web import ctx %>
 <%inherit file="base.html" />
 <div>
-%if ctx.session.username == username:
-    <a class="button" href="/+u/${username}/+my_posts">내가 쓴 글</a>
-%else:
-    <a class="button" href="/+u/${username}/+my_posts">이 사용자가 쓴 글</a>
-% endif
+##%if ctx.session.username == username:
+##    <a class="button" href="/+u/${username}/+my_posts">내가 쓴 글</a>
+##%else:
+##    <a class="button" href="/+u/${username}/+my_posts">이 사용자가 쓴 글</a>
+##% endif
 %if ctx.session.username == username:
     <a class="button" href="/+u/${username}/+modify">수정</a>
     <a class="button" href="/+u/${username}/+leave">회원 탈퇴</a>
@@ -103,27 +103,41 @@ from web import ctx %>
         <span>${user_.get_comment_count(user_id)}</span>
     </div>
 %if ctx.session is not UNDEFINED and ctx.session.has_key('uid'):
-% if ctx.session.uid == 1 or ctx.session.uid == user_id:
+    % if ctx.session.uid == 1 or ctx.session.uid == user_id:
     <div id="row">
         <div class="left-container">마지막 로그인</div>
         <span class="sep">:</span>
-%if user.uLastLogin is UNDEFINED:
+        %if user.uLastLogin is UNDEFINED:
         <span style='color: #aa0000'>알 수 없음</span>
-% else:
+        % else:
         <span>${user.uLastLogin}</span>
-% endif
+        % endif
     </div>
     <div id="row"> 
         <div class="left-container">마지막 접속 장소</div>
         <span class="sep">:</span>
-%if user.uLastHost is UNDEFINED:
+        %if user.uLastHost is UNDEFINED:
         <span style='color: #aa0000'>알 수 없음</span>
-%elif user.uLastHost.strip() == '':
+        %elif user.uLastHost.strip() == '':
         <span style='color: #aa0000'>알 수 없음</span>
-% else:
+        % else:
         <span>${user.uLastHost}</span>
-% endif
+        % endif
     </div>
-% endif
+    <div id="row"> 
+        <div class="left-container">암호화 강도</div>
+        <span class="sep">:</span>
+        <% password_strength = user_.get_password_strength(user_id) %>
+        % if password_strength == 2:
+            <span style="color: green;">강함</span>
+        % elif password_strength == 1:
+        <span style="color: orange;">보통 <a style="color: orange;" href="/+u/${username}/+modify">(암호 변경을 추천합니다)</a></span>
+        % elif password_strength == 0:
+        <span style="color: red; font-weight: bold;">취약 <a style="color: red;" href="/+u/${username}/+modify">(즉시 암호를 변경하십시오)</a></span>
+        % else:
+            <span style="color: red; font-weight: bold;">알 수 없음</span>
+        % endif
+    </div>
+    % endif
 % endif
 </div>

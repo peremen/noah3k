@@ -102,6 +102,13 @@ def verify_password(uid, password):
         return True
     return False
 
+def get_password_strength(uid):
+    strength = {13: 0, 16: 1, 40:2}
+    user = get_user(uid)
+    if not user[0]:
+        return -1
+    return strength[len(user[1].uPasswd)]
+
 def login(username, password):
     """
     로그인 처리. 사용자 ID와 암호를 평문으로 입력받은 다음,
