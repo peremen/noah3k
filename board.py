@@ -5,11 +5,11 @@ import config
 import web
 import user, util
 import posixpath
+import acl
 
 """
 게시판 클래스. 데이터베이스 상에 저장된 게시판에 접근한다.
 """
-
 
 if web.config.get('_database') is None:
     db = web.database(dbn=config.db_type, user=config.db_user,
@@ -42,12 +42,14 @@ def _get_path_from_board_id(board_id):
         return retvalue
 
 def get_parent(board_id):
+    if board_id == 1: # 최상위 보드
+        return -1
     val = dict(board_id = board_id)
     result = db.select('Boards', val, what='bParent', where='bSerial = $board_id')
     try:
         retvalue = result[0]
     except IndexError:
-        return None
+        return -1
     else:
         return retvalue['bParent']
 
@@ -77,7 +79,7 @@ def create_board(parent_id, settings):
     check = _get_board_id_from_path(settings['path'])
     if check > 0:
         return (False, 'BOARD_ALREADY_EXIST')
-    if original_board_info.uSerial != settings['current_uid']:
+    if not acl.is_allowed('board', parent_id, settings['current_uid'], 'create'):
         return (False, 'NO_PERMISSION')
 
     ret = db.insert('Boards', bName = settings['path'],
@@ -91,7 +93,7 @@ def create_board(parent_id, settings):
 
     return (True, 'SUCCESS')
 
-def edit_board(board_id, settings):
+def edit_board(current_uid, board_id, settings):
     # settings로 넘어오는 내용
     # path, name: 보드 전체 경로
     # description: 보드 짧은 설명
@@ -100,6 +102,8 @@ def edit_board(board_id, settings):
     # board_type: 0 - 폴더, 1 - 게시판
     # can_write_by_other: 쓰기 가능/불가능
     # can_comment: 0 - 불가능, 1 - 가능
+    if not acl.is_allowed('board', board_id, current_uid, 'edit'):
+        return (False, 'NO_PERMISSION')
     original_board_info = get_board_info(board_id)
     if original_board_info == None:
         return (False, 'NO_SUCH_BOARD')
@@ -113,6 +117,8 @@ def edit_board(board_id, settings):
     if _get_board_id_from_path(new_path) > 0 and old_path != new_path:
         return (False, 'BOARD_ALREADY_EXIST')
     new_parent_id = _get_board_id_from_path(settings['path'])
+    if not acl.is_allowed('board', new_parent_id, current_uid, 'create'):
+        return (False, 'NO_PERMISSION_ON_NEW_PARENT')
     result = db.update('Boards', vars=settings, where='bSerial = $board_id',
             bInformation = settings['cover'], bDescription = settings['description'],
             bType = settings['board_type'], bReply = 1, bComment = settings['can_comment'],
@@ -135,7 +141,7 @@ def move_child_boards(board_id, old_path, new_path):
 def delete_board(current_uid, board_id):
     original_board_info = get_board_info(board_id)
     old_path = original_board_info.bName
-    if current_uid != original_board_info.uSerial:
+    if not acl.is_allowed('board', board_id, current_uid, 'delete'):
         return (False, 'NO_PERMISSION')
     val = dict(old_path = old_path + r'/%')
     has_child = False

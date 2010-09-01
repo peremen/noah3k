@@ -121,6 +121,16 @@ def get_page_by_article_id(board_id, article_id, page_size):
         return -1
     return page_count - (article_count - index) / page_size
 
+def get_article_(article_id):
+    val = dict(article_id = int(article_id))
+    result = db.select('Articles', val, where='aSerial = $article_id')
+    try:
+        retvalue = result[0]
+    except IndexError:
+        return None
+    else:
+        return retvalue
+
 def get_article(board_id, article_id):
     val = dict(board_id = board_id, article_id = int(article_id))
     result = db.select('Articles', val, where='bSerial = $board_id AND aSerial = $article_id')
@@ -132,15 +142,14 @@ def get_article(board_id, article_id):
         return retvalue
 
 def write_article(uid, board_id, article):
+    if acl.is_allowed('board', board_id, uid, 'write'):
+        return (False, 'NO_PERMISSION')
     current_user = user.get_user(uid)
     if current_user[0] == False:
         return (False, 'NO_SUCH_USER')
     current_user = current_user[1]
-    # check_acl(uid, board_id, 'WRITE')
-    # if not acl: return (False, 'ACL_VIOLATION')
     if(article['title'].strip() == ""):
         return (False, 'EMPTY_TITLE')
-
     if(article['body'].strip() == ""):
         return (False, 'EMPTY_BODY')
 
@@ -178,15 +187,14 @@ def write_article(uid, board_id, article):
     return (True, ret)
 
 def modify_article(uid, board_id, article_id, article):
+    if acl.is_allowed('article', article_id, uid, 'modify'):
+        return (False, 'NO_PERMISSION')
     current_user = user.get_user(uid)
     if current_user[0] == False:
         return (False, 'NO_SUCH_USER')
     current_user = current_user[1]
-    # check_acl(uid, board_id, 'MODIFY')
-    # if not acl: return (False, 'ACL_VIOLATION')
     if(article['title'].strip() == ""):
         return (False, 'EMPTY_TITLE')
-
     if(article['body'].strip() == ""):
         return (False, 'EMPTY_BODY')
 
@@ -198,8 +206,6 @@ def modify_article(uid, board_id, article_id, article):
         article_info = result[0]
     except IndexError:
         return (False, 'NO_SUCH_ARTICLE')
-    if article_info.uSerial != uid:
-        return (False, 'ACL_VIOLATION')
 
     val = dict(article_id = article_id, title = article['title'], body = article['body'])
     ret = db.update('Articles', vars = val, where = 'aSerial = $article_id',
@@ -209,12 +215,12 @@ def modify_article(uid, board_id, article_id, article):
     return (True, article_id)
 
 def delete_article(uid, article_id):
+    if acl.is_allowed('board', article_id, uid, 'delete'):
+        return (False, 'NO_PERMISSION')
     current_user = user.get_user(uid)
     if current_user[0] == False:
         return (False, 'NO_SUCH_USER')
     current_user = current_user[1]
-    # check_acl(uid, board_id, 'MODIFY')
-    # if not acl: return (False, 'ACL_VIOLATION')
 
     article_id = int(article_id)
     val = dict(article_id = article_id)
@@ -225,9 +231,6 @@ def delete_article(uid, article_id):
         article_info = result[0]
     except IndexError:
         return (False, 'NO_SUCH_ARTICLE')
-
-    if article_info.uSerial != uid:
-        return (False, 'ACL_VIOLATION')
 
     try:
         val = dict(article_id = article_id, board_id = article_info.bSerial,
@@ -247,15 +250,14 @@ def delete_article(uid, article_id):
     return (True, 'SUCCESS')
 
 def reply_article(uid, board_id, article_id, reply):
+    if acl.is_allowed('board', board_id, uid, 'write'):
+        return (False, 'NO_PERMISSION')
     current_user = user.get_user(uid)
     if current_user[0] == False:
         return (False, 'NO_SUCH_USER')
     current_user = current_user[1]
-    # check_acl(uid, board_id, 'WRITE')
-    # if not acl: return (False, 'ACL_VIOLATION')
     if(reply['title'].strip() == ""):
         return (False, 'EMPTY_TITLE')
-
     if(reply['body'].strip() == ""):
         return (False, 'EMPTY_BODY')
 
@@ -332,12 +334,12 @@ def get_comment(article_id):
     return result
 
 def write_comment(uid, board_id, article_id, comment):
+    if acl.is_allowed('board', board_id, uid, 'comment'):
+        return (False, 'NO_PERMISSION')
     current_user = user.get_user(uid)
     if current_user[0] == False:
         return (False, 'NO_SUCH_USER')
     current_user = current_user[1]
-    # check_acl(uid, board_id, 'COMMENT')
-    # if not acl: return (False, 'ACL_VIOLATION')
     if(comment.strip() == ""):
         return (False, 'EMPTY_COMMENT')
 
@@ -355,12 +357,6 @@ def write_comment(uid, board_id, article_id, comment):
     return (True, article_id)
 
 def delete_comment(uid, comment_id):
-    #current_user = user.get_user(uid)
-    #if current_user[0] == False:
-    #    return (False, 'NO_SUCH_USER')
-    #current_user = current_user[1]
-    # check_acl(uid, board_id, 'COMMENT')
-    # if not acl: return (False, 'ACL_VIOLATION')
     val = dict(comment_id = comment_id)
     result = db.select('Comments', vars=val, what='uSerial, aSerial', where = 'cSerial = $comment_id')
     try:
@@ -368,8 +364,8 @@ def delete_comment(uid, comment_id):
     except IndexError:
         return (False, 'NO_SUCH_COMMENT')
 
-    if uid != comment_info.uSerial:
-        return (False, 'ACL_VIOLATION')
+    if uid != comment_info.uSerial or not acl.is_allowed('article', comment_info.aSerial, uid, 'comment_delete'):
+        return (False, 'NO_PERMISSION')
     try:
         result = db.delete('Comments', vars=val, where='cSerial = $comment_id')
     except:

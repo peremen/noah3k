@@ -1,6 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import board, user, article
+import config
+import web
+
 """
 Noah3K ACL 모듈. Noah3K 보안 설정의 가장 핵심을 이룬다.
 
@@ -36,6 +40,14 @@ ACL을 전혀 적용하지 않았을 때 권한은 다음과 같다.
 - 보드: 보드 시삽은 모든 권한을 가지며, 시삽이 아닌 사람은 보드 접근
   권한만 가진다. 기본적으로 모든 보드는 공개 보드라는 뜻이다.
 """
+
+if web.config.get('_database') is None:
+    db = web.database(dbn=config.db_type, user=config.db_user,
+            pw = config.db_password, db = config.db_name,
+            host=config.db_host, port=int(config.db_port))
+    web.config._database = db
+else:
+    db = web.config._database
 
 def add_acl(session_key, object_type, object_id, user_id, permission):
     """
@@ -89,12 +101,25 @@ def get_acl(object_type, object_id):
     """
     pass
 
+def get_board_admins(board_id):
+    admin_uids = []
+    current_board = board.get_board_info(board_id)
+    if current_board == None:
+        return None
+    admin_uids.append(current_board.uSerial)
+    board_id = board.get_parent(board_id)
+    while board_id != 0:
+        current_board = board.get_board_info(board_id)
+        admin_uids.append(current_board.uSerial)
+        board_id = current_board.bParent
+    return list(set(admin_uids))
+
 def is_allowed(object_type, object_id, user_id, permission):
     """
     지정한 개체에 지정한 사용자가 권한을 가지고 있는지 알려 준다.
 
     @type object_type: int
-    @param object_type: 개체 종류. 'ARTICLE', 'BOARD' 중 하나이다.
+    @param object_type: 개체 종류. 'article', 'board', 'comment' 중 하나이다.
     @type object_id: int
     @param object_id: 글이나 보드 ID. 이름이 아니다.
     @type user_id: int
@@ -104,4 +129,34 @@ def is_allowed(object_type, object_id, user_id, permission):
     @rtype bool
     @return 허용/금지 여부.
     """
-    pass
+    try:
+        return eval('is_allowed_%s' % (object_type))(object_id, user_id, permission)
+    except AttributeError:
+        return False
+
+def is_allowed_board(board_id, user_id, permission):
+    # comment, write는 별도로 빼낼 필요가 있음.
+    board_admins = get_board_admins(board_id)
+    board_info = board.get_board_info(board_id)
+    if permission == 'comment': # 댓글 허용/비허용은 모두에게 적용됨.
+        print board_info.bComment
+        return board_info.bComment == 1
+    if user_id == 1: # 시삽
+        return True
+    if permission == 'write': # 모두에게 쓰기가 허용된 경우.
+        if board_info.bWrite == 1:
+            return True
+    if user_id in board_admins:
+        # 기타 모든 권한은 보대 및 상위 보드 보대에게 모두 적용됨.
+        return True
+    return False
+
+def is_allowed_article(article_id, user_id, permission):
+    if user_id == 1: # 시삽
+        return True
+    a = article.get_article_(article_id)
+    writer = a.uSerial
+    board_admins = get_board_admins(a.bSerial)
+    if permission == 'modify':
+        return user_id == a.uSerial
+    return (user_id == a.uSerial) or (user_id in board_admins)

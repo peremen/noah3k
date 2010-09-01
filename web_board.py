@@ -6,11 +6,9 @@ import web
 from web.contrib.template import render_mako
 import config
 import board, user, article
-from cgi import parse_qs
+import util, attachment, acl
 from datetime import datetime
 import posixpath
-import util
-import attachment
 
 desktop_render = render_mako(
     directories = [os.path.join(os.path.dirname(__file__), 'templates/desktop/').replace('\\','/'),],
@@ -152,9 +150,8 @@ class board_actions:
 
     @util.session_helper
     def create_board_get(self, mobile, board_name, board_id, current_uid = -1):
-        # if !acl.get_permission(modify_board, user):
         board_info = board.get_board_info(board_id)
-        if current_uid != board_info.uSerial:
+        if not acl.is_allowed('board', board_id, current_uid, 'create'):
             return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION')
         return render[mobile].board_editor(action='create_board', board_info = board_info,
                 board_path = board_name, board_desc = board_info.bDescription, lang='ko',
@@ -164,9 +161,8 @@ class board_actions:
     @util.confirmation_helper
     @util.session_helper
     def create_board_post(self, mobile, board_name, board_id, current_uid = -1):
-        # if !acl.get_permission(modify_board, user):
         board_info = board.get_board_info(board_id)
-        if current_uid != board_info.uSerial:
+        if not acl.is_allowed('board', board_id, current_uid, 'create'):
             return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION')
         user_data = web.input()
         comment, write_by_other = 0, 0 # XXX: DB 스키마를 BOOLEAN으로 바꿔야 함
@@ -200,9 +196,8 @@ class board_actions:
 
     @util.session_helper
     def modify_get(self, mobile, board_name, board_id, current_uid = -1):
-        # if !acl.get_permission(modify_board, user):
         board_info = board.get_board_info(board_id)
-        if current_uid != board_info.uSerial:
+        if not acl.is_allowed('board', board_id, current_uid, 'modify'):
             return render[mobile].error(lang='ko', error_message='NO_PERMISSION')
         default_referer = posixpath.join('/', board_name, '+summary')
         if mobile:
@@ -215,9 +210,8 @@ class board_actions:
     @util.session_helper
     @util.confirmation_helper
     def modify_post(self, mobile, board_name, board_id, current_uid = -1):
-        # if !acl.get_permission(modify_board, user):
         board_info = board.get_board_info(board_id)
-        if current_uid != board_info.uSerial:
+        if not acl.is_allowed('board', board_id, current_uid, 'modify'):
             return render[mobile].error(lang='ko', error_message='NO_PERMISSION')
         comment, write_by_other = 0, 0 # XXX: DB 스키마를 BOOLEAN으로 바꿔야 함
         if web.input().commentable.strip() == 'yes':
@@ -233,7 +227,7 @@ class board_actions:
                 can_comment = comment, can_write_by_other = write_by_other,
                 description = web.input().description,
                 cover = web.input().information)
-        result = board.edit_board(board_id, board_info)
+        result = board.edit_board(current_uid, board_id, board_info)
         if result[0] == False:
             return render[mobile].error(lang='ko', error_message = result[1])
         else:

@@ -6,6 +6,11 @@
         에러가 발생했습니다. 이 에러는 일시적인 문제일 가능성이 높습니다.<br />
         혹시 계속해서 이 에러가 발생되는 경우에는 운영자에게 알려주세요. (<a href="javascript:eval(document.getElementById('exception').style.display='block')">자세히</a>)
         <div id="exception" style="display: none; margin-top: 10px; padding-top: 10px; border-top: dashed 1px #3C78B5; font-size: 0.9em">
+% if error_detail is not UNDEFINED:
+<pre>
+${error_detail}
+</pre>
+% endif
         </div>
         <hr />
         

@@ -4,6 +4,7 @@
 import os
 import web
 from web.contrib.template import render_mako
+from mako import exceptions
 import config
 import board, user, article
 from cgi import parse_qs
@@ -11,6 +12,7 @@ from datetime import datetime
 import posixpath
 import util
 import attachment
+import acl
 
 desktop_render = render_mako(
     directories = [os.path.join(os.path.dirname(__file__), 'templates/desktop/').replace('\\','/'),],
@@ -42,6 +44,7 @@ class article_actions:
         except AttributeError:
             raise web.notfound(render[mobile].error(lang='ko', error_message = 'INVALID_ACTION'))
 
+    @util.error_catcher
     def read_get(self, mobile, board_name, board_id, article_id):
         board_info = board.get_board_info(board_id)
         board_desc = board_info.bDescription
@@ -61,15 +64,20 @@ class article_actions:
         uploads = attachment.get_attachment(article_id)
         thumbs = attachment.get_thumbnail(article_id, mobile)
 
-        return render[mobile].read_article(article = a,
-            title = u"%s - %s - Noah3K" % (a.aIndex, a.aTitle),
-            board_path = board_name, board_desc = board_desc,
-            comments = comment, lang="ko", page_no = page_no,
-            prev_id = prev_id, next_id = next_id, feed = True,
-            attachment = uploads, thumbnail = thumbs,)
+        try:
+            return render[mobile].read_article(article = a,
+                title = u"%s - %s - Noah3K" % (a.aIndex, a.aTitle),
+                board_path = board_name, board_desc = board_desc,
+                comments = comment, lang="ko", page_no = page_no,
+                prev_id = prev_id, next_id = next_id, feed = True,
+                attachment = uploads, thumbnail = thumbs,)
+        except:
+            return exceptions.html_error_template().render()
 
     @util.session_helper
     def reply_get(self, mobile, board_name, board_id, article_id, current_uid = -1):
+        if acl.is_allowed('board', board_id, current_uid, 'write'):
+            return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION')
         board_info = board.get_board_info(board_id)
         board_desc = board_info.bDescription
         article_ = article.get_article(board_id, article_id)
@@ -82,6 +90,8 @@ class article_actions:
 
     @util.session_helper
     def reply_post(self, mobile, board_name, board_id, article_id, current_uid = -1):
+        if acl.is_allowed('board', article_id, current_uid, 'write'):
+            return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION')
         reply = dict(title = web.input().title, body = web.input().content)
         board_info = board.get_board_info(board_id)
         ret = article.reply_article(current_uid, board_id, article_id, reply)
@@ -101,6 +111,8 @@ class article_actions:
 
     @util.session_helper
     def modify_get(self, mobile, board_name, board_id, article_id, current_uid = -1):
+        if acl.is_allowed('article', article_id, current_uid, 'modify'):
+            return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION')
         board_info = board.get_board_info(board_id)
         board_desc = board_info.bDescription
         article_ = article.get_article(board_id, article_id)
@@ -112,6 +124,8 @@ class article_actions:
 
     @util.session_helper
     def modify_post(self, mobile, board_name, board_id, article_id, current_uid = -1):
+        if acl.is_allowed('article', article_id, current_uid, 'modify'):
+            return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION')
         data = web.input(new_attachment= {})
         fs = web.ctx.get('_fieldstorage')
         try:
@@ -132,6 +146,8 @@ class article_actions:
 
     @util.session_helper
     def delete_get(self, mobile, board_name, board_id, article_id, current_uid = -1):
+        if acl.is_allowed('article', article_id, current_uid, 'delete'):
+            return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION')
         if mobile:
             default_referer = os.path.join('/m', board_name, '+read', str(article_id))
             action=os.path.join('/m', board_name, '+delete', str(article_id))
@@ -146,8 +162,10 @@ class article_actions:
     @util.confirmation_helper
     @util.session_helper
     def delete_post(self, mobile, board_name, board_id, article_id, current_uid = -1):
-        attachment.remove_all_attachment(article_id)
+        if acl.is_allowed('article', article_id, current_uid, 'delete'):
+            return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION')
         ret = article.delete_article(current_uid, article_id)
+        attachment.remove_all_attachment(article_id)
         if ret[0] == True:
             if mobile:
                 raise web.seeother('/m/%s' % (board_name))
@@ -158,6 +176,8 @@ class article_actions:
 
     @util.session_helper
     def comment_post(self, mobile, board_name, board_id, article_id, current_uid = -1):
+        if not acl.is_allowed('board', board_id, current_uid, 'comment'):
+            return render[mobile].error(lang='ko', error_message='NO_PERMISSION')
         comment = web.input().comment
         board_info = board.get_board_info(board_id)
         ret = article.write_comment(current_uid, board_id, article_id, comment)
@@ -182,6 +202,8 @@ class article_actions:
 
     @util.session_helper
     def mark_get(self, mobile, board_name, board_id, article_id, current_uid = -1):
+        if not acl.is_allowed('board', board_id, current_uid, 'mark'):
+            return render[mobile].error(lang='ko', error_message='NO_PERMISSION')
         article.mark_article(article_id)
         if mobile:
             raise web.seeother('/m/%s/+read/%s' % (board_name, article_id))
@@ -190,6 +212,8 @@ class article_actions:
 
     @util.session_helper
     def unmark_get(self, mobile, board_name, board_id, article_id, current_uid = -1):
+        if not acl.is_allowed('board', board_id, current_uid, 'mark'):
+            return render[mobile].error(lang='ko', error_message='NO_PERMISSION')
         article.unmark_article(article_id)
         if mobile:
             raise web.seeother('/m/%s/+read/%s' % (board_name, article_id))

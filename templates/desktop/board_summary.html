@@ -1,32 +1,41 @@
 <%inherit file="base.html" />
 <%
-import user, board, util
+import user, board, util, acl
 import posixpath
 from web import ctx
 def get_formatted_username(uid):
     u = user.get_user(uid)[1]
     return "%(id)s (%(nick)s)" % {'id': u['uId'], 'nick':u['uNick']}
+
+upper_admin_list = []
+for i in acl.get_board_admins(board_info.bSerial):
+    if (i != board_info.uSerial) and (i != 1):
+        upper_admin_list.append(get_formatted_username(i))
+
+upper_admin_list.sort()
 %>
 <div>
     <div style="float: left; margin: 0 5px 0 5px;">
-% if ctx.session.has_key('uid') and ctx.session.uid == board_info.uSerial:
+%if ctx.session.has_key('uid') and acl.is_allowed('board', board_info.bSerial, ctx.session.uid, 'modify'):
         <!-- 게시판 수정 -->
         <a class="button" href="/${board_path}/+modify">고치기</a>
-        <!-- 게시판 백업 -->
-        <a class="button" href="/${board_path}/+backup">백업</a>
-        <!-- 게시판 통계 -->
+##        <!-- 게시판 백업 -->
+##        <a class="button" href="/${board_path}/+backup">백업</a>
+##        <!-- 게시판 통계 -->
 % endif
-        <a class="button" href="/${board_path}/+statistics">통계</a>
+##        <a class="button" href="/${board_path}/+statistics">통계</a>
     </div>
 
-% if ctx.session.has_key('uid') and ctx.session.uid == board_info.uSerial:
-    <!-- 게시판 삭제 -->
     <div style="float: right; margin: 0 5px 0 5px;">
+%if ctx.session.has_key('uid') and acl.is_allowed('board', board_info.bSerial, ctx.session.uid, 'delete'):
+    <!-- 게시판 삭제 -->
         <a class="button" href="/${board_path}/+delete">이 게시판 없애기</a>
+% endif
+%if ctx.session.has_key('uid') and acl.is_allowed('board', board_info.bSerial, ctx.session.uid, 'create'):
     <!-- 게시판 생성  -->
         <a class="button" href="/${board_path}/+create_board">하위 게시판 만들기</a>
-    </div>
 % endif
+    </div>
     </form>
 </div>
 <br />
@@ -52,6 +61,14 @@ def get_formatted_username(uid):
         <span class="sep">:</span>
         <span>${get_formatted_username(board_info.uSerial)}</span>
     </div>
+% if len(upper_admin_list) > 0:
+    <!-- 상위 관리자 -->
+    <div id="row"> 
+        <div class="left-container">상위 관리자</div>
+        <span class="sep">:</span>
+        <span>${', '.join(upper_admin_list)}</span>
+    </div>
+% endif
 
     <div class="heading">세부 설정</div>
     

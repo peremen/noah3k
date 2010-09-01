@@ -40,6 +40,15 @@ def confirmation_helper(func):
             raise web.seeother(i.referer)
     return _exec
 
+def error_catcher(func):
+    def _exec(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except Exception as e:
+            print e
+            raise web.internalerror(desktop_render.error(lang="ko", error_message = e, error_detail = traceback.format_exc()))
+    return _exec
+
 def validate_username(name):
     match = re.search(r'\W+', name)
     if match == None:
