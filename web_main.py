@@ -38,11 +38,13 @@ class main_actions:
         except AttributeError:
             raise web.notfound(render[mobile].error(lang='ko', error_message = 'INVALID_ACTION'))
 
+    @util.error_catcher
     def join_get(self, mobile):
         return render[mobile].join(title = u"회원 가입 - Noah3K",
                lang="ko", board_desc=u"회원 가입",
                referer = web.ctx.env.get('HTTP_REFERER', '/'))
 
+    @util.error_catcher
     @util.confirmation_helper
     def join_post(self, mobile):
         data = web.input()
@@ -68,11 +70,13 @@ class main_actions:
         else:
             raise web.seeother('/')
 
+    @util.error_catcher
     def login_get(self, mobile):
         referer = web.ctx.env.get('HTTP_REFERER', '/')
         return render[mobile].login(title = u"로그인 - Noah3K", board_desc=u"로그인",
                 lang="ko", referer = referer)
 
+    @util.error_catcher
     def login_post(self, mobile):
         username, password = '', ''
         err = ''
@@ -104,12 +108,14 @@ class main_actions:
             raise web.seeother(web.input().url)
             # 이전 페이지로 '묻지 않고' 되돌림
 
+    @util.error_catcher
     def logout_get(self, mobile):
         web.ctx.session.uid = 0
         web.ctx.session.kill()
         referer = web.ctx.env.get('HTTP_REFERER', '/')
         raise web.seeother(referer)
 
+    @util.error_catcher
     def credits_get(self, mobile):
         return render[mobile].credits(title = u"개발자 정보 - Noah3K",
                lang="ko", board_desc=u"개발자 정보", )

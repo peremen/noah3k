@@ -23,6 +23,7 @@ mobile_render = render_mako(
 render = {False: desktop_render, True: mobile_render}
 
 class personal_page:
+    @util.error_catcher
     @util.session_helper
     def GET(self, mobile, username, current_uid = -1):
         if mobile:
@@ -59,6 +60,7 @@ class personal_actions:
         except AttributeError:
             raise web.notfound(render[mobile].error(lang='ko', error_message = 'INVALID_ACTION'))
 
+    @util.error_catcher
     def favorite_rss_get(self, mobile, username, user_id):
         articles = user.get_favorite_board_feed(user_id, config.favorite_feed_size)
         date = datetime.today()
@@ -67,6 +69,7 @@ class personal_actions:
                 board_desc = u'%s의 즐겨찾는 보드 피드' % username,
                 link_address = 'http://noah.kaist.ac.kr/+u/%s' % username)
 
+    @util.error_catcher
     def favorite_atom_get(self, mobile, username, user_id):
         articles = user.get_favorite_board_feed(user_id, config.favorite_feed_size)
         date = datetime.today()
@@ -76,6 +79,7 @@ class personal_actions:
                 self_address = 'http://noah.kaist.ac.kr/+u/%s/+favorite_atom' % username,
                 href_address = 'http://noah.kaist.ac.kr/+u/%s' % username)
 
+    @util.error_catcher
     @util.session_helper
     def modify_get(self, mobile, username, user_id, current_uid = -1):
         if user_id != current_uid:
@@ -89,6 +93,7 @@ class personal_actions:
                 board_desc = u'내 정보 수정',
                 referer = web.ctx.env.get('HTTP_REFERER', referer))
 
+    @util.error_catcher
     @util.confirmation_helper
     @util.session_helper
     def modify_post(self, mobile, username, user_id, current_uid = -1):
@@ -114,6 +119,7 @@ class personal_actions:
         else:
             raise web.seeother('/+u/%s' % username)
 
+    @util.error_catcher
     @util.session_helper
     def leave_get(self, mobile, username, user_id, current_uid = -1):
         if user_id != current_uid:
@@ -123,6 +129,7 @@ class personal_actions:
                 title=u'회원 탈퇴', username = username,
                 referer = web.ctx.env.get('HTTP_REFERER', default_referer),)
 
+    @util.error_catcher
     @util.confirmation_helper
     @util.session_helper
     def leave_post(self, mobile, username, user_id, current_uid = -1):

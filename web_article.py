@@ -70,6 +70,7 @@ class article_actions:
             prev_id = prev_id, next_id = next_id, feed = True,
             attachment = uploads, thumbnail = thumbs,)
 
+    @util.error_catcher
     @util.session_helper
     def reply_get(self, mobile, board_name, board_id, article_id, current_uid = -1):
         if not acl.is_allowed('board', board_id, current_uid, 'write'):
@@ -84,6 +85,7 @@ class article_actions:
                 board_path = board_name, board_desc = board_desc,
                 lang="ko", body = body, article_title = article_.aTitle)
 
+    @util.error_catcher
     @util.session_helper
     def reply_post(self, mobile, board_name, board_id, article_id, current_uid = -1):
         if not acl.is_allowed('board', article_id, current_uid, 'write'):
@@ -105,6 +107,7 @@ class article_actions:
         else:
             return render[mobile].error(lang='ko', error_message = ret[1])
 
+    @util.error_catcher
     @util.session_helper
     def modify_get(self, mobile, board_name, board_id, article_id, current_uid = -1):
         if not acl.is_allowed('article', article_id, current_uid, 'modify'):
@@ -118,6 +121,7 @@ class article_actions:
                 article_title = article_.aTitle, body = article_.aContent,
                 lang="ko", )
 
+    @util.error_catcher
     @util.session_helper
     def modify_post(self, mobile, board_name, board_id, article_id, current_uid = -1):
         if not acl.is_allowed('article', article_id, current_uid, 'modify'):
@@ -140,6 +144,7 @@ class article_actions:
         else:
             return render[mobile].error(lang='ko', error_message = ret[1])
 
+    @util.error_catcher
     @util.session_helper
     def delete_get(self, mobile, board_name, board_id, article_id, current_uid = -1):
         if not acl.is_allowed('article', article_id, current_uid, 'delete'):
@@ -155,6 +160,7 @@ class article_actions:
                 action = action,
                 referer=web.ctx.env.get('HTTP_REFERER', default_referer))
 
+    @util.error_catcher
     @util.confirmation_helper
     @util.session_helper
     def delete_post(self, mobile, board_name, board_id, article_id, current_uid = -1):
@@ -170,6 +176,7 @@ class article_actions:
         else:
             return render[mobile].error(lang='ko', error_message = ret[1])
 
+    @util.error_catcher
     @util.session_helper
     def comment_post(self, mobile, board_name, board_id, article_id, current_uid = -1):
         if not acl.is_allowed('board', board_id, current_uid, 'comment'):
@@ -185,6 +192,7 @@ class article_actions:
         else:
             return render[mobile].error(lang='ko', error_message = ret[1])
 
+    @util.error_catcher
     @util.session_helper
     def comment_delete_get(self, mobile, board_name, board_id, comment_id, current_uid = -1):
         ret = article.delete_comment(current_uid, comment_id)
@@ -196,6 +204,7 @@ class article_actions:
         else:
             return render[mobile].error(lang='ko', error_message = ret[1])
 
+    @util.error_catcher
     @util.session_helper
     def mark_get(self, mobile, board_name, board_id, article_id, current_uid = -1):
         if not acl.is_allowed('board', board_id, current_uid, 'mark'):
@@ -206,6 +215,7 @@ class article_actions:
         else:
             raise web.seeother('/%s/+read/%s' % (board_name, article_id))
 
+    @util.error_catcher
     @util.session_helper
     def unmark_get(self, mobile, board_name, board_id, article_id, current_uid = -1):
         if not acl.is_allowed('board', board_id, current_uid, 'mark'):

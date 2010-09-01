@@ -45,7 +45,7 @@ def error_catcher(func):
     def _exec(*args, **kwargs):
         try:
             return func(*args, **kwargs)
-        except (web.webapi._NotFound, web.webapi._InternalError): # 웹 프로그램의 오류. 대개 해결 가능.
+        except (web.webapi._NotFound, web.webapi._InternalError, web.webapi.SeeOther): # 웹 프로그램의 오류. 대개 해결 가능.
             raise
         except Exception as e:
             current_ctx = web.ctx

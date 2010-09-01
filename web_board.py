@@ -52,6 +52,7 @@ class board_actions:
         except AttributeError:
             raise web.notfound(render[mobile].error(lang='ko', error_message = 'INVALID_ACTION'))
 
+    @util.error_catcher
     @util.session_helper
     def write_get(self, mobile, board_name, board_id, current_uid = -1):
         board_info = board.get_board_info(board_id)
@@ -60,6 +61,7 @@ class board_actions:
                 action='write', action_name = u"글 쓰기",
                 board_path = board_name, board_desc = board_desc, lang="ko", )
 
+    @util.error_catcher
     @util.session_helper
     def write_post(self, mobile, board_name, board_id, current_uid = -1):
         a = dict(title = web.input().title, body = web.input().content)
@@ -79,6 +81,7 @@ class board_actions:
         else:
             return render[mobile].error(lang='ko', error_message = ret[1])
 
+    @util.error_catcher
     def rss_get(self, mobile, board_name, board_id):
         if web.ctx.query == '':
             qs = dict()
@@ -97,6 +100,7 @@ class board_actions:
                 board_desc = board_info.bDescription,
                 articles=articles, today=date)
 
+    @util.error_catcher
     def atom_get(self, mobile, board_name, board_id):
         if web.ctx.query == '':
             qs = dict()
@@ -115,6 +119,7 @@ class board_actions:
                 board_desc = board_info.bDescription,
                 articles=articles, today=date)
 
+    @util.error_catcher
     @util.session_helper
     def add_to_favorites_get(self, mobile, board_name, board_id, current_uid = -1):
         user.add_favorite_board(current_uid, board_id)
@@ -123,6 +128,7 @@ class board_actions:
         else:
             raise web.seeother('/%s' % board_name)
 
+    @util.error_catcher
     @util.session_helper
     def remove_from_favorites_get(self, mobile, board_name, board_id, current_uid = -1):
         user.remove_favorite_board(current_uid, board_id)
@@ -131,6 +137,7 @@ class board_actions:
         else:
             raise web.seeother('/m/%s' % board_name)
 
+    @util.error_catcher
     def summary_get(self, mobile, board_name, board_id):
         board_info = board.get_board_info(board_id)
         return render[mobile].board_summary(board_info = board_info,
@@ -138,6 +145,7 @@ class board_actions:
                 board_desc = board_info.bDescription, lang='ko',
                 title = u'정보 - %s - Noah3k' % board_info.bName,)
 
+    @util.error_catcher
     def subboard_list_get(self, mobile, board_name = '', board_id = 1):
         board_info = board.get_board_info(board_id)
         child_board = board.get_child(board_id)
@@ -154,11 +162,13 @@ class board_actions:
                 board_desc = board_info.bDescription,
                 child_boards = child_board)
 
+    @util.error_catcher
     def cover_get(self, mobile, board_name, board_id):
         board_info = board.get_board_info(board_id)
         return desktop_render.cover(title = u'%s - Noah3K' % board_name,
                 board_cover = board_info.bInformation)
 
+    @util.error_catcher
     @util.session_helper
     def create_board_get(self, mobile, board_name, board_id, current_uid = -1):
         board_info = board.get_board_info(board_id)
@@ -169,6 +179,7 @@ class board_actions:
                 title = u'하위 게시판 만들기 - %s - Noah3k' % board_info.bName,
                 referer = posixpath.join('/', board_name, '+summary'))
 
+    @util.error_catcher
     @util.confirmation_helper
     @util.session_helper
     def create_board_post(self, mobile, board_name, board_id, current_uid = -1):
@@ -205,6 +216,7 @@ class board_actions:
         else:
             raise web.seeother('%s' % (new_path))
 
+    @util.error_catcher
     @util.session_helper
     def modify_get(self, mobile, board_name, board_id, current_uid = -1):
         board_info = board.get_board_info(board_id)
@@ -218,6 +230,7 @@ class board_actions:
                 title = u'정보 수정 - %s - Noah3k' % board_info.bName,
                 referer = web.ctx.env.get('HTTP_REFERER', default_referer))
 
+    @util.error_catcher
     @util.session_helper
     @util.confirmation_helper
     def modify_post(self, mobile, board_name, board_id, current_uid = -1):
@@ -247,6 +260,7 @@ class board_actions:
             else:
                 raise web.seeother('%s/+summary' % result[1])
 
+    @util.error_catcher
     @util.session_helper
     def delete_get(self, mobile, board_name, board_id, current_uid = -1):
         default_referer = posixpath.join('/', board_name, '+summary')
@@ -260,6 +274,7 @@ class board_actions:
                 action=action,
                 referer=web.ctx.env.get('HTTP_REFERER', default_referer))
 
+    @util.error_catcher
     @util.session_helper
     @util.confirmation_helper
     def delete_post(self, mobile, board_name, board_id, current_uid = -1):
