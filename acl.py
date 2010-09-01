@@ -139,7 +139,6 @@ def is_allowed_board(board_id, user_id, permission):
     board_admins = get_board_admins(board_id)
     board_info = board.get_board_info(board_id)
     if permission == 'comment': # 댓글 허용/비허용은 모두에게 적용됨.
-        print board_info.bComment
         return board_info.bComment == 1
     if user_id == 1: # 시삽
         return True

@@ -221,7 +221,7 @@ def modify_article(uid, board_id, article_id, article):
     return (True, article_id)
 
 def delete_article(uid, article_id):
-    if not acl.is_allowed('board', article_id, uid, 'delete'):
+    if not acl.is_allowed('article', article_id, uid, 'delete'):
         return (False, 'NO_PERMISSION')
     current_user = user.get_user(uid)
     if current_user[0] == False:
