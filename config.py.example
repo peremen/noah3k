@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+import os
 
+# Section 1: 데이터베이스
 db_host = "noah.kaist.ac.kr"
 db_port = "3305"
 db_type = "mysql"
@@ -8,10 +10,14 @@ db_name = "DB_NAME"
 db_prefix = ""
 db_user= "DB_USER"
 db_password = "DB_PASSWORD"
-hmac_key = "HMAC_KEY"
+
+# Section 2: 노아의 기능 설정
+hmac_key = "HMAC_KEY" # 중요! 서비스 중에는 값을 바꾸면 안 됨.
 page_size = 20
 feed_size = 30
 favorite_feed_size = 30
+
+# Section 3: 첨부 파일 경로
 attachment_disk_path = os.path.join(os.path.dirname(__file__), 'static', 'uploads')
 attachment_web_path = '/static/attachment/'
 thumbnail_desktop_disk_path = os.path.join(os.path.dirname(__file__), 'static', 'thumbs_desktop')
@@ -20,3 +26,6 @@ thumbnail_desktop_size = (800, 600)
 thumbnail_mobile_disk_path = os.path.join(os.path.dirname(__file__), 'static', 'thumbs_mobile')
 thumbnail_mobile_web_path = '/static/thumbs_mobile/'
 thumbnail_mobile_size = (240, 320)
+
+store_error_report = True
+error_report_path = os.path.join(os.path.dirname(__file__), 'error_report')

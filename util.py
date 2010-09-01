@@ -7,6 +7,7 @@ import config
 import os, re
 import postmarkup
 import sys, traceback
+import datetime
 
 desktop_render = render_mako(
     directories = [os.path.join(os.path.dirname(__file__), 'templates/desktop/').replace('\\','/'),],
@@ -44,10 +45,29 @@ def error_catcher(func):
     def _exec(*args, **kwargs):
         try:
             return func(*args, **kwargs)
+        except (web.webapi._NotFound, web.webapi._InternalError): # 웹 프로그램의 오류. 대개 해결 가능.
+            raise
         except Exception as e:
-            print e
-            raise web.internalerror(desktop_render.error(lang="ko", error_message = e, error_detail = traceback.format_exc()))
+            current_ctx = web.ctx
+            error_text = traceback.format_exc()
+            store_error(current_ctx, error_text)
+            raise web.internalerror(desktop_render.error(lang="ko", error_message = e,
+                error_detail = error_text))
     return _exec
+
+def store_error(current_ctx, error_text):
+    if not config.store_error_report:
+        return
+    today = datetime.datetime.today()
+    filename = 'error_%s.txt' % today.strftime('%Y%m%d_%H%M%S')
+    f = open(os.path.join(config.error_report_path, filename), 'w')
+    f.write('Traceback:\n')
+    f.write(error_text)
+    f.write('\n')
+    f.write('Context:\n')
+    f.write(str(current_ctx))
+    f.write('\n')
+    f.close()
 
 def validate_username(name):
     match = re.search(r'\W+', name)

@@ -1,20 +1,23 @@
+<% import random %>
 <%inherit file="base.html" />
 
 <div id="errorbox">
-    에러 : <span style="color: red">${error_message}</span>
-        <hr />
-        에러가 발생했습니다. 이 에러는 일시적인 문제일 가능성이 높습니다.<br />
-        혹시 계속해서 이 에러가 발생되는 경우에는 운영자에게 알려주세요. (<a href="javascript:eval(document.getElementById('exception').style.display='block')">자세히</a>)
-        <div id="exception" style="display: none; margin-top: 10px; padding-top: 10px; border-top: dashed 1px #3C78B5; font-size: 0.9em">
-% if error_detail is not UNDEFINED:
+    <img src="/static/image/error${random.randint(1, 3)}.jpg" />
+    <h3>오류 : <span style="color: red">${error_message}</span></h3>
+    <hr />
+% if error_detail is UNDEFINED:
+    위 오류에 나와 있는 상황을 확인하시고 다시 시도해 보시기 바랍니다.<br />
+% else:
+    불편을 끼쳐 드려 죄송합니다. 내부 문제로 인하여 오류가 발생했습니다.<br />
+    다음 정보가 운영자에게 전달되었습니다. 빠른 시일 내에 해결하겠습니다. (<a href="javascript:eval(document.getElementById('exception').style.display='block')">자세히</a>)
+    <div id="exception" style="display: none; margin-top: 10px; padding-top: 10px; border-top: dashed 1px #3C78B5; font-size: 0.9em">
 <pre>
 ${error_detail}
 </pre>
+    </div>
+    <hr />
 % endif
-        </div>
-        <hr />
-        
-        <div style="text-align: center">
-                <input type="button" value="돌아가기" onclick="history.back()" />
-        </div>
-</div>		
+    <p style="text-align: right;">
+        <input type="button" value="돌아가기" onclick="history.back()" />
+    </p>
+</div>

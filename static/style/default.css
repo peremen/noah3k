@@ -329,23 +329,33 @@ div#body div#menu ul {
     float: right;
 }
 
-div#body div#menu li {
+#body #menu li {
     float: left;
     padding: 0px 6px 0px 0px;
     margin: 0px 1px 0px 0px;
 }
 
-div#body .sep {
+#body .sep {
     display: none;
     margin: 0 1px 0 0;
 }
 
-div#body div#errorbox {
+#body #errorbox {
     margin: 0 auto;
-    padding-top: 50px;
-    padding-bottom: 50px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     width: 600px;
     text-align: left;
+}
+
+#body #errorbox img {
+    margin-bottom: 5px;
+}
+
+#body #errorbox h3 {
+    font-size: 1.2em;
+    font-weight: normal;
+    text-align: center;
 }
 
 /* footer ------------------------------------------ */

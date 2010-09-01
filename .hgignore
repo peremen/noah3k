@@ -6,3 +6,6 @@ noah2k9/*
 config.py
 sessions/*
 .directory
+error_report/*
+static/upload/*
+static/thumb_*
