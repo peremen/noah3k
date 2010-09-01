@@ -90,7 +90,7 @@ class noah2k_support:
         if path == '':
             raise web.notfound(desktop_render.error(lang='ko', error_message = 'NO_SUCH_BOARD'))
 
-        raise web.seeother(posixpath.join(path, '+%s' % feed_type))
+        raise web.seeother(posixpath.join(path, '+%s?size=%s' % (feed_type, numentries)))
 
     def download(self, query_string):
         attachment = -1

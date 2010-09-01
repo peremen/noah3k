@@ -8,6 +8,7 @@ import config
 import board, user, article
 import util, attachment, acl
 from datetime import datetime
+from cgi import parse_qs
 import posixpath
 
 desktop_render = render_mako(
@@ -79,26 +80,36 @@ class board_actions:
             return render[mobile].error(lang='ko', error_message = ret[1])
 
     def rss_get(self, mobile, board_name, board_id):
+        if web.ctx.query == '':
+            qs = dict()
+            feed_size = config.feed_size
+        else:
+            qs = parse_qs(web.ctx.query[1:])
+            feed_size = int(qs['size'][0])
         board_info = board.get_board_info(board_id)
         if board_info.bType == 0: # 디렉터리
             return
 
         date = datetime.today()
-        page = article._get_total_page_count(board_id, config.feed_size)
-        articles = article.get_article_list(board_id, confid.feed_size, page)
+        articles = article.get_article_feed(board_id, feed_size)
         web.header('Content-Type', 'application/rss+xml')
         return desktop_render.rss(board_path = board_name,
                 board_desc = board_info.bDescription,
                 articles=articles, today=date)
 
     def atom_get(self, mobile, board_name, board_id):
+        if web.ctx.query == '':
+            qs = dict()
+            feed_size = config.feed_size
+        else:
+            qs = parse_qs(web.ctx.query[1:])
+            feed_size = int(qs['size'][0])
         board_info = board.get_board_info(board_id)
         if board_info.bType == 0: # 디렉터리
             return
 
         date = datetime.today()
-        page = article._get_total_page_count(board_id, config.feed_size)
-        articles = article.get_article_list(board_id, confid.feed_size, page)
+        articles = article.get_article_feed(board_id, feed_size)
         web.header('Content-Type', 'application/atom+xml')
         return desktop_render.atom(board_path = board_name,
                 board_desc = board_info.bDescription,

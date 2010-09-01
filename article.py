@@ -4,7 +4,7 @@
 import config
 import web
 
-import user
+import user, acl
 import posixpath
 
 """
@@ -45,6 +45,12 @@ def get_article_list(board_id, page_size, page_number):
     val = dict(board_id = board_id, begin_index = begin_index, end_index = end_index)
     result = db.select('Articles', val, where='bSerial = $board_id AND aIndex >= $begin_index AND aIndex <= $end_index',
             order = 'aIndex ASC')
+    return result
+
+def get_article_feed(board_id, feed_size):
+    # 게시판의 피드로 사용할 수 있도록 aSerial 기준으로 글을 모아 줌.
+    result = db.query('SELECT * FROM Articles WHERE bSerial = $board_id ORDER BY aSerial DESC LIMIT $feed_size',
+            vars = locals())
     return result
 
 def get_marked_article(board_id):
@@ -142,7 +148,7 @@ def get_article(board_id, article_id):
         return retvalue
 
 def write_article(uid, board_id, article):
-    if acl.is_allowed('board', board_id, uid, 'write'):
+    if not acl.is_allowed('board', board_id, uid, 'write'):
         return (False, 'NO_PERMISSION')
     current_user = user.get_user(uid)
     if current_user[0] == False:
@@ -187,7 +193,7 @@ def write_article(uid, board_id, article):
     return (True, ret)
 
 def modify_article(uid, board_id, article_id, article):
-    if acl.is_allowed('article', article_id, uid, 'modify'):
+    if not acl.is_allowed('article', article_id, uid, 'modify'):
         return (False, 'NO_PERMISSION')
     current_user = user.get_user(uid)
     if current_user[0] == False:
@@ -215,7 +221,7 @@ def modify_article(uid, board_id, article_id, article):
     return (True, article_id)
 
 def delete_article(uid, article_id):
-    if acl.is_allowed('board', article_id, uid, 'delete'):
+    if not acl.is_allowed('board', article_id, uid, 'delete'):
         return (False, 'NO_PERMISSION')
     current_user = user.get_user(uid)
     if current_user[0] == False:
@@ -250,7 +256,7 @@ def delete_article(uid, article_id):
     return (True, 'SUCCESS')
 
 def reply_article(uid, board_id, article_id, reply):
-    if acl.is_allowed('board', board_id, uid, 'write'):
+    if not acl.is_allowed('board', board_id, uid, 'write'):
         return (False, 'NO_PERMISSION')
     current_user = user.get_user(uid)
     if current_user[0] == False:
@@ -334,7 +340,7 @@ def get_comment(article_id):
     return result
 
 def write_comment(uid, board_id, article_id, comment):
-    if acl.is_allowed('board', board_id, uid, 'comment'):
+    if not acl.is_allowed('board', board_id, uid, 'comment'):
         return (False, 'NO_PERMISSION')
     current_user = user.get_user(uid)
     if current_user[0] == False:

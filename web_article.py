@@ -72,7 +72,7 @@ class article_actions:
 
     @util.session_helper
     def reply_get(self, mobile, board_name, board_id, article_id, current_uid = -1):
-        if acl.is_allowed('board', board_id, current_uid, 'write'):
+        if not acl.is_allowed('board', board_id, current_uid, 'write'):
             return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION')
         board_info = board.get_board_info(board_id)
         board_desc = board_info.bDescription
@@ -86,7 +86,7 @@ class article_actions:
 
     @util.session_helper
     def reply_post(self, mobile, board_name, board_id, article_id, current_uid = -1):
-        if acl.is_allowed('board', article_id, current_uid, 'write'):
+        if not acl.is_allowed('board', article_id, current_uid, 'write'):
             return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION')
         reply = dict(title = web.input().title, body = web.input().content)
         board_info = board.get_board_info(board_id)
@@ -107,7 +107,7 @@ class article_actions:
 
     @util.session_helper
     def modify_get(self, mobile, board_name, board_id, article_id, current_uid = -1):
-        if acl.is_allowed('article', article_id, current_uid, 'modify'):
+        if not acl.is_allowed('article', article_id, current_uid, 'modify'):
             return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION')
         board_info = board.get_board_info(board_id)
         board_desc = board_info.bDescription
@@ -120,7 +120,7 @@ class article_actions:
 
     @util.session_helper
     def modify_post(self, mobile, board_name, board_id, article_id, current_uid = -1):
-        if acl.is_allowed('article', article_id, current_uid, 'modify'):
+        if not acl.is_allowed('article', article_id, current_uid, 'modify'):
             return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION')
         data = web.input(new_attachment= {})
         fs = web.ctx.get('_fieldstorage')
@@ -142,7 +142,7 @@ class article_actions:
 
     @util.session_helper
     def delete_get(self, mobile, board_name, board_id, article_id, current_uid = -1):
-        if acl.is_allowed('article', article_id, current_uid, 'delete'):
+        if not acl.is_allowed('article', article_id, current_uid, 'delete'):
             return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION')
         if mobile:
             default_referer = os.path.join('/m', board_name, '+read', str(article_id))
@@ -158,7 +158,7 @@ class article_actions:
     @util.confirmation_helper
     @util.session_helper
     def delete_post(self, mobile, board_name, board_id, article_id, current_uid = -1):
-        if acl.is_allowed('article', article_id, current_uid, 'delete'):
+        if not acl.is_allowed('article', article_id, current_uid, 'delete'):
             return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION')
         ret = article.delete_article(current_uid, article_id)
         attachment.remove_all_attachment(article_id)
