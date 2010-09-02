@@ -41,9 +41,9 @@ class noah2k_support:
             raise web.notfound(desktop_render.error(lang='ko', error_message = 'NO_SUCH_BOARD'))
 
         if page_no > 0:
-            raise web.seeother('%s?page=%s' % (path, page_no))
+            raise web.redirect('%s?page=%s' % (path, page_no))
         else:
-            raise web.seeother('%s' % path)
+            raise web.redirect('%s' % path)
 
     def view(self, query_string):
         board_id = -1
@@ -60,19 +60,19 @@ class noah2k_support:
         if path == '':
             raise web.notfound(desktop_render.error(lang='ko', error_message = 'NO_SUCH_BOARD'))
 
-        raise web.seeother(posixpath.join(path, '+read', article_id))
+        raise web.redirect(posixpath.join(path, '+read', article_id))
 
     def select(self, query_string):
         board_id = -1
         if query_string.has_key('board'):
             board_id = int(query_string['board'][0])
         else:
-            raise web.seeother('/*')
+            raise web.redirect('/*')
         path = board._get_path_from_board_id(board_id)
         if path == '':
             raise web.notfound(desktop_render.error(lang='ko', error_message = 'NO_SUCH_BOARD'))
 
-        raise web.seeother(posixpath.join(path, '*'))
+        raise web.redirect(posixpath.join(path, '*'))
 
     def feed(self, query_string):
         board_id = -1
@@ -90,7 +90,7 @@ class noah2k_support:
         if path == '':
             raise web.notfound(desktop_render.error(lang='ko', error_message = 'NO_SUCH_BOARD'))
 
-        raise web.seeother(posixpath.join(path, '+%s?size=%s' % (feed_type, numentries)))
+        raise web.redirect(posixpath.join(path, '+%s?size=%s' % (feed_type, numentries)))
 
     def download(self, query_string):
         attachment = -1
@@ -101,4 +101,4 @@ class noah2k_support:
         return # TODO: 첨부 파일 URL scheme 정할 것
 
     def index(self, query_string):
-        raise web.seeother('/')
+        raise web.redirect('/')
