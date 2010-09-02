@@ -61,7 +61,7 @@
  
      def render_close(self, parser, node_index):
 -        return u"</blockquote>"
-+        return u"</blockquote><br />"
++        return u"</blockquote>"
  
  
  class SearchTag(TagBase):
