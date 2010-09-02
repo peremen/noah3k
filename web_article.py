@@ -136,7 +136,6 @@ class article_actions:
             to_delete = fs['delete']
             if type(to_delete) == list:
                 for f in to_delete:
-                    print f
                     attachment.remove_attachment(article_id, f.value)
             else:
                 try:
