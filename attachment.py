@@ -106,15 +106,15 @@ def remove_attachment(article_id, filename):
     thumb_m_path = os.path.join(config.thumbnail_mobile_disk_path, str(article_id))
 
     if os.path.isfile(os.path.join(orig_path, filename)):
-        os.path.unlink(os.path.join(orig_path, filename))
+        os.remove(os.path.join(orig_path, filename))
         if len(os.listdir(orig_path)) == 0:
             os.rmdir(orig_path)
     if os.path.isfile(os.path.join(thumb_path, filename)):
-        os.path.unlink(os.path.join(thumb_path, filename))
+        os.remove(os.path.join(thumb_path, filename))
         if len(os.listdir(thumb_path)) == 0:
             os.rmdir(thumb_path)
     if os.path.isfile(os.path.join(thumb_m_path, filename)):
-        os.path.unlink(os.path.join(thumb_m_path, filename))
+        os.remove(os.path.join(thumb_m_path, filename))
         if len(os.listdir(thumb_m_path)) == 0:
             os.rmdir(thumb_m_path)
 

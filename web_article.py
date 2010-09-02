@@ -118,11 +118,12 @@ class article_actions:
         board_info = board.get_board_info(board_id)
         board_desc = board_info.bDescription
         article_ = article.get_article(board_id, article_id)
+        uploads = attachment.get_attachment(article_id)
         return render[mobile].editor(title = u"글 수정하기 - /%s - Noah3K" % board_name,
                 action='modify/%s' % article_id, action_name = u"글 수정하기",
                 board_path = board_name, board_desc = board_desc,
                 article_title = article_.aTitle, body = article_.aContent,
-                lang="ko", )
+                lang="ko", attachment = uploads, )
 
     @util.error_catcher
     @util.session_helper
@@ -132,10 +133,31 @@ class article_actions:
         data = web.input(new_attachment= {})
         fs = web.ctx.get('_fieldstorage')
         try:
-            for f in fs['new_attachment']:
-                attachment.add_attachment(article_id, f.filename, f.value)
-        except TypeError:
+            new_attachment = fs['new_attachment']
+            if type(new_attachment) == list:
+                for f in new_attachment:
+                    attachment.add_attachment(article_id, f.filename, f.value)
+            else:
+                try:
+                    attachment.add_attachment(article_id, new_attachment.filename, new_attachment.value)
+                except:
+                    pass
+        except KeyError:
             pass
+        try:
+            to_delete = fs['delete']
+            if type(to_delete) == list:
+                for f in to_delete:
+                    print f
+                    attachment.remove_attachment(article_id, f.value)
+            else:
+                try:
+                    attachment.remove_attachment(article_id, to_delete.value)
+                except:
+                    pass
+        except KeyError:
+            pass
+
         a = dict(title = data.title, body = data.content)
         board_info = board.get_board_info(board_id)
         ret = article.modify_article(current_uid, board_id, article_id, a)
