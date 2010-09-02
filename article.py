@@ -147,6 +147,11 @@ def get_article(board_id, article_id):
     else:
         return retvalue
 
+def increase_read_count(article_id):
+    result = db.update('Articles', vars=locals(), where = 'aSerial = $article_id',
+            aHit = web.SQLLiteral('aHit + 1'),)
+    return result > 0
+
 def write_article(uid, board_id, article):
     if not acl.is_allowed('board', board_id, uid, 'write'):
         return (False, 'NO_PERMISSION')
