@@ -1,13 +1,16 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import datetime
+import os, re
+import random
+import sys, traceback
+
 import web
 from web.contrib.template import render_mako
-import config
-import os, re
 import postmarkup
-import sys, traceback
-import datetime
+import board, article
+import config
 
 desktop_render = render_mako(
     directories = [os.path.join(os.path.dirname(__file__), 'templates/desktop/').replace('\\','/'),],
@@ -149,4 +152,18 @@ def process_noah12k_quote(original):
         if i < len(lines)-1:
             ret +='\n'
     return ret
+
+
+def get_login_notice(notice_board = '/noah/welcome'):
+    # /noah/welcome에서 공지 표시된 글 중 아무거나 하나를 랜덤으로 돌려 줌.
+    # 공지 표시된 글이 없는 경우 '공지가 없습니다.'를 돌려 줌.
+    articles = []
+    board_id = board._get_board_id_from_path(notice_board)
+    if board_id < 0:
+        return 'INVALID_NOTICE_BOARD'
+    for i in article.get_marked_article(board_id):
+        articles.append(i)
+    if len(articles) == 0:
+        return 'NO_NOTICE'
+    return articles[random.randint(0, len(articles)-1)].aContent
 
