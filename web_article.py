@@ -50,7 +50,7 @@ class article_actions:
         a = article.get_article(board_id, article_id)
         comment = article.get_comment(article_id)
         # XXX: 303 See Other를 통해서 여기로 온 경우 필터링.
-        article.increase_read_count(article_id)
+        #article.increase_read_count(article_id)
 
         prev_id = -1
         next_id = -1
