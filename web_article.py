@@ -132,19 +132,7 @@ class article_actions:
             return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION')
         data = web.input(new_attachment= {})
         fs = web.ctx.get('_fieldstorage')
-        try:
-            new_attachment = fs['new_attachment']
-            if type(new_attachment) == list:
-                for f in new_attachment:
-                    attachment.add_attachment(article_id, f.filename, f.value)
-            else:
-                try:
-                    attachment.add_attachment(article_id, new_attachment.filename, new_attachment.value)
-                except:
-                    pass
-        except KeyError:
-            pass
-        try:
+        if fs.has_key('delete'):
             to_delete = fs['delete']
             if type(to_delete) == list:
                 for f in to_delete:
@@ -155,8 +143,16 @@ class article_actions:
                     attachment.remove_attachment(article_id, to_delete.value)
                 except:
                     pass
-        except KeyError:
-            pass
+        if fs.has_key('new_attachment'):
+            new_attachment = fs['new_attachment']
+            if type(new_attachment) == list:
+                for f in new_attachment:
+                    attachment.add_attachment(article_id, f.filename, f.value)
+            else:
+                try:
+                    attachment.add_attachment(article_id, new_attachment.filename, new_attachment.value)
+                except:
+                    pass
 
         a = dict(title = data.title, body = data.content)
         board_info = board.get_board_info(board_id)
