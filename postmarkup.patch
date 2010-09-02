@@ -54,7 +54,7 @@
          if self.params:
 -            return u'<blockquote><em>%s</em><br/>'%(PostMarkup.standard_replace(self.params))
 +            quote_id = random.randint(0, sys.maxint)
-+            return u'<em><a class="quote" href="#" onclick="$(\'#quote%s\').toggle(\'fast\');">%s</a></em><blockquote id="quote%s">'%(quote_id, PostMarkup.standard_replace(self.params), quote_id)
++            return u'<em><a class="quote" href="#" onclick="$(\'#quote%s\').toggle();">%s</a></em><blockquote id="quote%s">'%(quote_id, PostMarkup.standard_replace(self.params), quote_id)
          else:
              return u'<blockquote>'
  
