@@ -31,67 +31,17 @@ def get_formatted_username(uid):
     <% i = 1 %>
     %if marked_articles is not UNDEFINED:
         % for a in marked_articles:
-            % if i%2 == 0:
-    <tr class="even">
-            % else:
-    <tr class="odd">
-            % endif
-            <% i = i + 1 %>
-        <!-- 글번호 -->
-        <td align="center"><a href="/${board_path}/+read/${a.aSerial}" class="articlelink">공지</a></td>
-        <!-- 제목 --> 
-        <td class="emphasized" width="55%">
-            %if a.aLevel > 0:
-            <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (a.aLevel-1)}px" />
-            %endif
-            <a href="/${board_path}/+read/${a.aSerial}" class="articlelink">${a.aTitle}
-                <% cmt_cnt = article.get_comment_count(a.aSerial) %>
-                % if cmt_cnt > 0:
-                [${cmt_cnt}]
-                % endif
-            </a>
-        </td>
-        <!-- 글쓴이 -->
-        <td style="padding-left: 1em">${get_formatted_username(a.uSerial)}</td>
-        <!-- 날짜 -->
-        <td align="center">${a.aDatetime.strftime('%Y-%m-%d')}</td>
-        <!-- 조회수 -->
-        <td align="center">${a.aHit}</td>
-    </tr>
+        ${put_article(a, i, True)}
+        <% i = i + 1 %>
         % endfor
     % endif
     %if articles is not UNDEFINED:
         % for a in articles:
-            % if i%2 == 0:
-    <tr class="even">
-            % else:
-    <tr class="odd">
-            % endif
-            <% i = i + 1 %>
-        <!-- 글번호 -->
-        <td align="center"><a href="/${board_path}/+read/${a.aSerial}" class="articlelink">${a.aIndex}</a></td>
-        <!-- 제목 --> 
-        <td width="55%">
-            % if a.aLevel > 0:
-            <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (a.aLevel-1)}px" />
-            % endif
-            <a href="/${board_path}/+read/${a.aSerial}" class="articlelink">${a.aTitle}
-                <% cmt_cnt = article.get_comment_count(a.aSerial) %>
-                % if cmt_cnt > 0:
-                [${cmt_cnt}]
-                % endif
-            </a>
-        </td>
-        <!-- 글쓴이 -->
-        <td style="padding-left: 1em">${get_formatted_username(a.uSerial)}</td>
-        <!-- 날짜 -->
-        <td align="center">${a.aDatetime.strftime('%Y-%m-%d')}</td>
-        <!-- 조회수 -->
-        <td align="center">${a.aHit}</td>
-    </tr>
-            % endfor
-        </table>
+        ${put_article(a, i, False)}
+        <% i = i + 1 %>
+        % endfor
     % endif
+</table>
 % endif
 
 <!-- 페이지 네비게이트 , 글쓰기/관리 버튼-->
@@ -134,4 +84,39 @@ def get_formatted_username(uid):
 </center>
 
 </div> <!-- end of menu -->
-
+<%def name="put_article(a, i, mark=False)" >
+% if i%2 == 0:
+<tr class="even">
+% else:
+<tr class="odd">
+% endif
+    <!-- 글번호 -->
+%if mark:
+    <td align="center"><a href="/${board_path}/+read/${a.aSerial}" class="articlelink">공지</a></td>
+% else:
+    <td align="center"><a href="/${board_path}/+read/${a.aSerial}" class="articlelink">${a.aIndex}</a></td>
+% endif
+    <!-- 제목 --> 
+% if mark:
+    <td class="emphasized" width="55%">
+% else:
+    <td width="55%">
+% endif
+%if a.aLevel > 0:
+        <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (a.aLevel-1)}px" />
+%endif
+        <a href="/${board_path}/+read/${a.aSerial}" class="articlelink">${a.aTitle}
+        <% cmt_cnt = article.get_comment_count(a.aSerial) %>
+        % if cmt_cnt > 0:
+        [${cmt_cnt}]
+        % endif
+        </a>
+    </td>
+    <!-- 글쓴이 -->
+    <td style="padding-left: 1em">${get_formatted_username(a.uSerial)}</td>
+    <!-- 날짜 -->
+    <td align="center">${a.aDatetime.strftime('%Y-%m-%d')}</td>
+    <!-- 조회수 -->
+    <td align="center">${a.aHit}</td>
+</tr>
+</%def>
