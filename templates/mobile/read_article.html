@@ -94,9 +94,9 @@ ${util.format(article['aContent'])}
 % if ctx.session.has_key('uid') and acl.is_allowed('board', article.bSerial, ctx.session.uid, 'mark'):
     % if A.get_mark_status(article['aSerial']):
     <!-- 강조 권한 --> 
-    <li><a class="button" href="/${board_path}/+unmark/${article['aSerial']}">강조 해제</a></li>
+    <li><a class="button" href="/m/${board_path}/+unmark/${article['aSerial']}">강조 해제</a></li>
     % else:
-    <li><a class="button" href="/${board_path}/+mark/${article['aSerial']}">강조</a></li>
+    <li><a class="button" href="/m/${board_path}/+mark/${article['aSerial']}">강조</a></li>
     % endif
 % endif
 </ul>
