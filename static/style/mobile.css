@@ -6,7 +6,6 @@ hr {
 }
 
 body {
-    font-size: 140%;
     line-height: 160%;
     margin: 0;
     padding: 0;
@@ -34,6 +33,10 @@ img{
     vertical-align: middle;
 }
 
+#header {
+    background-color: #a5c1e4;
+}
+
 #header img {
     margin-bottom: 5px;
 }
@@ -45,7 +48,7 @@ img{
 }
 
 #footer {
-    background-color: rgb(237, 243, 254);
+    background-color: #bfd9ff;
     text-align: center;
 }
 
@@ -70,6 +73,24 @@ table.list tr span#commentCount {
     color: #666666;
     padding-left: 5px;
     font-size: 80%; 
+}
+ul.list { 
+    margin-left: 0;
+    padding-left: 0;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #3C78B5;
+    list-style-type: none;
+}
+
+ul.list li {
+    margin-bottom: 0.4em;
+}
+ul.list li.even {
+    background: rgb(237, 243, 254);
+}
+
+ul.list li.odd {
+    background: #fff;
 }
 
 a.button {
@@ -100,7 +121,7 @@ ul.buttonlist li {
     display: inline;
 }
 
-#article h3 {
+h3.disp,#article h3 {
     font-size: 1.1em;
     font-weight: normal;
     margin: 0;
@@ -126,19 +147,12 @@ ul.buttonlist li {
     color: red;
 }
 
-#comment_list{
-    padding-top: 5px;
-}
 
-#comment_list td.writer {
+.cmt_writer {
     color: gray;
-    text-align: right;
     font-size: 90%;
     width: 4em;
-}
-
-#comment_list .button a{
-    padding: 0.2em;
+    margin-right: 0.5em;
 }
 
 #input {
@@ -147,4 +161,15 @@ ul.buttonlist li {
     border: 1px solid #c0c0c0;
     background-color: #F0F0F0;
     margin: 10px 0 10px 0;
+}
+
+#content .image {
+    font-size: 0.9em;
+    font-weight: bold;
+    color: gray;
+    margin-bottom: 10px;
+    border-style: none;
+}
+#content .image a{
+    border-style: none;
 }

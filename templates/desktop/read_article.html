@@ -110,7 +110,7 @@ ${util.format(article['aContent'])}
 % else:
         <li> <a class="button" href="/${board_path}?page=${page_no}">목록</a></li>
 % endif
-% if ctx.session.has_key('uid'):
+%if ctx.session.has_key('uid') and acl.is_allowed('board', board._get_board_id_from_path('/%s' % board_path), ctx.session.uid, 'write'):
         <!-- 쓰기 권한 -->	
         <li><a class="button" href="/${board_path}/+write">글쓰기</a></li>
         <li><a class="button" href="/${board_path}/+reply/${article['aSerial']}">답글</a></li>

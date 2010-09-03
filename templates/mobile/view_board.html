@@ -1,13 +1,13 @@
 <%inherit file="base.html" />
 <%
-import user, article
+from web import ctx
+import user, article, acl, board
 def get_formatted_username(uid):
     u = user.get_user(uid)
     if u[0]:
         return "%(id)s" % {'id': u[1]['uId']}
     else:
         return u"탈퇴한 회원"
-
 %>
 %if len(articles) == 0:
 <div align="center">
@@ -25,38 +25,70 @@ def get_formatted_username(uid):
         <th>날짜</th>
     </tr>
     <% i = 1 %>
-    % for a in articles:
-    % if i%2 == 0:
+
+    %if marked_articles is not UNDEFINED:
+        % for a in marked_articles:
+            % if i%2 == 0:
     <tr class="even">
-    % else:
+            % else:
     <tr class="odd">
-    % endif
+            % endif
     <% i = i + 1 %>
         <!-- 제목 --> 
-        <td  width="65%">
-    %if a.aLevel > 0:
-        <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (a.aLevel-1)}px" />
-    %endif
-        <a href="/m/${board_path}/+read/${a.aSerial}" class="articlelink">${a.aTitle}
-<% cmt_cnt = article.get_comment_count(a.aSerial) %>
-    % if cmt_cnt > 0:
-            [${cmt_cnt}]
-    % endif
-        </a>
+        <td width="65%" class="emphasized">
+        %if a.aLevel > 0:
+            <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (a.aLevel-1)}px" />
+        %endif
+            <a href="/m/${board_path}/+read/${a.aSerial}" class="articlelink">${a.aTitle}
+    <% cmt_cnt = article.get_comment_count(a.aSerial) %>
+        % if cmt_cnt > 0:
+        [${cmt_cnt}]
+        % endif
+            </a>
         </td>
         <!-- 글쓴이 -->
         <td align="left">${get_formatted_username(a.uSerial)}</td>
         <!-- 날짜 -->
         <td align="center">${a.aDatetime.strftime('%m-%d')}</td>
     </tr>
-    % endfor
+        % endfor
+    % endif
+    %if articles is not UNDEFINED:
+        % for a in articles:
+            % if i%2 == 0:
+    <tr class="even">
+            % else:
+    <tr class="odd">
+            % endif
+    <% i = i + 1 %>
+        <!-- 제목 --> 
+        <td width="65%">
+        %if a.aLevel > 0:
+            <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (a.aLevel-1)}px" />
+        %endif
+            <a href="/m/${board_path}/+read/${a.aSerial}" class="articlelink">${a.aTitle}
+    <% cmt_cnt = article.get_comment_count(a.aSerial) %>
+        % if cmt_cnt > 0:
+        [${cmt_cnt}]
+        % endif
+            </a>
+        </td>
+        <!-- 글쓴이 -->
+        <td align="left">${get_formatted_username(a.uSerial)}</td>
+        <!-- 날짜 -->
+        <td align="center">${a.aDatetime.strftime('%m-%d')}</td>
+    </tr>
+        % endfor
+    % endif
 </table>
 % endif
 
 
 <ul class="buttonlist">
+%if ctx.session.has_key('uid') and acl.is_allowed('board', board._get_board_id_from_path('/%s' % board_path), ctx.session.uid, 'write'):
     <!-- 글쓰기 -->
     <li><a class="button" href="/m/${board_path}/+write" title="새 글을 작성합니다">글쓰기</a></li>
+% endif
     <!-- 보드 관리 -->
     <li><a class="button" href="/m/${board_path}/+summary" title="이 보드의 정보를 보거나 수정합니다">게시판 정보</a></li>
 </ul>
@@ -64,29 +96,29 @@ def get_formatted_username(uid):
 <p style="text-align: center;">
 % if page > 0:
     % if page > 11:
-    <a href="/m/${board_path}?page=1"><img src="/static/image/arrows/first.png" alt="first" border="0" style="vertical-align: top" /></a>&nbsp;
+<a href="/m/${board_path}?page=1"><img src="/static/image/arrows/first.png" alt="first" border="0" style="vertical-align: top" /></a>&nbsp;
     % endif
     % if page > 2:
-    <a href="/m/${board_path}?page=${max(1, page-10)}"><img src="/static/image/arrows/more_prev.png" alt="more_prev" border="0" style="vertical-align: top" /></a>&nbsp;
+<a href="/m/${board_path}?page=${max(1, page-10)}"><img src="/static/image/arrows/more_prev.png" alt="more_prev" border="0" style="vertical-align: top" /></a>&nbsp;
     % endif
     % if page > 1:
-    <a href="/m/${board_path}?page=${page-1}"><img src="/static/image/arrows/prev.png" alt="prev" border="0" style="vertical-align: top" /> </a>&nbsp;
+<a href="/m/${board_path}?page=${page-1}"><img src="/static/image/arrows/prev.png" alt="prev" border="0" style="vertical-align: top" /> </a>&nbsp;
     % endif
     % for i in range(((page-1)/10)*10+1, min(total_page, ((page-1)/10*10+10))+1):
-    % if i == page:
-    <b>${i}</b>
-    % else:
-    <a class="listlink" href="/m/${board_path}?page=${i}">${i}</a>
-    % endif
+        % if i == page:
+<b>${i}</b>
+        % else:
+<a class="listlink" href="/m/${board_path}?page=${i}">${i}</a>
+        % endif
     % endfor
     % if page < total_page - 1:
-    <a href="/m/${board_path}?page=${page+1}"><img src="/static/image/arrows/next.png" alt="next" border="0" style="vertical-align: top" /></a>&nbsp;
+<a href="/m/${board_path}?page=${page+1}"><img src="/static/image/arrows/next.png" alt="next" border="0" style="vertical-align: top" /></a>&nbsp;
     % endif
     % if page < total_page - 2:
-    <a href="/m/${board_path}?page=${min(total_page, page+10)}"><img src="/static/image/arrows/more_next.png" alt="more_next" border="0" style="vertical-align: top" /></a>&nbsp;
+<a href="/m/${board_path}?page=${min(total_page, page+10)}"><img src="/static/image/arrows/more_next.png" alt="more_next" border="0" style="vertical-align: top" /></a>&nbsp;
     % endif
     % if page < total_page - 11:
-    <a href="/m/${board_path}?page=${total_page}"><img src="/static/image/arrows/last.png" alt="last" border="0" style="vertical-align: top" /></a>&nbsp;
+<a href="/m/${board_path}?page=${total_page}"><img src="/static/image/arrows/last.png" alt="last" border="0" style="vertical-align: top" /></a>&nbsp;
     % endif
 % endif
 </p>
