@@ -76,7 +76,7 @@ ${util.format(article['aContent'])}
 % if page_no is UNDEFINED:
     <li> <a class="button" href="/m/${board_path}">목록</a></li>
 % else:
-    <li> <a class="button" href="/${board_path}?page=${page_no}">목록</a></li>
+    <li> <a class="button" href="/m/${board_path}?page=${page_no}">목록</a></li>
 % endif
 %if ctx.session.has_key('uid') and acl.is_allowed('board', board._get_board_id_from_path('/%s' % board_path), ctx.session.uid, 'write'):
     <!-- 쓰기 권한 -->	
