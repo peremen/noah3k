@@ -21,16 +21,17 @@ mobile_render = render_mako(
     directories = [os.path.join(os.path.dirname(__file__), 'templates/mobile/').replace('\\','/'),],
     input_encoding = 'utf-8', output_encoding = 'utf-8',
 )
+render = {False: desktop_render, True: mobile_render}
 
 def session_helper(func):
     def _exec(*args, **kwargs):
-        is_mobile = args[1]
+        mobile = args[1]
         try:
             current_uid = web.ctx.session.uid
         except:
-            raise web.unauthorized(desktop_render.error(lang="ko", error_message = u"NOT_LOGGED_IN"))
+            raise web.unauthorized(render[mobile].error(lang="ko", error_message = u"NOT_LOGGED_IN"))
         if current_uid < 1:
-            raise web.internalerror(desktop_render.error(lang="ko", error_message = u"INVALID_UID"))
+            raise web.internalerror(render[mobile].error(lang="ko", error_message = u"INVALID_UID"))
         kwargs.update({'current_uid': current_uid})
         return func(*args, **kwargs)
     return _exec
@@ -48,13 +49,13 @@ def error_catcher(func):
     def _exec(*args, **kwargs):
         try:
             return func(*args, **kwargs)
-        except (web.webapi._NotFound, web.webapi._InternalError, web.webapi.SeeOther): # 웹 프로그램의 오류. 대개 해결 가능.
+        except (web.webapi.unauthorized, web.webapi._NotFound, web.webapi._InternalError, web.webapi.SeeOther): # 웹 프로그램의 오류. 대개 해결 가능.
             raise
         except Exception as e:
             current_ctx = web.ctx
             error_text = traceback.format_exc()
             store_error(current_ctx, error_text)
-            raise web.internalerror(desktop_render.error(lang="ko", error_message = e,
+            raise web.internalerror(render[args[1]].error(lang="ko", error_message = e,
                 error_detail = error_text))
     return _exec
 

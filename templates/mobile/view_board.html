@@ -2,12 +2,14 @@
 <%
 from web import ctx
 import user, article, acl, board
+import datetime
 def get_formatted_username(uid):
     u = user.get_user(uid)
     if u[0]:
         return "%(id)s" % {'id': u[1]['uId']}
     else:
         return u"탈퇴한 회원"
+today = datetime.datetime.today()
 %>
 %if len(articles) == 0:
 <div align="center">
@@ -49,7 +51,11 @@ def get_formatted_username(uid):
         <!-- 글쓴이 -->
         <td align="left">${get_formatted_username(a.uSerial)}</td>
         <!-- 날짜 -->
+        %if a.aDatetime.year == today.year:
         <td align="center">${a.aDatetime.strftime('%m-%d')}</td>
+        % else:
+        <td align="center">${a.aDatetime.strftime('%Y')}</td>
+        % endif
     </tr>
         % endfor
     % endif
@@ -76,7 +82,11 @@ def get_formatted_username(uid):
         <!-- 글쓴이 -->
         <td align="left">${get_formatted_username(a.uSerial)}</td>
         <!-- 날짜 -->
+        %if a.aDatetime.year == today.year:
         <td align="center">${a.aDatetime.strftime('%m-%d')}</td>
+        % else:
+        <td align="center">${a.aDatetime.strftime('%Y')}</td>
+        % endif
     </tr>
         % endfor
     % endif

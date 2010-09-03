@@ -8,7 +8,8 @@ hr {
 body {
     line-height: 160%;
     margin: 0;
-    padding: 0;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 a.servicelink        { text-decoration: none; color: black }
