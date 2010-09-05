@@ -32,9 +32,9 @@ def session_helper(func):
         try:
             current_uid = web.ctx.session.uid
         except:
-            raise web.unauthorized(render[mobile].error(lang="ko", error_message = u"NOT_LOGGED_IN"))
+            raise web.unauthorized(render[mobile].error(lang="ko", error_message = u"NOT_LOGGED_IN", help_context = 'error'))
         if current_uid < 1:
-            raise web.internalerror(render[mobile].error(lang="ko", error_message = u"INVALID_UID"))
+            raise web.internalerror(render[mobile].error(lang="ko", error_message = u"INVALID_UID", help_context = 'error'))
         kwargs.update({'current_uid': current_uid})
         return func(*args, **kwargs)
     return _exec
@@ -63,7 +63,7 @@ def error_catcher(func):
             error_text = traceback.format_exc()
             store_error(current_ctx, error_text)
             raise web.internalerror(render[is_mobile].error(lang="ko", error_message = e,
-                error_detail = error_text))
+                error_detail = error_text, help_context = 'error'))
     return _exec
 
 def store_error(current_ctx, error_text):

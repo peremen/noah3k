@@ -9,8 +9,9 @@ from web import ctx %><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
 % else:
     <title>${title}</title>
 % endif
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link rel="stylesheet" type="text/css" href="/static/style/default.css">		
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/static/style/default.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/code.css">
 % if board_path is not UNDEFINED:
 % if feed is not UNDEFINED:
     <link rel="alternate" type="application/rss+xml" href="/${board_path}/+rss" title="RSS 피드 (/${board_path})" />

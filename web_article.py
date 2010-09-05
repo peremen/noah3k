@@ -37,11 +37,11 @@ class article_actions:
             mobile = False
         board_id = board._get_board_id_from_path(board_name)
         if board_id < 0:
-            raise web.notfound(render[mobile].error(lang='ko', error_message = 'INVALID_BOARD'))
+            raise web.notfound(render[mobile].error(lang='ko', error_message = 'INVALID_BOARD', help_context='error'))
         try:
             return eval('self.%s_%s' % (action, method))(mobile, board_name, board_id, int(article_id))
         except AttributeError:
-            raise web.notfound(render[mobile].error(lang='ko', error_message = 'INVALID_ACTION'))
+            raise web.notfound(render[mobile].error(lang='ko', error_message = 'INVALID_ACTION', help_context='error'))
 
     @util.error_catcher
     def read_get(self, mobile, board_name, board_id, article_id):
@@ -56,7 +56,7 @@ class article_actions:
         next_id = -1
 
         if not a:
-            raise web.notfound(render[mobile].error(lang="ko", error_message = u"NO_SUCH_ARTICLE"))
+            raise web.notfound(render[mobile].error(lang="ko", error_message = u"NO_SUCH_ARTICLE", help_context='error'))
         if a.aIndex > 1:
             prev_id = article.get_article_id_by_index(board_id, a.aIndex - 1)
         if a.aIndex < article._get_article_count(board_id):
@@ -70,13 +70,14 @@ class article_actions:
             board_path = board_name, board_desc = board_desc,
             comments = comment, lang="ko", page_no = page_no,
             prev_id = prev_id, next_id = next_id, feed = True,
-            attachment = uploads, thumbnail = thumbs,)
+            attachment = uploads, thumbnail = thumbs,
+            help_context = 'read_article')
 
     @util.error_catcher
     @util.session_helper
     def reply_get(self, mobile, board_name, board_id, article_id, current_uid = -1):
         if not acl.is_allowed('board', board_id, current_uid, 'write'):
-            return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION')
+            return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION', help_context='error')
         board_info = board.get_board_info(board_id)
         board_desc = board_info.bDescription
         user_info = user.get_user(current_uid)[1]
@@ -86,13 +87,14 @@ class article_actions:
         return render[mobile].editor(title = u"답글 쓰기 - /%s - Noah3K" % board_name,
                 action='reply/%s' % article_id, action_name = u"답글 쓰기",
                 board_path = board_name, board_desc = board_desc,
-                lang="ko", body = body, article_title = article_.aTitle)
+                lang="ko", body = body, article_title = article_.aTitle,
+                help_context = 'editor')
 
     @util.error_catcher
     @util.session_helper
     def reply_post(self, mobile, board_name, board_id, article_id, current_uid = -1):
         if not acl.is_allowed('board', article_id, current_uid, 'write'):
-            return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION')
+            return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION', help_context = 'error')
         reply = dict(title = web.input().title, body = web.input().content)
         board_info = board.get_board_info(board_id)
         ret = article.reply_article(current_uid, board_id, article_id, reply)
@@ -108,13 +110,13 @@ class article_actions:
             else:
                 raise web.seeother('/%s/+read/%s' % (board_name, ret[1]))
         else:
-            return render[mobile].error(lang='ko', error_message = ret[1])
+            return render[mobile].error(lang='ko', error_message = ret[1], help_context='error')
 
     @util.error_catcher
     @util.session_helper
     def modify_get(self, mobile, board_name, board_id, article_id, current_uid = -1):
         if not acl.is_allowed('article', article_id, current_uid, 'modify'):
-            return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION')
+            return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION', help_context='error')
         board_info = board.get_board_info(board_id)
         board_desc = board_info.bDescription
         article_ = article.get_article(board_id, article_id)
@@ -123,13 +125,13 @@ class article_actions:
                 action='modify/%s' % article_id, action_name = u"글 수정하기",
                 board_path = board_name, board_desc = board_desc,
                 article_title = article_.aTitle, body = article_.aContent,
-                lang="ko", attachment = uploads, )
+                lang="ko", attachment = uploads, help_context = 'editor')
 
     @util.error_catcher
     @util.session_helper
     def modify_post(self, mobile, board_name, board_id, article_id, current_uid = -1):
         if not acl.is_allowed('article', article_id, current_uid, 'modify'):
-            return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION')
+            return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION', help_context='error')
         data = web.input(new_attachment= {})
         fs = web.ctx.get('_fieldstorage')
         if fs.has_key('delete'):
@@ -162,13 +164,13 @@ class article_actions:
             else:
                 raise web.seeother('/%s/+read/%s' % (board_name, ret[1]))
         else:
-            return render[mobile].error(lang='ko', error_message = ret[1])
+            return render[mobile].error(lang='ko', error_message = ret[1], help_context='error')
 
     @util.error_catcher
     @util.session_helper
     def delete_get(self, mobile, board_name, board_id, article_id, current_uid = -1):
         if not acl.is_allowed('article', article_id, current_uid, 'delete'):
-            return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION')
+            return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION', help_context='error')
         if mobile:
             default_referer = os.path.join('/m', board_name, '+read', str(article_id))
             action=os.path.join('/m', board_name, '+delete', str(article_id))
@@ -185,7 +187,7 @@ class article_actions:
     @util.session_helper
     def delete_post(self, mobile, board_name, board_id, article_id, current_uid = -1):
         if not acl.is_allowed('article', article_id, current_uid, 'delete'):
-            return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION')
+            return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION',help_context='error')
         ret = article.delete_article(current_uid, article_id)
         attachment.remove_all_attachment(article_id)
         if ret[0] == True:
@@ -194,13 +196,13 @@ class article_actions:
             else:
                 raise web.seeother('/%s' % (board_name))
         else:
-            return render[mobile].error(lang='ko', error_message = ret[1])
+            return render[mobile].error(lang='ko', error_message = ret[1], help_context='error')
 
     @util.error_catcher
     @util.session_helper
     def comment_post(self, mobile, board_name, board_id, article_id, current_uid = -1):
         if not acl.is_allowed('board', board_id, current_uid, 'comment'):
-            return render[mobile].error(lang='ko', error_message='NO_PERMISSION')
+            return render[mobile].error(lang='ko', error_message='NO_PERMISSION', help_context='error')
         comment = web.input().comment
         board_info = board.get_board_info(board_id)
         ret = article.write_comment(current_uid, board_id, article_id, comment)
@@ -210,7 +212,7 @@ class article_actions:
             else:
                 raise web.seeother('/%s/+read/%s' % (board_name, article_id))
         else:
-            return render[mobile].error(lang='ko', error_message = ret[1])
+            return render[mobile].error(lang='ko', error_message = ret[1], help_context='error')
 
     @util.error_catcher
     @util.session_helper
@@ -222,13 +224,13 @@ class article_actions:
             else:
                 raise web.seeother('/%s/+read/%s' % (board_name, ret[1]))
         else:
-            return render[mobile].error(lang='ko', error_message = ret[1])
+            return render[mobile].error(lang='ko', error_message = ret[1], help_context='error')
 
     @util.error_catcher
     @util.session_helper
     def mark_get(self, mobile, board_name, board_id, article_id, current_uid = -1):
         if not acl.is_allowed('board', board_id, current_uid, 'mark'):
-            return render[mobile].error(lang='ko', error_message='NO_PERMISSION')
+            return render[mobile].error(lang='ko', error_message='NO_PERMISSION', help_context='error')
         article.mark_article(article_id)
         if mobile:
             raise web.seeother('/m/%s/+read/%s' % (board_name, article_id))
@@ -239,7 +241,7 @@ class article_actions:
     @util.session_helper
     def unmark_get(self, mobile, board_name, board_id, article_id, current_uid = -1):
         if not acl.is_allowed('board', board_id, current_uid, 'mark'):
-            return render[mobile].error(lang='ko', error_message='NO_PERMISSION')
+            return render[mobile].error(lang='ko', error_message='NO_PERMISSION', help_context='error')
         article.unmark_article(article_id)
         if mobile:
             raise web.seeother('/m/%s/+read/%s' % (board_name, article_id))

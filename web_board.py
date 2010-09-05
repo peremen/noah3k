@@ -46,11 +46,11 @@ class board_actions:
         else:
             board_id = board._get_board_id_from_path(board_name)
         if board_id < 0:
-            raise web.notfound(render[mobile].error(lang='ko', error_message = 'INVALID_BOARD'))
+            raise web.notfound(render[mobile].error(lang='ko', error_message = 'INVALID_BOARD', help_context='error'))
         try:
             return eval('self.%s_%s' % (action, method))(mobile, board_name, board_id)
         except AttributeError:
-            raise web.notfound(render[mobile].error(lang='ko', error_message = 'INVALID_ACTION'))
+            raise web.notfound(render[mobile].error(lang='ko', error_message = 'INVALID_ACTION', help_context='error'))
 
     @util.error_catcher
     @util.session_helper
@@ -61,7 +61,7 @@ class board_actions:
         return render[mobile].editor(title = u"글 쓰기 - %s - Noah3K" % board_name,
                 action='write', action_name = u"글 쓰기",
                 board_path = board_name, board_desc = board_desc, lang="ko",
-                body = '\n\n\n%s' % user_info['uSig'])
+                body = '\n\n\n%s' % user_info['uSig'], help_context='editor')
 
     @util.error_catcher
     @util.session_helper
@@ -81,7 +81,7 @@ class board_actions:
             else:
                 raise web.seeother('/%s/+read/%s' % (board_name, ret[1]))
         else:
-            return render[mobile].error(lang='ko', error_message = ret[1])
+            return render[mobile].error(lang='ko', error_message = ret[1], help_context='error')
 
     @util.error_catcher
     def rss_get(self, mobile, board_name, board_id):
@@ -175,7 +175,7 @@ class board_actions:
     def create_board_get(self, mobile, board_name, board_id, current_uid = -1):
         board_info = board.get_board_info(board_id)
         if not acl.is_allowed('board', board_id, current_uid, 'create'):
-            return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION')
+            return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION', help_context='error')
         default_referer = posixpath.join('/', board_name, '+summary')
         if mobile:
             default_referer = posixpath.join('/m', default_referer)
@@ -190,7 +190,7 @@ class board_actions:
     def create_board_post(self, mobile, board_name, board_id, current_uid = -1):
         board_info = board.get_board_info(board_id)
         if not acl.is_allowed('board', board_id, current_uid, 'create'):
-            return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION')
+            return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION', help_context='error')
         user_data = web.input()
         comment, write_by_other = 0, 0 # XXX: DB 스키마를 BOOLEAN으로 바꿔야 함
         if user_data.commentable == 'yes':
@@ -199,12 +199,12 @@ class board_actions:
             write_by_other = 1
         owner_uid = user._get_uid_from_username(user_data.owner)
         if owner_uid < 0:
-            return render[mobile].error(lang='ko', error_message='NO_SUCH_USER_FOR_BOARD_ADMIN')
+            return render[mobile].error(lang='ko', error_message='NO_SUCH_USER_FOR_BOARD_ADMIN', help_context='error')
         if user_data.name.strip() == '':
-            return desktop_render.error(lang='ko', error_message = 'NO_NAME_SPECIFIED')
+            return desktop_render.error(lang='ko', error_message = 'NO_NAME_SPECIFIED', help_context='error')
         new_path = posixpath.join('/', board_name, user_data.name)
         if board._get_board_id_from_path(new_path) > 0:
-            return render[mobile].error(lang='ko', error_message = 'BOARD_EXISTS')
+            return render[mobile].error(lang='ko', error_message = 'BOARD_EXISTS', help_context='error')
 
         settings = dict(path=new_path, board_owner = owner_uid,
                 cover = user_data.information,
@@ -215,7 +215,7 @@ class board_actions:
                 current_uid = current_uid)
         ret = board.create_board(board_id, settings)
         if ret[0] == False:
-            return render[mobile].error(lang='ko', error_message = ret[1])
+            return render[mobile].error(lang='ko', error_message = ret[1] ,help_context = 'error')
         if mobile:
             raise web.seeother('/m%s' % (new_path))
         else:
@@ -226,7 +226,7 @@ class board_actions:
     def modify_get(self, mobile, board_name, board_id, current_uid = -1):
         board_info = board.get_board_info(board_id)
         if not acl.is_allowed('board', board_id, current_uid, 'modify'):
-            return render[mobile].error(lang='ko', error_message='NO_PERMISSION')
+            return render[mobile].error(lang='ko', error_message='NO_PERMISSION', help_context='error')
         default_referer = posixpath.join('/', board_name, '+summary')
         if mobile:
             default_referer = posixpath.join('/m', default_referer)
@@ -241,7 +241,7 @@ class board_actions:
     def modify_post(self, mobile, board_name, board_id, current_uid = -1):
         board_info = board.get_board_info(board_id)
         if not acl.is_allowed('board', board_id, current_uid, 'modify'):
-            return render[mobile].error(lang='ko', error_message='NO_PERMISSION')
+            return render[mobile].error(lang='ko', error_message='NO_PERMISSION', help_context='error')
         comment, write_by_other = 0, 0 # XXX: DB 스키마를 BOOLEAN으로 바꿔야 함
         if web.input().commentable.strip() == 'yes':
             comment = 1
@@ -249,7 +249,7 @@ class board_actions:
             write_by_other = 1
         owner_uid = user._get_uid_from_username(web.input().owner)
         if owner_uid < 0:
-            return render[mobile].error(lang='ko', error_message='NO_SUCH_USER_FOR_BOARD_ADMIN')
+            return render[mobile].error(lang='ko', error_message='NO_SUCH_USER_FOR_BOARD_ADMIN', help_context='error')
 
         board_info = dict(path = web.input().path, name = web.input().name,
                 owner = owner_uid, board_type = web.input().type,
@@ -258,7 +258,7 @@ class board_actions:
                 cover = web.input().information)
         result = board.edit_board(current_uid, board_id, board_info)
         if result[0] == False:
-            return render[mobile].error(lang='ko', error_message = result[1])
+            return render[mobile].error(lang='ko', error_message = result[1], help_context='error')
         else:
             if mobile:
                 raise web.seeother('/m%s/+summary' % result[1])
@@ -290,5 +290,5 @@ class board_actions:
             else:
                 raise web.seeother('%s' % (ret[1]))
         else:
-            return render[mobile].error(lang='ko', error_message = ret[1])
+            return render[mobile].error(lang='ko', error_message = ret[1], help_context='error')
 

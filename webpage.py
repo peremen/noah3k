@@ -104,7 +104,7 @@ class view_board:
             return v.subboard_list_get(mobile)
         board_id = board._get_board_id_from_path(board_name)
         if board_id < 0:
-            raise web.notfound(render[mobile].error(lang='ko', error_message='INVALID_BOARD'))
+            raise web.notfound(render[mobile].error(lang='ko', error_message='INVALID_BOARD', help_context='error'))
         board_info = board.get_board_info(board_id)
         if board_info.bType == 0: # 디렉터리
             v = board_actions()
@@ -131,9 +131,8 @@ class view_board:
             board_path = board_info.bName[1:],
             board_desc = board_info.bDescription,
             articles=a, marked_articles = m,
-            total_page = t,
-            page = page,
-            feed = True)
+            total_page = t, page = page, feed = True,
+            help_context = 'view_board')
 
 if __name__ == "__main__":
     app.run()

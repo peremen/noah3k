@@ -32,7 +32,7 @@ class personal_page:
             mobile = False
         user_id = user._get_uid_from_username(username)
         if user_id < 0:
-            raise web.notfound(render[mobile].error(lang='ko', error_message = 'INVALID_USER'))
+            raise web.notfound(render[mobile].error(lang='ko', error_message = 'INVALID_USER', help_context='error'))
         f = [{'type':'rss', 'path':'/+u/%s/+favorite_rss' % username, 'name':u'즐겨찾기 피드 (RSS)'},
              {'type':'atom', 'path':'/+u/%s/+favorite_atom' % username, 'name':u'즐겨찾기 피드 (Atom)'},]
         return render[mobile].myinfo(user = user.get_user(user_id)[1],
@@ -54,11 +54,11 @@ class personal_actions:
             mobile = False
         user_id = user._get_uid_from_username(username)
         if user_id < 0:
-            raise web.notfound(render[mobile].error(lang='ko', error_message = 'INVALID_USER'))
+            raise web.notfound(render[mobile].error(lang='ko', error_message = 'INVALID_USER', help_context='error'))
         try:
             return eval('self.%s_%s' % (action, method))(mobile, username, user_id)
         except AttributeError:
-            raise web.notfound(render[mobile].error(lang='ko', error_message = 'INVALID_ACTION'))
+            raise web.notfound(render[mobile].error(lang='ko', error_message = 'INVALID_ACTION', help_context='error'))
 
     @util.error_catcher
     def favorite_rss_get(self, mobile, username, user_id):
@@ -83,7 +83,7 @@ class personal_actions:
     @util.session_helper
     def modify_get(self, mobile, username, user_id, current_uid = -1):
         if user_id != current_uid:
-            return render[mobile].error(lang='ko', error_message='MODIFYING_OTHERS_INFORMATION')
+            return render[mobile].error(lang='ko', error_message='MODIFYING_OTHERS_INFORMATION', help_context='error')
         referer = posixpath.join('/', '+u', username)
         if mobile:
             referer = posixpath.join('/m', referer)
@@ -99,11 +99,11 @@ class personal_actions:
     def modify_post(self, mobile, username, user_id, current_uid = -1):
         data = web.input()
         if not user.verify_password(user_id, data.oldpass):
-            return render[mobile].error(lang='ko', error_message='INVALID_PASSWORD')
+            return render[mobile].error(lang='ko', error_message='INVALID_PASSWORD', help_context='error')
         if data.newpass1 != data.newpass2:
-            return render[mobile].error(lang='ko', error_message = 'PASSWORD_DO_NOT_MATCH')
+            return render[mobile].error(lang='ko', error_message = 'PASSWORD_DO_NOT_MATCH', help_context='error')
         if len(data.newpass1) > 0 and len(data.newpass1) < 6:
-            return render[mobile].error(lang='ko', error_message = 'PASSWORD_TOO_SHORT')
+            return render[mobile].error(lang='ko', error_message = 'PASSWORD_TOO_SHORT', help_context='error')
         if len(data.newpass1) == 0:
             password = data.oldpass
         else:
@@ -123,7 +123,7 @@ class personal_actions:
     @util.session_helper
     def leave_get(self, mobile, username, user_id, current_uid = -1):
         if user_id != current_uid:
-            return render[mobile].error(lang='ko', error_message='MODIFYING_OTHERS_INFORMATION')
+            return render[mobile].error(lang='ko', error_message='MODIFYING_OTHERS_INFORMATION', help_context='error')
         default_referer = posixpath.join('/', '+u', username)
         return render[mobile].leave(lang='ko', board_desc = u'회원 탈퇴',
                 title=u'회원 탈퇴', username = username,
@@ -135,11 +135,11 @@ class personal_actions:
     def leave_post(self, mobile, username, user_id, current_uid = -1):
         password = web.input().password
         if not user.verify_password(user_id, password):
-            return render[mobile].error(lang='ko', error_message='WRONG_PASSWORD')
+            return render[mobile].error(lang='ko', error_message='WRONG_PASSWORD', help_context='error')
 
         result = user.delete_user(user_id)
         if not result[0]:
-            return render[mobile].error(lang='ko', error_message = result[1])
+            return render[mobile].error(lang='ko', error_message = result[1], help_context='error')
         web.ctx.session.uid = 0
         web.ctx.session.kill()
         if mobile:
