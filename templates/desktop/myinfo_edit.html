@@ -1,12 +1,5 @@
 <%inherit file="base.html" />
 <form name="modify_form" method="post" action="/+u/${username}/+modify">
-<!-- 완료/취소 버튼 -->			
-<div>
-    <input type="submit" name="ok" value="완료" style="margin: 6px" />
-    <input type="submit" name="cancel" value="취소" style="margin: 6px" />
-    <input type="hidden" name="referer" value="${referer}" />
-</div>
-
 <div style="width: 640px">
     <div class="heading">개인 정보</div>
     <div id="row">
@@ -58,6 +51,13 @@
         <span class="sep">:</span>
         <textarea name="introduction" style="font-size: 0.9em; width: 500px; height: 100px">${user.uPlan}</textarea>
     </div>
+<!-- 완료/취소 버튼 -->			
+<div>
+    <input type="submit" name="ok" value="완료" style="margin: 6px" />
+    <input type="submit" name="cancel" value="취소" style="margin: 6px" />
+    <input type="hidden" name="referer" value="${referer}" />
+</div>
+
 
 </div>
 </form>

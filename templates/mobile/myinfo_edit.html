@@ -1,63 +1,25 @@
 <%inherit file="base.html" />
-<form name="modify_form" method="post" action="/+u/${username}/+modify">
-<!-- 완료/취소 버튼 -->			
-<div>
-    <input type="submit" name="ok" value="완료" style="margin: 6px" />
-    <input type="submit" name="cancel" value="취소" style="margin: 6px" />
-    <input type="hidden" name="referer" value="${referer}" />
-</div>
-
-<div style="width: 640px">
-    <div class="heading">개인 정보</div>
-    <div id="row">
-        <div class="left-container">아이디</div>
-        <span class="sep">:</span>
-        <span>${user.uId}</span>
-    </div>
-    <div id="row">
-        <div class="left-container">별명</div>
-        <span class="sep">:</span>
-        <span><input name="nick" type="text" maxlength="16" style="width: 12em" value="${user.uNick}" /></span>
-    </div>
-    <div id="row">
-        <div class="left-container">이메일 주소</div>
-        <span class="sep">:</span>
-        <span><input name="email" type="text" maxlength="64" style="width: 12em" value="${user.uEmail}" /></span>
-    </div>
-    <div id="row">
-        <div class="left-container">홈페이지 주소</div>
-        <span class="sep">:</span>
-        <span><input name="homepage" type="text" maxlength="64" style="width: 12em" value="${user.uHomepage}" /></span>
-    </div>
+<form name="modify_form" method="post" action="/m/+u/${username}/+modify">
+<h3>내 정보 수정</h3>
+<h4>개인 정보</h4>
+<ul class="list2">
+    <li>ID: ${user.uId}</li>
+    <li>별명: <input name="nick" type="text" maxlength="16" style="width: 12em" value="${user.uNick}" /></li>
+    <li>이메일 주소: <input name="email" type="text" maxlength="64" style="width: 12em" value="${user.uEmail}" /></li>
+    <li>홈페이지 주소: <input name="homepage" type="text" maxlength="64" style="width: 12em" value="${user.uHomepage}" /></li>
     <!-- 비밀번호 수정 -->
-    <div class="heading">암호</div>
-    <div id="row">
-        <div class="left-container">현재 암호</div>
-        <span class="sep">:</span>
-        <span><input name="oldpass" type="password" style="width: 12em"></span>
-    </div>
-    <div id="row">
-        <div class="left-container">새 암호 (6자 이상)</div>
-        <span class="sep">:</span>
-        <span><input name="newpass1" type="password" style="width: 12em"></span>
-    </div>
-    <div id="row">
-        <div class="left-container">암호 확인</div>
-        <span class="sep">:</span>
-        <span><input name="newpass2" type="password" style="width: 12em"></span>
-    </div>
-    <div class="heading">시그 변경</div>
-    <div id="row">
-        <div class="left-container">시그</div>
-        <span class="sep">:</span>
-        <textarea name="sig" style="font-size: 0.9em; width: 500px; height: 100px">${user.uSig}</textarea>
-    </div>
-    <div class="heading">자기소개 변경</div>
-    <div id="row">
-        <div class="left-container">자기소개</div>
-        <span class="sep">:</span>
-        <textarea name="introduction" style="font-size: 0.9em; width: 500px; height: 100px">${user.uPlan}</textarea>
-    </div>
+    <li>현재 암호: <input name="oldpass" type="password" style="width: 12em"></li>
+    <li>새 암호 (6자 이상): <input name="newpass1" type="password" style="width: 12em"></li>
+    <li>암호 확인: <input name="newpass2" type="password" style="width: 12em"></li>
+    <li>시그:<br />
+    <textarea name="sig" style="font-size: 0.9em; width: 100%; height: 100px">${user.uSig}</textarea>
+    </li>
+    <li>자기소개:<br />
+    <textarea name="introduction" style="font-size: 0.9em; width: 100%; height: 100px">${user.uPlan}</textarea>
+</ul>
+<!-- 완료/취소 버튼 -->			
+<input type="submit" name="ok" value="완료" style="margin: 6px" />
+<input type="submit" name="cancel" value="취소" style="margin: 6px" />
+<input type="hidden" name="referer" value="${referer}" />
 
-</div>
 </form>

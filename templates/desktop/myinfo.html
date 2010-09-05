@@ -2,18 +2,6 @@
 import util
 from web import ctx %>
 <%inherit file="base.html" />
-<div>
-##%if ctx.session.username == username:
-##    <a class="button" href="/+u/${username}/+my_posts">내가 쓴 글</a>
-##%else:
-##    <a class="button" href="/+u/${username}/+my_posts">이 사용자가 쓴 글</a>
-##% endif
-%if ctx.session.username == username:
-    <a class="button" href="/+u/${username}/+modify">수정</a>
-    <a class="button" href="/+u/${username}/+leave">회원 탈퇴</a>
-% endif
-</div>
-
 <div style="width: 640px">
     <div class="heading">개인 정보</div>
     <div id="row">
@@ -141,3 +129,16 @@ from web import ctx %>
     % endif
 % endif
 </div>
+<br />
+<div>
+##%if ctx.session.username == username:
+##    <a class="button" href="/+u/${username}/+my_posts">내가 쓴 글</a>
+##%else:
+##    <a class="button" href="/+u/${username}/+my_posts">이 사용자가 쓴 글</a>
+##% endif
+%if ctx.session.username == username:
+    <a class="button" href="/+u/${username}/+modify">수정</a>
+    <a class="button" href="/+u/${username}/+leave">회원 탈퇴</a>
+% endif
+</div>
+

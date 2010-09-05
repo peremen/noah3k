@@ -25,7 +25,10 @@ render = {False: desktop_render, True: mobile_render}
 
 def session_helper(func):
     def _exec(*args, **kwargs):
-        mobile = args[1]
+        if args[1]:
+            mobile = True
+        else:
+            mobile = False
         try:
             current_uid = web.ctx.session.uid
         except:
@@ -52,10 +55,14 @@ def error_catcher(func):
         except (web.webapi.unauthorized, web.webapi._NotFound, web.webapi._InternalError, web.webapi.SeeOther): # 웹 프로그램의 오류. 대개 해결 가능.
             raise
         except Exception as e:
+            if args[1]:
+                is_mobile = True
+            else:
+                is_mobile = False
             current_ctx = web.ctx
             error_text = traceback.format_exc()
             store_error(current_ctx, error_text)
-            raise web.internalerror(render[args[1]].error(lang="ko", error_message = e,
+            raise web.internalerror(render[is_mobile].error(lang="ko", error_message = e,
                 error_detail = error_text))
     return _exec
 

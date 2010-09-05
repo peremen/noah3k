@@ -82,6 +82,12 @@ ul.list {
     border-bottom: 2px solid #3C78B5;
     list-style-type: none;
 }
+ul.list2 { 
+    margin-left: 0;
+    padding-left: 0;
+    margin-bottom: 10px;
+    list-style-type: none;
+}
 
 ul.list li {
     margin-bottom: 0.4em;
@@ -122,16 +128,22 @@ ul.buttonlist li {
     display: inline;
 }
 
-h3.disp,#article h3 {
+h3 {
     font-size: 1.1em;
     font-weight: normal;
     margin: 0;
     padding: 0.5em 0.5em;
+    background-color: #ccc;
+    color: #000;
+}
+
+h4 {
+    font-size: 1em;
+    font-weight: normal;
+    margin: 0;
+    padding: 0.3em 0.3em;
     background-color: #eee;
     color: #000;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
 }
 
 #article .writer {

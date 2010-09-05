@@ -5,7 +5,7 @@
     <br /><span style="color: red">${error}</span>
 % endif
 <hr />
-<form method="post" action="/+login">
+<form method="post" action="/m/+login">
     <input name="url" type="hidden" value="${referer}" />
     <label for="username">ID</label>
     <input id="username" name="username" type="text" style="width: 8em;"/>
@@ -13,7 +13,7 @@
     <input id="password" name="password" type="password" style="width: 8em;"/>
     <input type="submit" name="Submit" value="로그인"/>
 </form>
-<h3 class="disp">공지 사항</h3>
+<h3>공지 사항</h3>
 <% notice_text = util.get_login_notice() %>
 % if notice_text == 'INVALID_NOTICE_BOARD':
 내부 오류

@@ -1,18 +1,14 @@
 <%inherit file="base.html" /> 
 
-<div style="width: 500px; height: 400px; text-align: center; margin: 0 auto; padding-top: 125px">
 <form name="question" method="post" action="${action}">
-    <hr />
 % if title is UNDEFINED:
-    <h2>오류</h2>
+<h3>오류</h3>
 % else:
-    <h2>${title}</h2>
+<h3>${title}</h3>
 % endif
-    <p>${question}</p>
-    <input type="submit" name="ok" value="확인" style="margin: 6px">
-    <input type="submit" name="cancel" value="취소" style="margin: 6px">
-    <input type="hidden" name="referer" value="${referer}" />
-    <br />
-    <hr />
+<p>${question}</p>
+<input type="submit" name="ok" value="확인" style="margin: 6px">
+<input type="submit" name="cancel" value="취소" style="margin: 6px">
+<input type="hidden" name="referer" value="${referer}" />
+<br />
 </form>
-</div>

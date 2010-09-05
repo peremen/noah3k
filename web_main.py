@@ -40,9 +40,13 @@ class main_actions:
 
     @util.error_catcher
     def join_get(self, mobile):
+        if mobile:
+            ref_path = '/m'
+        else:
+            ref_path = '/'
         return render[mobile].join(title = u"회원 가입 - Noah3K",
                lang="ko", board_desc=u"회원 가입",
-               referer = web.ctx.env.get('HTTP_REFERER', '/'))
+               referer = web.ctx.env.get('HTTP_REFERER', ref_path))
 
     @util.error_catcher
     @util.confirmation_helper
@@ -72,7 +76,10 @@ class main_actions:
 
     @util.error_catcher
     def login_get(self, mobile):
-        referer = web.ctx.env.get('HTTP_REFERER', '/')
+        if mobile:
+            referer = web.ctx.env.get('HTTP_REFERER', '/m')
+        else:
+            referer = web.ctx.env.get('HTTP_REFERER', '/')
         return render[mobile].login(title = u"로그인 - Noah3K", board_desc=u"로그인",
                 lang="ko", referer = referer)
 
@@ -112,7 +119,10 @@ class main_actions:
     def logout_get(self, mobile):
         web.ctx.session.uid = 0
         web.ctx.session.kill()
-        referer = web.ctx.env.get('HTTP_REFERER', '/')
+        if mobile:
+            referer = web.ctx.env.get('HTTP_REFERER', '/m')
+        else:
+            referer = web.ctx.env.get('HTTP_REFERER', '/')
         raise web.seeother(referer)
 
     @util.error_catcher

@@ -1,5 +1,5 @@
 <%inherit file="base.html" />
-<h3 class="disp">${action_name}</h3>
+<h3>${action_name}</h3>
 <form name="write_form" method="POST" action="/m/${board_path}/+${action}">
 제목
 %if article_title is UNDEFINED:
