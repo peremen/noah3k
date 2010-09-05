@@ -46,6 +46,8 @@ body {
     clear: both;
 }
 
+a.plainlink        { text-decoration: none; color: black }
+a.plainlink:hover    { text-decoration: none; color: black }
 a.servicelink        { text-decoration: none; color: black }
 a.servicelink:hover    { text-decoration: none; color: red }
 a.favlink            { text-decoration: none; color: orange; font-weight: bold }

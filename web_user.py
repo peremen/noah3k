@@ -146,3 +146,23 @@ class personal_actions:
             raise web.seeother('/m')
         else:
             raise web.seeother('/')
+
+    @util.error_catcher
+    @util.session_helper
+    def my_board_get(self, mobile, username, user_id, current_uid = -1):
+        my_board = user.get_owned_board(user_id)
+        return render[mobile].view_subboard_list(lang='ko',
+            child_boards = my_board, board_path = '',
+            title=u'내 게시판', board_desc = u'내 게시판',
+            list_type = u'내 게시판')
+
+    @util.error_catcher
+    @util.session_helper
+    def favorites_get(self, mobile, username, user_id, current_uid = -1):
+        fav_board = []
+        for b in user.get_favorite_board(user_id):
+            fav_board.append(board.get_board_info(b.bSerial))
+        return render[mobile].view_subboard_list(lang='ko',
+            child_boards = fav_board, board_path = '',
+            title=u'즐겨찾는 게시판', board_desc = u'즐겨찾는 게시판',
+            list_type = u'즐겨찾는 게시판')

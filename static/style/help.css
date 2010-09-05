@@ -1,0 +1,91 @@
+body {
+    margin: 0;
+}
+
+a.servicelink        { text-decoration: none; color: black }
+a.servicelink:hover    { text-decoration: none; color: red }
+a.favlink            { text-decoration: none; color: orange; font-weight: bold }
+a.favlink:hover        { text-decoration: underline }
+a.dirlink            { text-decoration: none; color: orange; font-weight: bold }
+a.dirlink:hover        { text-decoration: underline }
+a.boardlink            { text-decoration: none; color: black }
+a.boardlink:hover    { background-color: #E0E0FF }
+a.listlink            { text-decoration: none; color: black }
+a.listlink:hover    { color: red }
+a.articlelink        { text-decoration: none; color: black }
+a.articlelink:hover    { text-decoration: underline }
+a.filelink            { font-weight: bold; text-decoration: none; color: gray }
+a.filelink:hover    { font-weight: bold; text-decoration: underline; color: red }
+
+img{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: middle;
+}
+
+ul.list { 
+    margin-left: 0;
+    padding-left: 0;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #3C78B5;
+    list-style-type: none;
+}
+ul.list2 { 
+    margin-left: 0;
+    padding-left: 0;
+    margin-bottom: 10px;
+    list-style-type: none;
+}
+
+ul.list li {
+    margin-bottom: 0.4em;
+}
+ul.list li.even {
+    background: rgb(237, 243, 254);
+}
+
+ul.list li.odd {
+    background: #fff;
+}
+
+h1 {
+    font-size: 1.4em;
+    font-weight: normal;
+    margin: 0;
+    padding: 0.5em 0.5em;
+    background-color: #ccc;
+    color: #000;
+}
+
+h2 {
+    font-size: 1.2em;
+    font-weight: normal;
+    margin: 0;
+    padding: 0.3em 0.3em;
+    background-color: #ddd;
+    color: #000;
+}
+
+h3 {
+    font-size: 1.1em;
+    font-weight: normal;
+    margin: 0;
+    padding: 0.3em 0.3em;
+    background-color: #eee;
+    color: #000;
+}
+
+
+blockquote {
+    border: 1px solid #3C78B5;
+    margin-left: 20px;
+    margin-top: 2px;
+    padding: 5px 5px 5px 5px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+}
+a.quote {
+    text-decoration: none;
+    color: #555;
+}

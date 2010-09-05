@@ -82,7 +82,7 @@ class main_page:
             return desktop_render.main(title = u'전산학과 BBS 노아입니다', lang='ko',
                     board_desc = u'[전산학과 BBS]', board_path = '',
                     child_boards = child_board, notice_board_path = notice_board_path,
-                    notice_articles = a)
+                    notice_articles = a, help_context = 'main')
 
 class help:
     def GET(self, mobile, context):
@@ -90,7 +90,8 @@ class help:
             mobile = True
         else:
             mobile = False
-        return render[mobile].help(title = u"도움말: %s - Noah3K" % context, lang="ko", session = session)
+        return render[mobile].help(title = u"도움말: %s - Noah3K" % context, lang="ko",
+                help_context = context)
 
 class view_board:
     def GET(self, mobile, board_name):
