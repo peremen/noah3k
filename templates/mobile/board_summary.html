@@ -1,103 +1,59 @@
 <%inherit file="base.html" />
 <%
-import user
-import board
+import user, board, util, acl
 import posixpath
-from pygments import highlight
-from pygments.lexers import BBCodeLexer
-from pygments.formatters import HtmlFormatter
+from web import ctx
 def get_formatted_username(uid):
     u = user.get_user(uid)[1]
     return "%(id)s (%(nick)s)" % {'id': u['uId'], 'nick':u['uNick']}
 
-def format(original):
-    return highlight(original, BBCodeLexer(), HtmlFormatter())
+upper_admin_list = []
+for i in acl.get_board_admins(board_info.bSerial):
+    if (i != board_info.uSerial) and (i != 1):
+        upper_admin_list.append(get_formatted_username(i))
+
+upper_admin_list.sort()
 %>
-<div>
-    <div style="float: left; margin: 0 5px 0 5px;">
-        <!-- 게시판 수정 -->
-        <a href="/${board_path}/+modify">고치기</a>
-        <!-- 게시판 백업 -->
-        <a href="/${board_path}/+backup">백업</a>
-        <!-- 게시판 통계 -->
-        <a href="/${board_path}/+statistics">통계</a>
-    </div>
+<h3>게시판 정보</h3>
+<h4>기본 정보</h4>
+<ul class="list2">
+    <li>위치: ${posixpath.dirname(board_info.bName)}</li>
+    <li>이름: ${posixpath.basename(board_info.bName)}</li>
+    <li>관리자: ${get_formatted_username(board_info.uSerial)}</li>
+</ul>
 
-    <!-- 게시판 삭제 -->
-    <div style="float: right; margin: 0 5px 0 5px;">
-        <a href="/${board_path}/+delete">이 게시판 없애기</a>
-    </div>
+<h4>세부 설정</h4>
+<ul class="list2">
+    <li>유형: ${[u'폴더', u'게시판'][board_info.bType]}</li>
+    <li>댓글: ${[u'불가', u'가능'][board_info.bComment]}</li>
+    <li>타인 글쓰기: ${[u'불가', u'가능'][board_info.bWrite]}</li>
+</ul>
 
-    <!-- 게시판 생성  -->
-    <div style="float: right; margin: 0 5px 0 5px;">
-        <a href="/${board_path}/+create_board">하위 게시판 만들기</a>
+<h4>게시판 설명</h4>
+<ul class="list2">
+    <li>한 줄 설명: ${board_info.bDescription}</li>
+    <li>한 바닥 설명<br />
+    <div style="border: solid 1px lightgray;">
+        <span style="font-size: 0.9em">${util.format(board_info.bInformation)}</span>
     </div>
-    </form>
-</div>
-<br />
-<br />
-<div>
-    <div class="heading">기본 정보</div>
+</ul>
 
-    <div id="row">
-        <div class="left-container">위치</div>
-        <span class="sep">:</span>
-        <span>${posixpath.dirname(board_info.bName)}</span>
-    </div>
+% if ctx.session.has_key('uid') and acl.is_allowed('board', board_info.bSerial, ctx.session.uid, 'modify'):
+<!-- 게시판 수정 -->
+<a class="button" href="/${board_path}/+modify">고치기</a> 
+##        <!-- 게시판 백업 -->
+##        <a class="button" href="/${board_path}/+backup">백업</a>
+##        <!-- 게시판 통계 -->
+##        <a class="button" href="/${board_path}/+statistics">통계</a>
+% endif
 
-    <!-- 게시판 이름 -->
-    <div id="row">
-        <div class="left-container">이름</div>
-        <span class="sep">:</span>
-        <span>${posixpath.basename(board_info.bName)}</span>
-    </div>
-    <!-- 관리자 -->
-    <div id="row"> 
-        <div class="left-container">관리자</div>
-        <span class="sep">:</span>
-        <span>${get_formatted_username(board_info.uSerial)}</span>
-    </div>
+%if ctx.session.has_key('uid') and acl.is_allowed('board', board_info.bSerial, ctx.session.uid, 'delete'):
+<!-- 게시판 삭제 -->
+<a class="button" href="/${board_path}/+delete">이 게시판 없애기</a> 
+% endif
 
-    <div class="heading">세부 설정</div>
-    
-    <!-- 타입 -->
-    <div id="row">
-        <div class="left-container">유형</div>
-        <span class="sep">:</span>
-        <span>${[u'폴더', u'게시판'][board_info.bType]}</span>
-    </div>
-
-    <!-- 커멘트 여부 -->
-    <div id="row">
-        <div class="left-container">커멘트</div>
-        <span class="sep">:</span>
-        <span>${[u'불가', u'가능'][board_info.bComment]}</span>
-    </div>
-
-    <!-- 글쓰기 여부 -->
-    <div id="row">
-        <div class="left-container">타인 글쓰기</div>
-        <span class="sep">:</span>
-        <span>${[u'불가', u'가능'][board_info.bWrite]}</span>
-    </div>
-
-    <div class="heading">게시판 설명</div>
-    <!-- 한줄 설명 -->
-    <div id="row">
-        <div class="left-container">한줄 설명</div>
-        <span class="sep">:</span>
-        <span>${board_info.bDescription}</span>
-    </div>
-
-    <!-- 한바닥 설명 -->
-    <div id="row">
-        <div class="left-container">한 바닥 설명</div>
-        <span class="sep">:</span>
-        <div style="border: solid 1px lightgray; margin-left:9em">
-            <span style="font-size: 0.9em">${board_info.bInformation}</span>
-        </div>
-    </div>
-</div>
-
+%if ctx.session.has_key('uid') and acl.is_allowed('board', board_info.bSerial, ctx.session.uid, 'create'):
+<!-- 게시판 생성  -->
+<a class="button" href="/${board_path}/+create_board">하위 게시판 만들기</a>
+% endif
 <div style="height: 10px"></div>
-</form>
