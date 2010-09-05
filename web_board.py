@@ -176,10 +176,13 @@ class board_actions:
         board_info = board.get_board_info(board_id)
         if not acl.is_allowed('board', board_id, current_uid, 'create'):
             return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION')
+        default_referer = posixpath.join('/', board_name, '+summary')
+        if mobile:
+            default_referer = posixpath.join('/m', default_referer)
         return render[mobile].board_editor(action='create_board', board_info = board_info,
                 board_path = board_name, board_desc = board_info.bDescription, lang='ko',
                 title = u'하위 게시판 만들기 - %s - Noah3k' % board_info.bName,
-                referer = posixpath.join('/', board_name, '+summary'))
+                referer = web.ctx.env.get('HTTP_REFERER', default_referer))
 
     @util.error_catcher
     @util.confirmation_helper
