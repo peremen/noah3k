@@ -11,17 +11,7 @@ from web.contrib.template import render_mako
 import postmarkup
 import board, article
 import config
-
-desktop_render = render_mako(
-    directories = [os.path.join(os.path.dirname(__file__), 'templates/desktop/').replace('\\','/'),],
-    input_encoding = 'utf-8', output_encoding = 'utf-8',
-)
-
-mobile_render = render_mako(
-    directories = [os.path.join(os.path.dirname(__file__), 'templates/mobile/').replace('\\','/'),],
-    input_encoding = 'utf-8', output_encoding = 'utf-8',
-)
-render = {False: desktop_render, True: mobile_render}
+from config import render
 
 def session_helper(func):
     def _exec(*args, **kwargs):

@@ -3,7 +3,6 @@
 
 import os
 import web
-from web.contrib.template import render_mako
 import config
 import board, user, article
 from cgi import parse_qs
@@ -14,6 +13,7 @@ from web_board import board_actions
 from web_user import personal_page, personal_actions
 from web_main import main_actions
 from web_noah2k_support import noah2k_support
+from config import render
 
 urls = (
 # 다른 모든 action은 view_board 위로 올라가야 함.
@@ -39,16 +39,6 @@ else:
 def session_hook():
     web.ctx.session = session
 app.add_processor(web.loadhook(session_hook))
-
-desktop_render = render_mako(
-    directories = [os.path.join(os.path.dirname(__file__), 'templates/desktop/').replace('\\','/'),],
-    input_encoding = 'utf-8', output_encoding = 'utf-8',
-)
-mobile_render = render_mako(
-    directories = [os.path.join(os.path.dirname(__file__), 'templates/mobile/').replace('\\','/'),],
-    input_encoding = 'utf-8', output_encoding = 'utf-8',
-)
-render = {False: desktop_render, True: mobile_render}
 
 if web.config.get('_database') is None:
     db = web.database(dbn=config.db_type, user=config.db_user,
@@ -79,7 +69,7 @@ class main_page:
             notice_board_id = board._get_board_id_from_path(notice_board_path)
             page = article._get_total_page_count(notice_board_id, 5)
             a = article.get_article_list(notice_board_id, 5, page)
-            return desktop_render.main(title = u'전산학과 BBS 노아입니다', lang='ko',
+            return render[False].main(title = u'전산학과 BBS 노아입니다', lang='ko',
                     board_desc = u'[전산학과 BBS]', board_path = '',
                     child_boards = child_board, notice_board_path = notice_board_path,
                     notice_articles = a, help_context = 'main')

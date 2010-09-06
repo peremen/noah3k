@@ -3,7 +3,6 @@
 
 import os
 import web
-from web.contrib.template import render_mako
 import config
 import board, user, article
 from cgi import parse_qs
@@ -12,16 +11,7 @@ import posixpath
 import util
 import attachment
 import acl
-
-desktop_render = render_mako(
-    directories = [os.path.join(os.path.dirname(__file__), 'templates/desktop/').replace('\\','/'),],
-    input_encoding = 'utf-8', output_encoding = 'utf-8',
-)
-mobile_render = render_mako(
-    directories = [os.path.join(os.path.dirname(__file__), 'templates/mobile/').replace('\\','/'),],
-    input_encoding = 'utf-8', output_encoding = 'utf-8',
-)
-render = {False: desktop_render, True: mobile_render}
+from config import render
 
 class article_actions:
     def GET(self, mobile, board_name, action, article_id):

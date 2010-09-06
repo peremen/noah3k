@@ -4,15 +4,10 @@
 import os
 import web
 import board
-from web.contrib.template import render_mako
 from cgi import parse_qs
 import posixpath
 import sys, traceback
-
-desktop_render = render_mako(
-    directories = [os.path.join(os.path.dirname(__file__), 'templates/desktop/').replace('\\','/'),],
-    input_encoding = 'utf-8', output_encoding = 'utf-8',
-)
+from config import render
 
 class noah2k_support:
     def GET(self, jsp_name):
