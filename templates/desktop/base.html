@@ -2,7 +2,11 @@
 import user as U
 from web import ctx %><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+%if lang is UNDEFINED:
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko">
+% else:
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="${lang}">
+% endif
 <head>
 % if title is UNDEFINED:
     <title>오류</title>
