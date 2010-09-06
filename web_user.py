@@ -38,7 +38,7 @@ class personal_page:
         return render[mobile].myinfo(user = user.get_user(user_id)[1],
                 username = username, user_id = user_id,
                 lang='ko', title = u'내 정보', board_desc = u'내 정보',
-                feeds = f)
+                feeds = f, help_context='myinfo')
 
 class personal_actions:
     def GET(self, mobile, username, action):
@@ -91,7 +91,8 @@ class personal_actions:
                 username = username, user_id = user_id,
                 lang='ko', title = u'내 정보 수정',
                 board_desc = u'내 정보 수정',
-                referer = web.ctx.env.get('HTTP_REFERER', referer))
+                referer = web.ctx.env.get('HTTP_REFERER', referer),
+                help_context = 'myinfo')
 
     @util.error_catcher
     @util.confirmation_helper
