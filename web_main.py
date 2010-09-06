@@ -34,7 +34,7 @@ class main_actions:
             ref_path = '/m'
         else:
             ref_path = '/'
-        return render[mobile].join(title = u"회원 가입 - Noah3K",
+        return render[mobile].join(title = u"회원 가입 - %s" % config.branding,
                lang="ko", board_desc=u"회원 가입",
                referer = web.ctx.env.get('HTTP_REFERER', ref_path))
 
@@ -70,7 +70,7 @@ class main_actions:
             referer = web.ctx.env.get('HTTP_REFERER', '/m')
         else:
             referer = web.ctx.env.get('HTTP_REFERER', '/')
-        return render[mobile].login(title = u"로그인 - Noah3K", board_desc=u"로그인",
+        return render[mobile].login(title = u"로그인 - %s" % config.branding, board_desc=u"로그인",
                 lang="ko", referer = referer)
 
     @util.error_catcher
@@ -99,7 +99,7 @@ class main_actions:
                 # 로그인 실패
                 err = login[1]
         if not login[0]:
-            return render[mobile].login(title = u"로그인 - Noah3K", board_desc=u"로그인",
+            return render[mobile].login(title = u"로그인 - %s" % config.branding, board_desc=u"로그인",
                     lang="ko", error = err, referer = referer)
         else:
             raise web.seeother(web.input().url)
@@ -117,6 +117,6 @@ class main_actions:
 
     @util.error_catcher
     def credits_get(self, mobile):
-        return render[mobile].credits(title = u"개발자 정보 - Noah3K",
+        return render[mobile].credits(title = u"개발자 정보 - %s" % config.branding,
                lang="ko", board_desc=u"개발자 정보", )
 

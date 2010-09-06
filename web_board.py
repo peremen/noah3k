@@ -46,7 +46,7 @@ class board_actions:
         board_info = board.get_board_info(board_id)
         board_desc = board_info.bDescription
         user_info = user.get_user(current_uid)[1]
-        return render[mobile].editor(title = u"글 쓰기 - %s - Noah3K" % board_name,
+        return render[mobile].editor(title = u"글 쓰기 - %s - %s" % (board_name, config.branding),
                 action='write', action_name = u"글 쓰기",
                 board_path = board_name, board_desc = board_desc, lang="ko",
                 body = '\n\n\n%s' % user_info['uSig'], help_context='editor')
@@ -133,7 +133,7 @@ class board_actions:
         return render[mobile].board_summary(board_info = board_info,
                 board_path = board_name,
                 board_desc = board_info.bDescription, 
-                title = u'정보 - %s - Noah3k' % board_info.bName,)
+                title = u'정보 - %s - %s' % (board_info.bName, config.branding))
 
     @util.error_catcher
     def subboard_list_get(self, mobile, board_name = '', board_id = 1):
@@ -147,7 +147,7 @@ class board_actions:
             if board_name[0] != '/':
                 board_name = '/%s' % (board_name)
         return render[mobile].view_subboard_list(lang="ko",
-                title = u"%s - Noah3K" % board_name,
+                title = u"%s - %s" % (board_name, config.branding),
                 board_path = board_path,
                 board_desc = board_info.bDescription,
                 child_boards = child_board)
@@ -155,7 +155,7 @@ class board_actions:
     @util.error_catcher
     def cover_get(self, mobile, board_name, board_id):
         board_info = board.get_board_info(board_id)
-        return desktop_render.cover(title = u'%s - Noah3K' % board_name,
+        return desktop_render.cover(title = u'%s - %s' % (board_name, config.branding),
                 board_cover = board_info.bInformation)
 
     @util.error_catcher
@@ -169,7 +169,7 @@ class board_actions:
             default_referer = posixpath.join('/m', default_referer)
         return render[mobile].board_editor(action='create_board', board_info = board_info,
                 board_path = board_name, board_desc = board_info.bDescription, 
-                title = u'하위 게시판 만들기 - %s - Noah3k' % board_info.bName,
+                title = u'하위 게시판 만들기 - %s - %s' % (board_info.bName, config.branding),
                 referer = web.ctx.env.get('HTTP_REFERER', default_referer))
 
     @util.error_catcher
@@ -220,7 +220,7 @@ class board_actions:
             default_referer = posixpath.join('/m', default_referer)
         return render[mobile].board_editor(action='modify', board_info = board_info,
                 board_path = board_name, board_desc = board_info.bDescription, 
-                title = u'정보 수정 - %s - Noah3k' % board_info.bName,
+                title = u'정보 수정 - %s - %s' % (board_info.bName, config.branding),
                 referer = web.ctx.env.get('HTTP_REFERER', default_referer))
 
     @util.error_catcher

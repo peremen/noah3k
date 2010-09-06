@@ -80,7 +80,7 @@ class help:
             mobile = True
         else:
             mobile = False
-        return render[mobile].help(title = u"도움말: %s - Noah3K" % context, lang="ko",
+        return render[mobile].help(title = u"도움말: %s - %s" % (context, config.branding), lang="ko",
                 help_context = context)
 
 class view_board:
@@ -117,7 +117,7 @@ class view_board:
         m = article.get_marked_article(board_id)
         t = article._get_total_page_count(board_id, config.page_size)
         return render[mobile].view_board(lang="ko",
-            title = u"%s - Noah3K" % board_info.bName,
+            title = u"%s - %s" % (board_info.bName, config.branding),
             board_path = board_info.bName[1:],
             board_desc = board_info.bDescription,
             articles=a, marked_articles = m,

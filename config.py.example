@@ -17,6 +17,7 @@ hmac_key = "HMAC_KEY" # 중요! 서비스 중에는 값을 바꾸면 안 됨.
 page_size = 20
 feed_size = 30
 favorite_feed_size = 30
+branding = u'노아'
 
 # Section 3: 첨부 파일 경로
 attachment_disk_path = os.path.join(os.path.dirname(__file__), 'static', 'uploads')

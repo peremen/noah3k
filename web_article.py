@@ -56,7 +56,7 @@ class article_actions:
         thumbs = attachment.get_thumbnail(article_id, mobile)
 
         return render[mobile].read_article(article = a,
-            title = u"%s - %s - Noah3K" % (a.aIndex, a.aTitle),
+            title = u"%s - %s - %s" % (a.aIndex, a.aTitle, config.branding),
             board_path = board_name, board_desc = board_desc,
             comments = comment, page_no = page_no,
             prev_id = prev_id, next_id = next_id, feed = True,
@@ -74,7 +74,7 @@ class article_actions:
         article_ = article.get_article(board_id, article_id)
         quote_text = u'%s님의 글 "%s"에서:' % (user._get_username_from_uid(article_.uSerial), util.remove_bracket(article_.aTitle))
         body = '\n\n\n[quote=%s]%s\n[/quote]\n\n%s' % (quote_text, article_.aContent, user_info.uSig)
-        return render[mobile].editor(title = u"답글 쓰기 - /%s - Noah3K" % board_name,
+        return render[mobile].editor(title = u"답글 쓰기 - /%s - %s" % (board_name, config.branding),
                 action='reply/%s' % article_id, action_name = u"답글 쓰기",
                 board_path = board_name, board_desc = board_desc,
                 body = body, article_title = article_.aTitle,
@@ -111,7 +111,7 @@ class article_actions:
         board_desc = board_info.bDescription
         article_ = article.get_article(board_id, article_id)
         uploads = attachment.get_attachment(article_id)
-        return render[mobile].editor(title = u"글 수정하기 - /%s - Noah3K" % board_name,
+        return render[mobile].editor(title = u"글 수정하기 - /%s - %s" % (board_name, config.branding),
                 action='modify/%s' % article_id, action_name = u"글 수정하기",
                 board_path = board_name, board_desc = board_desc,
                 article_title = article_.aTitle, body = article_.aContent,
