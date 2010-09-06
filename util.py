@@ -7,7 +7,6 @@ import random
 import sys, traceback
 
 import web
-from web.contrib.template import render_mako
 import postmarkup
 import board, article
 import config
