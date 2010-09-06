@@ -47,6 +47,9 @@ def get_type(path):
 
 <div id="menu">
     <ul>
+%if help_context is not UNDEFINED:
+        <li><a class="button" target="_blank" href="/+help/${help_context}">도움말</a></li>
+% endif
         ## 로그인을 비롯한 다른 버튼들을 여기로.
 %if ctx.session is UNDEFINED:
         <li><a class="button" href="/+join">회원 가입</a></li>
