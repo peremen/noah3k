@@ -43,7 +43,7 @@ def get_article_list(board_id, page_size, page_number):
         if(end_index > total_article):
             end_index = total_article
     val = dict(board_id = board_id, begin_index = begin_index, end_index = end_index)
-    result = db.select('Articles', val, where='bSerial = $board_id AND aIndex >= $begin_index AND aIndex <= $end_index',
+    result = db.select('Articles', val, where='bSerial = $board_id AND aIndex BETWEEN $begin_index AND $end_index',
             order = 'aIndex ASC')
     return result
 

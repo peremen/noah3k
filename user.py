@@ -199,11 +199,11 @@ def get_favorite_board_feed(uid, feed_size):
         board_id_list.append(str(f.bSerial))
     if len(board_id_list) == 0:
         return []
-    where_clause = ' OR bSerial='.join(board_id_list)
-    val = dict(c = where_clause)
+    in_clause = ','.join(board_id_list)
+    val = dict(c = in_clause)
 
-    result = db.query('SELECT * FROM Articles WHERE bSerial = %s ORDER BY aSerial DESC LIMIT %s' % \
-            (where_clause, feed_size))
+    result = db.query('SELECT * FROM Articles WHERE bSerial IN (%s) ORDER BY aSerial DESC LIMIT %s' % \
+            (in_clause, feed_size))
     return result
 
 def get_user(uid):
