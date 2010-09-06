@@ -1,5 +1,6 @@
 <% from web import ctx 
 import board
+import posixpath
 def traverse_board_path(path):
     ret = ""
     id = board._get_board_id_from_path(path)
