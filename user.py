@@ -92,7 +92,15 @@ def update_password(uid, password):
         user = result[0]
     except IndexError:
         return False
-    return db.update('Users', where = 'uSerial = $uid', uPasswd = _generate_noah3k_password(password)) > 0
+    t = db.transaction()
+    try:
+        ret = db.update('Users', where = 'uSerial = $uid', uPasswd = _generate_noah3k_password(password)) 
+    except:
+        t.rollback()
+        return False
+    else:
+        t.commit()
+    return True
 
 def verify_password(uid, password):
     user = get_user(uid)
@@ -154,12 +162,25 @@ def is_favorite(uid, board_id):
     return result[0].f > 0
 
 def add_favorite_board(uid, board_id):
-    result = db.insert('Favorites', uSerial = uid, bSerial = board_id)
+    t = db.transaction()
+    try:
+        result = db.insert('Favorites', uSerial = uid, bSerial = board_id)
+    except:
+        t.rollback()
+        return False
+    else:
+        t.commit()
     return result
 
 def remove_favorite_board(uid, board_id):
     val = dict(uid = uid, board_id = board_id)
-    result = db.delete('Favorites', vars=val, where='uSerial = $uid AND bSerial = $board_id')
+    t = db.transaction()
+    try:
+        result = db.delete('Favorites', vars=val, where='uSerial = $uid AND bSerial = $board_id')
+    except:
+        t.rollback()
+    else:
+        t.commit()
     return result
 
 def get_favorite_board_feed(uid, feed_size):
@@ -237,9 +258,16 @@ def join(member):
         return (False, 'INVALID_USERNAME')
     if _get_uid_from_username(member['username']) > 0:
         return (False, 'ID_ALREADY_EXISTS')
-    result = db.insert('Users', uNick = member['nick'], uEmail = member['email'],
-            uId = member['username'], uPasswd = generate_password(member['password']),
-            uDatetime = web.SQLLiteral('NOW()'), uSig = '', uPlan = '')
+    t = db.transaction()
+    try:
+        result = db.insert('Users', uNick = member['nick'], uEmail = member['email'],
+                uId = member['username'], uPasswd = generate_password(member['password']),
+                uDatetime = web.SQLLiteral('NOW()'), uSig = '', uPlan = '')
+    except:
+        t.rollback()
+        return (False, 'DATABASE_ERROR')
+    else:
+        t.commit()
     return (True, '')
 
 
@@ -258,10 +286,17 @@ def modify_user(uid, member):
     @rtype tuple
     @return: 정보 수정 성공 여부(T/F)와 오류 코드(실패 시)를 포함하는 튜플.
     """
-    result = db.update('Users', vars=member, where='uSerial = $user_id',
-            uNick = member['nick'], uEmail = member['email'],
-            uSig = member['sig'], uPlan = member['introduction'],
-            uPasswd = generate_password(member['password']))
+    t = db.transaction()
+    try:
+        result = db.update('Users', vars=member, where='uSerial = $user_id',
+                uNick = member['nick'], uEmail = member['email'],
+                uSig = member['sig'], uPlan = member['introduction'],
+                uPasswd = generate_password(member['password']))
+    except:
+        t.rollback()
+        return False
+    else:
+        t.commit()
     return result
 
 def delete_user(uid):
@@ -281,13 +316,27 @@ def delete_user(uid):
         remove_favorite_board(uid, b.bSerial)
 
     val = dict(user_id = uid)
-    result = db.delete('Users', vars=val, where='uSerial = $user_id')
+    t = db.transaction()
+    try:
+        result = db.delete('Users', vars=val, where='uSerial = $user_id')
+    except:
+        t.rollback()
+        return (False, 'DATABASE_ERROR')
+    else:
+        t.commit()
     return (True, 'SUCCESS')
 
 def update_last_login(uid, ip_address):
     val = dict(uid = uid, ip_address = ip_address)
-    result = db.update('Users', vars=val, where = 'uSerial = $uid',
-            uNumLogin = web.SQLLiteral('uNumLogin + 1'),
-            uLastLogin = web.SQLLiteral('NOW()'),
-            uLastHost = ip_address)
+    t = db.transaction()
+    try:
+        result = db.update('Users', vars=val, where = 'uSerial = $uid',
+                uNumLogin = web.SQLLiteral('uNumLogin + 1'),
+                uLastLogin = web.SQLLiteral('NOW()'),
+                uLastHost = ip_address)
+    except:
+        t.rollback()
+        return False
+    else:
+        t.commit()
     return result

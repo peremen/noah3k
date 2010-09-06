@@ -60,14 +60,28 @@ def get_marked_article(board_id):
 
 def mark_article(article_id):
     # 강조함. 글이 존재하면 True, 존재하지 않으면 False를 반환함.
-    ret = db.update('Articles', vars = locals(), where = 'aSerial = $article_id',
-            aEmphasis = 1)
+    t = db.transaction()
+    try:
+        ret = db.update('Articles', vars = locals(), where = 'aSerial = $article_id',
+                aEmphasis = 1)
+    except:
+        t.rollback()
+        return False
+    else:
+        t.commit()
     return ret > 0
 
 def unmark_article(article_id):
     # 강조를 해제함. 글이 존재하면 True, 존재하지 않으면 False를 반환함.
-    ret = db.update('Articles', vars = locals(), where = 'aSerial = $article_id',
-            aEmphasis = 0)
+    t = db.transaction()
+    try:
+        ret = db.update('Articles', vars = locals(), where = 'aSerial = $article_id',
+                aEmphasis = 0)
+    except:
+        t.rollback()
+        return False
+    else:
+        t.commit()
     return ret > 0
 
 def toggle_marking(article_id):
@@ -148,9 +162,15 @@ def get_article(board_id, article_id):
         return retvalue
 
 def increase_read_count(article_id):
-    result = db.update('Articles', vars=locals(), where = 'aSerial = $article_id',
-            aHit = web.SQLLiteral('aHit + 1'),)
-    return result > 0
+    t = db.transaction()
+    try:
+        result = db.update('Articles', vars=locals(), where = 'aSerial = $article_id',
+                aHit = web.SQLLiteral('aHit + 1'),)
+        return result > 0
+    except:
+        t.rollback()
+    else:
+        t.commit()
 
 def write_article(uid, board_id, article):
     if not acl.is_allowed('board', board_id, uid, 'write'):
@@ -176,19 +196,26 @@ def write_article(uid, board_id, article):
 
     index = _get_article_count(board_id) + 1
 
-    val = dict(index = index)
-    ret = db.insert('Articles', bSerial = board_id, aIndex = index,
-            aTitle = article['title'], aContent = article['body'],
-            aId = current_user.uId, aNick = current_user.uNick, 
-            aDatetime = web.SQLLiteral("NOW()"), uSerial = uid)
+    t = db.transaction()
+    try:
+        val = dict(index = index)
+        ret = db.insert('Articles', bSerial = board_id, aIndex = index,
+                aTitle = article['title'], aContent = article['body'],
+                aId = current_user.uId, aNick = current_user.uNick, 
+                aDatetime = web.SQLLiteral("NOW()"), uSerial = uid)
 
-    val = dict(index = index)
-    ret = db.update('Articles', vars = val, where = 'aIndex = $index',
-            aRoot = web.SQLLiteral("aSerial"), _test = True)
+        val = dict(index = index)
+        ret = db.update('Articles', vars = val, where = 'aIndex = $index',
+                aRoot = web.SQLLiteral("aSerial"), _test = True)
 
-    val = dict(uid = uid)
-    ret = db.update('Users', vars = val, where='uSerial = $uid',
-        uNumPost = web.SQLLiteral('uNumPost + 1'))
+        val = dict(uid = uid)
+        ret = db.update('Users', vars = val, where='uSerial = $uid',
+            uNumPost = web.SQLLiteral('uNumPost + 1'))
+    except:
+        t.rollback()
+        return (False, 'DATABASE_ERROR')
+    else:
+        t.commit()
 
     val = dict(index = index, board_id = board_id)
     ret = db.select('Articles', val, where = 'bSerial = $board_id AND aIndex = $index',
@@ -219,9 +246,16 @@ def modify_article(uid, board_id, article_id, article):
         return (False, 'NO_SUCH_ARTICLE')
 
     val = dict(article_id = article_id, title = article['title'], body = article['body'])
-    ret = db.update('Articles', vars = val, where = 'aSerial = $article_id',
-            aTitle = article['title'], aContent = article['body'],
-            aEditedDatetime = web.SQLLiteral('NOW()'))
+    t = db.transaction()
+    try:
+        ret = db.update('Articles', vars = val, where = 'aSerial = $article_id',
+                aTitle = article['title'], aContent = article['body'],
+                aEditedDatetime = web.SQLLiteral('NOW()'))
+    except:
+        t.rollback()
+        return (False, 'DATABASE_ERROR')
+    else:
+        t.commit()
 
     return (True, article_id)
 
@@ -243,6 +277,7 @@ def delete_article(uid, article_id):
     except IndexError:
         return (False, 'NO_SUCH_ARTICLE')
 
+    t = db.transaction()
     try:
         val = dict(article_id = article_id, board_id = article_info.bSerial,
                 article_index = article_info.aIndex)
@@ -255,8 +290,11 @@ def delete_article(uid, article_id):
         ret = db.delete('Comments', vars=val, where='aSerial = $article_id')
         ret = db.update('Articles', vars = val, where='bSerial = $board_id AND aIndex > $article_index',
                 aIndex = web.SQLLiteral('aIndex - 1'))
-    except Exception as e:
-        return ('False', e)
+    except:
+        t.rollback()
+        return (False, 'DATABASE_ERROR')
+    else:
+        t.commit()
 
     return (True, 'SUCCESS')
 
@@ -307,24 +345,31 @@ def reply_article(uid, board_id, article_id, reply):
         # 발견 못했다면 그 스레드의 가장 마지막 글 다음으로.
         index = lastindex + 1
 
-    # 아래쪽 글들의 index를 뒤로 미룬다
-    val = dict(board_id = board_id, index = index)
-    ret = db.update('Articles', vars = val, where = 'bSerial = $board_id AND aIndex >= $index',
-            aIndex = web.SQLLiteral('aIndex + 1'))#, order='aIndex DESC')
+    t = db.transaction()
+    try:
+        # 아래쪽 글들의 index를 뒤로 미룬다
+        val = dict(board_id = board_id, index = index)
+        ret = db.update('Articles', vars = val, where = 'bSerial = $board_id AND aIndex >= $index',
+                aIndex = web.SQLLiteral('aIndex + 1'))#, order='aIndex DESC')
 
-    ret = db.insert('Articles', bSerial = board_id, aIndex = index,
-            aTitle = reply['title'], aContent = reply['body'],
-            aId = current_user.uId, aNick = current_user.uNick, 
-            aDatetime = web.SQLLiteral("NOW()"), uSerial = uid,
-            aLevel = level, aParent = article_id, aRoot = root)
+        ret = db.insert('Articles', bSerial = board_id, aIndex = index,
+                aTitle = reply['title'], aContent = reply['body'],
+                aId = current_user.uId, aNick = current_user.uNick, 
+                aDatetime = web.SQLLiteral("NOW()"), uSerial = uid,
+                aLevel = level, aParent = article_id, aRoot = root)
 
-    val = dict(index = index)
-    ret = db.update('Articles', vars = val, where = 'aIndex = $index',
-            aRoot = web.SQLLiteral("aSerial"), _test = True)
+        val = dict(index = index)
+        ret = db.update('Articles', vars = val, where = 'aIndex = $index',
+                aRoot = web.SQLLiteral("aSerial"), _test = True)
 
-    val = dict(uid = uid)
-    ret = db.update('Users', vars = val, where='uSerial = $uid',
-        uNumPost = web.SQLLiteral('uNumPost + 1'))
+        val = dict(uid = uid)
+        ret = db.update('Users', vars = val, where='uSerial = $uid',
+            uNumPost = web.SQLLiteral('uNumPost + 1'))
+    except:
+        t.rollback()
+        return (False, 'DATABASE_ERROR')
+    else:
+        t.commit()
 
     val = dict(index = index, board_id = board_id)
     ret = db.select('Articles', val, where = 'bSerial = $board_id AND aIndex = $index',
@@ -363,8 +408,15 @@ def write_comment(uid, board_id, article_id, comment):
     except IndexError:
         return (False, 'NO_SUCH_ARTICLE')
 
-    result = db.insert('Comments', bSerial = board_id, aSerial = article_id, uSerial = uid,
-            cId = current_user.uId, cContent = comment, cDatetime = web.SQLLiteral('NOW()'))
+    t = db.transaction()
+    try:
+        result = db.insert('Comments', bSerial = board_id, aSerial = article_id, uSerial = uid,
+                cId = current_user.uId, cContent = comment, cDatetime = web.SQLLiteral('NOW()'))
+    except:
+        t.rollback()
+        return (False, 'DATABASE_ERROR')
+    else:
+        t.commit()
     return (True, article_id)
 
 def delete_comment(uid, comment_id):

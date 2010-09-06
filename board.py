@@ -82,14 +82,20 @@ def create_board(parent_id, settings):
     if not acl.is_allowed('board', parent_id, settings['current_uid'], 'create'):
         return (False, 'NO_PERMISSION')
 
-    ret = db.insert('Boards', bName = settings['path'],
-            uSerial = settings['board_owner'],
-            bParent = parent_id, bDatetime = web.SQLLiteral('NOW()'),
-            bInformation = settings['cover'],
-            bDescription = settings['description'],
-            bType = settings['type'],
-            bReply = 1, bWrite = settings['guest_write'],
-            bComment = settings['can_comment'])
+    t = db.transaction()
+    try:
+        ret = db.insert('Boards', bName = settings['path'],
+                uSerial = settings['board_owner'],
+                bParent = parent_id, bDatetime = web.SQLLiteral('NOW()'),
+                bInformation = settings['cover'],
+                bDescription = settings['description'],
+                bType = settings['type'],
+                bReply = 1, bWrite = settings['guest_write'],
+                bComment = settings['can_comment'])
+    except:
+        t.rollback()
+    else:
+        t.commit()
 
     return (True, 'SUCCESS')
 
@@ -120,24 +126,37 @@ def edit_board(current_uid, board_id, settings):
     if new_parent_id != original_board_info.bParent:
         if not acl.is_allowed('board', new_parent_id, current_uid, 'create'):
             return (False, 'NO_PERMISSION_ON_NEW_PARENT')
-    result = db.update('Boards', vars=settings, where='bSerial = $board_id',
-            bInformation = settings['cover'], bDescription = settings['description'],
-            bType = settings['board_type'], bReply = 1, bComment = settings['can_comment'],
-            bWrite = settings['can_write_by_other'], uSerial = settings['owner'],
-            bName = new_path, bParent = new_parent_id)
-    result = move_child_boards(board_id, old_path, new_path)
+
+    t = db.transaction()
+    try:
+        result = db.update('Boards', vars=settings, where='bSerial = $board_id',
+                bInformation = settings['cover'], bDescription = settings['description'],
+                bType = settings['board_type'], bReply = 1, bComment = settings['can_comment'],
+                bWrite = settings['can_write_by_other'], uSerial = settings['owner'],
+                bName = new_path, bParent = new_parent_id)
+        result = move_child_boards(board_id, old_path, new_path)
+    except:
+        t.rollback()
+    else:
+        t.commit()
     return (True, new_path)
 
 def move_child_boards(board_id, old_path, new_path):
     # board_id 보드의 자식 보드가 속해 있는 경로를 new_path로 이동한다.
     val = dict(old_path = old_path + r'%')
     result = db.select('Boards', val, where = 'bName LIKE $old_path')
-    for r in result:
-        if not r.bName.startswith(old_path):
-            continue
-        val2 = dict(board_id = r.bSerial)
-        update = db.update('Boards', vars = val2, where = 'bSerial = $board_id',
-                bName = new_path + r.bName[len(old_path):])
+    t = db.transaction()
+    try:
+        for r in result:
+            if not r.bName.startswith(old_path):
+                continue
+            val2 = dict(board_id = r.bSerial)
+            update = db.update('Boards', vars = val2, where = 'bSerial = $board_id',
+                    bName = new_path + r.bName[len(old_path):])
+    except:
+        t.rollback()
+    else:
+        t.commit()
 
 def delete_board(current_uid, board_id):
     original_board_info = get_board_info(board_id)

@@ -93,7 +93,7 @@ class article_actions:
     @util.error_catcher
     @util.session_helper
     def reply_post(self, mobile, board_name, board_id, article_id, current_uid = -1):
-        if not acl.is_allowed('board', article_id, current_uid, 'write'):
+        if not acl.is_allowed('board', board_id, current_uid, 'write'):
             return render[mobile].error(lang='ko', error_message = 'NO_PERMISSION', help_context = 'error')
         reply = dict(title = web.input().title, body = web.input().content)
         board_info = board.get_board_info(board_id)
