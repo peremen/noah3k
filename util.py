@@ -32,11 +32,13 @@ def session_helper(func):
         try:
             current_uid = web.ctx.session.uid
         except:
-            raise web.unauthorized(render[mobile].error(lang="ko", error_message = u"NOT_LOGGED_IN", help_context = 'error'))
+            raise web.unauthorized(render[mobile].error(error_message = u"NOT_LOGGED_IN", help_context = 'error'))
         if current_uid < 1:
-            raise web.internalerror(render[mobile].error(lang="ko", error_message = u"INVALID_UID", help_context = 'error'))
+            raise web.internalerror(render[mobile].error(error_message = u"INVALID_UID", help_context = 'error'))
         kwargs.update({'current_uid': current_uid})
         return func(*args, **kwargs)
+    _exec.__name__ == func.__name__
+    _exec.__doc__ == func.__doc__
     return _exec
 
 def confirmation_helper(func):
@@ -46,6 +48,8 @@ def confirmation_helper(func):
             return func(*args, **kwargs)
         else:
             raise web.seeother(i.referer)
+    _exec.__name__ == func.__name__
+    _exec.__doc__ == func.__doc__
     return _exec
 
 def error_catcher(func):
@@ -62,8 +66,10 @@ def error_catcher(func):
             current_ctx = web.ctx
             error_text = traceback.format_exc()
             store_error(current_ctx, error_text)
-            raise web.internalerror(render[is_mobile].error(lang="ko", error_message = e,
+            raise web.internalerror(render[is_mobile].error(error_message = e,
                 error_detail = error_text, help_context = 'error'))
+    _exec.__name__ == func.__name__
+    _exec.__doc__ == func.__doc__
     return _exec
 
 def store_error(current_ctx, error_text):
@@ -71,14 +77,17 @@ def store_error(current_ctx, error_text):
         return
     today = datetime.datetime.today()
     filename = 'error_%s.txt' % today.strftime('%Y%m%d_%H%M%S')
-    f = open(os.path.join(config.error_report_path, filename), 'w')
-    f.write('Traceback:\n')
-    f.write(error_text)
-    f.write('\n')
-    f.write('Context:\n')
-    f.write(str(current_ctx))
-    f.write('\n')
-    f.close()
+    try:
+        f = open(os.path.join(config.error_report_path, filename), 'w')
+        f.write('Traceback:\n')
+        f.write(error_text)
+        f.write('\n')
+        f.write('Context:\n')
+        f.write(str(current_ctx))
+        f.write('\n')
+        f.close()
+    except OSError:
+        pass
 
 def validate_username(name):
     match = re.search(r'\W+', name)
@@ -97,7 +106,6 @@ def validate_boardname(name):
 def format(original):
     b = postmarkup.create(annotate_links = False)
     return b(process_noah12k_quote(original))
-    #return b(original)
 
 def remove_bracket(original):
     # BBCode 파서 안에 [/]이 들어가면 파서가 헷갈리므로
