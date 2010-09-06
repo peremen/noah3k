@@ -39,8 +39,19 @@ class article_actions:
         board_desc = board_info.bDescription
         a = article.get_article(board_id, article_id)
         comment = article.get_comment(article_id)
-        # XXX: 303 See Other를 통해서 여기로 온 경우 필터링.
-        #article.increase_read_count(article_id)
+
+        read_articles = web.cookies().get('read_articles')
+        if read_articles:
+            read_articles = [int(i) for i in read_articles.split(';')]
+            if article_id not in read_articles:
+                article.increase_read_count(article_id)
+                read_articles.append(article_id)
+        else:
+            article.increase_read_count(article_id)
+            read_articles = [article_id]
+        read_articles.sort()
+        read_articles = ';'.join(['%s' % i for i in read_articles])
+        web.setcookie('read_articles', read_articles, 3600)
 
         prev_id = -1
         next_id = -1

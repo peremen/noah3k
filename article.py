@@ -166,11 +166,11 @@ def increase_read_count(article_id):
     try:
         result = db.update('Articles', vars=locals(), where = 'aSerial = $article_id',
                 aHit = web.SQLLiteral('aHit + 1'),)
-        return result > 0
     except:
         t.rollback()
     else:
         t.commit()
+    return result > 0
 
 def write_article(uid, board_id, article):
     if not acl.is_allowed('board', board_id, uid, 'write'):
