@@ -10,6 +10,8 @@ from datetime import datetime
 from cgi import parse_qs
 import posixpath
 from config import render
+import i18n
+_ = i18n.custom_gettext
 
 class board_actions:
     def GET(self, mobile, board_name, action, dummy):
@@ -34,11 +36,11 @@ class board_actions:
         else:
             board_id = board._get_board_id_from_path(board_name)
         if board_id < 0:
-            raise web.notfound(render[mobile].error(error_message = 'INVALID_BOARD', help_context='error'))
+            raise web.notfound(render[mobile].error(error_message = _('INVALID_BOARD'), help_context='error'))
         try:
             return eval('self.%s_%s' % (action, method))(mobile, board_name, board_id)
         except AttributeError:
-            raise web.notfound(render[mobile].error(error_message = 'INVALID_ACTION', help_context='error'))
+            raise web.notfound(render[mobile].error(error_message = _('INVALID_ACTION'), help_context='error'))
 
     @util.error_catcher
     @util.session_helper
@@ -163,7 +165,7 @@ class board_actions:
     def create_board_get(self, mobile, board_name, board_id, current_uid = -1):
         board_info = board.get_board_info(board_id)
         if not acl.is_allowed('board', board_id, current_uid, 'create'):
-            return render[mobile].error(error_message = 'NO_PERMISSION', help_context='error')
+            return render[mobile].error(error_message = _('NO_PERMISSION'), help_context='error')
         default_referer = posixpath.join('/', board_name, '+summary')
         if mobile:
             default_referer = posixpath.join('/m', default_referer)
@@ -178,7 +180,7 @@ class board_actions:
     def create_board_post(self, mobile, board_name, board_id, current_uid = -1):
         board_info = board.get_board_info(board_id)
         if not acl.is_allowed('board', board_id, current_uid, 'create'):
-            return render[mobile].error(error_message = 'NO_PERMISSION', help_context='error')
+            return render[mobile].error(error_message = _('NO_PERMISSION'), help_context='error')
         user_data = web.input()
         comment, write_by_other = 0, 0 # XXX: DB 스키마를 BOOLEAN으로 바꿔야 함
         if user_data.commentable == 'yes':
@@ -187,12 +189,12 @@ class board_actions:
             write_by_other = 1
         owner_uid = user._get_uid_from_username(user_data.owner)
         if owner_uid < 0:
-            return render[mobile].error(error_message='NO_SUCH_USER_FOR_BOARD_ADMIN', help_context='error')
+            return render[mobile].error(error_message=_('NO_SUCH_USER_FOR_BOARD_ADMIN'), help_context='error')
         if user_data.name.strip() == '':
-            return desktop_render.error(error_message = 'NO_NAME_SPECIFIED', help_context='error')
+            return desktop_render.error(error_message = _('NO_NAME_SPECIFIED'), help_context='error')
         new_path = posixpath.join('/', board_name, user_data.name)
         if board._get_board_id_from_path(new_path) > 0:
-            return render[mobile].error(error_message = 'BOARD_EXISTS', help_context='error')
+            return render[mobile].error(error_message = _('BOARD_EXISTS'), help_context='error')
 
         settings = dict(path=new_path, board_owner = owner_uid,
                 cover = user_data.information,
@@ -214,7 +216,7 @@ class board_actions:
     def modify_get(self, mobile, board_name, board_id, current_uid = -1):
         board_info = board.get_board_info(board_id)
         if not acl.is_allowed('board', board_id, current_uid, 'modify'):
-            return render[mobile].error(error_message='NO_PERMISSION', help_context='error')
+            return render[mobile].error(error_message=_('NO_PERMISSION'), help_context='error')
         default_referer = posixpath.join('/', board_name, '+summary')
         if mobile:
             default_referer = posixpath.join('/m', default_referer)
@@ -229,7 +231,7 @@ class board_actions:
     def modify_post(self, mobile, board_name, board_id, current_uid = -1):
         board_info = board.get_board_info(board_id)
         if not acl.is_allowed('board', board_id, current_uid, 'modify'):
-            return render[mobile].error(error_message='NO_PERMISSION', help_context='error')
+            return render[mobile].error(error_message=_('NO_PERMISSION'), help_context='error')
         comment, write_by_other = 0, 0 # XXX: DB 스키마를 BOOLEAN으로 바꿔야 함
         if web.input().commentable.strip() == 'yes':
             comment = 1
@@ -237,7 +239,7 @@ class board_actions:
             write_by_other = 1
         owner_uid = user._get_uid_from_username(web.input().owner)
         if owner_uid < 0:
-            return render[mobile].error(error_message='NO_SUCH_USER_FOR_BOARD_ADMIN', help_context='error')
+            return render[mobile].error(error_message=_('NO_SUCH_USER_FOR_BOARD_ADMIN'), help_context='error')
 
         board_info = dict(path = web.input().path, name = web.input().name,
                 owner = owner_uid, board_type = web.input().type,

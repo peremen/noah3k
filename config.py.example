@@ -29,6 +29,8 @@ thumbnail_mobile_disk_path = os.path.join(os.path.dirname(__file__), 'static', '
 thumbnail_mobile_web_path = '/static/thumbs_mobile/'
 thumbnail_mobile_size = (240, 320)
 
+i18n_path = os.path.join(os.path.dirname(__file__), 'i18n')
+
 store_error_report = True
 error_report_path = os.path.join(os.path.dirname(__file__), 'error_report')
 

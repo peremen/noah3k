@@ -9,3 +9,4 @@ sessions/*
 error_report/*
 static/upload/*
 static/thumb_*
+*.mo

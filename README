@@ -10,6 +10,14 @@
 === 배포판 패키지로 설치해야 함 ===
 * python-mysqldb (데비안 계열 기준)
 
+== 번역 메시지 컴파일 ==
+gettext의 결과물 mo 파일은 기본적으로 포함하지 않는다.
+i18n/(로캘)/LC_MESSAGES/messages.mo 파일에 메시지를 저장한다.
+* pot 파일 업데이트 방법: 소스 루트에서 pygettext -a -v -d messages -o i18n/messages.pot *.py
+* 이후 할 일: msgmerge *.po messages.pot > *.po.new && mv *.po.new *.po
+* 메시지 파일 컴파일: msgfmt *.po -o i18n/*/LC_MESSAGES/message.mo
+* 메시지 파일이 없으면 오류 메시지는 전부 영어로 표시됨
+
 === non-UNIX 계열에서의 구동 ===
 * python-magic 모듈은 리눅스에 있는 mime.magic 데이터를 필요로 한다. (사용 불가능한 경우 썸네일 생성이 안 됨)
 * crypt 모듈은 유닉스 계열에서만 작동한다. (사용 불가능한 경우 noah1k 로그인이 불가능)

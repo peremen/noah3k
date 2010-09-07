@@ -10,6 +10,8 @@ from datetime import datetime
 import posixpath
 import util
 from config import render
+import i18n
+_ = i18n.custom_gettext
 
 class main_actions:
     def GET(self, mobile, action):
@@ -26,7 +28,7 @@ class main_actions:
         try:
             return eval('self.%s_%s' % (action, method))(mobile)
         except AttributeError:
-            raise web.notfound(render[mobile].error(error_message = 'INVALID_ACTION', help_context='error'))
+            raise web.notfound(render[mobile].error(error_message = _('INVALID_ACTION'), help_context='error'))
 
     @util.error_catcher
     def join_get(self, mobile):
@@ -44,11 +46,11 @@ class main_actions:
         data = web.input()
         username = data.id
         if user._get_uid_from_username(username) > 0:
-            return render[mobile].error(error_message = 'ID_ALREADY_EXISTS', help_context='error')
+            return render[mobile].error(error_message = _('ID_ALREADY_EXISTS'), help_context='error')
         if data.password1 != data.password2:
-            return render[mobile].error(error_message = 'PASSWORD_DO_NOT_MATCH', help_context='error')
+            return render[mobile].error(error_message = _('PASSWORD_DO_NOT_MATCH'), help_context='error')
         if len(data.password1) < 6:
-            return render[mobile].error(error_message = 'PASSWORD_TOO_SHORT', help_context='error')
+            return render[mobile].error(error_message = _('PASSWORD_TOO_SHORT'), help_context='error')
         nick = data.nick
         email = data.email
         password = data.password1

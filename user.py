@@ -137,12 +137,12 @@ def login(username, password):
     try:
         user = result[0]
     except IndexError:
-        return (False, 'NO_SUCH_USER')
+        return (False, _('NO_SUCH_USER'))
     if not password_set[len(user.uPasswd)](user.uPasswd, password):
-        return (False, 'WRONG_PASSWORD')
+        return (False, _('WRONG_PASSWORD'))
     #if len(user.uPassword) < 64:
     #    update_password(user.uSerial, password)
-    return (True, 'LOGIN_SUCCESS')
+    return (True, _('LOGIN_SUCCESS'))
 
 def get_owned_board(uid):
     # 모든 정보가 돌아옴.
@@ -221,7 +221,7 @@ def get_user(uid):
     try:
         retvalue = result[0]
     except IndexError:
-        return (False, 'NO_SUCH_USER')
+        return (False, _('NO_SUCH_USER'))
     else:
         return (True, retvalue)
 
@@ -255,9 +255,9 @@ def join(member):
     @return: 회원 등록 성공 여부(T/F)와 오류 코드(실패 시)를 포함하는 튜플.
     """
     if not util.validate_username(member['username']):
-        return (False, 'INVALID_USERNAME')
+        return (False, _('INVALID_USERNAME'))
     if _get_uid_from_username(member['username']) > 0:
-        return (False, 'ID_ALREADY_EXISTS')
+        return (False, _('ID_ALREADY_EXISTS'))
     t = db.transaction()
     try:
         result = db.insert('Users', uNick = member['nick'], uEmail = member['email'],
@@ -265,7 +265,7 @@ def join(member):
                 uDatetime = web.SQLLiteral('NOW()'), uSig = '', uPlan = '')
     except:
         t.rollback()
-        return (False, 'DATABASE_ERROR')
+        return (False, _('DATABASE_ERROR'))
     else:
         t.commit()
     return (True, '')
@@ -308,7 +308,7 @@ def delete_user(uid):
     for b in result:
         has_board = True
     if has_board:
-        return (False, 'HAS_BOARD')
+        return (False, _('HAS_BOARD'))
 
     # 즐겨찾는 보드 삭제
     result = get_favorite_board(uid)
@@ -321,10 +321,10 @@ def delete_user(uid):
         result = db.delete('Users', vars=val, where='uSerial = $user_id')
     except:
         t.rollback()
-        return (False, 'DATABASE_ERROR')
+        return (False, _('DATABASE_ERROR'))
     else:
         t.commit()
-    return (True, 'SUCCESS')
+    return (True, _('SUCCESS'))
 
 def update_last_login(uid, ip_address):
     val = dict(uid = uid, ip_address = ip_address)

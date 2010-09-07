@@ -6,6 +6,8 @@ import web
 
 import user, acl
 import posixpath
+import i18n
+_ = i18n.custom_gettext
 
 """
 글 모듈. 글을 읽어오기 위하여 필요한 일부 게시판 기능과 글 및 댓글에 접근한다.
@@ -174,15 +176,15 @@ def increase_read_count(article_id):
 
 def write_article(uid, board_id, article):
     if not acl.is_allowed('board', board_id, uid, 'write'):
-        return (False, 'NO_PERMISSION')
+        return (False, _('NO_PERMISSION'))
     current_user = user.get_user(uid)
     if current_user[0] == False:
-        return (False, 'NO_SUCH_USER')
+        return (False, _('NO_SUCH_USER'))
     current_user = current_user[1]
     if(article['title'].strip() == ""):
-        return (False, 'EMPTY_TITLE')
+        return (False, _('EMPTY_TITLE'))
     if(article['body'].strip() == ""):
-        return (False, 'EMPTY_BODY')
+        return (False, _('EMPTY_BODY'))
 
     val = dict(board_id = board_id)
     result = db.select('Boards', val, where='bSerial = $board_id', what='bType, bWrite')
@@ -190,9 +192,9 @@ def write_article(uid, board_id, article):
     try:
         board_info = result[0]
     except:
-        return (False, 'NO_SUCH_BOARD')
+        return (False, _('NO_SUCH_BOARD'))
     if board_info.bType == 0:
-        return (False, 'FOLDER')
+        return (False, _('FOLDER'))
 
     index = _get_article_count(board_id) + 1
 
@@ -213,7 +215,7 @@ def write_article(uid, board_id, article):
             uNumPost = web.SQLLiteral('uNumPost + 1'))
     except:
         t.rollback()
-        return (False, 'DATABASE_ERROR')
+        return (False, _('DATABASE_ERROR'))
     else:
         t.commit()
 
@@ -226,15 +228,15 @@ def write_article(uid, board_id, article):
 
 def modify_article(uid, board_id, article_id, article):
     if not acl.is_allowed('article', article_id, uid, 'modify'):
-        return (False, 'NO_PERMISSION')
+        return (False, _('NO_PERMISSION'))
     current_user = user.get_user(uid)
     if current_user[0] == False:
-        return (False, 'NO_SUCH_USER')
+        return (False, _('NO_SUCH_USER'))
     current_user = current_user[1]
     if(article['title'].strip() == ""):
-        return (False, 'EMPTY_TITLE')
+        return (False, _('EMPTY_TITLE'))
     if(article['body'].strip() == ""):
-        return (False, 'EMPTY_BODY')
+        return (False, _('EMPTY_BODY'))
 
     val = dict(article_id = article_id)
     result = db.select('Articles', val, where='aSerial = $article_id',
@@ -243,7 +245,7 @@ def modify_article(uid, board_id, article_id, article):
     try:
         article_info = result[0]
     except IndexError:
-        return (False, 'NO_SUCH_ARTICLE')
+        return (False, _('NO_SUCH_ARTICLE'))
 
     val = dict(article_id = article_id, title = article['title'], body = article['body'])
     t = db.transaction()
@@ -253,7 +255,7 @@ def modify_article(uid, board_id, article_id, article):
                 aEditedDatetime = web.SQLLiteral('NOW()'))
     except:
         t.rollback()
-        return (False, 'DATABASE_ERROR')
+        return (False, _('DATABASE_ERROR'))
     else:
         t.commit()
 
@@ -261,10 +263,10 @@ def modify_article(uid, board_id, article_id, article):
 
 def delete_article(uid, article_id):
     if not acl.is_allowed('article', article_id, uid, 'delete'):
-        return (False, 'NO_PERMISSION')
+        return (False, _('NO_PERMISSION'))
     current_user = user.get_user(uid)
     if current_user[0] == False:
-        return (False, 'NO_SUCH_USER')
+        return (False, _('NO_SUCH_USER'))
     current_user = current_user[1]
 
     article_id = int(article_id)
@@ -275,7 +277,7 @@ def delete_article(uid, article_id):
     try:
         article_info = result[0]
     except IndexError:
-        return (False, 'NO_SUCH_ARTICLE')
+        return (False, _('NO_SUCH_ARTICLE'))
 
     t = db.transaction()
     try:
@@ -284,7 +286,7 @@ def delete_article(uid, article_id):
         result = db.query('SELECT COUNT(*) AS reply_count FROM Articles WHERE bSerial = $board_id AND aIndex = $article_index + 1 AND aParent = $article_id', val)
         reply_count = result[0].reply_count
         if reply_count > 0:
-            return (False, 'HAS_REPLY')
+            return (False, _('HAS_REPLY'))
 
         ret = db.delete('Articles', vars = val, where = 'aSerial = $article_id')
         ret = db.delete('Comments', vars=val, where='aSerial = $article_id')
@@ -292,23 +294,23 @@ def delete_article(uid, article_id):
                 aIndex = web.SQLLiteral('aIndex - 1'))
     except:
         t.rollback()
-        return (False, 'DATABASE_ERROR')
+        return (False, _('DATABASE_ERROR'))
     else:
         t.commit()
 
-    return (True, 'SUCCESS')
+    return (True, _('SUCCESS'))
 
 def reply_article(uid, board_id, article_id, reply):
     if not acl.is_allowed('board', board_id, uid, 'write'):
-        return (False, 'NO_PERMISSION')
+        return (False, _('NO_PERMISSION'))
     current_user = user.get_user(uid)
     if current_user[0] == False:
-        return (False, 'NO_SUCH_USER')
+        return (False, _('NO_SUCH_USER'))
     current_user = current_user[1]
     if(reply['title'].strip() == ""):
-        return (False, 'EMPTY_TITLE')
+        return (False, _('EMPTY_TITLE'))
     if(reply['body'].strip() == ""):
-        return (False, 'EMPTY_BODY')
+        return (False, _('EMPTY_BODY'))
 
     val = dict(board_id = board_id)
     result = db.select('Boards', val, where='bSerial = $board_id', what='bType, bWrite')
@@ -316,9 +318,9 @@ def reply_article(uid, board_id, article_id, reply):
     try:
         board_info = result[0]
     except IndexError:
-        return (False, 'NO_SUCH_BOARD')
+        return (False, _('NO_SUCH_BOARD'))
     if board_info.bType == 0:
-        return (False, 'FOLDER')
+        return (False, _('FOLDER'))
 
     val = dict(board_id = board_id, article_id = article_id)
     ret = db.select('Articles', val, where='bSerial = $board_id AND aSerial = $article_id',
@@ -367,7 +369,7 @@ def reply_article(uid, board_id, article_id, reply):
             uNumPost = web.SQLLiteral('uNumPost + 1'))
     except:
         t.rollback()
-        return (False, 'DATABASE_ERROR')
+        return (False, _('DATABASE_ERROR'))
     else:
         t.commit()
 
@@ -391,13 +393,13 @@ def get_comment(article_id):
 
 def write_comment(uid, board_id, article_id, comment):
     if not acl.is_allowed('board', board_id, uid, 'comment'):
-        return (False, 'NO_PERMISSION')
+        return (False, _('NO_PERMISSION'))
     current_user = user.get_user(uid)
     if current_user[0] == False:
-        return (False, 'NO_SUCH_USER')
+        return (False, _('NO_SUCH_USER'))
     current_user = current_user[1]
     if(comment.strip() == ""):
-        return (False, 'EMPTY_COMMENT')
+        return (False, _('EMPTY_COMMENT'))
 
     article_id = int(article_id)
     val = dict(article_id = article_id)
@@ -406,7 +408,7 @@ def write_comment(uid, board_id, article_id, comment):
     try:
         article_info = result[0]
     except IndexError:
-        return (False, 'NO_SUCH_ARTICLE')
+        return (False, _('NO_SUCH_ARTICLE'))
 
     t = db.transaction()
     try:
@@ -414,7 +416,7 @@ def write_comment(uid, board_id, article_id, comment):
                 cId = current_user.uId, cContent = comment, cDatetime = web.SQLLiteral('NOW()'))
     except:
         t.rollback()
-        return (False, 'DATABASE_ERROR')
+        return (False, _('DATABASE_ERROR'))
     else:
         t.commit()
     return (True, article_id)
@@ -425,13 +427,13 @@ def delete_comment(uid, comment_id):
     try:
         comment_info = result[0]
     except IndexError:
-        return (False, 'NO_SUCH_COMMENT')
+        return (False, _('NO_SUCH_COMMENT'))
 
     if uid != comment_info.uSerial or not acl.is_allowed('article', comment_info.aSerial, uid, 'comment_delete'):
-        return (False, 'NO_PERMISSION')
+        return (False, _('NO_PERMISSION'))
     try:
         result = db.delete('Comments', vars=val, where='cSerial = $comment_id')
     except:
-        return (False, 'DATABASE_ERROR')
+        return (False, _('DATABASE_ERROR'))
 
     return (True, comment_info.aSerial)

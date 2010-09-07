@@ -6,6 +6,8 @@ import web
 import user, util
 import posixpath
 import acl
+import i18n
+_ = i18n.custom_gettext
 
 """
 게시판 클래스. 데이터베이스 상에 저장된 게시판에 접근한다.
@@ -73,14 +75,14 @@ def get_board_info(board_id):
 def create_board(parent_id, settings):
     original_board_info = get_board_info(parent_id)
     if original_board_info == None:
-        return (False, 'NO_SUCH_BOARD')
+        return (False, _('NO_SUCH_BOARD'))
     if not util.validate_boardname(settings['path']):
-        return (False, 'INVALID_BOARDNAME')
+        return (False, _('INVALID_BOARDNAME'))
     check = _get_board_id_from_path(settings['path'])
     if check > 0:
-        return (False, 'BOARD_ALREADY_EXIST')
+        return (False, _('BOARD_ALREADY_EXIST'))
     if not acl.is_allowed('board', parent_id, settings['current_uid'], 'create'):
-        return (False, 'NO_PERMISSION')
+        return (False, _('NO_PERMISSION'))
 
     t = db.transaction()
     try:
@@ -109,23 +111,23 @@ def edit_board(current_uid, board_id, settings):
     # can_write_by_other: 쓰기 가능/불가능
     # can_comment: 0 - 불가능, 1 - 가능
     if not acl.is_allowed('board', board_id, current_uid, 'edit'):
-        return (False, 'NO_PERMISSION')
+        return (False, _('NO_PERMISSION'))
     original_board_info = get_board_info(board_id)
     if original_board_info == None:
-        return (False, 'NO_SUCH_BOARD')
+        return (False, _('NO_SUCH_BOARD'))
     settings['board_id'] = board_id
     new_path = posixpath.join(settings['path'], settings['name'])
     if not util.validate_boardname(new_path):
-        return (False, 'INVALID_BOARDNAME')
+        return (False, _('INVALID_BOARDNAME'))
     old_path = original_board_info.bName
     old_directory = posixpath.dirname(old_path)
     new_directory = settings['path']
     if _get_board_id_from_path(new_path) > 0 and old_path != new_path:
-        return (False, 'BOARD_ALREADY_EXIST')
+        return (False, _('BOARD_ALREADY_EXIST'))
     new_parent_id = _get_board_id_from_path(settings['path'])
     if new_parent_id != original_board_info.bParent:
         if not acl.is_allowed('board', new_parent_id, current_uid, 'create'):
-            return (False, 'NO_PERMISSION_ON_NEW_PARENT')
+            return (False, _('NO_PERMISSION_ON_NEW_PARENT'))
 
     t = db.transaction()
     try:
@@ -162,7 +164,7 @@ def delete_board(current_uid, board_id):
     original_board_info = get_board_info(board_id)
     old_path = original_board_info.bName
     if not acl.is_allowed('board', board_id, current_uid, 'delete'):
-        return (False, 'NO_PERMISSION')
+        return (False, _('NO_PERMISSION'))
     val = dict(old_path = old_path + r'/%')
     has_child = False
     result = db.select('Boards', val, where = 'bName LIKE $old_path')
@@ -171,7 +173,7 @@ def delete_board(current_uid, board_id):
             continue
         has_child = True
     if has_child:
-        return (False, 'HAS_CHILD')
+        return (False, _('HAS_CHILD'))
     val = dict(board_id = board_id)
     result = db.delete('Boards', vars=val, where='bSerial = $board_id')
     delete_all_article(board_id)

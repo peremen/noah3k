@@ -11,6 +11,8 @@ import postmarkup
 import board, article
 import config
 from config import render
+import i18n
+_ = i18n.custom_gettext
 
 def session_helper(func):
     def _exec(*args, **kwargs):
@@ -165,10 +167,10 @@ def get_login_notice(notice_board = '/noah/welcome'):
     articles = []
     board_id = board._get_board_id_from_path(notice_board)
     if board_id < 0:
-        return 'INVALID_NOTICE_BOARD'
+        return _('INVALID_NOTICE_BOARD')
     for i in article.get_marked_article(board_id):
         articles.append(i)
     if len(articles) == 0:
-        return 'NO_NOTICE'
+        return _('NO_NOTICE')
     return articles[random.randint(0, len(articles)-1)].aContent
 

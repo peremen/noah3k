@@ -14,6 +14,8 @@ from web_user import personal_page, personal_actions
 from web_main import main_actions
 from web_noah2k_support import noah2k_support
 from config import render
+import i18n
+_ = i18n.custom_gettext
 
 urls = (
 # 다른 모든 action은 view_board 위로 올라가야 함.
@@ -94,7 +96,7 @@ class view_board:
             return v.subboard_list_get(mobile)
         board_id = board._get_board_id_from_path(board_name)
         if board_id < 0:
-            raise web.notfound(render[mobile].error(lang='ko', error_message='INVALID_BOARD', help_context='error'))
+            raise web.notfound(render[mobile].error(lang='ko', error_message=_('INVALID_BOARD'), help_context='error'))
         board_info = board.get_board_info(board_id)
         if board_info.bType == 0: # 디렉터리
             v = board_actions()

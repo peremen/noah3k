@@ -1,0 +1,174 @@
+# Copyright (C) YEAR ORGANIZATION
+#
+# Park Shinjo <peremen@gmail.com>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2010-09-08 02:45+KST\n"
+"PO-Revision-Date: 2010-09-08 02:50+0900\n"
+"Last-Translator: Park Shinjo <peremen@gmail.com>\n"
+"Language-Team: Korean <peremen@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: ENCODING\n"
+"Generated-By: pygettext.py 1.5\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: article.py:179 article.py:231 article.py:266 article.py:305 article.py:396
+#: article.py:433 board.py:85 board.py:114 board.py:167 web_article.py:83
+#: web_article.py:100 web_article.py:122 web_article.py:137 web_article.py:176
+#: web_article.py:193 web_article.py:208 web_article.py:236 web_article.py:247
+#: web_board.py:168 web_board.py:183 web_board.py:219 web_board.py:234
+msgid "NO_PERMISSION"
+msgstr "권한 없음"
+
+#: article.py:182 article.py:234 article.py:269 article.py:308 article.py:399
+#: user.py:140 user.py:224
+msgid "NO_SUCH_USER"
+msgstr "그러한 사용자가 없음"
+
+#: article.py:185 article.py:237 article.py:311
+msgid "EMPTY_TITLE"
+msgstr "제목이 비어 있음"
+
+#: article.py:187 article.py:239 article.py:313
+msgid "EMPTY_BODY"
+msgstr "내용이 비어 있음"
+
+#: article.py:195 article.py:321 board.py:78 board.py:117
+#: web_noah2k_support.py:38 web_noah2k_support.py:58 web_noah2k_support.py:70
+#: web_noah2k_support.py:88
+msgid "NO_SUCH_BOARD"
+msgstr "그러한 게시판이 없음"
+
+#: article.py:197 article.py:323
+msgid "FOLDER"
+msgstr "폴더"
+
+#: article.py:218 article.py:258 article.py:297 article.py:372 article.py:419
+#: article.py:437 user.py:268 user.py:324
+msgid "DATABASE_ERROR"
+msgstr "데이터베이스 오류"
+
+#: article.py:248 article.py:280 article.py:411 web_article.py:62
+msgid "NO_SUCH_ARTICLE"
+msgstr "글 없음"
+
+#: article.py:289
+msgid "HAS_REPLY"
+msgstr "답글이 달려 있음"
+
+#: article.py:301 user.py:327
+msgid "SUCCESS"
+msgstr "성공"
+
+#: article.py:402
+msgid "EMPTY_COMMENT"
+msgstr "댓글이 비어 있음"
+
+#: article.py:430
+msgid "NO_SUCH_COMMENT"
+msgstr "그러한 댓글이 없음"
+
+#: board.py:80 board.py:121
+msgid "INVALID_BOARDNAME"
+msgstr "게시판 이름이 잘못됨"
+
+#: board.py:83 board.py:126
+msgid "BOARD_ALREADY_EXIST"
+msgstr "게시판이 이미 존재함"
+
+#: board.py:130
+msgid "NO_PERMISSION_ON_NEW_PARENT"
+msgstr "새 부모 게시판에 권한이 없음"
+
+#: board.py:176
+msgid "HAS_CHILD"
+msgstr "자식 게시판이 있음"
+
+#: user.py:142
+msgid "WRONG_PASSWORD"
+msgstr "암호가 잘못됨"
+
+#: user.py:145
+msgid "LOGIN_SUCCESS"
+msgstr "로그인 성공"
+
+#: user.py:258
+msgid "INVALID_USERNAME"
+msgstr "사용자 이름이 잘못됨"
+
+#: user.py:260 web_main.py:49
+msgid "ID_ALREADY_EXISTS"
+msgstr "ID가 이미 존재함"
+
+#: user.py:311
+msgid "HAS_BOARD"
+msgstr "자식 게시판이 있음"
+
+#: util.py:170
+msgid "INVALID_NOTICE_BOARD"
+msgstr "잘못된 공지 사항 게시판"
+
+#: util.py:174
+msgid "NO_NOTICE"
+msgstr "공지 사항이 없습니다"
+
+#: web_article.py:32 web_board.py:39 webpage.py:99
+msgid "INVALID_BOARD"
+msgstr "잘못된 게시판"
+
+#: web_article.py:36 web_board.py:43 web_main.py:31 web_user.py:52
+msgid "INVALID_ACTION"
+msgstr "지원하지 않는 동작"
+
+#: web_board.py:192 web_board.py:242
+msgid "NO_SUCH_USER_FOR_BOARD_ADMIN"
+msgstr "게시판 관리자로 지정한 사용자가 존재하지 않음"
+
+#: web_board.py:194
+msgid "NO_NAME_SPECIFIED"
+msgstr "이름을 입력하지 않았음"
+
+#: web_board.py:197
+msgid "BOARD_EXISTS"
+msgstr "게시판이 이미 존재함"
+
+#: web_main.py:51 web_user.py:98
+msgid "PASSWORD_DO_NOT_MATCH"
+msgstr "암호가 일치하지 않음"
+
+#: web_main.py:53 web_user.py:100
+msgid "PASSWORD_TOO_SHORT"
+msgstr "암호가 너무 짧음"
+
+#: web_noah2k_support.py:23
+msgid "INVALID_NOAH2K_ACTION"
+msgstr "지원하지 않는 noah2k 동작"
+
+#: web_noah2k_support.py:30 web_noah2k_support.py:51
+msgid "NO_BOARD_SPECIFIED"
+msgstr "게시판이 지정되지 않았음"
+
+#: web_noah2k_support.py:55 web_noah2k_support.py:79
+msgid "NO_ARTICLE_SPECIFIED"
+msgstr "글이 지정되지 않았음"
+
+#: web_noah2k_support.py:97
+msgid "NO_ATTACHMENT_SPECIFIED"
+msgstr "첨부 파일이 지정되지 않았음"
+
+#: web_user.py:26 web_user.py:48
+msgid "INVALID_USER"
+msgstr "잘못된 사용자"
+
+#: web_user.py:79 web_user.py:120
+msgid "MODIFYING_OTHERS_INFORMATION"
+msgstr "다른 사용자의 개인 정보를 수정하려고 하는 중"
+
+#: web_user.py:96 web_user.py:132
+msgid "INVALID_PASSWORD"
+msgstr "암호가 잘못되었음"
+
+
