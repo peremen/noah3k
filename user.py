@@ -5,6 +5,8 @@ import config
 import web
 import crypt, hashlib, hmac
 import util
+import i18n
+_ = i18n.custom_gettext
 
 """
 사용자 로그인, 로그아웃, 세션을 관리한다.
@@ -26,6 +28,10 @@ def _verify_noah1k_password(to_verify, password):
 def _generate_noah2k_password(password):
     # MySQL <4.1.1 password() 함수의 파이썬 구현.
     # noah3k 런칭 이전까지는 생성할 필요가 있음.
+    # noah2k의 웹 폼에는 암호 입력이 최대 16글자까지로 제한되어 있음.
+    # 따라서 암호 검증 시에도 이를 고려하여야 함.
+    if len(password) > 16:
+        password = password[0:16]
     nr = 1345345333
     add = 7
     nr2 = 0x12345671
