@@ -53,7 +53,8 @@ class personal_actions:
     def favorite_rss_get(self, mobile, username, user_id):
         articles = user.get_favorite_board_feed(user_id, config.favorite_feed_size)
         date = datetime.today()
-        return desktop_render.rss(today = date,
+        web.header('Content-Type', 'application/rss+xml')
+        return config.desktop_render.rss(today = date,
                 articles = articles, board_path="+u/%s/+favorite_rss" % username,
                 board_desc = u'%s의 즐겨찾는 보드 피드' % username,
                 link_address = 'http://noah.kaist.ac.kr/+u/%s' % username)
@@ -62,7 +63,8 @@ class personal_actions:
     def favorite_atom_get(self, mobile, username, user_id):
         articles = user.get_favorite_board_feed(user_id, config.favorite_feed_size)
         date = datetime.today()
-        return desktop_render.atom(today = date,
+        web.header('Content-Type', 'application/atom+xml')
+        return config.desktop_render.atom(today = date,
                 articles = articles, board_path="+u/%s/+favorite_atom" % username,
                 board_desc = u'%s의 즐겨찾는 보드 피드' % username,
                 self_address = 'http://noah.kaist.ac.kr/+u/%s/+favorite_atom' % username,

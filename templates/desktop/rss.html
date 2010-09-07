@@ -6,7 +6,7 @@ def rfc822(dt):
         dt.day,
         ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
         "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][dt.month-1],
-        dt.year, dt.hour, dt.minute, dt.second) %><?xml version="1.0"?>
+        dt.year, dt.hour, dt.minute, dt.second) %><?xml version="1.0" encoding="utf-8" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>RSS 피드 - /${board_path}</title>
@@ -17,7 +17,7 @@ def rfc822(dt):
         <link>${link_address}</link>
         <atom:link href="${link_address}" rel="self" type="application/rss+xml" />
 % endif
-        <description>${board_desc}</description>
+        <description>${board_desc|x}</description>
         <language>ko-kr</language>
         <pubDate>${rfc822(today)}</pubDate>
         <lastBuildDate>${rfc822(today)}</lastBuildDate>
@@ -27,7 +27,7 @@ def rfc822(dt):
 
 % for article in articles:
         <item>
-            <title>${article.aTitle}</title>
+            <title>${article.aTitle|x}</title>
             <link>http://noah.kaist.ac.kr${board._get_path_from_board_id(article.bSerial)}/+read/${article.aSerial}</link>
             <description>${util.format(article.aContent)|x}</description>
             <pubDate>${rfc822(article.aDatetime)}</pubDate>

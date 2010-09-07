@@ -86,7 +86,7 @@ class board_actions:
         date = datetime.today()
         articles = article.get_article_feed(board_id, feed_size)
         web.header('Content-Type', 'application/rss+xml')
-        return desktop_render.rss(board_path = board_name,
+        return config.desktop_render.rss(board_path = board_name,
                 board_desc = board_info.bDescription,
                 articles=articles, today=date)
 
@@ -105,7 +105,7 @@ class board_actions:
         date = datetime.today()
         articles = article.get_article_feed(board_id, feed_size)
         web.header('Content-Type', 'application/atom+xml')
-        return desktop_render.atom(board_path = board_name,
+        return config.desktop_render.atom(board_path = board_name,
                 board_desc = board_info.bDescription,
                 articles=articles, today=date)
 
