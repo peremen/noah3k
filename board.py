@@ -125,6 +125,8 @@ def edit_board(current_uid, board_id, settings):
     if _get_board_id_from_path(new_path) > 0 and old_path != new_path:
         return (False, _('BOARD_ALREADY_EXIST'))
     new_parent_id = _get_board_id_from_path(settings['path'])
+    if new_parent_id < 0:
+        return (False, _('INVALID_PARENT'))
     if new_parent_id != original_board_info.bParent:
         if not acl.is_allowed('board', new_parent_id, current_uid, 'create'):
             return (False, _('NO_PERMISSION_ON_NEW_PARENT'))
