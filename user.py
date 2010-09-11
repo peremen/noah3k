@@ -145,7 +145,7 @@ def login(username, password):
     except IndexError:
         return (False, _('NO_SUCH_USER'))
     if not password_set[len(user.uPasswd)](user.uPasswd, password):
-        return (False, _('WRONG_PASSWORD'))
+        return (False, _('INVALID_PASSWORD'))
     #if len(user.uPassword) < 64:
     #    update_password(user.uSerial, password)
     return (True, _('LOGIN_SUCCESS'))
