@@ -32,15 +32,7 @@ urls = (
 )
 
 app = web.application(urls, globals(), autoreload = True)
-if web.config.get('_session') is None:
-    session = web.session.Session(app, web.session.DiskStore('sessions'), {'count':0})
-    web.config._session = session
-else:
-    session = web.config._session
-
-def session_hook():
-    web.ctx.session = session
-app.add_processor(web.loadhook(session_hook))
+application = app.wsgifunc()
 
 if web.config.get('_database') is None:
     db = web.database(dbn=config.db_type, user=config.db_user,
@@ -49,6 +41,17 @@ if web.config.get('_database') is None:
     web.config._database = db
 else:
     db = web.config._database
+
+if web.config.get('_session') is None:
+    store = web.session.DBStore(db, 'sessions')
+    session = web.session.Session(app, store, initializer={'count':0})
+    web.config._session = session
+else:
+    session = web.config._session
+
+def session_hook():
+    web.ctx.session = session
+app.add_processor(web.loadhook(session_hook))
 
 class redirect:
     def GET(self, path):
