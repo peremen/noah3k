@@ -96,7 +96,7 @@ ${my_board.bDescription}\
 % endif
 
 <div class="heading"><span style="color: black">공지</span></a></div>
-아직까지 새 글 읽기와 메일을 사용할 수 없으므로, 필요하면 <a href="http://143.248.133.112">noah2k</a>에서 사용하십시오. 단 첨부 파일을 볼 수 없으며, noah2k 서비스는 예고없이 중단될 수 있습니다.
+새 글 읽기와 메일이 필요하다면 <a href="http://143.248.133.112">noah2k</a>에서 사용하십시오. 일부 기능이 제한될 수 있으며, noah2k는 예고없이 중단될 수 있습니다.
 <br />
 <br />
 
@@ -115,7 +115,7 @@ ${my_board.bDescription}\
 </ul>
 <br />
 
-<div class="heading"><a class="dirlink" href="/friends"><span style="color: black">친목</a></a></div>
+<div class="heading"><a class="dirlink" href="/friends"><span style="color: black">친목</span></a></div>
 <ul>		
     <li><span style="color: #3C78B5; font-weight: bold">학부</span>
 % for b in get_friend_boards(u'학부'):
@@ -154,6 +154,9 @@ ${my_board.bDescription}\
 % endfor
     </ul>
 </div>
+<br />
+<div class="heading"><a class="dirlink" href="/m"><span style="color: black">노아 모바일</span></a></div>
+<a class="plainlink" href="/m"><img border="0" src="/static/image/qrcode.png" /></a>
 
 %if board_path is not UNDEFINED:
 %if feed is not UNDEFINED:
