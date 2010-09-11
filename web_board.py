@@ -157,7 +157,7 @@ class board_actions:
     @util.error_catcher
     def cover_get(self, mobile, board_name, board_id):
         board_info = board.get_board_info(board_id)
-        return desktop_render.cover(title = u'%s - %s' % (board_name, config.branding),
+        return config.desktop_render.cover(title = u'%s - %s' % (board_name, config.branding),
                 board_cover = board_info.bInformation)
 
     @util.error_catcher
@@ -191,7 +191,7 @@ class board_actions:
         if owner_uid < 0:
             return render[mobile].error(error_message=_('NO_SUCH_USER_FOR_BOARD_ADMIN'), help_context='error')
         if user_data.name.strip() == '':
-            return desktop_render.error(error_message = _('NO_NAME_SPECIFIED'), help_context='error')
+            return render[mobile].error(error_message = _('NO_NAME_SPECIFIED'), help_context='error')
         new_path = posixpath.join('/', board_name, user_data.name)
         if board._get_board_id_from_path(new_path) > 0:
             return render[mobile].error(error_message = _('BOARD_EXISTS'), help_context='error')
