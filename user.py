@@ -55,11 +55,11 @@ def _generate_noah3k_password(password):
     hm = hmac.new(config.hmac_key, password, hashlib.sha256)
     return hm.hexdigest()
 
-def generate_password(password):
-    return _generate_noah2k_password(password)
-
 def _verify_noah3k_password(to_verify, password):
     return to_verify == _generate_noah3k_password(password)
+
+def generate_password(password):
+    return _generate_noah3k_password(password)
 
 password_set = {13: _verify_noah1k_password,
                 16: _verify_noah2k_password,
@@ -100,7 +100,7 @@ def update_password(uid, password):
         return False
     t = db.transaction()
     try:
-        ret = db.update('Users', where = 'uSerial = $uid', uPasswd = _generate_noah3k_password(password)) 
+        ret = db.update('Users', vars=val, where = 'uSerial = $uid', uPasswd = generate_password(password)) 
     except:
         t.rollback()
         return False
@@ -146,8 +146,8 @@ def login(username, password):
         return (False, _('NO_SUCH_USER'))
     if not password_set[len(user.uPasswd)](user.uPasswd, password):
         return (False, _('INVALID_PASSWORD'))
-    #if len(user.uPassword) < 64:
-    #    update_password(user.uSerial, password)
+    if len(user.uPasswd) < 64:
+        update_password(user.uSerial, password)
     return (True, _('LOGIN_SUCCESS'))
 
 def get_owned_board(uid):
