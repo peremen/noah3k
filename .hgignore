@@ -7,6 +7,6 @@ config.py
 sessions/*
 .directory
 error_report/*
-static/upload/*
+static/uploads/*
 static/thumb_*
 *.mo
