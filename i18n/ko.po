@@ -50,7 +50,7 @@ msgstr "폴더"
 #: article.py:218 article.py:258 article.py:297 article.py:372 article.py:419
 #: article.py:437 user.py:274 user.py:330
 msgid "DATABASE_ERROR"
-msgstr "데이터베이스 오류"
+msgstr "데이터베이스 오류 (관리자에게 알려 주십시오!)"
 
 #: article.py:248 article.py:280 article.py:411 web_article.py:62
 msgid "NO_SUCH_ARTICLE"
@@ -130,7 +130,7 @@ msgstr "공지 사항이 없습니다"
 
 #: web_article.py:32 web_board.py:39 webpage.py:102
 msgid "INVALID_BOARD"
-msgstr "잘못된 게시판"
+msgstr "지정한 게시판이 없습니다"
 
 #: web_article.py:36 web_board.py:43 web_main.py:31 web_user.py:52
 msgid "INVALID_ACTION"
