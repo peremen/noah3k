@@ -357,7 +357,7 @@ def get_subscription_board(uid):
     result = db.select('Subscriptions', val, where='uSerial = $uid')
     return result
 
-def is_subscripted(uid, board_id):
+def is_subscribed(uid, board_id):
     val = dict(uid = uid, board_id = board_id)
     result = db.query('SELECT COUNT(*) AS f FROM Subscriptions WHERE uSerial=$uid AND bSerial=$board_id', val);
     return result[0].f > 0

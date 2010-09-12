@@ -44,6 +44,21 @@ class board_actions:
 
     @util.error_catcher
     @util.session_helper
+    def subscribe_get(self, mobile, board_name, board_id, current_uid = -1):
+        if mobile:
+            referer = web.ctx.env.get('HTTP_REFERER', '/m')
+        else:
+            referer = web.ctx.env.get('HTTP_REFERER', '/')
+
+        if user.is_subscribed(current_uid, board_id):
+            user.remove_subscription_board(current_uid, board_id)
+        else:
+            user.add_subscription_board(current_uid, board_id)
+
+        raise web.seeother(referer)
+
+    @util.error_catcher
+    @util.session_helper
     def write_get(self, mobile, board_name, board_id, current_uid = -1):
         board_info = board.get_board_info(board_id)
         board_desc = board_info.bDescription
