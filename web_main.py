@@ -80,7 +80,7 @@ class main_actions:
         username, password = '', ''
         err = ''
         valid = True
-        login = None
+        login = (False, 'UNDEFINED')
         username, password = web.input().username, web.input().password
         referer = web.input().url
         username, password = username.strip(), password.strip()
