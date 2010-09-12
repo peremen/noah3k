@@ -204,7 +204,8 @@ def write_article(uid, board_id, article):
         ret = db.insert('Articles', bSerial = board_id, aIndex = index,
                 aTitle = article['title'], aContent = article['body'],
                 aId = current_user.uId, aNick = current_user.uNick, 
-                aDatetime = web.SQLLiteral("NOW()"), uSerial = uid)
+                aDatetime = web.SQLLiteral("NOW()"), uSerial = uid,
+                aUpdatedDatetime = web.SQLLiteral("NOW()"),)
 
         val = dict(index = index)
         ret = db.update('Articles', vars = val, where = 'aIndex = $index',
@@ -414,6 +415,8 @@ def write_comment(uid, board_id, article_id, comment):
     try:
         result = db.insert('Comments', bSerial = board_id, aSerial = article_id, uSerial = uid,
                 cId = current_user.uId, cContent = comment, cDatetime = web.SQLLiteral('NOW()'))
+        db.update('Articles', vars = dict(aSerial = article_id), where = 'aSerial = $aSerial',
+                aUpdatedDatetime= web.SQLLiteral('NOW()'))
     except:
         t.rollback()
         return (False, _('DATABASE_ERROR'))

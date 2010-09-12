@@ -6,6 +6,7 @@ import web
 import crypt, hashlib, hmac
 import util
 import i18n
+import datetime
 _ = i18n.custom_gettext
 
 """
@@ -346,3 +347,58 @@ def update_last_login(uid, ip_address):
     else:
         t.commit()
     return result
+
+
+###
+
+def get_subscription_board(uid):
+    # bSerial만 돌아오므로 적절한 가공이 필요함.
+    val = dict(uid = uid)
+    result = db.select('Subscriptions', val, where='uSerial = $uid')
+    return result
+
+def is_subscripted(uid, board_id):
+    val = dict(uid = uid, board_id = board_id)
+    result = db.query('SELECT COUNT(*) AS f FROM Subscriptions WHERE uSerial=$uid AND bSerial=$board_id', val);
+    return result[0].f > 0
+
+def add_subscription_board(uid, board_id):
+    t = db.transaction()
+    try:
+        result = db.insert('Subscriptions', uSerial = uid, bSerial = board_id, lastSubscriptedDate=web.SQLLiteral('NOW()'))
+    except:
+        t.rollback()
+        return False
+    else:
+        t.commit()
+    return result
+
+def remove_subscription_board(uid, board_id):
+    val = dict(uid = uid, board_id = board_id)
+    t = db.transaction()
+    try:
+        result = db.delete('Subscriptions', vars=val, where='uSerial = $uid AND bSerial = $board_id')
+    except:
+        t.rollback()
+    else:
+        t.commit()
+    return result
+
+def read_article(uid, aSerial):
+    val = dict(uid = uid, aSerial = aSerial)
+    db.delete('UserArticles', vars=val, where='uSerial = $uid and aSerial = $aSerial')
+
+def get_unreaded_article(uid):
+    update_unreaded_articles(uid)
+    return db.select('UserArticles', vars=dict(uSerial = uid), where = 'uSerial = $uSerial')
+
+def update_unreaded_articles(uid):
+    now = datetime.datetime.now()
+
+    for subscription in get_subscription_board(uid):
+        val = dict(bSerial = subscription.bSerial, subscriptedDate = subscription.lastSubscriptedDate)
+        result = db.query('select * from Articles where bSerial = $bSerial and aUpdatedDatetime > $subscriptedDate', val)
+        for article in result:
+            db.insert('UserArticles', uSerial = uid, aSerial = article.aSerial, auCreatedDatetime=now)
+
+    db.update('Subscriptions', vars=dict(uSerial = uid), where = 'uSerial = $uSerial', lastSubscriptedDate = now)
