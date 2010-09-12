@@ -43,8 +43,8 @@ class article_actions:
         comment = article.get_comment(article_id)
 
         #새글읽기 처리
-        if ctx.session.has_key('uid'):
-            uSerial = ctx.session.uid
+        if web.ctx.session.has_key('uid'):
+            uSerial = web.ctx.session.uid
             user.read_article(uSerial, article_id) 
 
         read_articles = web.cookies().get('read_articles')

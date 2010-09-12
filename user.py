@@ -388,9 +388,10 @@ def read_article(uid, aSerial):
     val = dict(uid = uid, aSerial = aSerial)
     db.delete('UserArticles', vars=val, where='uSerial = $uid and aSerial = $aSerial')
 
-def get_unreaded_article(uid):
+def get_unreaded_articles(uid):
     update_unreaded_articles(uid)
-    return db.select('UserArticles', vars=dict(uSerial = uid), where = 'uSerial = $uSerial')
+    result = db.query('select * from Articles where aSerial in (select aSerial from UserArticles where uSerial = $uSerial)', dict(uSerial = uid))
+    return result
 
 def update_unreaded_articles(uid):
     now = datetime.datetime.now()
