@@ -3,6 +3,7 @@
 import attachment as A_
 import article as A
 from web import ctx
+import urllib
 import util, acl
 def get_formatted_username(uid):
     u = user.get_user(uid)
@@ -22,9 +23,9 @@ def get_formatted_username(uid):
 <div style="clear: both;" />
 </div> <!-- end of article -->
 % if attachment is not UNDEFINED:
-% for a in attachment:
-첨부: <a class="filelink" href="${config.attachment_web_path}${article['aSerial']}/${a}">${a}</a> (${A_.format_file_size(A_.get_attachment_size(article['aSerial'], a))})<br />
-% endfor 
+	% for a in attachment:
+첨부: <a class="filelink" href="${config.attachment_web_path}${article['aSerial']}/${urllib.quote(a)}">${a.decode('utf-8')}</a> (${A_.format_file_size(A_.get_attachment_size(article['aSerial'], a))})<br />
+	% endfor 
 % endif
 <hr />
 % if thumbnail is not UNDEFINED:
