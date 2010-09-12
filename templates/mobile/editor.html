@@ -19,7 +19,7 @@
 %if attachment is not UNDEFINED:
     <% i = 1 %>
     %for a in attachment:
-    기존 첨부 ${i}: %{a} <input name="delete" type="checkbox" value="${a}" /> (삭제)<br />
+    기존 첨부 ${i}: %{a.decode('utf-8')} <input name="delete" type="checkbox" value="${a.decode('utf-8')}" /> (삭제)<br />
     <% i = i + 1 %>
     % endfor
 % endif

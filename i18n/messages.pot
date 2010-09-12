@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2010-09-11 22:55+KST\n"
+"POT-Creation-Date: 2010-09-12 21:50+KST\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -109,6 +109,14 @@ msgstr ""
 
 #: user.py:317
 msgid "HAS_BOARD"
+msgstr ""
+
+#: util.py:26
+msgid "NOT_LOGGED_IN"
+msgstr ""
+
+#: util.py:28
+msgid "INVALID_UID"
 msgstr ""
 
 #: util.py:170

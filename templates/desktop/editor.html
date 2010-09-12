@@ -27,7 +27,7 @@
 <div id="row">
     <div class="left-container">기존 첨부 ${i}</div>
     <span class="sep">:</span>
-    <span>${a} <input name="delete" type="checkbox" value="${a}" /> (삭제)</span>
+    <span>${a.decode('utf-8')} <input name="delete" type="checkbox" value="${a.decode('utf-8')}" /> (삭제)</span>
 </div>
 <% i = i + 1 %>
 % endfor
