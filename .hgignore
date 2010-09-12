@@ -8,5 +8,6 @@ sessions/*
 .directory
 error_report/*
 static/uploads/*
-static/thumb_*
+static/thumbs_desktop/*
+static/thumbs_mobile/*
 *.mo
