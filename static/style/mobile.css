@@ -10,6 +10,7 @@ body {
     margin: 0;
     padding-left: 0;
     padding-right: 0;
+    font-size: 0.8em;
 }
 
 a.servicelink        { text-decoration: none; color: black }
@@ -41,6 +42,11 @@ img{
 #header img {
     margin-bottom: 5px;
 }
+
+#header a {
+    margin: 10px;
+}
+
 #header .title {
     font-size: 1.6em;
     text-decoration: none;
@@ -90,8 +96,10 @@ ul.list2 {
 }
 
 ul.list li {
-    margin-bottom: 0.4em;
+	height: 1.8em;
+	overflow: hidden;
 }
+
 ul.list li.even {
     background: rgb(237, 243, 254);
 }
