@@ -1,5 +1,9 @@
 <% from datetime import datetime
-import board, util
+import user, board, util
+def get_formatted_username(uid):
+    u = user.get_user(uid)[1]
+    return "%(id)s (%(nick)s)" % {'id': u['uId'], 'nick':u['uNick']}
+
 def rfc822(dt):
     return "%s, %02d %s %04d %02d:%02d:%02d +0900" % (
         ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"][dt.weekday()],
@@ -28,6 +32,7 @@ def rfc822(dt):
 % for article in articles:
         <item>
             <title>${article.aTitle|x}</title>
+            <author>${get_formatted_username(article.uSerial)}</author>
             <link>http://noah.kaist.ac.kr${board._get_path_from_board_id(article.bSerial)}/+read/${article.aSerial}</link>
             <description>${util.format(article.aContent)|x}</description>
             <pubDate>${rfc822(article.aDatetime)}</pubDate>
