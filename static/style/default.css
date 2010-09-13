@@ -81,7 +81,7 @@ div#header div#logo {
 
 div#header div#menu {
     float: right;
-    width: 19em;
+    width: 30em;
 }
 
 div#header div#menu ul { 
@@ -112,6 +112,7 @@ div#header div#title {
     font-size: 1.6em;
     height: 1.4em;
     margin-left: 220px;
+    overflow: hidden;
 }
 
 div#header div#histnav {
