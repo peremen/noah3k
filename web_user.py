@@ -74,6 +74,16 @@ class personal_actions:
 
     @util.error_catcher
     @util.session_helper
+    def new_article_get(self, mobile, username, user_id, current_uid = -1):
+        if user_id != current_uid:
+            return render[mobile].error(error_message=_('LOOKING_OTHERS_NEW_ARTICLES'), help_context='error')
+
+        return render[mobile].new_article(articles = user.get_unreaded_articles(user_id),
+                title = u'새글읽기',
+                board_desc = u'새글읽기')
+
+    @util.error_catcher
+    @util.session_helper
     def modify_get(self, mobile, username, user_id, current_uid = -1):
         if user_id != current_uid:
             return render[mobile].error(error_message=_('MODIFYING_OTHERS_INFORMATION'), help_context='error')

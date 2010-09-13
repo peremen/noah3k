@@ -58,6 +58,7 @@ def get_type(path):
         <li><a class="button" href="/+join">회원 가입</a></li>
         <li><a class="button" href="/+login">로그인</a></li>
 % else:
+<li><a class="button" href="/+u/${ctx.session.username}/+new_article">새글읽기</a></li>
 <li><a class="button" href="/+u/${ctx.session.username}">내 정보</a></li>
         <li><a class="button" href="/+logout">로그아웃</a></li>
 % endif

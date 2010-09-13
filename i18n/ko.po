@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2010-09-11 22:55+KST\n"
+"POT-Creation-Date: 2010-09-12 21:50+KST\n"
 "PO-Revision-Date: 2010-09-08 02:50+0900\n"
 "Last-Translator: Park Shinjo <peremen@gmail.com>\n"
 "Language-Team: Korean <peremen@gmail.com>\n"
@@ -22,26 +22,26 @@ msgstr ""
 #: web_article.py:193 web_article.py:208 web_article.py:236 web_article.py:247
 #: web_board.py:168 web_board.py:183 web_board.py:219 web_board.py:234
 msgid "NO_PERMISSION"
-msgstr "권한 없음"
+msgstr "권한이 없습니다"
 
 #: article.py:182 article.py:234 article.py:269 article.py:308 article.py:399
 #: user.py:146 user.py:230
 msgid "NO_SUCH_USER"
-msgstr "그러한 사용자가 없음"
+msgstr "그러한 사용자가 없습니다"
 
 #: article.py:185 article.py:237 article.py:311
 msgid "EMPTY_TITLE"
-msgstr "제목이 비어 있음"
+msgstr "제목이 비어 있습니다"
 
 #: article.py:187 article.py:239 article.py:313
 msgid "EMPTY_BODY"
-msgstr "내용이 비어 있음"
+msgstr "내용이 비어 있습니다"
 
 #: article.py:195 article.py:321 board.py:78 board.py:117
 #: web_noah2k_support.py:38 web_noah2k_support.py:58 web_noah2k_support.py:70
 #: web_noah2k_support.py:88
 msgid "NO_SUCH_BOARD"
-msgstr "그러한 게시판이 없음"
+msgstr "게시판이 없습니다"
 
 #: article.py:197 article.py:323
 msgid "FOLDER"
@@ -50,15 +50,15 @@ msgstr "폴더"
 #: article.py:218 article.py:258 article.py:297 article.py:372 article.py:419
 #: article.py:437 user.py:274 user.py:330
 msgid "DATABASE_ERROR"
-msgstr "데이터베이스 오류"
+msgstr "데이터베이스 오류 (관리자에게 알려 주십시오!)"
 
 #: article.py:248 article.py:280 article.py:411 web_article.py:62
 msgid "NO_SUCH_ARTICLE"
-msgstr "글 없음"
+msgstr "글이 없습니다"
 
 #: article.py:289
 msgid "HAS_REPLY"
-msgstr "답글이 달려 있음"
+msgstr "답글이 달려 있습니다"
 
 #: article.py:301 user.py:333
 msgid "SUCCESS"
@@ -66,36 +66,35 @@ msgstr "성공"
 
 #: article.py:402
 msgid "EMPTY_COMMENT"
-msgstr "댓글이 비어 있음"
+msgstr "댓글을 입력하지 않았습니다"
 
 #: article.py:430
 msgid "NO_SUCH_COMMENT"
-msgstr "그러한 댓글이 없음"
+msgstr "댓글이 없습니다"
 
 #: board.py:80 board.py:121
 msgid "INVALID_BOARDNAME"
-msgstr "게시판 이름이 잘못됨"
+msgstr "게시판 이름이 잘못되었습니다"
 
 #: board.py:83 board.py:126
 msgid "BOARD_ALREADY_EXIST"
-msgstr "게시판이 이미 존재함"
+msgstr "게시판이 이미 존재합니다"
 
 #: board.py:129
-#, fuzzy
 msgid "INVALID_PARENT"
-msgstr "잘못된 게시판"
+msgstr "부모가 잘못되었습니다"
 
 #: board.py:132
 msgid "NO_PERMISSION_ON_NEW_PARENT"
-msgstr "새 부모 게시판에 권한이 없음"
+msgstr "새 부모 게시판에 권한이 없습니다"
 
 #: board.py:178
 msgid "HAS_CHILD"
-msgstr "자식 게시판이 있음"
+msgstr "자식 게시판이 있습니다"
 
 #: user.py:148 web_user.py:96 web_user.py:132
 msgid "INVALID_PASSWORD"
-msgstr "암호가 잘못되었음"
+msgstr "암호가 잘못되었습니다"
 
 #: user.py:151
 msgid "LOGIN_SUCCESS"
@@ -103,15 +102,23 @@ msgstr "로그인 성공"
 
 #: user.py:264
 msgid "INVALID_USERNAME"
-msgstr "사용자 이름이 잘못됨"
+msgstr "사용자 이름이 잘못되었습니다"
 
 #: user.py:266 web_main.py:49
 msgid "ID_ALREADY_EXISTS"
-msgstr "ID가 이미 존재함"
+msgstr "ID가 이미 존재합니다"
 
 #: user.py:317
 msgid "HAS_BOARD"
-msgstr "자식 게시판이 있음"
+msgstr "자식 게시판이 있습니다"
+
+#: util.py:26
+msgid "NOT_LOGGED_IN"
+msgstr "로그인하지 않았습니다"
+
+#: util.py:28
+msgid "INVALID_UID"
+msgstr "내부 오류: 사용자 ID가 잘못되었습니다"
 
 #: util.py:170
 msgid "INVALID_NOTICE_BOARD"
@@ -123,7 +130,7 @@ msgstr "공지 사항이 없습니다"
 
 #: web_article.py:32 web_board.py:39 webpage.py:102
 msgid "INVALID_BOARD"
-msgstr "잘못된 게시판"
+msgstr "지정한 게시판이 없습니다"
 
 #: web_article.py:36 web_board.py:43 web_main.py:31 web_user.py:52
 msgid "INVALID_ACTION"
@@ -131,23 +138,23 @@ msgstr "지원하지 않는 동작"
 
 #: web_board.py:192 web_board.py:242
 msgid "NO_SUCH_USER_FOR_BOARD_ADMIN"
-msgstr "게시판 관리자로 지정한 사용자가 존재하지 않음"
+msgstr "게시판 관리자로 지정한 사용자가 존재하지 않습니다"
 
 #: web_board.py:194
 msgid "NO_NAME_SPECIFIED"
-msgstr "이름을 입력하지 않았음"
+msgstr "이름을 입력하지 않았습니다"
 
 #: web_board.py:197
 msgid "BOARD_EXISTS"
-msgstr "게시판이 이미 존재함"
+msgstr "게시판이 이미 존재합니다"
 
 #: web_main.py:51 web_user.py:98
 msgid "PASSWORD_DO_NOT_MATCH"
-msgstr "암호가 일치하지 않음"
+msgstr "암호가 일치하지 않습니다"
 
 #: web_main.py:53 web_user.py:100
 msgid "PASSWORD_TOO_SHORT"
-msgstr "암호가 너무 짧음"
+msgstr "암호가 너무 짧습니다"
 
 #: web_noah2k_support.py:23
 msgid "INVALID_NOAH2K_ACTION"
@@ -155,15 +162,15 @@ msgstr "지원하지 않는 noah2k 동작"
 
 #: web_noah2k_support.py:30 web_noah2k_support.py:51
 msgid "NO_BOARD_SPECIFIED"
-msgstr "게시판이 지정되지 않았음"
+msgstr "게시판이 지정되지 않았습니다"
 
 #: web_noah2k_support.py:55 web_noah2k_support.py:79
 msgid "NO_ARTICLE_SPECIFIED"
-msgstr "글이 지정되지 않았음"
+msgstr "글이 지정되지 않았습니다"
 
 #: web_noah2k_support.py:97
 msgid "NO_ATTACHMENT_SPECIFIED"
-msgstr "첨부 파일이 지정되지 않았음"
+msgstr "첨부 파일이 지정되지 않았습니다"
 
 #: web_user.py:26 web_user.py:48
 msgid "INVALID_USER"
@@ -173,5 +180,3 @@ msgstr "잘못된 사용자"
 msgid "MODIFYING_OTHERS_INFORMATION"
 msgstr "다른 사용자의 개인 정보를 수정하려고 하는 중"
 
-#~ msgid "WRONG_PASSWORD"
-#~ msgstr "암호가 잘못됨"

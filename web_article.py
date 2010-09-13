@@ -42,6 +42,11 @@ class article_actions:
         a = article.get_article(board_id, article_id)
         comment = article.get_comment(article_id)
 
+        #새글읽기 처리
+        if web.ctx.session.has_key('uid'):
+            uSerial = web.ctx.session.uid
+            user.read_article(uSerial, article_id) 
+
         read_articles = web.cookies().get('read_articles')
         if read_articles:
             read_articles = [int(i) for i in read_articles.split(';')]
