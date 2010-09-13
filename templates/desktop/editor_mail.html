@@ -1,0 +1,39 @@
+<% from web import ctx %>
+<%inherit file="base_mail.html" />
+<h1>메시지 쓰기</h1>
+<form name="write_form" method="post" action="/+u/${ctx.session.username}/+write_message">
+<div id="row">
+    <div class="left-container">받는 사람</div>
+    <span class="sep">:</span>
+% if mail_receiver is UNDEFINED:
+    <input name="id" type="text" style="font-size: 0.9em; width: 160px; height: 1.6em" />
+% else:
+    <input name="id" type="text" style="font-size: 0.9em; width: 160px; height: 1.6em" value="${mail_receiver}"/>
+% endif
+</div>
+
+<div id="row">
+    <div class="left-container">제목</div>
+    <span class="sep">:</span>
+% if mail_title is UNDEFINED:
+<input name="title" type="text" maxlength="255" style="font-size: 0.9em; width: 500px; height: 1.6em" />
+% else:
+<input name="title" type="text" maxlength="255" style="font-size: 0.9em; width: 500px; height: 1.6em" value="${mail_title}" />
+% endif
+</div>
+
+<div id="row">
+    <div class="left-container">내용</div>
+    <span class="sep">:</span>
+    <textarea name="body" style="font-size: 0.9em; width: 550px; height: 360px">
+% if mail_body is not UNDEFINED:
+${mail_body}
+% endif
+    </textarea>
+</div>
+
+<div style="text-align: right; width: 52em;">
+    <input type="submit" name="Submit" value="쓰기" />
+    <input type="button" value="돌아가기" onclick="history.back()" />
+</div>
+</form>

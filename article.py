@@ -432,7 +432,7 @@ def delete_comment(uid, comment_id):
     except IndexError:
         return (False, _('NO_SUCH_COMMENT'))
 
-    if uid != comment_info.uSerial or not acl.is_allowed('article', comment_info.aSerial, uid, 'comment_delete'):
+    if uid != comment_info.uSerial and not acl.is_allowed('article', comment_info.aSerial, uid, 'comment_delete'):
         return (False, _('NO_PERMISSION'))
     try:
         result = db.delete('Comments', vars=val, where='cSerial = $comment_id')

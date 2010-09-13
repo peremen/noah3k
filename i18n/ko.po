@@ -4,71 +4,73 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2010-09-12 21:50+KST\n"
-"PO-Revision-Date: 2010-09-08 02:50+0900\n"
+"POT-Creation-Date: 2010-09-13 20:21+KST\n"
+"PO-Revision-Date: 2010-09-13 20:23+0900\n"
 "Last-Translator: Park Shinjo <peremen@gmail.com>\n"
 "Language-Team: Korean <peremen@gmail.com>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: ENCODING\n"
+"Content-Transfer-Encoding: UTF-8\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Lokalize 1.0\n"
+"X-Generator: Lokalize 1.1\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: article.py:179 article.py:231 article.py:266 article.py:305 article.py:396
-#: article.py:433 board.py:85 board.py:114 board.py:169 web_article.py:83
-#: web_article.py:100 web_article.py:122 web_article.py:137 web_article.py:176
-#: web_article.py:193 web_article.py:208 web_article.py:236 web_article.py:247
-#: web_board.py:168 web_board.py:183 web_board.py:219 web_board.py:234
+#: article.py:179 article.py:232 article.py:267 article.py:306 article.py:397
+#: article.py:436 board.py:85 board.py:114 board.py:169 web_article.py:88
+#: web_article.py:105 web_article.py:127 web_article.py:142 web_article.py:181
+#: web_article.py:198 web_article.py:213 web_article.py:241 web_article.py:252
+#: web_board.py:183 web_board.py:198 web_board.py:234 web_board.py:249
+#: web_user.py:180 web_user.py:209 web_user.py:221 web_user.py:229
+#: web_user.py:259 web_user.py:280 web_user.py:309
 msgid "NO_PERMISSION"
 msgstr "권한이 없습니다"
 
-#: article.py:182 article.py:234 article.py:269 article.py:308 article.py:399
-#: user.py:146 user.py:230
+#: article.py:182 article.py:235 article.py:270 article.py:309 article.py:400
+#: user.py:149 user.py:233
 msgid "NO_SUCH_USER"
 msgstr "그러한 사용자가 없습니다"
 
-#: article.py:185 article.py:237 article.py:311
+#: article.py:185 article.py:238 article.py:312 pm.py:110
 msgid "EMPTY_TITLE"
 msgstr "제목이 비어 있습니다"
 
-#: article.py:187 article.py:239 article.py:313
+#: article.py:187 article.py:240 article.py:314 pm.py:112
 msgid "EMPTY_BODY"
 msgstr "내용이 비어 있습니다"
 
-#: article.py:195 article.py:321 board.py:78 board.py:117
+#: article.py:195 article.py:322 board.py:78 board.py:117
 #: web_noah2k_support.py:38 web_noah2k_support.py:58 web_noah2k_support.py:70
 #: web_noah2k_support.py:88
 msgid "NO_SUCH_BOARD"
 msgstr "게시판이 없습니다"
 
-#: article.py:197 article.py:323
+#: article.py:197 article.py:324
 msgid "FOLDER"
 msgstr "폴더"
 
-#: article.py:218 article.py:258 article.py:297 article.py:372 article.py:419
-#: article.py:437 user.py:274 user.py:330
+#: article.py:219 article.py:259 article.py:298 article.py:373 article.py:422
+#: article.py:440 pm.py:125 pm.py:136 user.py:277 user.py:333
 msgid "DATABASE_ERROR"
 msgstr "데이터베이스 오류 (관리자에게 알려 주십시오!)"
 
-#: article.py:248 article.py:280 article.py:411 web_article.py:62
+#: article.py:249 article.py:281 article.py:412 web_article.py:67
 msgid "NO_SUCH_ARTICLE"
 msgstr "글이 없습니다"
 
-#: article.py:289
+#: article.py:290
 msgid "HAS_REPLY"
 msgstr "답글이 달려 있습니다"
 
-#: article.py:301 user.py:333
+#: article.py:302 pm.py:128 pm.py:139 user.py:336
 msgid "SUCCESS"
 msgstr "성공"
 
-#: article.py:402
+#: article.py:403
 msgid "EMPTY_COMMENT"
 msgstr "댓글을 입력하지 않았습니다"
 
-#: article.py:430
+#: article.py:433
 msgid "NO_SUCH_COMMENT"
 msgstr "댓글이 없습니다"
 
@@ -92,23 +94,31 @@ msgstr "새 부모 게시판에 권한이 없습니다"
 msgid "HAS_CHILD"
 msgstr "자식 게시판이 있습니다"
 
-#: user.py:148 web_user.py:96 web_user.py:132
+#: pm.py:106
+msgid "INVALID_SENDER"
+msgstr "보낸 사람이 잘못되었습니다"
+
+#: pm.py:108 web_user.py:236
+msgid "INVALID_RECEIVER"
+msgstr "받는 사람이 잘못되었습니다"
+
+#: user.py:151 web_user.py:108 web_user.py:144
 msgid "INVALID_PASSWORD"
 msgstr "암호가 잘못되었습니다"
 
-#: user.py:151
+#: user.py:154
 msgid "LOGIN_SUCCESS"
 msgstr "로그인 성공"
 
-#: user.py:264
+#: user.py:267
 msgid "INVALID_USERNAME"
 msgstr "사용자 이름이 잘못되었습니다"
 
-#: user.py:266 web_main.py:49
+#: user.py:269 web_main.py:49
 msgid "ID_ALREADY_EXISTS"
 msgstr "ID가 이미 존재합니다"
 
-#: user.py:317
+#: user.py:320
 msgid "HAS_BOARD"
 msgstr "자식 게시판이 있습니다"
 
@@ -132,27 +142,27 @@ msgstr "공지 사항이 없습니다"
 msgid "INVALID_BOARD"
 msgstr "지정한 게시판이 없습니다"
 
-#: web_article.py:36 web_board.py:43 web_main.py:31 web_user.py:52
+#: web_article.py:36 web_board.py:43 web_main.py:31 web_user.py:54
 msgid "INVALID_ACTION"
 msgstr "지원하지 않는 동작"
 
-#: web_board.py:192 web_board.py:242
+#: web_board.py:207 web_board.py:257
 msgid "NO_SUCH_USER_FOR_BOARD_ADMIN"
 msgstr "게시판 관리자로 지정한 사용자가 존재하지 않습니다"
 
-#: web_board.py:194
+#: web_board.py:209
 msgid "NO_NAME_SPECIFIED"
 msgstr "이름을 입력하지 않았습니다"
 
-#: web_board.py:197
+#: web_board.py:212
 msgid "BOARD_EXISTS"
 msgstr "게시판이 이미 존재합니다"
 
-#: web_main.py:51 web_user.py:98
+#: web_main.py:51 web_user.py:110
 msgid "PASSWORD_DO_NOT_MATCH"
 msgstr "암호가 일치하지 않습니다"
 
-#: web_main.py:53 web_user.py:100
+#: web_main.py:53 web_user.py:112
 msgid "PASSWORD_TOO_SHORT"
 msgstr "암호가 너무 짧습니다"
 
@@ -172,11 +182,19 @@ msgstr "글이 지정되지 않았습니다"
 msgid "NO_ATTACHMENT_SPECIFIED"
 msgstr "첨부 파일이 지정되지 않았습니다"
 
-#: web_user.py:26 web_user.py:48
+#: web_user.py:27 web_user.py:50
 msgid "INVALID_USER"
 msgstr "잘못된 사용자"
 
-#: web_user.py:79 web_user.py:120
+#: web_user.py:81
+msgid "LOOKING_OTHERS_NEW_ARTICLES"
+msgstr "다른 사람의 새 글을 읽으려고 하는 중"
+
+#: web_user.py:91 web_user.py:132
 msgid "MODIFYING_OTHERS_INFORMATION"
 msgstr "다른 사용자의 개인 정보를 수정하려고 하는 중"
+
+#: web_user.py:206 web_user.py:256 web_user.py:277 web_user.py:306
+msgid "NO_SUCH_MESSAGE"
+msgstr "그러한 메시지가 없습니다"
 

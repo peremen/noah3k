@@ -1,5 +1,5 @@
 <%
-import board, posixpath
+import board, posixpath, pm
 from web import ctx
 def traverse_board_path(path):
     if path == '^root':
@@ -58,8 +58,14 @@ def get_type(path):
         <li><a class="button" href="/+join">회원 가입</a></li>
         <li><a class="button" href="/+login">로그인</a></li>
 % else:
-<li><a class="button" href="/+u/${ctx.session.username}/+new_article">새글읽기</a></li>
-<li><a class="button" href="/+u/${ctx.session.username}">내 정보</a></li>
+        <li><a class="button" href="/+u/${ctx.session.username}/+new_article">새글읽기</a></li>
+    <% read_cnt = pm.unread_count(ctx.session.uid) %>
+    %if read_cnt > 0:
+        <li><a class="button" style="background: red; color: white;" target="_blank" href="/+u/${ctx.session.username}/+inbox">메일 (${read_cnt})</a></li>
+    % else:
+        <li><a class="button" target="_blank" href="/+u/${ctx.session.username}/+inbox">메일</a></li>
+    % endif
+        <li><a class="button" href="/+u/${ctx.session.username}">내 정보</a></li>
         <li><a class="button" href="/+logout">로그아웃</a></li>
 % endif
     </ul>

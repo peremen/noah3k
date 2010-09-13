@@ -52,10 +52,12 @@ def get_formatted_username(uid):
 % endif
 <!-- 보드 관리 -->
 <a class="button" href="/${board_path}/+summary" title="이 보드의 정보를 보거나 수정합니다">정보</a> 
-% if user.is_subscribed(ctx.session.uid, board._get_board_id_from_path(board_path)):
+%if ctx.session.has_key('uid'):
+    % if user.is_subscribed(ctx.session.uid, board._get_board_id_from_path(board_path)):
 <a class="button" href="/${board_path}/+subscribe" title="이 보드를 구독 취소합니다.">구독취소</a> 
-% else:
+    % else:
 <a class="button" href="/${board_path}/+subscribe" title="이 보드를 구독합니다.">구독하기</a> 
+    %endif
 %endif
 
 <center>
@@ -113,7 +115,7 @@ def get_formatted_username(uid):
         <a href="/${board_path}/+read/${a.aSerial}" class="articlelink">${a.aTitle}
         <% cmt_cnt = article.get_comment_count(a.aSerial) %>
         % if cmt_cnt > 0:
-        [${cmt_cnt}]
+        <span class="commentCount">[${cmt_cnt}]</span>
         % endif
         </a>
     </td>

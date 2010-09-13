@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2010-09-12 21:50+KST\n"
+"POT-Creation-Date: 2010-09-13 20:21+KST\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,59 +15,61 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: article.py:179 article.py:231 article.py:266 article.py:305 article.py:396
-#: article.py:433 board.py:85 board.py:114 board.py:169 web_article.py:83
-#: web_article.py:100 web_article.py:122 web_article.py:137 web_article.py:176
-#: web_article.py:193 web_article.py:208 web_article.py:236 web_article.py:247
-#: web_board.py:168 web_board.py:183 web_board.py:219 web_board.py:234
+#: article.py:179 article.py:232 article.py:267 article.py:306 article.py:397
+#: article.py:436 board.py:85 board.py:114 board.py:169 web_article.py:88
+#: web_article.py:105 web_article.py:127 web_article.py:142 web_article.py:181
+#: web_article.py:198 web_article.py:213 web_article.py:241 web_article.py:252
+#: web_board.py:183 web_board.py:198 web_board.py:234 web_board.py:249
+#: web_user.py:180 web_user.py:209 web_user.py:221 web_user.py:229
+#: web_user.py:259 web_user.py:280 web_user.py:309
 msgid "NO_PERMISSION"
 msgstr ""
 
-#: article.py:182 article.py:234 article.py:269 article.py:308 article.py:399
-#: user.py:146 user.py:230
+#: article.py:182 article.py:235 article.py:270 article.py:309 article.py:400
+#: user.py:149 user.py:233
 msgid "NO_SUCH_USER"
 msgstr ""
 
-#: article.py:185 article.py:237 article.py:311
+#: article.py:185 article.py:238 article.py:312 pm.py:110
 msgid "EMPTY_TITLE"
 msgstr ""
 
-#: article.py:187 article.py:239 article.py:313
+#: article.py:187 article.py:240 article.py:314 pm.py:112
 msgid "EMPTY_BODY"
 msgstr ""
 
-#: article.py:195 article.py:321 board.py:78 board.py:117
+#: article.py:195 article.py:322 board.py:78 board.py:117
 #: web_noah2k_support.py:38 web_noah2k_support.py:58 web_noah2k_support.py:70
 #: web_noah2k_support.py:88
 msgid "NO_SUCH_BOARD"
 msgstr ""
 
-#: article.py:197 article.py:323
+#: article.py:197 article.py:324
 msgid "FOLDER"
 msgstr ""
 
-#: article.py:218 article.py:258 article.py:297 article.py:372 article.py:419
-#: article.py:437 user.py:274 user.py:330
+#: article.py:219 article.py:259 article.py:298 article.py:373 article.py:422
+#: article.py:440 pm.py:125 pm.py:136 user.py:277 user.py:333
 msgid "DATABASE_ERROR"
 msgstr ""
 
-#: article.py:248 article.py:280 article.py:411 web_article.py:62
+#: article.py:249 article.py:281 article.py:412 web_article.py:67
 msgid "NO_SUCH_ARTICLE"
 msgstr ""
 
-#: article.py:289
+#: article.py:290
 msgid "HAS_REPLY"
 msgstr ""
 
-#: article.py:301 user.py:333
+#: article.py:302 pm.py:128 pm.py:139 user.py:336
 msgid "SUCCESS"
 msgstr ""
 
-#: article.py:402
+#: article.py:403
 msgid "EMPTY_COMMENT"
 msgstr ""
 
-#: article.py:430
+#: article.py:433
 msgid "NO_SUCH_COMMENT"
 msgstr ""
 
@@ -91,23 +93,31 @@ msgstr ""
 msgid "HAS_CHILD"
 msgstr ""
 
-#: user.py:148 web_user.py:96 web_user.py:132
+#: pm.py:106
+msgid "INVALID_SENDER"
+msgstr ""
+
+#: pm.py:108 web_user.py:236
+msgid "INVALID_RECEIVER"
+msgstr ""
+
+#: user.py:151 web_user.py:108 web_user.py:144
 msgid "INVALID_PASSWORD"
 msgstr ""
 
-#: user.py:151
+#: user.py:154
 msgid "LOGIN_SUCCESS"
 msgstr ""
 
-#: user.py:264
+#: user.py:267
 msgid "INVALID_USERNAME"
 msgstr ""
 
-#: user.py:266 web_main.py:49
+#: user.py:269 web_main.py:49
 msgid "ID_ALREADY_EXISTS"
 msgstr ""
 
-#: user.py:317
+#: user.py:320
 msgid "HAS_BOARD"
 msgstr ""
 
@@ -131,27 +141,27 @@ msgstr ""
 msgid "INVALID_BOARD"
 msgstr ""
 
-#: web_article.py:36 web_board.py:43 web_main.py:31 web_user.py:52
+#: web_article.py:36 web_board.py:43 web_main.py:31 web_user.py:54
 msgid "INVALID_ACTION"
 msgstr ""
 
-#: web_board.py:192 web_board.py:242
+#: web_board.py:207 web_board.py:257
 msgid "NO_SUCH_USER_FOR_BOARD_ADMIN"
 msgstr ""
 
-#: web_board.py:194
+#: web_board.py:209
 msgid "NO_NAME_SPECIFIED"
 msgstr ""
 
-#: web_board.py:197
+#: web_board.py:212
 msgid "BOARD_EXISTS"
 msgstr ""
 
-#: web_main.py:51 web_user.py:98
+#: web_main.py:51 web_user.py:110
 msgid "PASSWORD_DO_NOT_MATCH"
 msgstr ""
 
-#: web_main.py:53 web_user.py:100
+#: web_main.py:53 web_user.py:112
 msgid "PASSWORD_TOO_SHORT"
 msgstr ""
 
@@ -171,11 +181,19 @@ msgstr ""
 msgid "NO_ATTACHMENT_SPECIFIED"
 msgstr ""
 
-#: web_user.py:26 web_user.py:48
+#: web_user.py:27 web_user.py:50
 msgid "INVALID_USER"
 msgstr ""
 
-#: web_user.py:79 web_user.py:120
+#: web_user.py:81
+msgid "LOOKING_OTHERS_NEW_ARTICLES"
+msgstr ""
+
+#: web_user.py:91 web_user.py:132
 msgid "MODIFYING_OTHERS_INFORMATION"
+msgstr ""
+
+#: web_user.py:206 web_user.py:256 web_user.py:277 web_user.py:306
+msgid "NO_SUCH_MESSAGE"
 msgstr ""
 

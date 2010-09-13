@@ -1,0 +1,50 @@
+<%inherit file="base_mail.html" />
+<% import util, user, config
+from web import ctx
+def get_formatted_username(uid):
+    u = user.get_user(uid)
+    if u[0]:
+        return "%(id)s" % {'id': u[1]['uId']}
+    else:
+        return u"탈퇴한 회원"
+%>
+<h1>${mailbox_name}</h1>
+% if mails is UNDEFINED:
+메시지가 없습니다.
+% elif len(mails) == 0:
+메시지가 없습니다.
+% else:
+총 메시지 ${len(mails)}개<br />
+<table border="0" cellspacing="0" cellpadding="4" style="width: 100%; margin-bottom: 0;" class="list">
+    <tr align="center" class="head">
+        <th>보낸 사람</th>
+        <th>제목</th>
+        <th>날짜</th>
+    </tr>
+    <% i = 1 %>
+    % for m in mails:
+        % if i%2 == 0:
+    <tr class="even">
+        % else:
+    <tr class="odd">
+        % endif
+        <!-- 글쓴이 -->
+        <td>${get_formatted_username(m.mSenderSerial)}</td>
+
+        <!-- 제목 --> 
+        <td width="55%">
+        <a class="articlelink" href="/+u/${ctx.session.username}/+read_message?message_id=${m.mSerial}">${m.mTitle}
+        % if m.mMark == 0:
+        <span class="new">new</span>
+        % endif
+        </a>
+        </td>
+
+        <!-- 날짜 -->
+        <td align="center">${m.mDatetime.strftime('%Y-%m-%d')}</td>
+    </tr>
+    <% i = i + 1 %>
+    % endfor
+</table>
+% endif
+<p><a class="button" href="/+u/${ctx.session.username}/+write_message">메시지 쓰기</a></p>
