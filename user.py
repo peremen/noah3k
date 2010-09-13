@@ -390,16 +390,14 @@ def read_article(uid, aSerial):
 
 def get_unreaded_articles(uid):
     update_unreaded_articles(uid)
-    result = db.query('select * from Articles where aSerial in (select aSerial from UserArticles where uSerial = $uSerial)', dict(uSerial = uid))
+    result = db.query('select * from Articles inner join UserArticles where Articles.aSerial = UserArticles.aSerial and UserArticles.uSerial = $uSerial', dict(uSerial = uid))
     return result
 
 def update_unreaded_articles(uid):
     now = datetime.datetime.now()
 
     for subscription in get_subscription_board(uid):
-        val = dict(bSerial = subscription.bSerial, subscriptedDate = subscription.lastSubscriptedDate)
-        result = db.query('select * from Articles where bSerial = $bSerial and aUpdatedDatetime > $subscriptedDate', val)
-        for article in result:
-            db.insert('UserArticles', uSerial = uid, aSerial = article.aSerial, auCreatedDatetime=now)
+        val = dict(uSerial = uid, bSerial = subscription.bSerial, subscriptedDate = subscription.lastSubscriptedDate)
+        result = db.query('insert into UserArticles (select $uSerial, aSerial, NOW() from Articles where bSerial = $bSerial and aUpdatedDatetime > $subscriptedDate)', val)
 
     db.update('Subscriptions', vars=dict(uSerial = uid), where = 'uSerial = $uSerial', lastSubscriptedDate = now)
