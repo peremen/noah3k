@@ -75,7 +75,8 @@ def _get_uid_from_username(username):
     @return: 이름에 해당하는 사용자 ID. 
     """
     val = dict(username = username)
-    result = db.select('Users', val, where="uId = $username")
+    result = db.query('SELECT * FROM Users WHERE uId = $username COLLATE utf8_general_ci',
+            vars = locals())
     try:
         retvalue = int(result[0]['uSerial'])
     except IndexError:
@@ -138,7 +139,8 @@ def login(username, password):
     @return: 로그인 성공 여부(T/F)와 세션 키(성공 시) 또는 오류 코드(실패 시)를 포함하는 튜플.
     """
     val = dict(username = username)
-    result = db.select('Users', val, where='uId = $username')
+    result = db.query('SELECT * FROM Users WHERE uId = $username COLLATE utf8_general_ci',
+            vars = locals())
     user = None
     try:
         user = result[0]
