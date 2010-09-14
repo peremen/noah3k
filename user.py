@@ -395,16 +395,32 @@ def read_article(uid, aSerial):
     val = dict(uid = uid, aSerial = aSerial)
     db.delete('UserArticles', vars=val, where='uSerial = $uid and aSerial = $aSerial')
 
+def is_unreaded_article(uid, aSerial):
+    result = db.select('UserArticles', dict(uid=uid, aSerial=aSerial), where='uSerial = $uid and aSerial = $aSerial')
+    return len(result)
+
 def get_unreaded_articles(uid):
     update_unreaded_articles(uid)
     result = db.query('select * from Articles inner join UserArticles where Articles.aSerial = UserArticles.aSerial and UserArticles.uSerial = $uSerial', dict(uSerial = uid))
     return result
+
+def update_unreaded_articles_board(uid, bSerial):
+    now = datetime.datetime.now()
+
+    subscription = db.select('Subscriptions', dict(uid=uid, bSerial=bSerial), where='uSerial=$uid and bSerial=$bSerial')
+    if len(subscription) is not 0:
+        sub = subscription[0]
+        val = dict(uSerial = uid, bSerial = sub.bSerial, subscriptedDate = sub.lastSubscriptedDate)
+        db.query('insert ignore into UserArticles (select $uSerial, aSerial, NOW() from Articles where bSerial = $bSerial and aUpdatedDatetime > $subscriptedDate)', val)
+
+        db.update('Subscriptions', vars=dict(uSerial=uid, bSerial=sub.bSerial), where='uSerial=$uSerial and bSerial = $bSerial', lastSubscriptedDate = now)
+
 
 def update_unreaded_articles(uid):
     now = datetime.datetime.now()
 
     for subscription in get_subscription_board(uid):
         val = dict(uSerial = uid, bSerial = subscription.bSerial, subscriptedDate = subscription.lastSubscriptedDate)
-        result = db.query('insert into UserArticles (select $uSerial, aSerial, NOW() from Articles where bSerial = $bSerial and aUpdatedDatetime > $subscriptedDate)', val)
+        result = db.query('insert ignore into UserArticles (select $uSerial, aSerial, NOW() from Articles where bSerial = $bSerial and aUpdatedDatetime > $subscriptedDate)', val)
 
     db.update('Subscriptions', vars=dict(uSerial = uid), where = 'uSerial = $uSerial', lastSubscriptedDate = now)

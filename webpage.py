@@ -116,6 +116,12 @@ class view_board:
             v = board_actions()
             return v.subboard_list_get(mobile, board_name, board_id)
 
+        #processing new_article
+        if web.ctx.session.has_key('uid'):
+            uid = web.ctx.session.uid
+            user.update_unreaded_articles_board(uid, board_id)
+
+
         qs = web.ctx.query
         if len(qs) > 0:
             qs = qs[1:]

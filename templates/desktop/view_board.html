@@ -86,6 +86,13 @@ from web import ctx
 
 </div> <!-- end of menu -->
 <%def name="put_article(a, i, mark=False)" >
+
+<%
+unreaded = False
+if ctx.session.has_key('uid'):
+	if (user.is_unreaded_article(ctx.session.uid, a.aSerial) == 1):
+		unreaded = True
+%>
 % if i%2 == 0:
 <tr class="even">
 % else:
@@ -106,12 +113,18 @@ from web import ctx
 %if a.aLevel > 0:
         <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (a.aLevel-1)}px" />
 %endif
+%if unreaded:
+<b>
+%endif
         <a href="/${board_path}/+read/${a.aSerial}" class="articlelink">${a.aTitle}
         <% cmt_cnt = article.get_comment_count(a.aSerial) %>
         % if cmt_cnt > 0:
         <span class="commentCount">[${cmt_cnt}]</span>
         % endif
         </a>
+%if unreaded:
+</b>
+%endif
     </td>
     <!-- 글쓴이 -->
     <td style="padding-left: 1em">${a.aId}</td>
