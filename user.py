@@ -159,6 +159,11 @@ def get_owned_board(uid):
     result = db.select('Boards', val, where='uSerial = $uid', order = 'bName')
     return result
 
+def get_favorite_board_with_detail(uid):
+    val = dict(uid = uid)
+    result = db.query('select * from Boards inner join Favorites where Favorites.uSerial = $uid and Boards.bSerial = Favorites.bSerial', val)
+    return result
+
 def get_favorite_board(uid):
     # bSerial만 돌아오므로 적절한 가공이 필요함.
     val = dict(uid = uid)

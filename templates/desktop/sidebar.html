@@ -3,13 +3,10 @@ import user, board
 from datetime import datetime
 def get_friend_boards(type):
     friend_list = []
-    current_year = datetime.now().year
-    while len(friend_list) < 7:
-        bdesc_prefix = '%%[%s%02d%%' % (type, current_year % 100)
-        result = board.search_board(bdesc_prefix)
-        if result:
-            friend_list.insert(0, dict(year = '%02d' % (current_year % 100), board = result[0]))
-        current_year = current_year - 1
+
+    for b in board.search_board('%%[%s%%' % type):
+    	friend_list.append(dict(year = b.bDescription[3:5], board = b))
+
     return friend_list
 %>
 % if ctx.session.has_key('uid'):
@@ -68,8 +65,7 @@ ${my_board.bDescription}\
 <div id="favorites" style="display: inline;">
 <ul>
 <% not_has_fav_board = True %>
-% for fav_board in user.get_favorite_board(ctx.session.uid):
-    <% my_board = board.get_board_info(fav_board.bSerial) %>
+% for my_board in user.get_favorite_board_with_detail(ctx.session.uid):
     <li><a class="boardlink" href="${my_board.bName}">\
     % if my_board.bType == 0:
 <img class="type" src="/static/image/folder.png" /> \
