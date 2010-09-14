@@ -34,6 +34,26 @@ def _get_board_id_from_path(path):
     else:
         return retvalue
 
+def _get_board_id_from_regex_path(path):
+    if path != "":
+        if path[0] == '/':
+            path = path[1:]
+
+    fronts = path.split('/')
+    regex = ''
+    for front in fronts:
+        regex = regex + '/%s[[:alnum:]]*' % front
+    regex = regex + '$'
+
+    val = dict(board_regex = regex)
+    result = db.query('select * from Boards where bName REGEXP $board_regex', val)
+    try:
+        retvalue = result[0]["bSerial"]
+    except IndexError:
+        return -1
+    else:
+        return retvalue
+
 def _get_path_from_board_id(board_id):
     result = db.select('Boards', locals(), where='bSerial = $board_id')
     try:

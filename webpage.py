@@ -99,7 +99,18 @@ class view_board:
             return v.subboard_list_get(mobile)
         board_id = board._get_board_id_from_path(board_name)
         if board_id < 0:
-            raise web.notfound(render[mobile].error(lang='ko', error_message=_('INVALID_BOARD'), help_context='error'))
+            #try to find regex match
+            board_id = board._get_board_id_from_regex_path(board_name)
+            if board_id < 0:
+                raise web.notfound(render[mobile].error(lang='ko', error_message=_('INVALID_BOARD'), help_context='error'))
+            else:
+                path = board._get_path_from_board_id(board_id)
+                if mobile:
+                    web.seeother('/m'+path)
+                else:
+                    web.seeother(path)
+                return
+
         board_info = board.get_board_info(board_id)
         if board_info.bType == 0: # 디렉터리
             v = board_actions()
