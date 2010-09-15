@@ -75,6 +75,9 @@ class board_actions:
         board_info = board.get_board_info(board_id)
         ret = article.write_article(current_uid, board_id, a)
         if ret[0] == True:
+            user.update_unreaded_articles_board(current_uid, board_id)
+            user.read_article(current_uid, ret[1])
+
             fs = web.ctx.get('_fieldstorage')
             try:
                 for f in fs['new_attachment']:

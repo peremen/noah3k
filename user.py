@@ -405,22 +405,17 @@ def get_unreaded_articles(uid):
     return result
 
 def update_unreaded_articles_board(uid, bSerial):
-    now = datetime.datetime.now()
-
     subscription = db.select('Subscriptions', dict(uid=uid, bSerial=bSerial), where='uSerial=$uid and bSerial=$bSerial')
     if len(subscription) is not 0:
         sub = subscription[0]
         val = dict(uSerial = uid, bSerial = sub.bSerial, subscriptedDate = sub.lastSubscriptedDate)
         db.query('insert ignore into UserArticles (select $uSerial, aSerial, NOW() from Articles where bSerial = $bSerial and aUpdatedDatetime > $subscriptedDate)', val)
 
-        db.update('Subscriptions', vars=dict(uSerial=uid, bSerial=sub.bSerial), where='uSerial=$uSerial and bSerial = $bSerial', lastSubscriptedDate = now)
-
+        db.update('Subscriptions', vars=dict(uSerial=uid, bSerial=sub.bSerial), where='uSerial=$uSerial and bSerial = $bSerial', lastSubscriptedDate = web.SQLLiteral('NOW()'))
 
 def update_unreaded_articles(uid):
-    now = datetime.datetime.now()
-
     for subscription in get_subscription_board(uid):
         val = dict(uSerial = uid, bSerial = subscription.bSerial, subscriptedDate = subscription.lastSubscriptedDate)
         result = db.query('insert ignore into UserArticles (select $uSerial, aSerial, NOW() from Articles where bSerial = $bSerial and aUpdatedDatetime > $subscriptedDate)', val)
 
-    db.update('Subscriptions', vars=dict(uSerial = uid), where = 'uSerial = $uSerial', lastSubscriptedDate = now)
+    db.update('Subscriptions', vars=dict(uSerial = uid), where = 'uSerial = $uSerial', lastSubscriptedDate = web.SQLLiteral('NOW()'))

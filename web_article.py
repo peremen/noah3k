@@ -215,6 +215,9 @@ class article_actions:
         board_info = board.get_board_info(board_id)
         ret = article.write_comment(current_uid, board_id, article_id, comment)
         if ret[0] == True:
+            user.update_unreaded_articles_board(current_uid, board_id)
+            user.read_article(current_uid, ret[1])
+
             if mobile:
                 raise web.seeother('/m/%s/+read/%s' % (board_name, article_id))
             else:
