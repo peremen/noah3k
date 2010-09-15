@@ -125,6 +125,9 @@ def get_type(path):
     <a href="/m/+join">회원 가입</a> |
     <a href="/m/+login">로그인</a>
 % else:
+    <a href="/m/+u/${ctx.session.username}/+new_article">새글읽기</a>
+    <br/>
+    
     <a href="/m/+u/${ctx.session.username}/+my_board">내 게시판</a> |
     <a href="/m/+u/${ctx.session.username}/+favorites">즐겨찾기</a> |
     <a href="/m/+u/${ctx.session.username}">내 정보</a> |

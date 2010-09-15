@@ -1,5 +1,5 @@
 <%
-import board, posixpath, pm
+import board, posixpath, pm, config
 from web import ctx
 def traverse_board_path(path):
     if path == '^root':
@@ -39,10 +39,9 @@ def get_type(path):
     id = board._get_board_id_from_path(path)
     data = board.get_board_info(id)
     return data.bType
-
 %>
 <div id="logo">
-    <a href="/"><img src="/static/image/logo.png" border="0" /></a>
+	<a href="/"><img src="${config.logo_url}" border="0" /></a>
 </div>
 
 <div id="menu">
