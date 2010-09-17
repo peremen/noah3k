@@ -46,3 +46,4 @@ mobile_render = render_mako(
 )
 render = {False: desktop_render, True: mobile_render}
 
+logo_url = '/static/image/logo.png'
