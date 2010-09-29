@@ -359,7 +359,9 @@ def reply_article(uid, board_id, article_id, reply):
                 aTitle = reply['title'], aContent = reply['body'],
                 aId = current_user.uId, aNick = current_user.uNick, 
                 aDatetime = web.SQLLiteral("NOW()"), uSerial = uid,
-                aLevel = level, aParent = article_id, aRoot = root)
+                aLevel = level, aParent = article_id, aRoot = root,
+                aUpdatedDatetime = web.SQLLiteral("NOW()"),)
+
 
         val = dict(index = index)
         ret = db.update('Articles', vars = val, where = 'aIndex = $index',
