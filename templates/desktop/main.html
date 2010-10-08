@@ -10,28 +10,20 @@
             <th>날짜</th>
         </tr>
         <% i = 1 %>
-        % for a in notice_articles:
-        % if i%2 == 0:
-        <tr class="even">
-        % else:
-        <tr class="odd">
-        % endif
-        <% i = i + 1 %>
-            <!-- 제목 --> 
-            <td>
-        %if a.aLevel > 0:
-            <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (a.aLevel-1)}px" />
-        %endif
-            <a href="${notice_board_path}/+read/${a.aSerial}" class="articlelink">${a.aTitle}
-            </a>
-            </td>
-            <!-- 날짜 -->
-            <td align="center">${a.aDatetime.strftime('%Y-%m-%d')}</td>
-        </tr>
-        % endfor
+        ${put_article(notice_articles, i)}
     </table>
-</td>
-<td>
+            <span style="font-size: 1.4em; font-weight: bold;"><a style="color: #000; text-decoration: none;" href="${student_notice_board_path}">학생 공지</a></span>
+    <!-- 학생 공지 -->
+    <table border="0" cellspacing="0" cellpadding="4" style="margin-bottom: 0px" class="list">
+        <tr align="center" class="head">
+            <th>제목</th>
+            <th>날짜</th>
+        </tr>
+        <% i = 1 %>
+        ${put_article(student_notice_articles, i)}
+    </table>
+    </td>
+    <td>
 <script src="http://widgets.twimg.com/j/2/widget.js"></script>
 <script>
 new TWTR.Widget({
@@ -40,7 +32,7 @@ new TWTR.Widget({
   rpp: 4,
   interval: 6000,
   width: 'auto',
-  height: 150,
+  height: 250,
   theme: {
     shell: {
       background: '#edf3fe',
@@ -71,3 +63,25 @@ new TWTR.Widget({
 <div>
 <%include file="view_subboard_list_content.html" />
 </div>
+
+<%def name="put_article(articles, i)">
+% for a in articles:
+% if i%2 == 0:
+        <tr class="even">
+% else:
+        <tr class="odd">
+% endif
+        <% i = i + 1 %>
+            <!-- 제목 --> 
+            <td>
+%if a.aLevel > 0:
+            <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (a.aLevel-1)}px" />
+%endif
+            <a href="${notice_board_path}/+read/${a.aSerial}" class="articlelink">${a.aTitle}
+            </a>
+            </td>
+            <!-- 날짜 -->
+            <td align="center">${a.aDatetime.strftime('%Y-%m-%d')}</td>
+        </tr>
+% endfor
+</%def>
