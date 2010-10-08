@@ -1,32 +1,34 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR ORGANIZATION
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Translations template for PROJECT.
+# Copyright (C) 2010 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2010-09-13 20:21+KST\n"
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2010-10-08 23:47+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: ENCODING\n"
-"Generated-By: pygettext.py 1.5\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 0.9.5\n"
 
-
-#: article.py:179 article.py:232 article.py:267 article.py:306 article.py:397
-#: article.py:436 board.py:85 board.py:114 board.py:169 web_article.py:88
+#: article.py:179 article.py:232 article.py:267 article.py:306 article.py:399
+#: article.py:438 board.py:105 board.py:134 board.py:189 web_article.py:88
 #: web_article.py:105 web_article.py:127 web_article.py:142 web_article.py:181
-#: web_article.py:198 web_article.py:213 web_article.py:241 web_article.py:252
-#: web_board.py:183 web_board.py:198 web_board.py:234 web_board.py:249
+#: web_article.py:198 web_article.py:213 web_article.py:244 web_article.py:255
+#: web_board.py:186 web_board.py:201 web_board.py:237 web_board.py:252
 #: web_user.py:180 web_user.py:209 web_user.py:221 web_user.py:229
 #: web_user.py:259 web_user.py:280 web_user.py:309
 msgid "NO_PERMISSION"
 msgstr ""
 
-#: article.py:182 article.py:235 article.py:270 article.py:309 article.py:400
-#: user.py:149 user.py:233
+#: article.py:182 article.py:235 article.py:270 article.py:309 article.py:402
+#: user.py:149 user.py:238
 msgid "NO_SUCH_USER"
 msgstr ""
 
@@ -38,7 +40,7 @@ msgstr ""
 msgid "EMPTY_BODY"
 msgstr ""
 
-#: article.py:195 article.py:322 board.py:78 board.py:117
+#: article.py:195 article.py:322 board.py:98 board.py:137
 #: web_noah2k_support.py:38 web_noah2k_support.py:58 web_noah2k_support.py:70
 #: web_noah2k_support.py:88
 msgid "NO_SUCH_BOARD"
@@ -48,12 +50,12 @@ msgstr ""
 msgid "FOLDER"
 msgstr ""
 
-#: article.py:219 article.py:259 article.py:298 article.py:373 article.py:422
-#: article.py:440 pm.py:125 pm.py:136 user.py:277 user.py:333
+#: article.py:219 article.py:259 article.py:298 article.py:375 article.py:424
+#: article.py:442 pm.py:125 pm.py:136 user.py:282 user.py:338
 msgid "DATABASE_ERROR"
 msgstr ""
 
-#: article.py:249 article.py:281 article.py:412 web_article.py:67
+#: article.py:249 article.py:281 article.py:414 web_article.py:67
 msgid "NO_SUCH_ARTICLE"
 msgstr ""
 
@@ -61,35 +63,35 @@ msgstr ""
 msgid "HAS_REPLY"
 msgstr ""
 
-#: article.py:302 pm.py:128 pm.py:139 user.py:336
+#: article.py:302 pm.py:128 pm.py:139 user.py:341
 msgid "SUCCESS"
 msgstr ""
 
-#: article.py:403
+#: article.py:405
 msgid "EMPTY_COMMENT"
 msgstr ""
 
-#: article.py:433
+#: article.py:435
 msgid "NO_SUCH_COMMENT"
 msgstr ""
 
-#: board.py:80 board.py:121
+#: board.py:100 board.py:141
 msgid "INVALID_BOARDNAME"
 msgstr ""
 
-#: board.py:83 board.py:126
+#: board.py:103 board.py:146
 msgid "BOARD_ALREADY_EXIST"
 msgstr ""
 
-#: board.py:129
+#: board.py:149
 msgid "INVALID_PARENT"
 msgstr ""
 
-#: board.py:132
+#: board.py:152
 msgid "NO_PERMISSION_ON_NEW_PARENT"
 msgstr ""
 
-#: board.py:178
+#: board.py:198
 msgid "HAS_CHILD"
 msgstr ""
 
@@ -105,19 +107,15 @@ msgstr ""
 msgid "INVALID_PASSWORD"
 msgstr ""
 
-#: user.py:154
-msgid "LOGIN_SUCCESS"
-msgstr ""
-
-#: user.py:267
+#: user.py:272
 msgid "INVALID_USERNAME"
 msgstr ""
 
-#: user.py:269 web_main.py:49
+#: user.py:274 web_main.py:49
 msgid "ID_ALREADY_EXISTS"
 msgstr ""
 
-#: user.py:320
+#: user.py:325
 msgid "HAS_BOARD"
 msgstr ""
 
@@ -137,7 +135,7 @@ msgstr ""
 msgid "NO_NOTICE"
 msgstr ""
 
-#: web_article.py:32 web_board.py:39 webpage.py:102
+#: web_article.py:32 web_board.py:39 webpage.py:112
 msgid "INVALID_BOARD"
 msgstr ""
 
@@ -145,15 +143,15 @@ msgstr ""
 msgid "INVALID_ACTION"
 msgstr ""
 
-#: web_board.py:207 web_board.py:257
+#: web_board.py:210 web_board.py:260
 msgid "NO_SUCH_USER_FOR_BOARD_ADMIN"
 msgstr ""
 
-#: web_board.py:209
+#: web_board.py:212
 msgid "NO_NAME_SPECIFIED"
 msgstr ""
 
-#: web_board.py:212
+#: web_board.py:215
 msgid "BOARD_EXISTS"
 msgstr ""
 

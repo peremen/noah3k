@@ -137,7 +137,7 @@ def login(username, password):
     @type password: string
     @param password: 암호. 평문으로 전송되어야 한다.
     @rtype tuple
-    @return: 로그인 성공 여부(T/F)와 세션 키(성공 시) 또는 오류 코드(실패 시)를 포함하는 튜플.
+    @return: 로그인 성공 여부(T/F)와 언어(성공 시) 또는 오류 코드(실패 시)를 포함하는 튜플.
     """
     val = dict(username = username)
     result = db.query('SELECT * FROM Users WHERE uId = $username COLLATE utf8_general_ci',
@@ -151,7 +151,7 @@ def login(username, password):
         return (False, _('INVALID_PASSWORD'))
     if len(user.uPasswd) < 64:
         update_password(user.uSerial, password)
-    return (True, _('LOGIN_SUCCESS'))
+    return (True, user.language)
 
 def get_owned_board(uid):
     # 모든 정보가 돌아옴.
