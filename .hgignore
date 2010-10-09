@@ -11,3 +11,4 @@ static/uploads/*
 static/thumbs_desktop/*
 static/thumbs_mobile/*
 *.mo
+*.po~
