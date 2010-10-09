@@ -210,10 +210,6 @@ def write_article(uid, board_id, article):
         val = dict(index = index)
         ret = db.update('Articles', vars = val, where = 'aIndex = $index',
                 aRoot = web.SQLLiteral("aSerial"), _test = True)
-
-        val = dict(uid = uid)
-        ret = db.update('Users', vars = val, where='uSerial = $uid',
-            uNumPost = web.SQLLiteral('uNumPost + 1'))
     except:
         t.rollback()
         return (False, _('DATABASE_ERROR'))
@@ -366,10 +362,6 @@ def reply_article(uid, board_id, article_id, reply):
         val = dict(index = index)
         ret = db.update('Articles', vars = val, where = 'aIndex = $index',
                 aRoot = web.SQLLiteral("aSerial"), _test = True)
-
-        val = dict(uid = uid)
-        ret = db.update('Users', vars = val, where='uSerial = $uid',
-            uNumPost = web.SQLLiteral('uNumPost + 1'))
     except:
         t.rollback()
         return (False, _('DATABASE_ERROR'))
