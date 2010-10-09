@@ -1,15 +1,16 @@
-<% import random %>
+<% import random
+from i18n import custom_gettext as _ %>
 <%inherit file="base.html" />
 
 <div id="errorbox">
     <img src="/static/image/error/${random.randint(1, 6)}.jpg" />
-    <h3>오류 : <span style="color: red">${error_message}</span></h3>
+    <h3>${_('Error')} : <span style="color: red">${error_message}</span></h3>
     <hr />
 % if error_detail is UNDEFINED:
-    위 오류에 나와 있는 상황을 확인하시고 다시 시도해 보시기 바랍니다.<br />
+    ${_('Check error details and retry.')}<br />
 % else:
-    불편을 끼쳐 드려 죄송합니다. 내부 문제로 인하여 오류가 발생했습니다.<br />
-    다음 정보가 운영자에게 전달되었습니다. 빠른 시일 내에 해결하겠습니다. (<a href="javascript:eval(document.getElementById('exception').style.display='block')">자세히</a>)
+    ${_('An error has occured. Sorry for inconvenience.')}<br />
+    ${_('Following information is reported to administrator. We will fix error soon.')} (<a href="javascript:eval(document.getElementById('exception').style.display='block')">${_('More')}</a>)
     <div id="exception" style="display: none; margin-top: 10px; padding-top: 10px; border-top: dashed 1px #3C78B5; font-size: 0.9em">
 <pre>
 ${error_detail}
@@ -18,6 +19,6 @@ ${error_detail}
     <hr />
 % endif
     <p style="text-align: right;">
-        <input type="button" value="돌아가기" onclick="history.back()" />
+        <input type="button" value="${_('Go Back')}" onclick="history.back()" />
     </p>
 </div>

@@ -1,19 +1,20 @@
-<% import util %>
+<% import util
+from i18n import custom_gettext as _ %>
 <%inherit file="base.html" />
 <center>
     <div style="border: 1px solid #C0C0C0; padding:5px; width: 41em; font-size: 10pt; font-family: monospace; text-align: left">
         <% notice_text = util.get_login_notice() %>
 % if notice_text == 'INVALID_NOTICE_BOARD':
-내부 오류
+${_('Internal Error')}
 % elif notice_text == 'NO_NOTICE':
-공지가 없습니다.
+${_('No Notice')}
 % else:
 ${util.format(util.get_login_notice())}
 % endif
         <br />
     </div>
     <div style="padding-top: 20px; width: 42em; line-height:1.6em; text-align: left">
-    노아 아이디가 없으신 분들은 <a href="/+join/">여기</a>를 클릭해 주세요
+    ${_('To join NOAH, click <a href="/+join/">here</a>')}
 % if error is not UNDEFINED:
     <br /><span style="color: red">${error}</span>
 % endif
@@ -26,10 +27,10 @@ ${util.format(util.get_login_notice())}
                 <input id="username" name="username" type="text" style="width: 8em; height: 1.6em"/>
             </div>
             <div style="height: 1.8em; width: 18em; float: left">
-                <div class="desc">암호</div>
+                <div class="desc">${_('Password')}</div>
                 <input id="password" name="password" type="password" style="width: 8em; height: 1.6em"/>
             </div>
-            <input align="right" type="submit" name="Submit" value="로그인"/>
+            <input align="right" type="submit" name="Submit" value="${_('Login')}"/>
         </div>
 	<script>
 		$("#username").focus();

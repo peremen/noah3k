@@ -1,9 +1,10 @@
 <%inherit file="base.html" />
+<% from i18n import custom_gettext as _ %>
 <%! scripts = ['/static/scripts/jquery-multifile.js'] %>
 <p>${action_name}</p>
 <form enctype="multipart/form-data" method="POST" action="/${board_path}/+${action}">
 <div id="row">
-    <div class="left-container">제목</div>
+    <div class="left-container">${_('Title')}</div>
     <span class="sep">:</span>
 %if article_title is UNDEFINED:
     <input name="title" type="text" maxlength="255" style="font-size: 0.9em; width: 500px; height: 1.6em" value="">
@@ -13,7 +14,7 @@
 </div>
 
 <div id="row">
-    <div class="left-container">내용</div>
+    <div class="left-container">${_('Content')}</div>
     <span class="sep">:</span>
 %if body is UNDEFINED:
     <textarea name="content" style="font-size: 0.9em; width: 550px; height: 360px"></textarea>
@@ -25,22 +26,22 @@
 <% i = 1 %>
 %for a in attachment:
 <div id="row">
-    <div class="left-container">기존 첨부 ${i}</div>
+    <div class="left-container">${_('Attachment %s' % i)}</div>
     <span class="sep">:</span>
-    <span>${a.decode('utf-8')} <input name="delete" type="checkbox" value="${a.decode('utf-8')}" /> (삭제)</span>
+    <span>${a.decode('utf-8')} <input name="delete" type="checkbox" value="${a.decode('utf-8')}" /> ${_('Delete')}</span>
 </div>
 <% i = i + 1 %>
 % endfor
 % endif
 <div id="row">
-    <div class="left-container">첨부</div>
+    <div class="left-container">${_('Attachment')}</div>
     <span class="sep">:</span>
     <input name="new_attachment" class="multi" type="file" />
 </div>
 
 <div style="text-align: right; width: 52em;">
-    <input type="submit" name="ok" value="확인">
-    <input type="button" value="돌아가기" onclick="history.back()">
+    <input type="submit" name="ok" value="${_('Submit')}">
+    <input type="button" value="${_('Go Back')}" onclick="history.back()">
 </div>
 </form>
 <!-- <iframe id="sessionKeeper" src="sessionkeeper.jsp" scrolling="no" frameborder="0" width="1px" height="1px"></iframe> -->

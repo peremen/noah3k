@@ -1,25 +1,26 @@
 <%inherit file="base_mail.html" />
 <% import util, user, config
 from web import ctx
+from i18n import custom_gettext as _
 def get_formatted_username(uid):
     u = user.get_user(uid)
     if u[0]:
         return "%(id)s" % {'id': u[1]['uId']}
     else:
-        return u"탈퇴한 회원"
+        return _('Former Member')
 %>
 <h1>${mailbox_name}</h1>
 % if mails is UNDEFINED:
-메시지가 없습니다.
+${_('No private messages.')}
 % elif len(mails) == 0:
-메시지가 없습니다.
+${_('No private messages.')}
 % else:
-총 메시지 ${len(mails)}개<br />
+${_('%s messages' % len(mails))}<br />
 <table border="0" cellspacing="0" cellpadding="4" style="width: 100%; margin-bottom: 0;" class="list">
     <tr align="center" class="head">
-        <th>보낸 사람</th>
-        <th>제목</th>
-        <th>날짜</th>
+        <th>${_('From')}</th>
+        <th>${_('Title')}</th>
+        <th>${_('Date')}</th>
     </tr>
     <% i = 1 %>
     % for m in mails:
@@ -47,4 +48,4 @@ def get_formatted_username(uid):
     % endfor
 </table>
 % endif
-<p><a class="button" href="/+u/${ctx.session.username}/+write_message">메시지 쓰기</a></p>
+<p><a class="button" href="/+u/${ctx.session.username}/+write_message">${_('Write Message')}</a></p>

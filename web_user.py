@@ -119,7 +119,14 @@ class personal_actions:
         homepage = data.homepage
         sig = data.sig
         introduction = data.introduction
+        language = data.language
+        user_info = user.get_user(user_id)
+        change_lang = False
+        if language != user_info[1].language:
+            change_lang = True
         ret = user.modify_user(user_id, locals())
+        if change_lang:
+            web.ctx.session.lang = language
         if mobile:
             raise web.seeother('/m/+u/%s' % username)
         else:

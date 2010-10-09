@@ -1,15 +1,16 @@
 <%inherit file="base.html" />
 <% import user
 import posixpath
+from i18n import custom_gettext as _ 
 def get_userid(uid):
     u = user.get_user(uid)[1]
     return '%s' % u.uId
 %>
 <form name="write_form" method="post" action="/${board_path}/+${action}">
 <div>
-    <div class="heading">기본 정보</div>
+    <div class="heading">${_('Basic Information')}</div>
     <div id="row">
-        <div class="left-container">위치</div>
+        <div class="left-container">${_('Location')}</div>
         <span class="sep">:</span>
         <span>
         % if action == 'modify':
@@ -21,7 +22,7 @@ def get_userid(uid):
     </div>
 <!-- 게시판 이름 -->
     <div id="row">
-        <div class="left-container">이름</div>
+        <div class="left-container">${_('Name')}</div>
         <span class="sep">:</span>
         <span>
         % if action == 'modify':
@@ -33,17 +34,17 @@ def get_userid(uid):
     </div>
     <!-- 관리자 -->
     <div id="row"> 
-        <div class="left-container">관리자</div>
+        <div class="left-container">${_('Admin')}</div>
         <span class="sep">:</span>
         <span>
             <input name="owner" type="text" size="12" value="${get_userid(board_info.uSerial)}">
         </span>
     </div>
 
-    <div class="heading">세부 설정</div>
+    <div class="heading">${_('Details')}</div>
     <!-- 타입 -->
     <div id="row">
-        <div class="left-container">유형</div>
+        <div class="left-container">${_('Type')}</div>
         <span class="sep">:</span>
         <span>
 % if action == 'modify':
@@ -55,7 +56,7 @@ checked="checked" \
 % elif action == 'create_board':
         <input id="radio_dir" type="radio" name="type" onclick="dirclick()" value="0">
 % endif
-        <label for="radio_dir">폴더</label>
+        <label for="radio_dir">${_('Folder')}</label>
 % if action == 'modify':
         <input id="radio_board" type="radio" name="type" onclick="boardclick()" value="1" \
         % if board_info.bType == 1:
@@ -65,13 +66,13 @@ checked="checked" \
 % elif action == 'create_board':
         <input id="radio_board" type="radio" name="type" onclick="boardclick()" value="1" checked="checked">
 % endif
-        <label for="radio_board">게시판</label>
+        <label for="radio_board">${_('Board')}</label>
         </span>
     </div>
 
     <!-- 커멘트 여부 -->
     <div id="row">
-        <div class="left-container">댓글</div>
+        <div class="left-container">${_('Comments')}</div>
         <span class="sep">:</span>
         <span>
 % if action == 'modify':
@@ -83,7 +84,7 @@ checked="checked" \
 % elif action == 'create_board':
         <input id="radio_comyes" type="radio" name="commentable" value="yes" checked="checked" />
 % endif
-        <label for="radio_comyes">허용</label>
+        <label for="radio_comyes">${_('Allow')}</label>
 % if action == 'modify':
         <input id="radio_comno" type="radio" name="commentable" value="no" \
         % if board_info.bComment == 0:
@@ -93,13 +94,13 @@ checked="checked" \
 % elif action == 'create_board':
         <input id="radio_comno" type="radio" name="commentable" value="no" />
 % endif
-        <label for="radio_comno">불가</label>
+        <label for="radio_comno">${_('Not Allow')}</label>
         </span>
     </div>
 
     <!-- 글쓰기 여부 -->
     <div id="row">
-        <div class="left-container">타인 글쓰기</div>
+        <div class="left-container">${_('Guest Writing')}</div>
         <span class="sep">:</span>
         <span>
 % if action == 'modify':
@@ -111,9 +112,9 @@ checked="checked" \
 % elif action == 'create_board':
         <input id="radio_comyes" type="radio" name="writable" value="yes" checked="checked" />
 % endif
-        <label for="radio_comyes">허용</label>
+        <label for="radio_comyes">${_('Allow')}</label>
 % if action == 'modify':
-<input id="radio_comno" type="radio" name="writable" value="no" \
+        <input id="radio_comno" type="radio" name="writable" value="no" \
 % if board_info.bWrite == 0:
 checked="checked" \
 %endif 
@@ -121,14 +122,14 @@ checked="checked" \
 % elif action == 'create_board':
         <input id="radio_comno" type="radio" name="writable" value="no" />
 % endif
-        <label for="radio_comno">불가</label>
+        <label for="radio_comno">${_('Not Allow')}</label>
         </span>
     </div>
 
-    <div class="heading">게시판 설명</div>
+    <div class="heading">${_('Board Description')}</div>
     <!-- 한줄 설명 -->
     <div id="row">
-        <div class="left-container">한 줄 설명</div>
+        <div class="left-container">${_('Short Description')}</div>
         <span class="sep">:</span>
         <span><input name="description" type="text" maxlength="255" style="width:300px"
 % if action == 'modify':
@@ -141,7 +142,7 @@ value="${board_info.bDescription}" /> \
 
     <!-- 한바닥 설명 -->
     <div id="row">
-        <div class="left-container">한 바닥 설명</div>
+        <div class="left-container">${_('Long Description')}</div>
         <span class="sep">:</span>
         <textarea name="information" style="font-size: 0.9em; width: 500px; height: 360px">
 % if action == 'modify':
@@ -153,9 +154,9 @@ ${board_info.bInformation}
 
     <!-- 완료/취소 버튼 -->			
     <span style="align:right;">
-    <input type="submit" name="ok" value="완료">
-    <input type="submit" name="cancel" value="취소">
-    <input type="hidden" name="referer" value="${referer}">
+        <input type="submit" name="ok" value="${_('Submit')}">
+        <input type="submit" name="cancel" value="${_('Cancel')}">
+        <input type="hidden" name="referer" value="${referer}">
     </span>
 
 <div style="height: 10px"></div>

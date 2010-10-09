@@ -1,23 +1,23 @@
-<%inherit file="base.html" />
+<% from i18n import custom_gettext as _ %><%inherit file="base.html" />
 <table cellpadding="5px">
     <tr>
         <td width="50%">
-            <span style="font-size: 1.4em; font-weight: bold;"><a style="color: #000; text-decoration: none;" href="${notice_board_path}">전산학과 공지</a></span>
+            <span style="font-size: 1.4em; font-weight: bold;"><a style="color: #000; text-decoration: none;" href="${notice_board_path}">${_('Department Notice')}</a></span>
     <!-- 학과 공지 -->
     <table border="0" cellspacing="0" cellpadding="4" style="margin-bottom: 0px" class="list">
         <tr align="center" class="head">
-            <th>제목</th>
-            <th>날짜</th>
+            <th>${_('Title')}</th>
+            <th>${_('Date')}</th>
         </tr>
         <% i = 1 %>
         ${put_article(notice_articles, i)}
     </table>
-            <span style="font-size: 1.4em; font-weight: bold;"><a style="color: #000; text-decoration: none;" href="${student_notice_board_path}">학생 공지</a></span>
+    <span style="font-size: 1.4em; font-weight: bold;"><a style="color: #000; text-decoration: none;" href="${student_notice_board_path}">${_('Student Notice')}</a></span>
     <!-- 학생 공지 -->
     <table border="0" cellspacing="0" cellpadding="4" style="margin-bottom: 0px" class="list">
         <tr align="center" class="head">
-            <th>제목</th>
-            <th>날짜</th>
+            <th>${_('Title')}</th>
+            <th>${_('Date')}</th>
         </tr>
         <% i = 1 %>
         ${put_article(student_notice_articles, i)}
@@ -59,7 +59,7 @@ new TWTR.Widget({
 </tr>
 </table>
 
-<span style="font-size: 1.4em; font-weight: bold;">게시판 목록</span>
+<span style="font-size: 1.4em; font-weight: bold;">${_('Board List')}</span>
 <div>
 <%include file="view_subboard_list_content.html" />
 </div>

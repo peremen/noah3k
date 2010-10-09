@@ -1,21 +1,23 @@
 # Translations template for PROJECT.
 # Copyright (C) 2010 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
 #
-#, fuzzy
+# Park Shinjo <peremen@gmail.com>, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2010-10-10 03:17+0900\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2010-10-10 03:15+0900\n"
+"PO-Revision-Date: 2010-10-10 03:17+0900\n"
+"Last-Translator: Park Shinjo <peremen@gmail.com>\n"
+"Language-Team: English <peremen@gmail.com>\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.5\n"
+"X-Generator: Lokalize 1.1\n"
+"Plural-Forms: nplurals=2; plural=n!=1;\n"
 
 #: article.py:179 article.py:232 article.py:267 article.py:306 article.py:399
 #: article.py:438 board.py:105 board.py:134 board.py:189 web_article.py:88
@@ -25,175 +27,175 @@ msgstr ""
 #: web_user.py:187 web_user.py:216 web_user.py:228 web_user.py:236
 #: web_user.py:266 web_user.py:287 web_user.py:316
 msgid "NO_PERMISSION"
-msgstr ""
+msgstr "No permission"
 
 #: article.py:182 article.py:235 article.py:270 article.py:309 article.py:402
 #: user.py:149 user.py:238
 msgid "NO_SUCH_USER"
-msgstr ""
+msgstr "No such user"
 
 #: article.py:185 article.py:238 article.py:312 pm.py:110
 msgid "EMPTY_TITLE"
-msgstr ""
+msgstr "Empty title"
 
 #: article.py:187 article.py:240 article.py:314 pm.py:112
 msgid "EMPTY_BODY"
-msgstr ""
+msgstr "Empty body"
 
 #: article.py:195 article.py:322 board.py:98 board.py:137
 #: web_noah2k_support.py:38 web_noah2k_support.py:58 web_noah2k_support.py:70
 #: web_noah2k_support.py:88
 msgid "NO_SUCH_BOARD"
-msgstr ""
+msgstr "No such board"
 
 #: article.py:197 article.py:324
 msgid "FOLDER"
-msgstr ""
+msgstr "Folder"
 
 #: article.py:219 article.py:259 article.py:298 article.py:375 article.py:424
 #: article.py:442 pm.py:125 pm.py:136 user.py:282 user.py:339
 msgid "DATABASE_ERROR"
-msgstr ""
+msgstr "Database error (Please notify to administrator!)"
 
 #: article.py:249 article.py:281 article.py:414 web_article.py:67
 msgid "NO_SUCH_ARTICLE"
-msgstr ""
+msgstr "No such article"
 
 #: article.py:290
 msgid "HAS_REPLY"
-msgstr ""
+msgstr "Article has replies"
 
 #: article.py:302 pm.py:128 pm.py:139 user.py:342
 msgid "SUCCESS"
-msgstr ""
+msgstr "Success"
 
 #: article.py:405
 msgid "EMPTY_COMMENT"
-msgstr ""
+msgstr "Comment is empty"
 
 #: article.py:435
 msgid "NO_SUCH_COMMENT"
-msgstr ""
+msgstr "No such comment"
 
 #: board.py:100 board.py:141
 msgid "INVALID_BOARDNAME"
-msgstr ""
+msgstr "Invalid board name"
 
 #: board.py:103 board.py:146
 msgid "BOARD_ALREADY_EXIST"
-msgstr ""
+msgstr "Board already exists"
 
 #: board.py:149
 msgid "INVALID_PARENT"
-msgstr ""
+msgstr "Invalid parent"
 
 #: board.py:152
 msgid "NO_PERMISSION_ON_NEW_PARENT"
-msgstr ""
+msgstr "No permission on new parent board"
 
 #: board.py:198
 msgid "HAS_CHILD"
-msgstr ""
+msgstr "Has child board(s)"
 
 #: pm.py:106
 msgid "INVALID_SENDER"
-msgstr ""
+msgstr "Invalid sender"
 
 #: pm.py:108 web_user.py:243
 msgid "INVALID_RECEIVER"
-msgstr ""
+msgstr "Invalid receiver"
 
 #: user.py:151 web_user.py:108 web_user.py:151
 msgid "INVALID_PASSWORD"
-msgstr ""
+msgstr "Invalid password"
 
 #: user.py:272
 msgid "INVALID_USERNAME"
-msgstr ""
+msgstr "Invalid username"
 
 #: user.py:274 web_main.py:49
 msgid "ID_ALREADY_EXISTS"
-msgstr ""
+msgstr "ID is already occupied. Pick a new one"
 
 #: user.py:326
 msgid "HAS_BOARD"
-msgstr ""
+msgstr "Has child board"
 
 #: util.py:30
 msgid "NOT_LOGGED_IN"
-msgstr ""
+msgstr "Not logged in"
 
 #: util.py:32
 msgid "INVALID_UID"
-msgstr ""
+msgstr "Invalid UID"
 
 #: util.py:174
 msgid "INVALID_NOTICE_BOARD"
-msgstr ""
+msgstr "Invalid notice board specified"
 
 #: util.py:178
 msgid "NO_NOTICE"
-msgstr ""
+msgstr "No notice"
 
 #: web_article.py:32 web_board.py:39 webpage.py:112
 msgid "INVALID_BOARD"
-msgstr ""
+msgstr "Invalid board"
 
 #: web_article.py:36 web_board.py:43 web_main.py:31 web_user.py:54
 msgid "INVALID_ACTION"
-msgstr ""
+msgstr "Invalid action"
 
 #: web_board.py:210 web_board.py:260
 msgid "NO_SUCH_USER_FOR_BOARD_ADMIN"
-msgstr ""
+msgstr "No such user for specified board administrator"
 
 #: web_board.py:212
 msgid "NO_NAME_SPECIFIED"
-msgstr ""
+msgstr "No name specified"
 
 #: web_board.py:215
 msgid "BOARD_EXISTS"
-msgstr ""
+msgstr "Board already exists"
 
 #: web_main.py:51 web_user.py:110
 msgid "PASSWORD_DO_NOT_MATCH"
-msgstr ""
+msgstr "Password do not match"
 
 #: web_main.py:53 web_user.py:112
 msgid "PASSWORD_TOO_SHORT"
-msgstr ""
+msgstr "Password too short"
 
 #: web_noah2k_support.py:23
 msgid "INVALID_NOAH2K_ACTION"
-msgstr ""
+msgstr "Unsupported Noah2K action"
 
 #: web_noah2k_support.py:30 web_noah2k_support.py:51
 msgid "NO_BOARD_SPECIFIED"
-msgstr ""
+msgstr "No board specified"
 
 #: web_noah2k_support.py:55 web_noah2k_support.py:79
 msgid "NO_ARTICLE_SPECIFIED"
-msgstr ""
+msgstr "No article specified"
 
 #: web_noah2k_support.py:97
 msgid "NO_ATTACHMENT_SPECIFIED"
-msgstr ""
+msgstr "No attachment specified"
 
 #: web_user.py:27 web_user.py:50
 msgid "INVALID_USER"
-msgstr ""
+msgstr "Invalid user"
 
 #: web_user.py:81
 msgid "LOOKING_OTHERS_NEW_ARTICLES"
-msgstr ""
+msgstr "Looking other's new articles"
 
 #: web_user.py:91 web_user.py:139
 msgid "MODIFYING_OTHERS_INFORMATION"
-msgstr ""
+msgstr "Modifying other's information"
 
 #: web_user.py:213 web_user.py:263 web_user.py:284 web_user.py:313
 msgid "NO_SUCH_MESSAGE"
-msgstr ""
+msgstr "No such message"
 
 #: templates/desktop/base.html:13 templates/desktop/error.html:7
 #: templates/desktop/header.html:77 templates/desktop/question.html:8
@@ -285,7 +287,8 @@ msgid "Long Description"
 msgstr ""
 
 #: templates/desktop/board_editor.html:157 templates/desktop/editor.html:43
-#: templates/desktop/myinfo_edit.html:71 templates/desktop/read_article.html:96
+#: templates/desktop/myinfo_edit.html:71
+#: templates/desktop/read_article.html:96
 msgid "Submit"
 msgstr ""
 
@@ -369,8 +372,7 @@ msgstr ""
 
 #: templates/desktop/error.html:13
 msgid ""
-"Following information is reported to administrator. We will fix error "
-"soon."
+"Following information is reported to administrator. We will fix error soon."
 msgstr ""
 
 #: templates/desktop/error.html:13
@@ -527,7 +529,7 @@ msgstr ""
 msgid ""
 "_:Count\n"
 "Comments"
-msgstr ""
+msgstr "Comments"
 
 #: templates/desktop/myinfo.html:102
 msgid "Last Login"
@@ -582,8 +584,9 @@ msgstr ""
 msgid "No new articles."
 msgstr ""
 
-#: templates/desktop/new_article.html:27 templates/desktop/read_article.html:28
-#: templates/desktop/read_mail.html:23 templates/desktop/view_board.html:21
+#: templates/desktop/new_article.html:27
+#: templates/desktop/read_article.html:28 templates/desktop/read_mail.html:23
+#: templates/desktop/view_board.html:21
 msgid "Author"
 msgstr ""
 
@@ -616,7 +619,8 @@ msgstr ""
 msgid "List"
 msgstr ""
 
-#: templates/desktop/read_article.html:117 templates/desktop/view_board.html:45
+#: templates/desktop/read_article.html:117
+#: templates/desktop/view_board.html:45
 msgid "Write"
 msgstr ""
 
@@ -756,4 +760,3 @@ msgstr ""
 #: templates/desktop/view_subboard_list_content.html:10
 msgid "No child boards."
 msgstr ""
-
