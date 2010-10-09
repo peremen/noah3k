@@ -10,7 +10,7 @@
             <th>날짜</th>
         </tr>
         <% i = 1 %>
-        ${put_article(notice_articles, i)}
+        ${put_article(notice_articles, i, notice_board_path)}
     </table>
             <span style="font-size: 1.4em; font-weight: bold;"><a style="color: #000; text-decoration: none;" href="${student_notice_board_path}">학생 공지</a></span>
     <!-- 학생 공지 -->
@@ -20,7 +20,7 @@
             <th>날짜</th>
         </tr>
         <% i = 1 %>
-        ${put_article(student_notice_articles, i)}
+        ${put_article(student_notice_articles, i, student_notice_board_path)}
     </table>
     </td>
     <td>
@@ -64,7 +64,7 @@ new TWTR.Widget({
 <%include file="view_subboard_list_content.html" />
 </div>
 
-<%def name="put_article(articles, i)">
+<%def name="put_article(articles, i, board_path)">
 % for a in articles:
 % if i%2 == 0:
         <tr class="even">
@@ -77,7 +77,7 @@ new TWTR.Widget({
 %if a.aLevel > 0:
             <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (a.aLevel-1)}px" />
 %endif
-            <a href="${notice_board_path}/+read/${a.aSerial}" class="articlelink">${a.aTitle}
+            <a href="${board_path}/+read/${a.aSerial}" class="articlelink">${a.aTitle}
             </a>
             </td>
             <!-- 날짜 -->
