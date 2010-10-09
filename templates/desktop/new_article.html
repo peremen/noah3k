@@ -2,18 +2,19 @@
 <%
 import user, article, acl, board
 from web import ctx
+from i18n import custom_gettext as _
 def get_formatted_username(uid):
     u = user.get_user(uid)
     if u[0]:
         return "%(id)s" % {'id': u[1]['uId']}
     else:
-        return u"탈퇴한 회원"
+        return _('Former Member')
 %>
 % if len(articles) == 0:
 <div align="center">
     <div style="width: 500px; padding: 25px">
         <hr />
-        새 글이 없습니다.
+        ${_('No new articles.')}
         <hr />
     </div>
 </div>
@@ -21,11 +22,11 @@ def get_formatted_username(uid):
 <!-- 글 -->
 <table border="0" cellspacing="0" cellpadding="4" style="width: 100%; margin-bottom: 10px; " class="list">
     <tr align="center" class="head">
-        <th>글번호</th>
-        <th>제목</th>
-        <th>글쓴이</th>
-        <th>날짜</th>
-        <th>조회수</th>
+        <th>#</th>
+        <th>${_('Title')}</th>
+        <th>${_('Author')}</th>
+        <th>${_('Date')}</th>
+        <th>${_('Hit')}</th>
     </tr>
     <% i = 1 %>
     %if articles is not UNDEFINED:

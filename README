@@ -1,11 +1,12 @@
 == 필요한 파이썬 모듈 ==
 === easy_install로 설치 가능 ===
-* web.py
-* mako
-* PIL
-* python-magic
-* postmarkup
+* web.py (웹 프레임워크)
+* mako (템플릿 엔진)
+* PIL (썸네일 생성)
+* python-magic (첨부 파일의 MIME 형식 인식)
+* postmarkup (BBCode 프로세서)
 ** postmarkup은 자체 패치를 여러 번 했으므로, 차후 소스 코드에 포함시킬 예정.
+* Babel (번역 메시지 추출을 위함)
 
 === 배포판 패키지로 설치해야 함 ===
 * python-mysqldb (데비안 계열 기준)

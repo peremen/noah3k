@@ -96,6 +96,7 @@ class main_actions:
                 uid = user._get_uid_from_username(username)
                 web.ctx.session.uid = uid
                 web.ctx.session.username = username
+                web.ctx.session.lang = login[1]
                 user.update_last_login(uid, web.ctx.ip)
             else:
                 # 로그인 실패

@@ -2,13 +2,13 @@
 <%
 import user, article, acl, board
 from web import ctx
+from i18n import custom_gettext as _
 %>
 % if len(articles) == 0:
 <div align="center">
     <div style="width: 500px; padding: 25px">
         <hr />
-        현재 이 게시판에는 글이 하나도 없습니다.<br />
-        글쓰기 버튼을 눌러 글을 써주세요.
+        ${_('No articles in this board.<br />Press \'Write\' to write one.')}
         <hr />
     </div>
 </div>
@@ -16,11 +16,11 @@ from web import ctx
 <!-- 글 -->
 <table border="0" cellspacing="0" cellpadding="4" style="width: 100%; margin-bottom: 10px; " class="list">
     <tr align="center" class="head">
-        <th>글번호</th>
-        <th>제목</th>
-        <th>글쓴이</th>
-        <th>날짜</th>
-        <th>조회수</th>
+        <th>#</th>
+        <th>${_('Title')}</th>
+        <th>${_('Author')}</th>
+        <th>${_('Date')}</th>
+        <th>${_('Hit')}</th>
     </tr>
     <% i = 1 %>
     %if marked_articles is not UNDEFINED:
@@ -42,15 +42,15 @@ from web import ctx
 <div id="listmenu">
 %if ctx.session.has_key('uid') and acl.is_allowed('board', board._get_board_id_from_path('/%s' % board_path), ctx.session.uid, 'write'):
 <!-- 글쓰기 -->
-<a class="button" href="/${board_path}/+write" title="새 글을 작성합니다">글쓰기</a> 
+    <a class="button" href="/${board_path}/+write" title="${_('Write new article')}">${_('Write')}</a> 
 % endif
 <!-- 보드 관리 -->
-<a class="button" href="/${board_path}/+summary" title="이 보드의 정보를 보거나 수정합니다">정보</a> 
+<a class="button" href="/${board_path}/+summary" title="${_('Display and modify board information')}">${_('Information')}</a> 
 %if ctx.session.has_key('uid'):
     % if user.is_subscribed(ctx.session.uid, board._get_board_id_from_path(board_path)):
-<a class="button" href="/${board_path}/+subscribe" title="이 보드를 구독 취소합니다.">구독취소</a> 
+    <a class="button" href="/${board_path}/+subscribe" title="${_('Unsubscribe from this board')}">${_('Unsubscribe')}</a> 
     % else:
-<a class="button" href="/${board_path}/+subscribe" title="이 보드를 구독합니다.">구독하기</a> 
+    <a class="button" href="/${board_path}/+subscribe" title="${_('Subscribe to this board')}">${_('Subscribe')}</a> 
     %endif
 %endif
 
@@ -100,7 +100,7 @@ if ctx.session.has_key('uid'):
 % endif
     <!-- 글번호 -->
 %if mark:
-    <td align="center"><a href="/${board_path}/+read/${a.aSerial}" class="articlelink">공지</a></td>
+    <td align="center"><a href="/${board_path}/+read/${a.aSerial}" class="articlelink">${_('Notice')}</a></td>
 % else:
     <td align="center"><a href="/${board_path}/+read/${a.aSerial}" class="articlelink">${a.aIndex}</a></td>
 % endif

@@ -1,4 +1,5 @@
 ﻿<% from web import ctx
+from i18n import custom_gettext as _
 import user, board
 from datetime import datetime
 def get_friend_boards(type):
@@ -10,10 +11,10 @@ def get_friend_boards(type):
     return friend_list
 %>
 % if ctx.session.has_key('uid'):
-<div class="heading"><a class="plainlink" href="/+u/${ctx.session.username}/+my_board">내 게시판</a>
+<div class="heading"><a class="plainlink" href="/+u/${ctx.session.username}/+my_board">${_('My Boards')}</a>
     <div style="float: right;">
         <span style="color: black; font-size: 0.9em; font-weight: normal;">
-            <a class="plainlink" href="#" id="fold_my_boards" onclick="$('#my_boards').toggle();">(접기/펴기)</a>
+            <a class="plainlink" href="#" id="fold_my_boards" onclick="$('#my_boards').toggle();">${_('(toggle)')}</a>
         </span>
     </div>
 </div>
@@ -36,29 +37,29 @@ ${my_board.bDescription}\
     <% not_has_my_board = False %>
 % else:
     % if not_has_my_board:
-    <li>만든 게시판이 없습니다</li>
+    <li>${_('You have no boards')}</li>
     % endif
 % endfor
 </ul>
 </div>
 <br />
 
-<div class="heading"><a class="plainlink" href="/+u/${ctx.session.username}/+favorites">즐겨찾기</a> <span style="color: black; font-size:0.9em; font-weight: normal;"><a class="favlink"\
+<div class="heading"><a class="plainlink" href="/+u/${ctx.session.username}/+favorites">${_('Favorites')}</a> <span style="color: black; font-size:0.9em; font-weight: normal;"><a class="favlink"\
 % if board_path is not UNDEFINED:
     % if board_path == '':
- href="#">(사용 불가)\
+    href="#">${_('(not available)')}\
     % elif user.is_favorite(ctx.session.uid, board._get_board_id_from_path(board_path)):
- href="/${board_path}/+remove_from_favorites">(삭제)\
+    href="/${board_path}/+remove_from_favorites">${_('(remove)')}\
     % else:
- href="/${board_path}/+add_to_favorites">(추가)\
+    href="/${board_path}/+add_to_favorites">${_('(add)')}\
     % endif
 % else:
- href="#">(사용 불가)\
+href="#">${_('(not available)')}\
 % endif
 </a></span>
     <div style="float: right;">
         <span style="color: black; font-size: 0.9em; font-weight: normal;">
-            <a style="color: black; text-decoration: none;" href="#" id="fold_favorites" onclick="$('#favorites').toggle();">(접기/펴기)</a>
+            <a style="color: black; text-decoration: none;" href="#" id="fold_favorites" onclick="$('#favorites').toggle();">${_('(toggle)')}</a>
         </span>
     </div>
 </div>
@@ -81,9 +82,9 @@ ${my_board.bDescription}\
     <% not_has_fav_board = False %>
 % else:
     % if not_has_fav_board:
-    <li>등록한 게시판이 없습니다</li>
+    <li>${_('No board in your favorites')}</li>
     % else:
-    <li><img src="/static/image/feed.png" /> 피드: <a href="/+u/${ctx.session.username}/+favorite_rss">RSS</a>, <a href="/+u/${ctx.session.username}/+favorite_atom">Atom</a></li>
+    <li><img src="/static/image/feed.png" /> ${_('Feed')}: <a href="/+u/${ctx.session.username}/+favorite_rss">RSS</a>, <a href="/+u/${ctx.session.username}/+favorite_atom">Atom</a></li>
     % endif
 % endfor
 </ul>
@@ -91,30 +92,30 @@ ${my_board.bDescription}\
 <br />
 % endif
 
-<div class="heading"><a class="dirlink" href="/divisionCS"><span style="color: black">학과</span></a></div>
+<div class="heading"><a class="dirlink" href="/divisionCS"><span style="color: black">${_('Department')}</span></a></div>
 <ul>
     <li>
-        <a class="boardlink" href="/divisionCS/Notice">공지</a> / 
-        <a class="boardlink" href="/divisionCS/studentNotice">학생 공지</a> / 
-        <a class="boardlink" href="/divisionCS/HowAbout">건의</a> / 
-        <a class="boardlink" href="/divisionCS/EastOfEden">과기계실</a>
+        <a class="boardlink" href="/divisionCS/Notice">${_('Notice')}</a> / 
+        <a class="boardlink" href="/divisionCS/studentNotice">${_('Student Notice')}</a> / 
+        <a class="boardlink" href="/divisionCS/HowAbout">${_('To Dept.')}</a> / 
+        <a class="boardlink" href="/divisionCS/EastOfEden">${_('EVE Room')}</a>
     </li>
     <li>
-        <a class="boardlink" href="/divisionCS/JobOffer">구인/구직</a> / 
-        <a class="boardlink" href="/divisionCS/sportsCS">스포츠</a> / 
-        <a class="boardlink" href="/divisionCS/entrExamLabAsgn">입시&amp;랩배정</a>
+        <a class="boardlink" href="/divisionCS/JobOffer">${_('Job Offer')}</a> / 
+        <a class="boardlink" href="/divisionCS/sportsCS">${_('Sports')}</a> / 
+        <a class="boardlink" href="/divisionCS/entrExamLabAsgn">${_('Lab Assignment')}</a>
     </li>
 </ul>
 <br />
 
-<div class="heading"><a class="dirlink" href="/friends"><span style="color: black">친목</span></a></div>
+<div class="heading"><a class="dirlink" href="/friends"><span style="color: black">${_('Friends')}</span></a></div>
 <ul>		
-    <li><span style="color: #3C78B5; font-weight: bold">학부</span>
+    <li><span style="color: #3C78B5; font-weight: bold">${_('Undg.')}</span>
 % for b in get_friend_boards(u'학부'):
 <a class="boardlink" href="${b['board'].bName}">'${b['year']}</a> \
 % endfor
     </li>
-    <li><span style="color: #3C78B5; font-weight: bold">석사</span>
+    <li><span style="color: #3C78B5; font-weight: bold">${_('Mast.')}</span>
 % for b in get_friend_boards(u'석사'):
 <a class="boardlink" href="${b['board'].bName}">'${b['year']}</a> \
 % endfor
@@ -125,8 +126,8 @@ ${my_board.bDescription}\
 <!-- 과목 게시판 -->
 <div id="box">
     <div class="heading">
-        <span style="color: black"><a class="dirlink" href="/course"><span style="color: black">개설 교과목</span></a></span>
-        <span style="color: black; font-size: 0.9em; font-weight: normal"><a href="/OldCourse">(예전)</a></span>
+        <span style="color: black"><a class="dirlink" href="/course"><span style="color: black">${_('Courses')}</span></a></span>
+        <span style="color: black; font-size: 0.9em; font-weight: normal"><a href="/OldCourse">${_('(archive)')}</a></span>
     </div>
     <ul>
 <% not_has_subject_board = True %>
@@ -141,13 +142,13 @@ ${my_board.bDescription}\
     <% not_has_subject_board = False %>
 % else:
     % if not_has_subject_board:
-    <li>과목 게시판이 없습니다</li>
+    <li>${_('No course boards')}</li>
     % endif
 % endfor
     </ul>
 </div>
 <br />
-<div class="heading"><a class="dirlink" href="/m"><span style="color: black">노아 모바일</span></a></div>
+<div class="heading"><a class="dirlink" href="/m"><span style="color: black">${_('NOAH Mobile')}</span></a></div>
 <a class="plainlink" href="/m"><img border="0" src="/static/image/qrcode.png" /></a>
 
 %if board_path is not UNDEFINED:

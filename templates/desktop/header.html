@@ -1,4 +1,4 @@
-<%
+<% from i18n import custom_gettext as _
 import board, posixpath, pm, config
 from web import ctx
 def traverse_board_path(path):
@@ -13,7 +13,7 @@ def traverse_board_path(path):
         else:
             ret = '&nbsp;&gt;&nbsp;<a class="boardlink" href="%s">%s</a>' % (i.bName, i.bName.split('/')[-1]) + ret
         id = board.get_parent(id)
-    ret = u'<a class="dirlink" href="/">게시판</a>' + ret
+    ret = (u'<a class="dirlink" href="/">%s</a>' % _('Board')) + ret
     return ret
 
 def traverse_child_board(path):
@@ -47,25 +47,25 @@ def get_type(path):
 <div id="menu">
     <ul>
 %if help_context is not UNDEFINED:
-        <li><a class="button" target="_blank" href="/+help/${help_context}">도움말</a></li>
+        <li><a class="button" target="_blank" href="/+help/${help_context}">${_('Help')}</a></li>
 % endif
         ## 로그인을 비롯한 다른 버튼들을 여기로.
 %if ctx.session is UNDEFINED:
-        <li><a class="button" href="/+join">회원 가입</a></li>
-        <li><a class="button" href="/+login">로그인</a></li>
+        <li><a class="button" href="/+join">${_('Join')}</a></li>
+        <li><a class="button" href="/+login">${_('Login')}</a></li>
 %elif not ctx.session.has_key('uid'):
-        <li><a class="button" href="/+join">회원 가입</a></li>
-        <li><a class="button" href="/+login">로그인</a></li>
+        <li><a class="button" href="/+join">${_('Join')}</a></li>
+        <li><a class="button" href="/+login">${_('Login')}</a></li>
 % else:
-        <li><a class="button" href="/+u/${ctx.session.username}/+new_article">새글읽기</a></li>
+        <li><a class="button" href="/+u/${ctx.session.username}/+new_article">${_('New Article')}</a></li>
     <% read_cnt = pm.unread_count(ctx.session.uid) %>
     %if read_cnt > 0:
-        <li><a class="button" style="background: red; color: white;" target="_blank" href="/+u/${ctx.session.username}/+inbox">메일 (${read_cnt})</a></li>
+        <li><a class="button" style="background: red; color: white;" target="_blank" href="/+u/${ctx.session.username}/+inbox">${_('Mail')} (${read_cnt})</a></li>
     % else:
-        <li><a class="button" target="_blank" href="/+u/${ctx.session.username}/+inbox">메일</a></li>
+        <li><a class="button" target="_blank" href="/+u/${ctx.session.username}/+inbox">${_('Mail')}</a></li>
     % endif
-        <li><a class="button" href="/+u/${ctx.session.username}">내 정보</a></li>
-        <li><a class="button" href="/+logout">로그아웃</a></li>
+        <li><a class="button" href="/+u/${ctx.session.username}">${_('My Info')}</a></li>
+        <li><a class="button" href="/+logout">${_('Logout')}</a></li>
 % endif
     </ul>
 </div>
@@ -74,7 +74,7 @@ def get_type(path):
 <div id="title">
 %if board_path is UNDEFINED:
     %if board_desc is UNDEFINED:
-    <a href="#">오류</a>
+    <a href="#">${_('Error')}</a>
     %else:
     <a href="#">${board_desc}</a>
     %endif
@@ -97,6 +97,6 @@ def get_type(path):
 %if board_path is not UNDEFINED:
     ${traverse_board_path(board_path)}
 %else:
-    <a class="dirlink" href="/">게시판</a>
+    <a class="dirlink" href="/">${_('Boards')}</a>
 %endif
 </div>

@@ -1,12 +1,13 @@
+<% from i18n import custom_gettext as _ %>
 <!-- 하위 디렉토리 -->
 <table border="0" cellspacing="0" cellpadding="4" width="100%" class="list">
     <tr class="head">
-        <th width="20%">이름</th>
-        <th width="55%">설명</th>
+        <th width="20%">${_('Name')}</th>
+        <th width="55%">${_('Description')}</th>
     </tr>
     % if len(child_boards) == 0:
     <tr>
-        <td colspan="2">생성된 하위 게시판이 없습니다.</td>
+        <td colspan="2">${_('No child boards.')}</td>
     </tr>
     %else:
     <% i = 1 %>
@@ -33,5 +34,5 @@
     % endif
 </table>
 %if board_path != '':
-<p> <a class="button" href="/${board_path}/+summary">정보</a> </p> 
+<p> <a class="button" href="/${board_path}/+summary">${_('Information')}</a> </p> 
 % endif

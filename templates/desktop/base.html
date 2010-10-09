@@ -1,5 +1,6 @@
 <%! scripts = ['/static/scripts/jquery-1.4.2.min.js'] 
 import user as U
+from i18n import custom_gettext as _
 from web import ctx %><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 %if lang is UNDEFINED:
@@ -9,7 +10,7 @@ from web import ctx %><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
 % endif
 <head>
 % if title is UNDEFINED:
-    <title>오류</title>
+    <title>${_('Error')}</title>
 % else:
     <title>${title}</title>
 % endif

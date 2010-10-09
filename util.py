@@ -14,6 +14,10 @@ from config import render
 import i18n
 _ = i18n.custom_gettext
 
+lang_map = { 'ko': u'한국어',
+             'en': u'English',
+             'ru': u'Русский', }
+
 def session_helper(func):
     def _exec(*args, **kwargs):
         if args[1]:
@@ -177,3 +181,9 @@ def get_login_notice(notice_board = '/noah/welcome'):
         return _('NO_NOTICE')
     return articles[random.randint(0, len(articles)-1)].aContent
 
+
+def lcode_to_name(lcode):
+    return lang_map[lcode]
+
+def get_lang_map():
+    return lang_map

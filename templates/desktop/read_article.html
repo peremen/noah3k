@@ -5,17 +5,18 @@ import urllib
 import article as A
 from web import ctx
 import attachment as A_
+from i18n import custom_gettext as _
 def get_formatted_username(uid):
     u = user.get_user(uid)
     if u[0]:
         return "%(id)s (%(nick)s)" % {'id': u[1]['uId'], 'nick':u[1]['uNick']}
     else:
-        return u"탈퇴한 회원"
+        return _("Former Member")
 %>
 <div id="article">
     <!-- 글 -->
     <div id="row">
-        <div class="left-container">제목</div>
+        <div class="left-container">${_('Title')}</div>
         <span class="sep">:</span>
 % if A.get_mark_status(article['aSerial']):
         <span class="emphasized" id="title">${article['aTitle']}</span>
@@ -24,18 +25,18 @@ def get_formatted_username(uid):
 % endif
     </div>
     <div id="row">
-        <div class="left-container">글쓴이</div>
+        <div class="left-container">${_('Author')}</div>
         <span class="sep">:</span>
         <span id="writer">${get_formatted_username(article['uSerial'])}</span>
     </div>
     <div id="row">
-        <div class="left-container">시간</div>
+        <div class="left-container">${_('Date/Time')}</div>
         <span class="sep">:</span>
         <span id="writetime">${article['aDatetime']}</span>
     </div>
 % if article.aEditedDatetime:
     <div id="row">
-        <div class="left-container">수정</div>
+        <div class="left-container">${_('Last Modified')}</div>
         <span class="sep">:</span>
         <span id="edittime">${article['aEditedDatetime']}</span>
     </div>
@@ -43,7 +44,7 @@ def get_formatted_username(uid):
 % if attachment is not UNDEFINED:
     % for a in attachment:
     <div id="row">
-        <div class="left-container">첨부</div>
+        <div class="left-container">${_('Attachment')}</div>
         <span class="sep">:</span>
         <span class="attachment"><a class="filelink" href="${config.attachment_web_path}${article['aSerial']}/${urllib.quote(a)}">${a.decode('utf-8')}</a> (${A_.format_file_size(A_.get_attachment_size(article['aSerial'], a))})</span>
     </div>
@@ -75,7 +76,7 @@ ${util.format(article['aContent'])}
                         <td class="writetime">${comment['cDatetime']}</td>
             %if ctx.session.has_key('uid') and ctx.session.uid == comment['uSerial']:
                         <td class="button">
-                            <a class="button" href="/${board_path}/+comment_delete/${comment['cSerial']}">삭제</a>
+                            <a class="button" href="/${board_path}/+comment_delete/${comment['cSerial']}">${_('Delete')}</a>
                         </td>
             % endif
                     </tr>
@@ -87,12 +88,12 @@ ${util.format(article['aContent'])}
 
         <div id="input">
     % if not ctx.session.has_key('uid'):
-            댓글을 쓰시려면 <a href="/+login">로그인</a>을 해주세요
+            ${_('To post commment, please <a href="/+login">log in</a>')}
     % else:
             <form name="comment" method="post" action="/${board_path}/+comment/${article['aSerial']}">
-                댓글 쓰기
+                ${_('Write Comment')}
                 <input name="comment" type="text" maxlength="255" style="width: 30em">
-                <input type="submit" name="Submit" value="확인">
+                <input type="submit" name="Submit" value="${_('Submit')}">
             </form>
     % endif
         </div>
@@ -107,22 +108,22 @@ ${util.format(article['aContent'])}
 <div id="menu">
     <ul>
 % if page_no is UNDEFINED:
-        <li> <a class="button" href="/${board_path}">목록</a></li>
+        <li> <a class="button" href="/${board_path}">${_('List')}</a></li>
 % else:
-        <li> <a class="button" href="/${board_path}?page=${page_no}">목록</a></li>
+        <li> <a class="button" href="/${board_path}?page=${page_no}">${_('List')}</a></li>
 % endif
 %if ctx.session.has_key('uid') and acl.is_allowed('board', board._get_board_id_from_path('/%s' % board_path), ctx.session.uid, 'write'):
         <!-- 쓰기 권한 -->	
-        <li><a class="button" href="/${board_path}/+write">글쓰기</a></li>
-        <li><a class="button" href="/${board_path}/+reply/${article['aSerial']}">답글</a></li>
+        <li><a class="button" href="/${board_path}/+write">${_('Write')}</a></li>
+        <li><a class="button" href="/${board_path}/+reply/${article['aSerial']}">${_('Reply')}</a></li>
 % endif
 %if ctx.session.has_key('uid') and acl.is_allowed('article', article.aSerial, ctx.session.uid, 'modify'):
         <!-- 로그인 --> 
-        <li><a class="button" href="/${board_path}/+modify/${article['aSerial']}">수정</a></li>
+        <li><a class="button" href="/${board_path}/+modify/${article['aSerial']}">${_('Modify')}</a></li>
 % endif
 %if ctx.session.has_key('uid') and acl.is_allowed('article', article.aSerial, ctx.session.uid, 'delete'):
         <!-- 삭제 권한 --> 
-        <li><a class="button" href="/${board_path}/+delete/${article['aSerial']}">삭제</a></li>
+        <li><a class="button" href="/${board_path}/+delete/${article['aSerial']}">${_('Delete')}</a></li>
 % endif
 %if ctx.session.has_key('uid') and acl.is_allowed('board', article.bSerial, ctx.session.uid, 'mark'):
     % if A.get_mark_status(article['aSerial']):
