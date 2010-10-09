@@ -109,8 +109,9 @@ class article_actions:
         if ret[0] == True:
             fs = web.ctx.get('_fieldstorage')
             try:
-                for f in fs['new_attachment']:
-                    attachment.add_attachment(ret[1], f.filename, f.value)
+                if fs.has_key('new_attachment'):
+                    for f in fs['new_attachment']:
+                        attachment.add_attachment(ret[1], f.filename, f.value)
             except TypeError:
                 pass
             if mobile:
