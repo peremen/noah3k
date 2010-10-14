@@ -1,7 +1,8 @@
 <%inherit file="base.html" />
+<% from i18n import custom_gettext as _ %>
 <h3>${action_name}</h3>
 <form name="write_form" method="POST" action="/m/${board_path}/+${action}">
-제목
+${_('Title')}
 %if article_title is UNDEFINED:
     <input name="title" type="text" style="width: 60%;"maxlength="255" value="">
 %else:
@@ -9,7 +10,7 @@
 %endif
 <br />
 
-내용<br />
+${_('Content')}<br />
 %if body is UNDEFINED:
     <textarea name="content" style="width: 100%; height: 320px;"></textarea>
 %else:
@@ -19,15 +20,15 @@
 %if attachment is not UNDEFINED:
     <% i = 1 %>
     %for a in attachment:
-    기존 첨부 ${i}: %{a.decode('utf-8')} <input name="delete" type="checkbox" value="${a.decode('utf-8')}" /> (삭제)<br />
+    ${_('Attachment %s') % i}: %{a.decode('utf-8')} <input name="delete" type="checkbox" value="${a.decode('utf-8')}" /> (${_('Delete')})<br />
     <% i = i + 1 %>
     % endfor
 % endif
 <br />
-첨부 <input name="new_attachment" class="multi" type="file" />
+${_('Attachment')} <input name="new_attachment" class="multi" type="file" />
 <br />
 <br />
-<input type="submit" name="ok" value="확인">
-<input type="button" value="돌아가기" onclick="history.back()">
+<input type="submit" name="ok" value="${_('Submit')}">
+<input type="button" value="${_('Go Back')}" onclick="history.back()">
 </form>
 <!-- <iframe id="sessionKeeper" src="sessionkeeper.jsp" scrolling="no" frameborder="0" width="1px" height="1px"></iframe> -->

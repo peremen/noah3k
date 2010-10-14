@@ -29,7 +29,7 @@ class personal_page:
              {'type':'atom', 'path':'/+u/%s/+favorite_atom' % username, 'name':u'즐겨찾기 피드 (Atom)'},]
         return render[mobile].myinfo(user = user.get_user(user_id)[1],
                 username = username, user_id = user_id,
-                title = u'내 정보', board_desc = u'내 정보',
+                title = _('My Information'), board_desc = _('My Information'),
                 feeds = f, help_context='myinfo')
 
 class personal_actions:
@@ -81,8 +81,8 @@ class personal_actions:
             raise web.unauthorized(render[mobile].error(error_message=_('LOOKING_OTHERS_NEW_ARTICLES'), help_context='error'))
 
         return render[mobile].new_article(articles = user.get_unreaded_articles(user_id),
-                title = u'새글읽기',
-                board_desc = u'새글읽기')
+                title = _('New Article'),
+                board_desc = _('New Article'))
 
     @util.error_catcher
     @util.session_helper
@@ -94,8 +94,8 @@ class personal_actions:
             referer = posixpath.join('/m', referer)
         return render[mobile].myinfo_edit(user = user.get_user(user_id)[1],
                 username = username, user_id = user_id,
-                title = u'내 정보 수정',
-                board_desc = u'내 정보 수정',
+                title = _('Edit My Information'),
+                board_desc = _('Edit My Information'),
                 referer = web.ctx.env.get('HTTP_REFERER', referer),
                 help_context = 'myinfo')
 
@@ -138,8 +138,8 @@ class personal_actions:
         if user_id != current_uid:
             return render[mobile].error(error_message=_('MODIFYING_OTHERS_INFORMATION'), help_context='error')
         default_referer = posixpath.join('/', '+u', username)
-        return render[mobile].leave(board_desc = u'회원 탈퇴',
-                title=u'회원 탈퇴', username = username,
+        return render[mobile].leave(board_desc = _('Leave NOAH'),
+                title=_('Leave NOAH'), username = username,
                 referer = web.ctx.env.get('HTTP_REFERER', default_referer),)
 
     @util.error_catcher
@@ -166,8 +166,8 @@ class personal_actions:
         my_board = user.get_owned_board(user_id)
         return render[mobile].view_subboard_list(
             child_boards = my_board, board_path = '',
-            title=u'내 게시판', board_desc = u'내 게시판',
-            list_type = u'내 게시판')
+            title=_('My Boards'), board_desc = _('My Boards'),
+            list_type = _('My Boards'))
 
     @util.error_catcher
     @util.session_helper
@@ -177,8 +177,8 @@ class personal_actions:
             fav_board.append(board.get_board_info(b.bSerial))
         return render[mobile].view_subboard_list(
             child_boards = fav_board, board_path = '',
-            title=u'즐겨찾는 게시판', board_desc = u'즐겨찾는 게시판',
-            list_type = u'즐겨찾는 게시판')
+            title=_('Favorite Boards'), board_desc = _('Favorite Boards'),
+            list_type = _('Favorite Boards'))
 
     @util.error_catcher
     @util.session_helper
@@ -195,8 +195,8 @@ class personal_actions:
             page = 1
         mails = pm.inbox(user_id, page, config.mail_size)
         return config.desktop_render.inbox(mails = mails, 
-                mailbox_name = u'받은 편지함',
-                title = '%s - %s - %s' % (u'받은 편지함', username, config.branding),
+                mailbox_name = _('Inbox'),
+                title = '%s - %s - %s' % (_('Inbox'), username, config.branding),
                 page = page, total_page = pm.inbox_count(user_id) / config.mail_size + 1)
 
     @util.error_catcher
@@ -214,9 +214,9 @@ class personal_actions:
         mail = pm.get_mail(message_id)
         if mail.mReceiverSerial != current_uid:
             raise web.unauthorized(render[mobile].error(error_message=_('NO_PERMISSION'), help_context='error'))
-        quote_text = u'메시지 "%s"에서:' % mail.mTitle
+        quote_text = _('From message \"%s\":') % mail.mTitle
         return config.desktop_render.editor_mail(
-            title = '%s - %s' % (u'답장 쓰기', config.branding),
+            title = '%s - %s' % (_('Write Reply'), config.branding),
             mail_title = 'Re: %s' % mail.mTitle,
             mail_body = '\n\n[quote=%s]%s\n[/quote]' % (quote_text, mail.mContent),
             mail_receiver = user._get_username_from_uid(mail.mSenderSerial))
@@ -227,7 +227,7 @@ class personal_actions:
         if user_id != current_uid:
             raise web.unauthorized(render[mobile].error(error_message=_('NO_PERMISSION'), help_context='error'))
         return config.desktop_render.editor_mail(
-                title = '%s - %s' % (u'메시지 쓰기', config.branding))
+                title = '%s - %s' % (_('Write Message'), config.branding))
 
     @util.error_catcher
     @util.session_helper
@@ -266,7 +266,7 @@ class personal_actions:
             raise web.unauthorized(render[mobile].error(error_message=_('NO_PERMISSION'), help_context='error'))
         pm.mark_as_read(message_id)
         return config.desktop_render.read_mail(mail = mail, 
-                title = '%s - %s - %s' % (u'메시지 보기', mail.mTitle, config.branding),)
+                title = '%s - %s - %s' % (_('Read Message'), mail.mTitle, config.branding),)
 
     @util.error_catcher
     @util.session_helper
@@ -291,8 +291,8 @@ class personal_actions:
         else:
             default_referer = posixpath.join('/+u', username, '+inbox')
             action='%s?message_id=%s' % (posixpath.join('/+u', username, '+delete_message'), message_id)
-        return render[mobile].question(question=u'메시지를 삭제하시겠습니까?',
-                board_path = '', board_desc = u'확인', title=u'확인',
+        return render[mobile].question(question=_('Do you want to delete the message?'),
+                board_path = '', board_desc = _('Confirmation'), title=_('Confirmation'),
                 action = action,
                 referer=web.ctx.env.get('HTTP_REFERER', default_referer))
 

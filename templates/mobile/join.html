@@ -1,20 +1,22 @@
 <%inherit file="base.html" />
-<h3>회원 가입</h3>
+<% from i18n import custom_gettext as _ %>
+<h3>${_('Join')}</h3>
 노아에 새 아이디를 만듭니다.<br />
 노아는 KAIST 전산학과는 물론 KAIST 모든 구성원들에게 자유롭게 열려 있습니다.<br />
 <br />
 노아는 개인 정보를 BBS 운영 이외의 목적에 사용하지 않습니다.<br />
-다음의 항목들을 정확하게 기입하여 주십시오.
+다음의 항목들을 정확하게 기입하여 주십시오.<br />
+* 표시가 된 항목은 필수 항목입니다.
 <form name="join_form" method="post" action="/m/+join">
 <hr />
-ID (필수): <input name="id" type="text" maxlength="12" style="width: 8em"></span><br />
-암호 (필수): <input name="password1" type="password" style="width: 8em"></span><br />
-암호 확인 (필수): <input name="password2" type="password" style="width: 8em"><br />
+ID*: <input name="id" type="text" maxlength="12" style="width: 8em"></span><br />
+${_('Password')}*: <input name="password1" type="password" style="width: 8em"></span><br />
+${_('Repeat Password')}*: <input name="password2" type="password" style="width: 8em"><br />
 <hr />
-별명: <input name="nick" type="text" maxlength="16"><br />
-이메일: <input name="email" type="text" maxlength="32"><br />
-<input type="submit" name="ok" value="가입">
-<input type="submit" name="cancel" value="취소">
+${_('Nickname')}: <input name="nick" type="text" maxlength="16"><br />
+${_('E-Mail')}: <input name="email" type="text" maxlength="32"><br />
+<input type="submit" name="ok" value="${_('Join')}">
+<input type="submit" name="cancel" value="${_('Cancel')}">
 <input type="hidden" name="referer" value="${referer}">
 </form>
 

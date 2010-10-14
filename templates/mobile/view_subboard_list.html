@@ -1,17 +1,18 @@
-<% import posixpath %>
+<% import posixpath
+from i18n import custom_gettext as _ %>
 <%inherit file="base.html" />
 <!-- 하위 디렉토리 -->
 % if list_type is UNDEFINED:
-<h3>하위 게시판 목록</h3>
+<h3>${_('Child Boards')}</h3>
 % else:
 <h3>${list_type}</h3>
 % endif
 <ul class="list">
 % if len(child_boards) == 0:
     % if list_type is UNDEFINED:
-    <li>생성된 하위 게시판이 없습니다.</li>
+    <li>${_('No child boards.')}</li>
     % else:
-    <li>게시판이 없습니다.</li>
+    <li>${_('No boards.')}</li>
     % endif
 % else:
     <% i = 1 %>
@@ -33,5 +34,5 @@
 % endif
 </ul>
 %if board_path != '':
-<p> <a class="button" href="/m/${board_path}/+summary">정보</a> </p> 
+<p> <a class="button" href="/m/${board_path}/+summary">${_('Information')}</a> </p> 
 % endif

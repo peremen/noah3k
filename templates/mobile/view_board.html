@@ -3,28 +3,28 @@
 from web import ctx
 import user, article, acl, board
 import datetime
+from i18n import custom_gettext as _
 def get_formatted_username(uid):
     u = user.get_user(uid)
     if u[0]:
         return "%(id)s" % {'id': u[1]['uId']}
     else:
-        return u"탈퇴한 회원"
+        return _('Former Member')
 today = datetime.datetime.today()
 %>
 %if len(articles) == 0:
 <div align="center">
     <hr />
-    현재 이 게시판에는 글이 하나도 없습니다.<br />
-    글쓰기 버튼을 눌러 글을 써주세요.
+    ${_('No articles in this board.<br />Press \'Write\' to write one.')}
     <hr />
 </div>
 %else:
 <!-- 글 -->
 <table border="0" cellspacing="0" cellpadding="4" style="width: 100%; margin-bottom: 10px; " class="list">
     <tr align="center" class="head">
-        <th>제목</th>
-        <th>글쓴이</th>
-        <th>날짜</th>
+        <th>${_('Title')}</th>
+        <th>${_('Author')}</th>
+        <th>${_('Date')}</th>
     </tr>
     <% i = 1 %>
 
@@ -47,10 +47,17 @@ today = datetime.datetime.today()
 <ul class="buttonlist">
 %if ctx.session.has_key('uid') and acl.is_allowed('board', board._get_board_id_from_path('/%s' % board_path), ctx.session.uid, 'write'):
     <!-- 글쓰기 -->
-    <li><a class="button" href="/m/${board_path}/+write" title="새 글을 작성합니다">글쓰기</a></li>
+    <li><a class="button" href="/m/${board_path}/+write" title="${_('Write new article')}">${_('Write')}</a></li>
 % endif
     <!-- 보드 관리 -->
-    <li><a class="button" href="/m/${board_path}/+summary" title="이 보드의 정보를 보거나 수정합니다">게시판 정보</a></li>
+    <li><a class="button" href="/m/${board_path}/+summary" title="${_('Display and modify board information')}">${_('Information')}</a></li>
+%if ctx.session.has_key('uid'):
+    % if user.is_subscribed(ctx.session.uid, board._get_board_id_from_path(board_path)):
+    <li><a class="button" href="/m/${board_path}/+subscribe" title="${_('Unsubscribe from this board')}">${_('Unsubscribe')}</a> </li>
+    % else:
+    <li><a class="button" href="/m/${board_path}/+subscribe" title="${_('Subscribe to this board')}">${_('Subscribe')}</a> </li>
+    %endif
+%endif
 </ul>
 
 <p style="text-align: center;">

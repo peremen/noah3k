@@ -1,37 +1,38 @@
 <%inherit file="base.html" />
 <% import user
 import posixpath
+from i18n import custom_gettext as _ 
 def get_userid(uid):
     u = user.get_user(uid)[1]
     return '%s' % u.uId
 %>
 <form name="write_form" method="post" action="/m/${board_path}/+${action}">
 %if action == 'modify':
-<h3>게시판 정보 수정</h3>
+<h3>${_('Modify')}</h3>
 % elif action == 'create_board':
-<h3>하위 게시판 만들기</h3>
+<h3>${_('Create Child Board')}</h3>
 % endif
-<h4>기본 정보</h4>
+<h4>${_('Basic Information')}</h4>
 <ul class="list2">
-    <li>위치: \
+    <li>${_('Location')}: \
 % if action == 'modify':
         <input name="path" type="text" value="${posixpath.dirname(board_info.bName)}" /> \
 %elif action == 'create_board':
         ${board_info.bName} \
 % endif
     </li>
-    <li>이름: \
+    <li>${_('Name')}: \
 % if action == 'modify':
         <input name="name" type="text" maxlength="255" style="width:300px" value="${posixpath.basename(board_info.bName)}" /> \
 %elif action == 'create_board':
         <input name="name" type="text" maxlength="255" style="width:300px" /> \
 % endif
     </li>
-    <li>관리자: <input name="owner" type="text" size="12" value="${get_userid(board_info.uSerial)}" /></li>
+    <li>${_('Admin')}: <input name="owner" type="text" size="12" value="${get_userid(board_info.uSerial)}" /></li>
 </ul>
-<h4>세부 설정</h4>
+<h4>${_('Details')}</h4>
 <ul class="list2">
-    <li>유형: \
+    <li>${_('Type')}: \
 % if action == 'modify':
         <input id="radio_dir" type="radio" name="type" onclick="dirclick()" value="0" \
         % if board_info.bType == 0:
@@ -41,7 +42,7 @@ checked="checked" \
 % elif action == 'create_board':
         <input id="radio_dir" type="radio" name="type" onclick="dirclick()" value="0">
 % endif
-        <label for="radio_dir">폴더</label>
+        <label for="radio_dir">${_('Folder')}</label>
 % if action == 'modify':
         <input id="radio_board" type="radio" name="type" onclick="boardclick()" value="1" \
         % if board_info.bType == 1:
@@ -51,9 +52,9 @@ checked="checked" \
 % elif action == 'create_board':
         <input id="radio_board" type="radio" name="type" onclick="boardclick()" value="1" checked="checked">
 % endif
-        <label for="radio_board">게시판</label>
+        <label for="radio_board">${_('Board')}</label>
     </li>
-    <li>댓글: \
+    <li>${_('Comments')}: \
 % if action == 'modify':
         <input id="radio_comyes" type="radio" name="commentable" value="yes" \
         % if board_info.bComment == 1:
@@ -63,7 +64,7 @@ checked="checked" \
 % elif action == 'create_board':
         <input id="radio_comyes" type="radio" name="commentable" value="yes" checked="checked" />
 % endif
-        <label for="radio_comyes">허용</label>
+        <label for="radio_comyes">${_('Allow')}</label>
 % if action == 'modify':
         <input id="radio_comno" type="radio" name="commentable" value="no" \
         % if board_info.bComment == 0:
@@ -73,9 +74,9 @@ checked="checked" \
 % elif action == 'create_board':
         <input id="radio_comno" type="radio" name="commentable" value="no" />
 % endif
-        <label for="radio_comno">불가</label>
+        <label for="radio_comno">${_('Not Allow')}</label>
     </li>
-    <li>타인 글쓰기: \
+    <li>${_('Guest Writing')}: \
 % if action == 'modify':
         <input id="radio_comyes" type="radio" name="writable" value="yes" \
 % if board_info.bWrite == 1:
@@ -85,7 +86,7 @@ checked="checked" \
 % elif action == 'create_board':
         <input id="radio_comyes" type="radio" name="writable" value="yes" checked="checked" />
 % endif
-        <label for="radio_comyes">허용</label>
+        <label for="radio_comyes">${_('Allow')}</label>
 % if action == 'modify':
         <input id="radio_comno" type="radio" name="writable" value="no" \
 % if board_info.bWrite == 0:
@@ -95,20 +96,20 @@ checked="checked" \
 % elif action == 'create_board':
         <input id="radio_comno" type="radio" name="writable" value="no" />
 % endif
-        <label for="radio_comno">불가</label>
+        <label for="radio_comno">${_('Not Allow')}</label>
     </li>
 </ul>
 
-<h4>게시판 설명</h4>
+<h4>${_('Board Description')}</h4>
 <ul class="list2">
-    <li>한 줄 설명: <input name="description" type="text" maxlength="255" style="width:300px" \
+    <li>${_('Short Description')}: <input name="description" type="text" maxlength="255" style="width:300px" \
 % if action == 'modify':
 value="${board_info.bDescription}" /> \
 % else:
 /> \
 % endif
     </li>
-    <li>한 바닥 설명<br />
+    <li>${_('Long Description')}<br />
         <textarea name="information" style="font-size: 0.9em; width: 100%; height: 360px"> \
 % if action == 'modify':
 ${board_info.bInformation}
@@ -118,8 +119,8 @@ ${board_info.bInformation}
 </ul>
 
 <!-- 완료/취소 버튼 -->			
-<input type="submit" name="ok" value="완료">
-<input type="submit" name="cancel" value="취소">
+<input type="submit" name="ok" value="${_('Submit')}">
+<input type="submit" name="cancel" value="${_('Cancel')}">
 <input type="hidden" name="referer" value="${referer}">
 
 <div style="height: 10px"></div>

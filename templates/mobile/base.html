@@ -1,6 +1,7 @@
 <% from web import ctx 
 import board
 import posixpath
+from i18n import custom_gettext as _
 def traverse_board_path(path):
     ret = ""
     id = board._get_board_id_from_path(path)
@@ -11,7 +12,7 @@ def traverse_board_path(path):
         else:
             ret = '&nbsp;&gt;&nbsp;<a class="boardlink" href="/m%s">%s</a>' % (i.bName, i.bName.split('/')[-1]) + ret
         id = board.get_parent(id)
-    ret = u'<a class="dirlink" href="/m">게시판</a>' + ret
+    ret = u'<a class="dirlink" href="/m">'+ _('Boards')+'</a>' + ret
     return ret
 
 def traverse_child_board(path):
@@ -46,7 +47,7 @@ def get_type(path):
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi">
 
 % if title is UNDEFINED:
-    <title>오류</title>
+    <title>${_('Error')}</title>
 % else:
     <title>${title}</title>
 % endif
@@ -83,7 +84,7 @@ def get_type(path):
 <div id="header">
 %if board_path is UNDEFINED:
     %if board_desc is UNDEFINED:
-    <a class="title" href="#">오류</a>
+    <a class="title" href="#">${_('Error')}</a>
     %else:
     <a class="title" href="#">${board_desc}</a>
     %endif
@@ -95,7 +96,7 @@ def get_type(path):
 %if board_path is not UNDEFINED:
     ${traverse_board_path(board_path)}
 %else:
-    <a class="dirlink" href="/m">게시판</a>
+    <a class="dirlink" href="/m">${_('Boards')}</a>
 %endif
 <br />
 ## 자식 보드
@@ -112,30 +113,30 @@ def get_type(path):
 </div> <!-- end of body -->
 
 <div id="footer">
-    <a href="/m">홈</a> |
-    <a href="/m/divisionCS">전산학과</a> |
-    <a href="/m/friends">친목</a> |
-    <a href="/m/course">교과목</a>
+    <a href="/m">${_('Home')}</a> |
+    <a href="/m/divisionCS">${_('Department')}</a> |
+    <a href="/m/friends">${_('Friends')}</a> |
+    <a href="/m/course">${_('Courses')}</a>
     <br />
-        ## 로그인을 비롯한 다른 버튼들을 여기로.
+        ## ${_('Login')}을 비롯한 다른 버튼들을 여기로.
 %if ctx.session is UNDEFINED:
-    <a href="/m/+join">회원 가입</a> |
-    <a href="/m/+login">로그인</a>
+    <a href="/m/+join">${_('Join')}</a> |
+    <a href="/m/+login">${_('Login')}</a>
 %elif not ctx.session.has_key('uid'):
-    <a href="/m/+join">회원 가입</a> |
-    <a href="/m/+login">로그인</a>
+    <a href="/m/+join">${_('Join')}</a> |
+    <a href="/m/+login">${_('Login')}</a>
 % else:
-    <a href="/m/+u/${ctx.session.username}/+new_article">새글읽기</a>
+    <a href="/m/+u/${ctx.session.username}/+new_article">${_('New Article')}</a>
     <br/>
     
-    <a href="/m/+u/${ctx.session.username}/+my_board">내 게시판</a> |
-    <a href="/m/+u/${ctx.session.username}/+favorites">즐겨찾기</a> |
-    <a href="/m/+u/${ctx.session.username}">내 정보</a> |
-    <a href="/m/+logout">로그아웃</a>
+    <a href="/m/+u/${ctx.session.username}/+my_board">${_('My Boards')}</a> |
+    <a href="/m/+u/${ctx.session.username}/+favorites">${_('Favorites')}</a> |
+    <a href="/m/+u/${ctx.session.username}">${_('My Info')}</a> |
+    <a href="/m/+logout">${_('Logout')}</a>
 % endif
     <br />
     Powered by <a href="http://haje.org">HAJE</a><br />
-    <a href="/m/+credits">개발자 정보</a>
+    <a href="/m/+credits">${_('Credits')}</a>
 </div>
     
 </body>

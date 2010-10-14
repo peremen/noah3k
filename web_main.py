@@ -36,8 +36,8 @@ class main_actions:
             ref_path = '/m'
         else:
             ref_path = '/'
-        return render[mobile].join(title = u"회원 가입 - %s" % config.branding,
-               lang="ko", board_desc=u"회원 가입",
+        return render[mobile].join(title = _('Join - %s') % config.branding,
+               lang="ko", board_desc=_('Join'),
                referer = web.ctx.env.get('HTTP_REFERER', ref_path))
 
     @util.error_catcher
@@ -72,7 +72,7 @@ class main_actions:
             referer = web.ctx.env.get('HTTP_REFERER', '/m')
         else:
             referer = web.ctx.env.get('HTTP_REFERER', '/')
-        return render[mobile].login(title = u"로그인 - %s" % config.branding, board_desc=u"로그인",
+        return render[mobile].login(title = _('Login - %s') % config.branding, board_desc=_('Login'),
                 lang="ko", referer = referer)
 
     @util.error_catcher
@@ -85,14 +85,13 @@ class main_actions:
         referer = web.input().url
         username, password = username.strip(), password.strip()
         if username == '' or password == '':
-            err = u"사용자 이름이나 암호를 입력하지 않았습니다."
+            err = _('No user ID or password specified.')
             valid = False
 
         if valid:
             login = user.login(username, password)
             if login[0]:
                 # 로그인 성공. referer로 돌아감.
-                err = u"로그인 성공"
                 uid = user._get_uid_from_username(username)
                 web.ctx.session.uid = uid
                 web.ctx.session.username = username
@@ -102,7 +101,7 @@ class main_actions:
                 # 로그인 실패
                 err = login[1]
         if not login[0]:
-            return render[mobile].login(title = u"로그인 - %s" % config.branding, board_desc=u"로그인",
+            return render[mobile].login(title = _('Login - %s') % config.branding, board_desc=_('Login'),
                     lang="ko", error = err, referer = referer)
         else:
             raise web.seeother(web.input().url)
@@ -120,6 +119,6 @@ class main_actions:
 
     @util.error_catcher
     def credits_get(self, mobile):
-        return render[mobile].credits(title = u"개발자 정보 - %s" % config.branding,
-               lang="ko", board_desc=u"개발자 정보", )
+        return render[mobile].credits(title = _('Credits - %s') % config.branding,
+               lang="ko", board_desc=_('Credits'), )
 

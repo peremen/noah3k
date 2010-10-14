@@ -1,14 +1,15 @@
 <%inherit file="base.html" /> 
+<% from i18n import custom_gettext as _ %>
 
 <form name="question" method="post" action="${action}">
 % if title is UNDEFINED:
-<h3>오류</h3>
+<h3>${_('Error')}</h3>
 % else:
 <h3>${title}</h3>
 % endif
 <p>${question}</p>
-<input type="submit" name="ok" value="확인" style="margin: 6px">
-<input type="submit" name="cancel" value="취소" style="margin: 6px">
+<input type="submit" name="ok" value="${_('OK')}" style="margin: 6px">
+<input type="submit" name="cancel" value="${_('Cancel')}" style="margin: 6px">
 <input type="hidden" name="referer" value="${referer}" />
 <br />
 </form>

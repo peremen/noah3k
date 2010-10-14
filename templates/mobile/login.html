@@ -1,6 +1,7 @@
 <%inherit file="base.html" />
-<% import util %>
-노아 아이디가 없으신 분들은 <a href="/m/+join/">여기</a>를 클릭해 주세요
+<% import util
+from i18n import custom_gettext as _ %>
+${_('To join NOAH, click <a href="/+join/">here</a>')}
 % if error is not UNDEFINED:
     <br /><span style="color: red">${error}</span>
 % endif
@@ -9,16 +10,16 @@
     <input name="url" type="hidden" value="${referer}" />
     <label for="username">ID</label>
     <input id="username" name="username" type="text" style="width: 8em;"/>
-    <label for="password">암호</label>
+    <label for="password">${_('Password')}</label>
     <input id="password" name="password" type="password" style="width: 8em;"/>
-    <input type="submit" name="Submit" value="로그인"/>
+    <input type="submit" name="Submit" value="${_('Login')}"/>
 </form>
-<h3>공지 사항</h3>
+<h3>${_('Notice')}</h3>
 <% notice_text = util.get_login_notice() %>
 % if notice_text == 'INVALID_NOTICE_BOARD':
-내부 오류
+${_('Internal Error')}
 % elif notice_text == 'NO_NOTICE':
-공지가 없습니다.
+${_('No Notice')}
 % else:
 ${util.format(util.get_login_notice())}
 % endif

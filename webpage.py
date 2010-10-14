@@ -81,7 +81,7 @@ class main_page:
             page = article._get_total_page_count(student_notice_board_id, 5)
             b = article.get_article_list(student_notice_board_id, 5, page)
             return render[False].main(title = u'전산학과 BBS 노아입니다', lang='ko',
-                    board_desc = u'[전산학과 BBS]', board_path = '',
+                    board_desc = _('[KAIST CS BBS]'), board_path = '',
                     child_boards = child_board, notice_board_path = notice_board_path,
                     notice_articles = a, student_notice_board_path = student_notice_board_path,
                     student_notice_articles = b, help_context = 'main')
@@ -92,7 +92,7 @@ class help:
             mobile = True
         else:
             mobile = False
-        return render[mobile].help(title = u"도움말: %s - %s" % (context, config.branding), lang="ko",
+        return render[mobile].help(title = _('Help: %s - %s') % (context, config.branding), lang="ko",
                 help_context = context)
 
 class view_board:

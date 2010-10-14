@@ -63,8 +63,8 @@ class board_actions:
         board_info = board.get_board_info(board_id)
         board_desc = board_info.bDescription
         user_info = user.get_user(current_uid)[1]
-        return render[mobile].editor(title = u"글 쓰기 - %s - %s" % (board_name, config.branding),
-                action='write', action_name = u"글 쓰기",
+        return render[mobile].editor(title = _('Write article - %s - %s') % (board_name, config.branding),
+                action='write', action_name = _('Write article'),
                 board_path = board_name, board_desc = board_desc, lang="ko",
                 body = '\n\n\n%s' % user_info['uSig'], help_context='editor')
 
@@ -154,14 +154,14 @@ class board_actions:
         return render[mobile].board_summary(board_info = board_info,
                 board_path = board_name,
                 board_desc = board_info.bDescription, 
-                title = u'정보 - %s - %s' % (board_info.bName, config.branding))
+                title = _('Information - %s - %s') % (board_info.bName, config.branding))
 
     @util.error_catcher
     def subboard_list_get(self, mobile, board_name = '', board_id = 1):
         board_info = board.get_board_info(board_id)
         child_board = board.get_child(board_id)
         if board_name == "":
-            board_name = u"초기 화면"
+            board_name = _('Main menu')
             board_path = ""
         else:
             board_path = board_name
@@ -190,7 +190,7 @@ class board_actions:
             default_referer = posixpath.join('/m', default_referer)
         return render[mobile].board_editor(action='create_board', board_info = board_info,
                 board_path = board_name, board_desc = board_info.bDescription, 
-                title = u'하위 게시판 만들기 - %s - %s' % (board_info.bName, config.branding),
+                title = _('Create child board - %s - %s') % (board_info.bName, config.branding),
                 referer = web.ctx.env.get('HTTP_REFERER', default_referer))
 
     @util.error_catcher
@@ -241,7 +241,7 @@ class board_actions:
             default_referer = posixpath.join('/m', default_referer)
         return render[mobile].board_editor(action='modify', board_info = board_info,
                 board_path = board_name, board_desc = board_info.bDescription, 
-                title = u'정보 수정 - %s - %s' % (board_info.bName, config.branding),
+                title = _('Modify information - %s - %s') % (board_info.bName, config.branding),
                 referer = web.ctx.env.get('HTTP_REFERER', default_referer))
 
     @util.error_catcher
@@ -283,8 +283,8 @@ class board_actions:
         action = posixpath.join('/', board_name, '+delete')
         if mobile:
             action = posixpath.join('/m', action)
-        return render[mobile].question(question=u'이 게시판을 삭제하시겠습니까?',
-                board_path = board_name, board_desc = u'확인', title=u'확인',
+        return render[mobile].question(question=_('Do you want to delete this board?'),
+                board_path = board_name, board_desc = _('Confirmation'), title=_('Confirmation'),
                 action=action,
                 referer=web.ctx.env.get('HTTP_REFERER', default_referer))
 

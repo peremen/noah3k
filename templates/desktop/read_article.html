@@ -128,9 +128,9 @@ ${util.format(article['aContent'])}
 %if ctx.session.has_key('uid') and acl.is_allowed('board', article.bSerial, ctx.session.uid, 'mark'):
     % if A.get_mark_status(article['aSerial']):
         <!-- 강조 권한 --> 
-        <li><a class="button" href="/${board_path}/+unmark/${article['aSerial']}">강조 해제</a></li>
+        <li><a class="button" href="/${board_path}/+unmark/${article['aSerial']}">${_('Unmark')}</a></li>
     % else:
-        <li><a class="button" href="/${board_path}/+mark/${article['aSerial']}">강조</a></li>
+        <li><a class="button" href="/${board_path}/+mark/${article['aSerial']}">${_('Mark')}</a></li>
     % endif
 % endif
     </ul>
@@ -138,14 +138,14 @@ ${util.format(article['aContent'])}
     <!-- 이전글/다음글 -->
 % if prev_id > 0:
     <div id="row">
-        <div class="left-container">이전글</div>
+        <div class="left-container">${_('Previous Article')}</div>
         <span class="sep">: </span>
         <span id="title"><a class="articlelink" href="/${board_path}/+read/${prev_id}">${A.get_title(prev_id)}</a></span> 
     </div>
 % endif
 % if next_id > 0:
     <div id="row">
-        <div class="left-container">다음글</div>
+        <div class="left-container">${_('Next Article')}</div>
         <span class="sep">: </span>
         <span id="title"><a class="articlelink" href="/${board_path}/+read/${next_id}">${A.get_title(next_id)}</a></span> 
     </div>
