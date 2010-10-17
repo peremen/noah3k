@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2010-10-14 15:35+0900\n"
-"PO-Revision-Date: 2010-10-14 15:35+0900\n"
+"POT-Creation-Date: 2010-10-18 02:26+0900\n"
+"PO-Revision-Date: 2010-10-18 02:27+0900\n"
 "Last-Translator: Park Shinjo <peremen@gmail.com>\n"
 "Language-Team: Korean <peremen@gmail.com>\n"
 "Language: ko\n"
@@ -22,8 +22,7 @@ msgstr ""
 #: web_article.py:105 web_article.py:128 web_article.py:143 web_article.py:182
 #: web_article.py:199 web_article.py:214 web_article.py:245 web_article.py:256
 #: web_board.py:187 web_board.py:202 web_board.py:238 web_board.py:253
-#: web_user.py:187 web_user.py:216 web_user.py:228 web_user.py:236
-#: web_user.py:266 web_user.py:287 web_user.py:316
+#: web_user.py:243 web_user.py:292 web_user.py:313
 msgid "NO_PERMISSION"
 msgstr "권한이 없습니다"
 
@@ -99,11 +98,11 @@ msgstr "자식 게시판이 있습니다"
 msgid "INVALID_SENDER"
 msgstr "보낸 사람이 잘못되었습니다"
 
-#: pm.py:108 web_user.py:243
+#: pm.py:108 web_user.py:269
 msgid "INVALID_RECEIVER"
 msgstr "받는 사람이 잘못되었습니다"
 
-#: user.py:151 web_user.py:108 web_user.py:151
+#: user.py:151 web_user.py:127 web_user.py:174
 msgid "INVALID_PASSWORD"
 msgstr "암호가 잘못되었습니다"
 
@@ -119,27 +118,24 @@ msgstr "ID가 이미 존재합니다"
 msgid "HAS_BOARD"
 msgstr "자식 게시판이 있습니다"
 
-#: util.py:30
-msgid "NOT_LOGGED_IN"
-msgstr "로그인하지 않았습니다"
-
-#: util.py:32
+#: util.py:36
 msgid "INVALID_UID"
 msgstr "내부 오류: 사용자 ID가 잘못되었습니다"
 
-#: util.py:177
+#: util.py:181
 msgid "INVALID_NOTICE_BOARD"
 msgstr "잘못된 공지 사항 게시판"
 
-#: util.py:181
+#: util.py:185
 msgid "NO_NOTICE"
 msgstr "공지 사항이 없습니다"
 
-#: web_article.py:32 web_board.py:39 webpage.py:112
+#: web_article.py:32 web_board.py:39 webpage.py:116
 msgid "INVALID_BOARD"
 msgstr "지정한 게시판이 없습니다"
 
-#: web_article.py:36 web_board.py:43 web_main.py:31 web_user.py:54
+#: web_article.py:36 web_board.py:43 web_main.py:31 web_user.py:30
+#: web_user.py:92
 msgid "INVALID_ACTION"
 msgstr "지원하지 않는 동작"
 
@@ -170,7 +166,7 @@ msgstr "글을 수정합니다"
 msgid "Do you want to delete the article?"
 msgstr "글을 삭제하시겠습니까?"
 
-#: web_article.py:190 web_board.py:287 web_user.py:295
+#: web_article.py:190 web_board.py:287 web_user.py:321
 msgid "Confirmation"
 msgstr "확인"
 
@@ -230,36 +226,36 @@ msgstr "가입 - %s"
 msgid "Join"
 msgstr "가입"
 
-#: web_main.py:51 web_user.py:110
+#: web_main.py:51 web_user.py:129
 msgid "PASSWORD_DO_NOT_MATCH"
 msgstr "암호가 일치하지 않습니다"
 
-#: web_main.py:53 web_user.py:112
+#: web_main.py:53 web_user.py:131
 msgid "PASSWORD_TOO_SHORT"
 msgstr "암호가 너무 짧습니다"
 
-#: web_main.py:75 web_main.py:104
+#: web_main.py:84 web_main.py:113
 #, python-format
 msgid "Login - %s"
 msgstr "로그인 - %s"
 
-#: web_main.py:75 web_main.py:104 templates/desktop/header.html:55
+#: web_main.py:84 web_main.py:113 templates/desktop/header.html:55
 #: templates/desktop/header.html:58 templates/desktop/login.html:33
 #: templates/mobile/base.html:124 templates/mobile/base.html:127
 #: templates/mobile/login.html:15
 msgid "Login"
 msgstr "로그인"
 
-#: web_main.py:88
+#: web_main.py:97
 msgid "No user ID or password specified."
 msgstr "사용자 ID나 암호를 입력하지 않았습니다."
 
-#: web_main.py:122
+#: web_main.py:131
 #, python-format
 msgid "Credits - %s"
 msgstr "개발자 정보 - %s"
 
-#: web_main.py:123 templates/mobile/base.html:139
+#: web_main.py:132 templates/mobile/base.html:139
 msgid "Credits"
 msgstr "개발자 정보"
 
@@ -279,80 +275,68 @@ msgstr "글이 지정되지 않았습니다"
 msgid "NO_ATTACHMENT_SPECIFIED"
 msgstr "첨부 파일이 지정되지 않았습니다"
 
-#: web_user.py:27 web_user.py:50
-msgid "INVALID_USER"
-msgstr "잘못된 사용자"
-
-#: web_user.py:32 templates/mobile/myinfo.html:6
+#: web_user.py:73 templates/mobile/myinfo.html:6
 msgid "My Information"
 msgstr "내 정보"
 
-#: web_user.py:81
-msgid "LOOKING_OTHERS_NEW_ARTICLES"
-msgstr "다른 사람의 새 글을 읽으려고 하는 중"
-
-#: web_user.py:84 web_user.py:85 templates/desktop/header.html:60
+#: web_user.py:99 web_user.py:100 templates/desktop/header.html:60
 #: templates/mobile/base.html:129
 msgid "New Article"
 msgstr "새글읽기"
 
-#: web_user.py:91 web_user.py:139
-msgid "MODIFYING_OTHERS_INFORMATION"
-msgstr "다른 사용자의 개인 정보를 수정하려고 하는 중"
-
-#: web_user.py:97 web_user.py:98 templates/mobile/myinfo_edit.html:5
+#: web_user.py:113 web_user.py:114 templates/mobile/myinfo_edit.html:5
 msgid "Edit My Information"
 msgstr "내 정보 수정하기"
 
-#: web_user.py:141 web_user.py:142 templates/desktop/myinfo.html:147
+#: web_user.py:161 web_user.py:162 templates/desktop/myinfo.html:142
 #: templates/mobile/myinfo.html:96
 msgid "Leave NOAH"
 msgstr "회원 탈퇴"
 
-#: web_user.py:169 web_user.py:170 templates/desktop/sidebar.html:14
+#: web_user.py:192 web_user.py:193 templates/desktop/sidebar.html:14
 #: templates/mobile/base.html:132
 msgid "My Boards"
 msgstr "내 게시판"
 
-#: web_user.py:180 web_user.py:181
+#: web_user.py:203 web_user.py:204
 msgid "Favorite Boards"
 msgstr "즐겨찾기"
 
-#: web_user.py:198 web_user.py:199
+#: web_user.py:222 web_user.py:223
 msgid "Inbox"
 msgstr "받은 편지함"
 
-#: web_user.py:213 web_user.py:263 web_user.py:284 web_user.py:313
+#: web_user.py:240 web_user.py:289 web_user.py:310 web_user.py:339
 msgid "NO_SUCH_MESSAGE"
 msgstr "그러한 메시지가 없습니다"
 
-#: web_user.py:217
+#: web_user.py:244
 #, python-format
 msgid "From message \"%s\":"
 msgstr "메시지 \"%s\"에서:"
 
-#: web_user.py:219
+#: web_user.py:246
 msgid "Write Reply"
 msgstr "답장 쓰기"
 
-#: web_user.py:230 templates/desktop/editor_mail.html:37
+#: web_user.py:255 templates/desktop/editor_mail.html:37
 #: templates/desktop/inbox.html:51 templates/desktop/read_mail.html:43
 msgid "Write Message"
 msgstr "메시지 남기기"
 
-#: web_user.py:269
+#: web_user.py:295
 msgid "Read Message"
 msgstr "메시지 읽기"
 
-#: web_user.py:294
+#: web_user.py:320
 msgid "Do you want to delete the message?"
 msgstr "이 메시지를 삭제하시겠습니까?"
 
-#: webpage.py:84
+#: webpage.py:88
 msgid "[KAIST CS BBS]"
 msgstr "[전산학과 BBS]"
 
-#: webpage.py:95
+#: webpage.py:99
 #, python-format
 msgid "Help: %s - %s"
 msgstr "도움말: %s - %s"
@@ -495,7 +479,7 @@ msgstr "완료"
 msgid "Cancel"
 msgstr "취소"
 
-#: templates/desktop/board_summary.html:22 templates/desktop/myinfo.html:146
+#: templates/desktop/board_summary.html:22 templates/desktop/myinfo.html:141
 #: templates/desktop/read_article.html:122
 #: templates/mobile/board_editor.html:11
 #: templates/mobile/board_summary.html:44 templates/mobile/myinfo.html:95
@@ -535,6 +519,10 @@ msgstr "제목"
 #: templates/mobile/editor.html:13
 msgid "Content"
 msgstr "내용"
+
+#: templates/desktop/editor.html:17 templates/mobile/editor.html:13
+msgid "(BBCode Help)"
+msgstr "(BBCode 도움말)"
 
 #: templates/desktop/editor.html:29 templates/mobile/editor.html:23
 #, python-format
@@ -780,6 +768,10 @@ msgstr "약함"
 msgid "(Change password NOW)"
 msgstr "(지금 암호를 변경하십시오)"
 
+#: templates/desktop/myinfo.html:140
+msgid "My Posts"
+msgstr "내가 쓴 글"
+
 #: templates/desktop/myinfo_edit.html:43 templates/mobile/myinfo_edit.html:23
 msgid "Current Password"
 msgstr "현재 암호"
@@ -1023,6 +1015,18 @@ msgstr "하위 게시판"
 #: templates/mobile/view_subboard_list.html:15
 msgid "No boards."
 msgstr "게시판이 없습니다."
+
+#~ msgid "NOT_LOGGED_IN"
+#~ msgstr "로그인하지 않았습니다"
+
+#~ msgid "INVALID_USER"
+#~ msgstr "잘못된 사용자"
+
+#~ msgid "LOOKING_OTHERS_NEW_ARTICLES"
+#~ msgstr "다른 사람의 새 글을 읽으려고 하는 중"
+
+#~ msgid "MODIFYING_OTHERS_INFORMATION"
+#~ msgstr "다른 사용자의 개인 정보를 수정하려고 하는 중"
 
 #~ msgid "Modify My Information"
 #~ msgstr "내 정보 수정하기"
