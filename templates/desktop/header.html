@@ -57,14 +57,14 @@ def get_type(path):
         <li><a class="button" href="/+join">${_('Join')}</a></li>
         <li><a class="button" href="/+login">${_('Login')}</a></li>
 % else:
-        <li><a class="button" href="/+u/${ctx.session.username}/+new_article">${_('New Article')}</a></li>
+        <li><a class="button" href="/+u/+new_article">${_('New Article')}</a></li>
     <% read_cnt = pm.unread_count(ctx.session.uid) %>
     %if read_cnt > 0:
-        <li><a class="button" style="background: red; color: white;" target="_blank" href="/+u/${ctx.session.username}/+inbox">${_('Mail')} (${read_cnt})</a></li>
+        <li><a class="button" style="background: red; color: white;" target="_blank" href="/+u/+inbox">${_('Mail')} (${read_cnt})</a></li>
     % else:
-        <li><a class="button" target="_blank" href="/+u/${ctx.session.username}/+inbox">${_('Mail')}</a></li>
+        <li><a class="button" target="_blank" href="/+u/+inbox">${_('Mail')}</a></li>
     % endif
-        <li><a class="button" href="/+u/${ctx.session.username}">${_('My Info')}</a></li>
+        <li><a class="button" href="/+u">${_('My Info')}</a></li>
         <li><a class="button" href="/+logout">${_('Logout')}</a></li>
 % endif
     </ul>

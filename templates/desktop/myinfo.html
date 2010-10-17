@@ -125,9 +125,9 @@ from i18n import custom_gettext as _ %>
         % if password_strength == 2:
         <span style="color: green;">${_('Strong')}</span>
         % elif password_strength == 1:
-        <span style="color: orange;">${_('Normal')} <a style="color: orange;" href="/+u/${username}/+modify">${_('(Change password recommended)')}</a></span>
+        <span style="color: orange;">${_('Normal')} <a style="color: orange;" href="/+u/+modify">${_('(Change password recommended)')}</a></span>
         % elif password_strength == 0:
-        <span style="color: red; font-weight: bold;">${_('Weak')} <a style="color: red;" href="/+u/${username}/+modify">${_('(Change password NOW)')}</a></span>
+        <span style="color: red; font-weight: bold;">${_('Weak')} <a style="color: red;" href="/+u/+modify">${_('(Change password NOW)')}</a></span>
         % else:
         <span style="color: red; font-weight: bold;">${_('Unknown')}</span>
         % endif
@@ -137,14 +137,8 @@ from i18n import custom_gettext as _ %>
 </div>
 <br />
 <div>
-##%if ctx.session.username == username:
-##    <a class="button" href="/+u/${username}/+my_posts">${_('My Posts')}</a>
-##%else:
-##    <a class="button" href="/+u/${username}/+my_posts">${_('Posts By This User')}</a>
-##% endif
-%if ctx.session.username == username:
-    <a class="button" href="/+u/${username}/+modify">${_('Modify')}</a>
-    <a class="button" href="/+u/${username}/+leave">${_('Leave NOAH')}</a>
-% endif
+    <a class="button" href="/+u/+my_posts">${_('My Posts')}</a>
+    <a class="button" href="/+u/+modify">${_('Modify')}</a>
+    <a class="button" href="/+u/+leave">${_('Leave NOAH')}</a>
 </div>
 

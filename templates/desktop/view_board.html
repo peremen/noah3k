@@ -16,11 +16,11 @@ from i18n import custom_gettext as _
 <!-- 글 -->
 <table border="0" cellspacing="0" cellpadding="4" style="width: 100%; margin-bottom: 10px; " class="list">
     <tr align="center" class="head">
-        <th>#</th>
+        <th style="width:60px;">#</th>
         <th>${_('Title')}</th>
-        <th>${_('Author')}</th>
-        <th>${_('Date')}</th>
-        <th>${_('Hit')}</th>
+        <th style="width:80px;">${_('Author')}</th>
+        <th style="width:80px;">${_('Date')}</th>
+	<th style="width:40px;">${_('Hit')}</th>
     </tr>
     <% i = 1 %>
     %if marked_articles is not UNDEFINED:

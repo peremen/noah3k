@@ -36,13 +36,13 @@ ${util.format(mail.mContent)}
 <div class="menu">
 <ul>
     <!-- 목록 -->
-    <li><a class="button" href="/+u/${ctx.session.username}/+inbox">${_('List')}</a></li>
+    <li><a class="button" href="/+u/+inbox">${_('List')}</a></li>
     <!-- 답장 쓰기 -->
-    <li><a class="button" href="/+u/${ctx.session.username}/+reply_message?message_id=${mail.mSerial}">${_('Reply')}</a></li>
+    <li><a class="button" href="/+u/+reply_message?message_id=${mail.mSerial}">${_('Reply')}</a></li>
     <!-- 편지 쓰기 -->	
-    <li><a class="button" href="/+u/${ctx.session.username}/+write_message">${_('Write Message')}</a></li>
+    <li><a class="button" href="/+u/+write_message">${_('Write Message')}</a></li>
     <!-- 삭제 --> 
-    <li><a class="button" href="/+u/${ctx.session.username}/+delete_message?message_id=${mail.mSerial}">${_('Delete')}</a></li>
+    <li><a class="button" href="/+u/+delete_message?message_id=${mail.mSerial}">${_('Delete')}</a></li>
 </ul>
 </div>
 <br />

@@ -34,7 +34,7 @@ ${_('%s messages' % len(mails))}<br />
 
         <!-- 제목 --> 
         <td width="55%">
-        <a class="articlelink" href="/+u/${ctx.session.username}/+read_message?message_id=${m.mSerial}">${m.mTitle}
+        <a class="articlelink" href="/+u/+read_message?message_id=${m.mSerial}">${m.mTitle}
         % if m.mMark == 0:
         <span class="new">new</span>
         % endif
@@ -48,4 +48,4 @@ ${_('%s messages' % len(mails))}<br />
     % endfor
 </table>
 % endif
-<p><a class="button" href="/+u/${ctx.session.username}/+write_message">${_('Write Message')}</a></p>
+<p><a class="button" href="/+u/+write_message">${_('Write Message')}</a></p>

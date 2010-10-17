@@ -2,7 +2,7 @@
 from i18n import custom_gettext as _ %>
 <%inherit file="base_mail.html" />
 <h1>${_('Write Private Message')}</h1>
-<form name="write_form" method="post" action="/+u/${ctx.session.username}/+write_message">
+<form name="write_form" method="post" action="/+u/+write_message">
 <div id="row">
     <div class="left-container">${_('To')}</div>
     <span class="sep">:</span>

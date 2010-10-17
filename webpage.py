@@ -10,7 +10,7 @@ from datetime import datetime
 import posixpath
 from web_article import article_actions
 from web_board import board_actions
-from web_user import personal_page, personal_actions
+from web_user import personal_page, personal_actions, personal_feeds
 from web_main import main_actions
 from web_noah2k_support import noah2k_support
 from config import render
@@ -23,8 +23,12 @@ urls = (
     r'/(\w*).jsp', 'noah2k_support',
     r'/(m|)', 'main_page',
     r'/(m/|)\+help/(\S*)', 'help',
-    r'/(m/|)\+u/(\S*)/\+(\w*)', 'personal_actions',
-    r'/(m/|)\+u/(\S*)', 'personal_page',
+
+    r'/(m/|)\+u/(\S*)/\+(\w*)', 'personal_feeds',
+
+    r'/(m/|)\+u/\+(\w*)', 'personal_actions',
+    r'/(m/|)\+u', 'personal_page',
+
     r'/(m/|)\+(\w*)', 'main_actions',
     r'/(m/|)(\S*)/\+(\w*)/(\d*)', 'article_actions',
     r'/(m/|)(\S*)/(\+(\w*)|\*)', 'board_actions',

@@ -14,26 +14,7 @@ import i18n
 _ = i18n.custom_gettext
 import pm
 
-class personal_page:
-    @util.error_catcher
-    @util.session_helper
-    def GET(self, mobile, username, current_uid = -1):
-        if mobile:
-            mobile = True
-        else:
-            mobile = False
-        user_id = user._get_uid_from_username(username)
-        if user_id < 0:
-            raise web.notfound(render[mobile].error(error_message = _('INVALID_USER'), help_context='error'))
-        f = [{'type':'rss', 'path':'/+u/%s/+favorite_rss' % username, 'name':u'즐겨찾기 피드 (RSS)'},
-             {'type':'atom', 'path':'/+u/%s/+favorite_atom' % username, 'name':u'즐겨찾기 피드 (Atom)'},]
-        return render[mobile].myinfo(user = user.get_user(user_id)[1],
-                username = username, user_id = user_id,
-                title = _('My Information'), board_desc = _('My Information'),
-                feeds = f, help_context='myinfo')
-
-class personal_actions:
-    # TODO: 로그인 필요한 동작에서는 사용자 이름을 빼내는 방법 생각해 볼 것.
+class personal_feeds:
     def GET(self, mobile, username, action):
         return self.caller(mobile, username, action, 'get')
 
@@ -45,9 +26,9 @@ class personal_actions:
             mobile = True
         else:
             mobile = False
+
         user_id = user._get_uid_from_username(username)
-        if user_id < 0:
-            raise web.notfound(render[mobile].error(error_message = _('INVALID_USER'), help_context='error'))
+
         try:
             return eval('self.%s_%s' % (action, method))(mobile, username, user_id)
         except AttributeError:
@@ -55,9 +36,11 @@ class personal_actions:
 
     @util.error_catcher
     def favorite_rss_get(self, mobile, username, user_id):
+
         articles = user.get_favorite_board_feed(user_id, config.favorite_feed_size)
         date = datetime.today()
         web.header('Content-Type', 'application/rss+xml')
+
         return config.desktop_render.rss(today = date,
                 articles = articles, board_path="+u/%s/+favorite_rss" % username,
                 board_desc = u'%s의 즐겨찾는 보드 피드' % username,
@@ -65,35 +48,74 @@ class personal_actions:
 
     @util.error_catcher
     def favorite_atom_get(self, mobile, username, user_id):
+
         articles = user.get_favorite_board_feed(user_id, config.favorite_feed_size)
         date = datetime.today()
         web.header('Content-Type', 'application/atom+xml')
+
         return config.desktop_render.atom(today = date,
                 articles = articles, board_path="+u/%s/+favorite_atom" % username,
-                board_desc = u'%s의 즐겨찾는 보드 피드' % username,
+                board_desc = (u'%s의 즐겨찾는 보드 피드' % username),
                 self_address = 'http://noah.kaist.ac.kr/+u/%s/+favorite_atom' % username,
                 href_address = 'http://noah.kaist.ac.kr/+u/%s' % username)
 
+
+
+class personal_page:
     @util.error_catcher
     @util.session_helper
-    def new_article_get(self, mobile, username, user_id, current_uid = -1):
-        if user_id != current_uid:
-            raise web.unauthorized(render[mobile].error(error_message=_('LOOKING_OTHERS_NEW_ARTICLES'), help_context='error'))
+    def GET(self, mobile, current_uid = -1):
+        if mobile:
+            mobile = True
+        else:
+            mobile = False
+        user_id = web.ctx.session.uid
 
-        return render[mobile].new_article(articles = user.get_unreaded_articles(user_id),
+        f = [{'type':'rss', 'path':'/+u/+favorite_rss', 'name':u'즐겨찾기 피드 (RSS)'},
+             {'type':'atom', 'path':'/+u/+favorite_atom', 'name':u'즐겨찾기 피드 (Atom)'},]
+        return render[mobile].myinfo(user = user.get_user(user_id)[1],
+                user_id = user_id,
+                title = _('My Information'), board_desc = _('My Information'),
+                feeds = f, help_context='myinfo')
+
+class personal_actions:
+    # TODO: 로그인 필요한 동작에서는 사용자 이름을 빼내는 방법 생각해 볼 것.
+    def GET(self, mobile, action):
+        return self.caller(mobile, action, 'get')
+
+    def POST(self, mobile, action):
+        return self.caller(mobile, action, 'post')
+
+    def caller(self, mobile, action, method):
+        if mobile:
+            mobile = True
+        else:
+            mobile = False
+
+        try:
+            return eval('self.%s_%s' % (action, method))(mobile)
+        except AttributeError:
+            raise web.notfound(render[mobile].error(error_message = _('INVALID_ACTION'), help_context='error'))
+
+    @util.error_catcher
+    @util.session_helper
+    def new_article_get(self, mobile, current_uid = -1):
+        return render[mobile].new_article(articles = user.get_unreaded_articles(current_uid),
+                uid = current_uid,
                 title = _('New Article'),
                 board_desc = _('New Article'))
 
     @util.error_catcher
     @util.session_helper
-    def modify_get(self, mobile, username, user_id, current_uid = -1):
-        if user_id != current_uid:
-            raise web.unauthorized(render[mobile].error(error_message=_('MODIFYING_OTHERS_INFORMATION'), help_context='error'))
-        referer = posixpath.join('/', '+u', username)
+    def modify_get(self, mobile, current_uid = -1):
+        user_id = current_uid
+        usr = user.get_user(user_id)[1]
+
+        referer = '/+u'
         if mobile:
             referer = posixpath.join('/m', referer)
         return render[mobile].myinfo_edit(user = user.get_user(user_id)[1],
-                username = username, user_id = user_id,
+                user_id = user_id,
                 title = _('Edit My Information'),
                 board_desc = _('Edit My Information'),
                 referer = web.ctx.env.get('HTTP_REFERER', referer),
@@ -102,7 +124,10 @@ class personal_actions:
     @util.error_catcher
     @util.confirmation_helper
     @util.session_helper
-    def modify_post(self, mobile, username, user_id, current_uid = -1):
+    def modify_post(self, mobile, current_uid = -1):
+        user_id = current_uid
+        usr = user.get_user(user_id)[1]
+
         data = web.input()
         if not user.verify_password(user_id, data.oldpass):
             return render[mobile].error(error_message=_('INVALID_PASSWORD'), help_context='error')
@@ -128,24 +153,28 @@ class personal_actions:
         if change_lang:
             web.ctx.session.lang = language
         if mobile:
-            raise web.seeother('/m/+u/%s' % username)
+            raise web.seeother('/m/+u')
         else:
-            raise web.seeother('/+u/%s' % username)
+            raise web.seeother('/+u')
 
     @util.error_catcher
     @util.session_helper
-    def leave_get(self, mobile, username, user_id, current_uid = -1):
-        if user_id != current_uid:
-            return render[mobile].error(error_message=_('MODIFYING_OTHERS_INFORMATION'), help_context='error')
-        default_referer = posixpath.join('/', '+u', username)
+    def leave_get(self, mobile, current_uid = -1):
+        user_id = current_uid
+        usr = user.get_user(user_id)[1]
+
+        default_referer = posixpath.join('/', '+u')
         return render[mobile].leave(board_desc = _('Leave NOAH'),
-                title=_('Leave NOAH'), username = username,
+                title=_('Leave NOAH'),
                 referer = web.ctx.env.get('HTTP_REFERER', default_referer),)
 
     @util.error_catcher
     @util.confirmation_helper
     @util.session_helper
-    def leave_post(self, mobile, username, user_id, current_uid = -1):
+    def leave_post(self, mobile, current_uid = -1):
+        user_id = current_uid
+        usr = user.get_user(user_id)[1]
+
         password = web.input().password
         if not user.verify_password(user_id, password):
             return render[mobile].error(error_message= _('INVALID_PASSWORD'), help_context='error')
@@ -162,7 +191,7 @@ class personal_actions:
 
     @util.error_catcher
     @util.session_helper
-    def my_board_get(self, mobile, username, user_id, current_uid = -1):
+    def my_board_get(self, mobile, current_uid = -1):
         my_board = user.get_owned_board(user_id)
         return render[mobile].view_subboard_list(
             child_boards = my_board, board_path = '',
@@ -171,7 +200,7 @@ class personal_actions:
 
     @util.error_catcher
     @util.session_helper
-    def favorites_get(self, mobile, username, user_id, current_uid = -1):
+    def favorites_get(self, mobile, current_uid = -1):
         fav_board = []
         for b in user.get_favorite_board(user_id):
             fav_board.append(board.get_board_info(b.bSerial))
@@ -182,9 +211,10 @@ class personal_actions:
 
     @util.error_catcher
     @util.session_helper
-    def inbox_get(self, mobile, username, user_id, current_uid = -1):
-        if user_id != current_uid:
-            raise web.unauthorized(render[mobile].error(error_message=_('NO_PERMISSION'), help_context='error'))
+    def inbox_get(self, mobile, current_uid = -1):
+        user_id = current_uid
+        usr = user.get_user(user_id)[1]
+
         qs = web.ctx.query
         if len(qs) > 0:
             qs = qs[1:]
@@ -196,12 +226,15 @@ class personal_actions:
         mails = pm.inbox(user_id, page, config.mail_size)
         return config.desktop_render.inbox(mails = mails, 
                 mailbox_name = _('Inbox'),
-                title = '%s - %s - %s' % (_('Inbox'), username, config.branding),
+                title = '%s - %s - %s' % (_('Inbox'), usr['uId'], config.branding),
                 page = page, total_page = pm.inbox_count(user_id) / config.mail_size + 1)
 
     @util.error_catcher
     @util.session_helper
-    def reply_message_get(self, mobile, username, user_id, current_uid = -1):
+    def reply_message_get(self, mobile, current_uid = -1):
+        user_id = current_uid
+        usr = user.get_user(user_id)[1]
+
         message_id = -1
         qs = web.ctx.query
         if len(qs) > 0:
@@ -223,17 +256,16 @@ class personal_actions:
 
     @util.error_catcher
     @util.session_helper
-    def write_message_get(self, mobile, username, user_id, current_uid = -1):
-        if user_id != current_uid:
-            raise web.unauthorized(render[mobile].error(error_message=_('NO_PERMISSION'), help_context='error'))
+    def write_message_get(self, mobile, current_uid = -1):
         return config.desktop_render.editor_mail(
                 title = '%s - %s' % (_('Write Message'), config.branding))
 
     @util.error_catcher
     @util.session_helper
-    def write_message_post(self, mobile, username, user_id, current_uid = -1):
-        if user_id != current_uid:
-            raise web.unauthorized(render[mobile].error(error_message=_('NO_PERMISSION'), help_context='error'))
+    def write_message_post(self, mobile, current_uid = -1):
+        user_id = current_uid
+        usr = user.get_user(user_id)[1]
+
         data = web.input()
         title = data.title
         body = data.body
@@ -245,11 +277,11 @@ class personal_actions:
         if not result[0]:
             raise web.internalerror(render[mobile].error(error_message=result[1], help_context='error'))
         else:
-            raise web.seeother('/+u/%s/+inbox' % username)
+            raise web.seeother('/+u/+inbox')
 
     @util.error_catcher
     @util.session_helper
-    def read_message_get(self, mobile, username, user_id, current_uid = -1):
+    def read_message_get(self, mobile, current_uid = -1):
         # XXX: 현재는 메시지 번호를 Query String에 담아서 전달한다.
         # 차후 정규 표현식을 고쳐서 다른 게시판처럼 만들어야 한다.
         message_id = -1
@@ -270,7 +302,7 @@ class personal_actions:
 
     @util.error_catcher
     @util.session_helper
-    def delete_message_get(self, mobile, username, user_id, current_uid = -1):
+    def delete_message_get(self, mobile, current_uid = -1):
         # XXX: 현재는 메시지 번호를 Query String에 담아서 전달한다.
         # 차후 정규 표현식을 고쳐서 다른 게시판처럼 만들어야 한다.
         message_id = -1
@@ -286,11 +318,11 @@ class personal_actions:
         if mail.mReceiverSerial != current_uid:
             raise web.unauthorized(render[mobile].error(error_message=_('NO_PERMISSION'), help_context='error'))
         if mobile:
-            default_referer = posixpath.join('/m/+u', username, '+inbox')
-            action='%s?message_id=%s' % (posixpath.join('/m/+u', username, '+delete_message'), message_id)
+            default_referer = posixpath.join('/m/+u', '+inbox')
+            action='%s?message_id=%s' % (posixpath.join('/m/+u', '+delete_message'), message_id)
         else:
-            default_referer = posixpath.join('/+u', username, '+inbox')
-            action='%s?message_id=%s' % (posixpath.join('/+u', username, '+delete_message'), message_id)
+            default_referer = posixpath.join('/+u', '+inbox')
+            action='%s?message_id=%s' % (posixpath.join('/+u', '+delete_message'), message_id)
         return render[mobile].question(question=_('Do you want to delete the message?'),
                 board_path = '', board_desc = _('Confirmation'), title=_('Confirmation'),
                 action = action,
@@ -299,7 +331,7 @@ class personal_actions:
     @util.error_catcher
     @util.confirmation_helper
     @util.session_helper
-    def delete_message_post(self, mobile, username, user_id, current_uid = -1):
+    def delete_message_post(self, mobile, current_uid = -1):
         # XXX: 현재는 메시지 번호를 Query String에 담아서 전달한다.
         # 차후 정규 표현식을 고쳐서 다른 게시판처럼 만들어야 한다.
         message_id = -1
@@ -312,14 +344,12 @@ class personal_actions:
         else:
             raise web.notfound(render[mobile].error(error_message=_('NO_SUCH_MESSAGE'), help_context='error'))
         mail = pm.get_mail(message_id)
-        if mail.mReceiverSerial != current_uid:
-            raise web.unauthorized(render[mobile].error(error_message=_('NO_PERMISSION'), help_context='error'))
         result = pm.delete_mail(message_id)
         if result[0]:
             if mobile:
-                raise web.seeother('/m/+u/%s/+inbox' % username)
+                raise web.seeother('/m/+u/+inbox')
             else:
-                raise web.seeother('/+u/%s/+inbox' % username)
+                raise web.seeother('/+u/+inbox')
         else:
             return config.render[mobile].error(error_message = ret[1],
                     help_context = 'error')
