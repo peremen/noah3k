@@ -27,7 +27,11 @@ def session_helper(func):
         try:
             current_uid = web.ctx.session.uid
         except:
-            raise web.unauthorized(render[mobile].error(error_message = _("NOT_LOGGED_IN"), help_context = 'error'))
+            if mobile:
+                raise web.seeother('/m/+login')
+            else:
+                raise web.seeother('/+login')
+            #raise web.unauthorized(render[mobile].error(error_message = _("NOT_LOGGED_IN"), help_context = 'error'))
         if current_uid < 1:
             raise web.internalerror(render[mobile].error(error_message = _("INVALID_UID"), help_context = 'error'))
         kwargs.update({'current_uid': current_uid})

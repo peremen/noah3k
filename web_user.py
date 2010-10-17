@@ -16,13 +16,8 @@ import pm
 
 class personal_feeds:
     def GET(self, mobile, username, action):
-        return self.caller(mobile, username, action, 'get')
-
-    def POST(self, mobile, username, action):
-        return self.caller(mobile, username, action, 'post')
-
-    def caller(self, mobile, username, action, method):
         if mobile:
+            u
             mobile = True
         else:
             mobile = False
@@ -30,12 +25,12 @@ class personal_feeds:
         user_id = user._get_uid_from_username(username)
 
         try:
-            return eval('self.%s_%s' % (action, method))(mobile, username, user_id)
+            return eval('self.%s' % (action))(mobile, username, user_id)
         except AttributeError:
             raise web.notfound(render[mobile].error(error_message = _('INVALID_ACTION'), help_context='error'))
 
     @util.error_catcher
-    def favorite_rss_get(self, mobile, username, user_id):
+    def favorite_rss(self, mobile, username, user_id):
 
         articles = user.get_favorite_board_feed(user_id, config.favorite_feed_size)
         date = datetime.today()
@@ -47,7 +42,7 @@ class personal_feeds:
                 link_address = 'http://noah.kaist.ac.kr/+u/%s' % username)
 
     @util.error_catcher
-    def favorite_atom_get(self, mobile, username, user_id):
+    def favorite_atom(self, mobile, username, user_id):
 
         articles = user.get_favorite_board_feed(user_id, config.favorite_feed_size)
         date = datetime.today()

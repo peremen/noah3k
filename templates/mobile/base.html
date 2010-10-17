@@ -126,12 +126,12 @@ def get_type(path):
     <a href="/m/+join">${_('Join')}</a> |
     <a href="/m/+login">${_('Login')}</a>
 % else:
-    <a href="/m/+u/${ctx.session.username}/+new_article">${_('New Article')}</a>
+    <a href="/m/+u/+new_article">${_('New Article')}</a>
     <br/>
     
-    <a href="/m/+u/${ctx.session.username}/+my_board">${_('My Boards')}</a> |
+    <a href="/m/+u/+my_board">${_('My Boards')}</a> |
     <a href="/m/+u/${ctx.session.username}/+favorites">${_('Favorites')}</a> |
-    <a href="/m/+u/${ctx.session.username}">${_('My Info')}</a> |
+    <a href="/m/+u">${_('My Info')}</a> |
     <a href="/m/+logout">${_('Logout')}</a>
 % endif
     <br />

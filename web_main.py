@@ -69,9 +69,16 @@ class main_actions:
     @util.error_catcher
     def login_get(self, mobile):
         if mobile:
-            referer = web.ctx.env.get('HTTP_REFERER', '/m')
+            referer = web.ctx.env.get('HTTP_REFERER', '/m/+u/+new_article')
         else:
             referer = web.ctx.env.get('HTTP_REFERER', '/')
+
+        try:
+            if web.ctx.session.uid is not 0:
+                web.seeother(referer)
+        except AttributeError:
+            pass
+
         return render[mobile].login(title = _('Login - %s') % config.branding, board_desc=_('Login'),
                 lang="ko", referer = referer)
 
