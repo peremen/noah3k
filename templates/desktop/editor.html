@@ -2,25 +2,26 @@
 <% from i18n import custom_gettext as _ %>
 <%! scripts = ['/static/scripts/jquery-multifile.js'] %>
 <p>${action_name}</p>
+
 <form enctype="multipart/form-data" method="POST" action="/${board_path}/+${action}">
 <div id="row">
     <div class="left-container">${_('Title')}</div>
     <span class="sep">:</span>
-%if article_title is UNDEFINED:
-    <input name="title" type="text" maxlength="255" style="font-size: 0.9em; width: 500px; height: 1.6em" value="">
-%else:
-    <input name="title" type="text" maxlength="255" style="font-size: 0.9em; width: 500px; height: 1.6em" value="${article_title}">
+    <input id="editor_title" name="title" tabindex="1" type="text" maxlength="255" style="font-size: 0.9em; width: 500px; height: 1.6em">
+%if article_title is not UNDEFINED:
+	${article_title}
 %endif
+    </input>
 </div>
 
 <div id="row">
     <div class="left-container">${_('Content')}<br /><a href="/+help/editor#bbcode" target="_blank">${_('(BBCode Help)')}</a></div>
     <span class="sep">:</span>
-%if body is UNDEFINED:
-    <textarea name="content" style="font-size: 0.9em; width: 550px; height: 360px"></textarea>
-%else:
-    <textarea name="content" style="font-size: 0.9em; width: 550px; height: 360px">${body}</textarea>
+<textarea name="content" tabindex="2" style="font-size: 0.9em; width: 550px; height: 360px" >
+%if body is not UNDEFINED:
+	${body}
 %endif
+</textarea>
 </div>
 %if attachment is not UNDEFINED:
 <% i = 1 %>
@@ -33,15 +34,19 @@
 <% i = i + 1 %>
 % endfor
 % endif
+
 <div id="row">
     <div class="left-container">${_('Attachment')}</div>
     <span class="sep">:</span>
-    <input name="new_attachment" class="multi" type="file" />
+    <input name="new_attachment" tabindex="3" class="multi" type="file" />
 </div>
 
 <div style="text-align: right; width: 52em;">
-    <input type="submit" name="ok" value="${_('Submit')}">
-    <input type="button" value="${_('Go Back')}" onclick="history.back()">
+    <input type="submit" tabindex="4" name="ok" value="${_('Submit')}">
+    <input type="button" tabindex="5" value="${_('Go Back')}" onclick="history.back()">
 </div>
 </form>
-<!-- <iframe id="sessionKeeper" src="sessionkeeper.jsp" scrolling="no" frameborder="0" width="1px" height="1px"></iframe> -->
+
+<script type="text/javascript">
+    $("#editor_title").focus();
+</script>

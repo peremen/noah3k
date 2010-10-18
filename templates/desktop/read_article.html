@@ -92,9 +92,12 @@ ${util.format(article['aContent'])}
     % else:
             <form name="comment" method="post" action="/${board_path}/+comment/${article['aSerial']}">
                 ${_('Write Comment')}
-                <input name="comment" type="text" maxlength="255" style="width: 30em">
+                <input id="read_article_comment" name="comment" type="text" maxlength="255" style="width: 30em">
                 <input type="submit" name="Submit" value="${_('Submit')}">
             </form>
+	    <script type="text/javascript">
+		    $("#read_article_comment").focus();
+	    </script>
     % endif
         </div>
 
