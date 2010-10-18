@@ -74,7 +74,6 @@ class personal_page:
                 feeds = f, help_context='myinfo')
 
 class personal_actions:
-    # TODO: 로그인 필요한 동작에서는 사용자 이름을 빼내는 방법 생각해 볼 것.
     def GET(self, mobile, action):
         return self.caller(mobile, action, 'get')
 
