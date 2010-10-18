@@ -70,6 +70,8 @@ class main_actions:
     def login_get(self, mobile):
         if mobile:
             referer = web.ctx.env.get('HTTP_REFERER', '/m/+u/+new_article')
+            if referer.endswith('/m') or referer.endswith('/m/'):
+                referer = '/m/+u/+new_article'
         else:
             referer = web.ctx.env.get('HTTP_REFERER', '/')
 
