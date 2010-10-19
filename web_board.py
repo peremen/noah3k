@@ -63,7 +63,7 @@ class board_actions:
         board_info = board.get_board_info(board_id)
         board_desc = board_info.bDescription
         user_info = user.get_user(current_uid)[1]
-        return render[mobile].editor(title = _('Write article - %s - %s') % (board_name, config.branding),
+        return render[mobile].editor(title = _('Write article - %s') % (board_name),
                 action='write', action_name = _('Write article'),
                 board_path = board_name, board_desc = board_desc, lang="ko",
                 body = '\n\n\n%s' % user_info['uSig'], help_context='editor')
@@ -154,7 +154,7 @@ class board_actions:
         return render[mobile].board_summary(board_info = board_info,
                 board_path = board_name,
                 board_desc = board_info.bDescription, 
-                title = _('Information - %s - %s') % (board_info.bName, config.branding))
+                title = _('Information - %s') % (board_info.bName))
 
     @util.error_catcher
     def subboard_list_get(self, mobile, board_name = '', board_id = 1):
@@ -168,7 +168,7 @@ class board_actions:
             if board_name[0] != '/':
                 board_name = '/%s' % (board_name)
         return render[mobile].view_subboard_list(lang="ko",
-                title = u"%s - %s" % (board_name, config.branding),
+                title = board_name,
                 board_path = board_path,
                 board_desc = board_info.bDescription,
                 child_boards = child_board)
@@ -176,7 +176,7 @@ class board_actions:
     @util.error_catcher
     def cover_get(self, mobile, board_name, board_id):
         board_info = board.get_board_info(board_id)
-        return config.desktop_render.cover(title = u'%s - %s' % (board_name, config.branding),
+        return config.desktop_render.cover(title = board_name,
                 board_cover = board_info.bInformation)
 
     @util.error_catcher
@@ -190,7 +190,7 @@ class board_actions:
             default_referer = posixpath.join('/m', default_referer)
         return render[mobile].board_editor(action='create_board', board_info = board_info,
                 board_path = board_name, board_desc = board_info.bDescription, 
-                title = _('Create child board - %s - %s') % (board_info.bName, config.branding),
+                title = _('Create child board - %s') % (board_info.bName),
                 referer = web.ctx.env.get('HTTP_REFERER', default_referer))
 
     @util.error_catcher
@@ -241,7 +241,7 @@ class board_actions:
             default_referer = posixpath.join('/m', default_referer)
         return render[mobile].board_editor(action='modify', board_info = board_info,
                 board_path = board_name, board_desc = board_info.bDescription, 
-                title = _('Modify information - %s - %s') % (board_info.bName, config.branding),
+                title = _('Modify information - %s') % (board_info.bName),
                 referer = web.ctx.env.get('HTTP_REFERER', default_referer))
 
     @util.error_catcher

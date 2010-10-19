@@ -12,6 +12,7 @@ from web_article import article_actions
 from web_board import board_actions
 from web_user import personal_page, personal_actions, personal_feeds
 from web_main import main_actions
+from web_labs import labs
 from web_noah2k_support import noah2k_support
 from config import render
 import i18n
@@ -24,8 +25,9 @@ urls = (
     r'/(m|)', 'main_page',
     r'/(m/|)\+help/(\S*)', 'help',
 
-    r'/(m/|)\+u/(\S*)/\+(\w*)', 'personal_feeds',
+    r'/labs/(\S*)', 'labs',
 
+    r'/(m/|)\+u/(\S*)/\+(\w*)', 'personal_feeds',
     r'/(m/|)\+u/\+(\w*)', 'personal_actions',
     r'/(m/|)\+u', 'personal_page',
 
@@ -96,7 +98,7 @@ class help:
             mobile = True
         else:
             mobile = False
-        return render[mobile].help(title = _('Help: %s - %s') % (context, config.branding), lang="ko",
+        return render[mobile].help(title = _('Help: %s') % context, lang="ko",
                 help_context = context)
 
 class view_board:
@@ -150,7 +152,7 @@ class view_board:
         m = article.get_marked_article(board_id)
         t = article._get_total_page_count(board_id, config.page_size)
         return render[mobile].view_board(lang="ko",
-            title = u"%s - %s" % (board_info.bName, config.branding),
+            title = board_info.bName,
             board_path = board_info.bName[1:],
             board_desc = board_info.bDescription,
             articles=a, marked_articles = m,
