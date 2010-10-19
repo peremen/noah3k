@@ -81,9 +81,16 @@ class board_actions:
             fs = web.ctx.get('_fieldstorage')
             try:
                 if fs.has_key('new_attachment'):
-                    for f in fs['new_attachment']:
-                        attachment.add_attachment(ret[1], f.filename, f.value)
-            except TypeError:
+                    new_attachment = fs['new_attachment']
+                    if type(new_attachment) == list:
+                        for f in new_attachment:
+                            attachment.add_attachment(ret[1], f.filename, f.value)
+                    else:
+                        try:
+                            attachment.add_attachment(ret[1], new_attachment.filename, new_attachment.value)
+                        except:
+                            pass
+            except:
                 pass
             if mobile:
                 raise web.seeother('/m/%s/+read/%s' % (board_name, ret[1]))
