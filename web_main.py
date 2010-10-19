@@ -36,7 +36,7 @@ class main_actions:
             ref_path = '/m'
         else:
             ref_path = '/'
-        return render[mobile].join(title = _('Join - %s') % config.branding,
+        return render[mobile].join(title = _('Join'),
                lang="ko", board_desc=_('Join'),
                referer = web.ctx.env.get('HTTP_REFERER', ref_path))
 
@@ -81,7 +81,7 @@ class main_actions:
         except AttributeError:
             pass
 
-        return render[mobile].login(title = _('Login - %s') % config.branding, board_desc=_('Login'),
+        return render[mobile].login(title = _('Login'), board_desc=_('Login'),
                 lang="ko", referer = referer)
 
     @util.error_catcher
@@ -110,7 +110,7 @@ class main_actions:
                 # 로그인 실패
                 err = login[1]
         if not login[0]:
-            return render[mobile].login(title = _('Login - %s') % config.branding, board_desc=_('Login'),
+            return render[mobile].login(title = _('Login'), board_desc=_('Login'),
                     lang="ko", error = err, referer = referer)
         else:
             raise web.seeother(web.input().url)
@@ -128,6 +128,6 @@ class main_actions:
 
     @util.error_catcher
     def credits_get(self, mobile):
-        return render[mobile].credits(title = _('Credits - %s') % config.branding,
+        return render[mobile].credits(title = _('Credits'),
                lang="ko", board_desc=_('Credits'), )
 

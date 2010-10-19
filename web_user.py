@@ -220,7 +220,7 @@ class personal_actions:
         mails = pm.inbox(user_id, page, config.mail_size)
         return config.desktop_render.inbox(mails = mails, 
                 mailbox_name = _('Inbox'),
-                title = '%s - %s - %s' % (_('Inbox'), usr['uId'], config.branding),
+                title = '%s - %s' % (_('Inbox'), usr['uId']),
                 page = page, total_page = pm.inbox_count(user_id) / config.mail_size + 1)
 
     @util.error_catcher
@@ -243,7 +243,7 @@ class personal_actions:
             raise web.unauthorized(render[mobile].error(error_message=_('NO_PERMISSION'), help_context='error'))
         quote_text = _('From message \"%s\":') % mail.mTitle
         return config.desktop_render.editor_mail(
-            title = '%s - %s' % (_('Write Reply'), config.branding),
+            title = _('Write Reply'),
             mail_title = 'Re: %s' % mail.mTitle,
             mail_body = '\n\n[quote=%s]%s\n[/quote]' % (quote_text, mail.mContent),
             mail_receiver = user._get_username_from_uid(mail.mSenderSerial))
@@ -252,7 +252,7 @@ class personal_actions:
     @util.session_helper
     def write_message_get(self, mobile, current_uid = -1):
         return config.desktop_render.editor_mail(
-                title = '%s - %s' % (_('Write Message'), config.branding))
+                title = _('Write Message'))
 
     @util.error_catcher
     @util.session_helper
@@ -292,7 +292,8 @@ class personal_actions:
             raise web.unauthorized(render[mobile].error(error_message=_('NO_PERMISSION'), help_context='error'))
         pm.mark_as_read(message_id)
         return config.desktop_render.read_mail(mail = mail, 
-                title = '%s - %s - %s' % (_('Read Message'), mail.mTitle, config.branding),)
+                title = '%s - %s' % (_('Read Message'), mail.mTitle)
+                )
 
     @util.error_catcher
     @util.session_helper
