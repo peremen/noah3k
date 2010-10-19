@@ -110,9 +110,16 @@ class article_actions:
             fs = web.ctx.get('_fieldstorage')
             try:
                 if fs.has_key('new_attachment'):
-                    for f in fs['new_attachment']:
-                        attachment.add_attachment(ret[1], f.filename, f.value)
-            except TypeError:
+                    new_attachment = fs['new_attachment']
+                    if type(new_attachment) == list:
+                        for f in new_attachment:
+                            attachment.add_attachment(ret[1], f.filename, f.value)
+                    else:
+                        try:
+                            attachment.add_attachment(ret[1], new_attachment.filename, new_attachment.value)
+                        except:
+                            pass
+            except:
                 pass
             if mobile:
                 raise web.seeother('/m/%s/+read/%s' % (board_name, ret[1]))
@@ -143,26 +150,29 @@ class article_actions:
             return render[mobile].error(error_message = _('NO_PERMISSION'), help_context='error')
         data = web.input(new_attachment= {})
         fs = web.ctx.get('_fieldstorage')
-        if fs.has_key('delete'):
-            to_delete = fs['delete']
-            if type(to_delete) == list:
-                for f in to_delete:
-                    attachment.remove_attachment(article_id, f.value)
-            else:
-                try:
-                    attachment.remove_attachment(article_id, to_delete.value)
-                except:
-                    pass
-        if fs.has_key('new_attachment'):
-            new_attachment = fs['new_attachment']
-            if type(new_attachment) == list:
-                for f in new_attachment:
-                    attachment.add_attachment(article_id, f.filename, f.value)
-            else:
-                try:
-                    attachment.add_attachment(article_id, new_attachment.filename, new_attachment.value)
-                except:
-                    pass
+        try:
+            if fs.has_key('delete'):
+                to_delete = fs['delete']
+                if type(to_delete) == list:
+                    for f in to_delete:
+                        attachment.remove_attachment(article_id, f.value)
+                else:
+                    try:
+                        attachment.remove_attachment(article_id, to_delete.value)
+                    except:
+                        pass
+            if fs.has_key('new_attachment'):
+                new_attachment = fs['new_attachment']
+                if type(new_attachment) == list:
+                    for f in new_attachment:
+                        attachment.add_attachment(article_id, f.filename, f.value)
+                else:
+                    try:
+                        attachment.add_attachment(article_id, new_attachment.filename, new_attachment.value)
+                    except:
+                        pass
+        except:
+            pass
 
         a = dict(title = data.title, body = data.content)
         board_info = board.get_board_info(board_id)
