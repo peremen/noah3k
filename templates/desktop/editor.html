@@ -7,11 +7,11 @@
 <div id="row">
     <div class="left-container">${_('Title')}</div>
     <span class="sep">:</span>
-    <input id="editor_title" name="title" tabindex="1" type="text" maxlength="255" style="font-size: 0.9em; width: 500px; height: 1.6em">
+    <input id="editor_title" name="title" tabindex="1" type="text" maxlength="255" style="font-size: 0.9em; width: 500px; height: 1.6em" \
 %if article_title is not UNDEFINED:
-	${article_title}
+	value="${article_title}"\
 %endif
-    </input>
+    />
 </div>
 
 <div id="row">
@@ -19,7 +19,7 @@
     <span class="sep">:</span>
 <textarea name="content" tabindex="2" style="font-size: 0.9em; width: 550px; height: 360px" >
 %if body is not UNDEFINED:
-	${body}
+${body}
 %endif
 </textarea>
 </div>
