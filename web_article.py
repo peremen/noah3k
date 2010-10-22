@@ -177,9 +177,18 @@ class article_actions:
         except:
             pass
 
+        mark_as_unreaded = False
+        try:
+            if web.input().unreaded == "True":
+                mark_as_unreaded = True
+        except:
+            pass
+
+
+
         a = dict(title = data.title, body = data.content)
         board_info = board.get_board_info(board_id)
-        ret = article.modify_article(current_uid, board_id, article_id, a)
+        ret = article.modify_article(current_uid, board_id, article_id, a, mark_as_unreaded)
         if ret[0] == True:
             if theme == 'default':
                 raise web.seeother('/%s/+read/%s' % (board_name, ret[1]))

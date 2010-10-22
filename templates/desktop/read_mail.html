@@ -14,17 +14,17 @@ def get_formatted_username(uid):
 ${_('Internal Error')}
 <% return %>
 % endif
-<div id="row">
+<div class="row">
     <div class="left-container">${_('Title')}</div>
     <span class="sep">:</span>
     <span id="title">${mail.mTitle}</span>
 </div>
-<div id="row">
+<div class="row">
     <div class="left-container">${_('Author')}</div>
     <span class="sep">:</span>
     <span id="writer">${get_formatted_username(mail.mSenderSerial)}</span>
 </div>
-<div id="row">
+<div class="row">
     <div class="left-container">${_('Date/Time')}</div>
     <span class="sep">:</span>
     <span id="writetime">${mail.mDatetime.strftime('%Y-%m-%d %H:%M:%S')}</span>

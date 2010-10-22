@@ -5,12 +5,12 @@ from i18n import custom_gettext as _ %>
 <%inherit file="base.html" />
 <div style="width: 640px">
     <div class="heading">${_('Personal Information')}</div>
-    <div id="row">
+    <div class="row">
         <div class="left-container">ID</div>
         <span class="sep">:</span>
         <span>${user.uId}</span>
     </div>
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Nickname')}</div>
         <span class="sep">:</span>
 %if user.uNick is UNDEFINED:
@@ -21,7 +21,7 @@ from i18n import custom_gettext as _ %>
         <span>${user.uNick}</span>
 % endif
     </div>
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('E-Mail')}</div>
         <span class="sep">:</span>
 %if user.uEmail is UNDEFINED:
@@ -32,7 +32,7 @@ from i18n import custom_gettext as _ %>
         <span>${user.uEmail}</span>
 % endif
     </div>
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Website')}</div>
         <span class="sep">:</span>
 %if user.uHomepage is UNDEFINED:
@@ -43,7 +43,7 @@ from i18n import custom_gettext as _ %>
         <span>${user.uHomepage}</span>
 % endif
     </div>
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Signature')}</div>
         <span class="sep">:</span>
         <div style="border: solid 1px lightgray; margin-left:9em">
@@ -56,7 +56,7 @@ from i18n import custom_gettext as _ %>
 % endif
         </div>
     </div>
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Introduction')}</div>
         <span class="sep">:</span>
         <div style="border: solid 1px lightgray; margin-left: 9em">
@@ -68,7 +68,7 @@ from i18n import custom_gettext as _ %>
             <span style="font-size: 0.9em">${util.format(user.uPlan)}</span>
 % endif
         </div>
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Language')}</div>
         <span class="sep">:</span>
         <span>${util.lcode_to_name(user.language)}</span>
@@ -76,29 +76,29 @@ from i18n import custom_gettext as _ %>
     </div>
 
     <div class="heading">${_('Usage Statistics')}</div>
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Join Date')}</div>
         <span class="sep">:</span>
         <span>${user.uDatetime}</span>
     </div>
-    <div id="row"> 
+    <div class="row"> 
         <div class="left-container">${_('Login Count')}</div>
         <span class="sep">:</span>
         <span>${user.uNumLogin}</span>
     </div>
-    <div id="row"> 
+    <div class="row"> 
         <div class="left-container">${_('Posts')}</div>
         <span class="sep">:</span>
         <span>${user_.get_post_count(user_id)}</span>
     </div>
-    <div id="row"> 
+    <div class="row"> 
         <div class="left-container">${_('_:Count\nComments')}</div>
         <span class="sep">:</span>
         <span>${user_.get_comment_count(user_id)}</span>
     </div>
 %if ctx.session is not UNDEFINED and ctx.session.has_key('uid'):
     % if ctx.session.uid == 1 or ctx.session.uid == user_id:
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Last Login')}</div>
         <span class="sep">:</span>
         %if user.uLastLogin is UNDEFINED:
@@ -107,7 +107,7 @@ from i18n import custom_gettext as _ %>
         <span>${user.uLastLogin}</span>
         % endif
     </div>
-    <div id="row"> 
+    <div class="row"> 
         <div class="left-container">${_('Last Login IP')}</div>
         <span class="sep">:</span>
         %if user.uLastHost is UNDEFINED:
@@ -118,7 +118,7 @@ from i18n import custom_gettext as _ %>
         <span>${user.uLastHost}</span>
         % endif
     </div>
-    <div id="row"> 
+    <div class="row"> 
         <div class="left-container">${_('Password Strength')}</div>
         <span class="sep">:</span>
         <% password_strength = user_.get_password_strength(user_id) %>

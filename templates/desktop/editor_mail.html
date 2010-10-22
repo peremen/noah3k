@@ -3,7 +3,7 @@ from i18n import custom_gettext as _ %>
 <%inherit file="base_mail.html" />
 <h1>${_('Write Private Message')}</h1>
 <form name="write_form" method="post" action="/+u/+write_message">
-<div id="row">
+<div class="row">
     <div class="left-container">${_('To')}</div>
     <span class="sep">:</span>
 % if mail_receiver is UNDEFINED:
@@ -13,7 +13,7 @@ from i18n import custom_gettext as _ %>
 % endif
 </div>
 
-<div id="row">
+<div class="row">
     <div class="left-container">${_('Title')}</div>
     <span class="sep">:</span>
 % if mail_title is UNDEFINED:
@@ -23,7 +23,7 @@ from i18n import custom_gettext as _ %>
 % endif
 </div>
 
-<div id="row">
+<div class="row">
     <div class="left-container">${_('Content')}</div>
     <span class="sep">:</span>
     <textarea name="body" style="font-size: 0.9em; width: 550px; height: 360px">
