@@ -64,15 +64,15 @@ class redirect:
 
 class main_page:
     def GET(self, theme):
-        if not render.has_key(theme):
-            theme = 'default'
-        if not render.has_key(theme):
+        if theme != "" and not render.has_key(theme):
             vb = view_board()
             return vb.GET('default', theme)
         if theme == 'm':
             v = board_actions()
             return v.subboard_list_get(theme)
         else:
+            if theme == '':
+                theme = 'default'
             child_board = board.get_child(1)
 
             notice_board_path = '/divisionCS/Notice'
