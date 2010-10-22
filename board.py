@@ -23,8 +23,10 @@ else:
 
 def _get_board_id_from_path(path):
     if path != "":
-        if path[0] != '/':
+        if not path.startswith('/'):
             path = '/%s' % path
+        if path.endswith('/'):
+            path = path[:-1]
     val = dict(board_path = path)
     result = db.select('Boards', val, where="bName = $board_path")
     try:

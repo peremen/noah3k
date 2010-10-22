@@ -7,7 +7,7 @@ import board
 from cgi import parse_qs
 import posixpath
 import sys, traceback
-from config import render
+from render import render
 import i18n
 _ = i18n.custom_gettext
 

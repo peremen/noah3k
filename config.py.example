@@ -1,7 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import os
-from web.contrib.template import render_mako
 
 # Section 1: 데이터베이스
 db_host = "noah.kaist.ac.kr"
@@ -34,16 +33,5 @@ i18n_path = os.path.join(os.path.dirname(__file__), 'i18n')
 
 store_error_report = True
 error_report_path = os.path.join(os.path.dirname(__file__), 'error_report')
-
-desktop_render = render_mako(
-    directories = [os.path.join(os.path.dirname(__file__), 'templates/desktop/').replace('\\','/'),],
-    input_encoding = 'utf-8', output_encoding = 'utf-8',
-)
-
-mobile_render = render_mako(
-    directories = [os.path.join(os.path.dirname(__file__), 'templates/mobile/').replace('\\','/'),],
-    input_encoding = 'utf-8', output_encoding = 'utf-8',
-)
-render = {False: desktop_render, True: mobile_render}
 
 logo_url = '/static/image/logo.png'

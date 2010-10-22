@@ -86,12 +86,6 @@ ${user.uNick} \
 % endif
 </ul>
 <br />
-##%if ctx.session.username == username:
-##    <a href="/m/+u/${username}/+my_posts">${_('My Posts')}</a>
-##%else:
-##    <a href="/m/+u/${username}/+my_posts">${_('Posts By This User')}</a>
-##% endif
-%if ctx.session.username == username:
-<a class="button" href="/m/+u/${username}/+modify">${_('Modify')}</a>
-<a class="button" href="/m/+u/${username}/+leave">${_('Leave NOAH')}</a>
-% endif
+<a class="button" href="/m/+u/+my_posts">${_('My Posts')}</a>
+<a class="button" href="/m/+u/+modify">${_('Modify')}</a>
+<a class="button" href="/m/+u/+leave">${_('Leave NOAH')}</a>
