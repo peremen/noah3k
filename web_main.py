@@ -12,6 +12,7 @@ import util
 from render import render
 import i18n
 _ = i18n.custom_gettext
+from web_board import board_actions
 
 class main_actions:
     def GET(self, theme, action):
@@ -21,7 +22,10 @@ class main_actions:
         return self.caller(theme, action, 'post')
 
     def caller(self, theme, action, method):
-        if not render.has_key(theme):
+        if theme and not render.has_key(theme):
+            ba = board_actions()
+            return ba.caller('default', theme, action, method)
+        if not theme:
             theme = 'default'
         try:
             return eval('self.%s_%s' % (action, method))(theme)
