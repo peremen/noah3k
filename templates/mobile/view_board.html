@@ -2,6 +2,7 @@
 <%
 from web import ctx
 import user, article, acl, board
+import attachment
 import datetime
 from i18n import custom_gettext as _
 def get_formatted_username(uid):
@@ -105,7 +106,11 @@ today = datetime.datetime.today()
         <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (a.aLevel-1)}px" />
     %endif
         <a href="/m/${board_path}/+read/${a.aSerial}" class="articlelink">${a.aTitle}
+    <% attach_cnt = len(attachment.get_attachment(a.aSerial)) %>
     <% cmt_cnt = article.get_comment_count(a.aSerial) %>
+    % if attach_cnt > 0:
+    <img src="/static/image/file.png" alt="attachment" />
+    % endif
     % if cmt_cnt > 0:
         [${cmt_cnt}]
     % endif
