@@ -105,10 +105,10 @@ today = datetime.datetime.today()
         <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (a.aLevel-1)}px" />
     %endif
         <a href="/m/${board_path}/+read/${a.aSerial}" class="articlelink">${a.aTitle}
-    <% cmt_cnt = article.get_comment_count(a.aSerial) %>
-    % if cmt_cnt > 0:
+
+	% if a.comment_count > 0:
         [${cmt_cnt}]
-    % endif
+        % endif
         </a>
     </td>
     <!-- 글쓴이 -->

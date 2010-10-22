@@ -117,9 +117,8 @@ if ctx.session.has_key('uid'):
 <b>
 %endif
         <a href="/${board_path}/+read/${a.aSerial}" class="articlelink">${a.aTitle}
-        <% cmt_cnt = article.get_comment_count(a.aSerial) %>
-        % if cmt_cnt > 0:
-        <span class="commentCount">[${cmt_cnt}]</span>
+	% if a.comment_count > 0:
+        <span class="commentCount">[${a.comment_count}]</span>
         % endif
         </a>
 %if unreaded:
