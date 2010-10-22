@@ -1,6 +1,7 @@
 <%inherit file="base.html" />
 <%
 import user, article, acl, board
+import attachment
 from web import ctx
 from i18n import custom_gettext as _
 %>
@@ -117,6 +118,10 @@ if ctx.session.has_key('uid'):
 <b>
 %endif
         <a href="/${board_path}/+read/${a.aSerial}" class="articlelink">${a.aTitle}
+        <% attach_cnt = len(attachment.get_attachment(a.aSerial)) %>
+        % if attach_cnt > 0:
+        <img src="/static/image/file.png" style="vertical-align: bottom; border: 0;" alt="attachment" />
+        % endif
 	% if a.comment_count > 0:
         <span class="commentCount">[${a.comment_count}]</span>
         % endif
