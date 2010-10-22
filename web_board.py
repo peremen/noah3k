@@ -29,6 +29,8 @@ class board_actions:
         return self.caller(theme, board_name, action, 'post')
 
     def caller(self, theme, board_name, action, method):
+        if not theme:
+            theme = ''
         if board_name[0] == '/':
             board_name = board_name[1:]
         if not render.has_key(theme):
