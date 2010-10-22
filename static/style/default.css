@@ -220,7 +220,7 @@ div#body .heading {
     margin-bottom: 4px;
 }
 
-div#row {
+div.row {
     color: #000000;
     margin-bottom: 0.3em;
      padding: 0;

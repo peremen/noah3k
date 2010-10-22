@@ -223,7 +223,7 @@ def write_article(uid, board_id, article):
 
     return (True, ret)
 
-def modify_article(uid, board_id, article_id, article):
+def modify_article(uid, board_id, article_id, article, mark_as_unreaded):
     if not acl.is_allowed('article', article_id, uid, 'modify'):
         return (False, _('NO_PERMISSION'))
     current_user = user.get_user(uid)
@@ -244,12 +244,17 @@ def modify_article(uid, board_id, article_id, article):
     except IndexError:
         return (False, _('NO_SUCH_ARTICLE'))
 
+
     val = dict(article_id = article_id, title = article['title'], body = article['body'])
     t = db.transaction()
     try:
         ret = db.update('Articles', vars = val, where = 'aSerial = $article_id',
                 aTitle = article['title'], aContent = article['body'],
                 aEditedDatetime = web.SQLLiteral('NOW()'))
+
+        if mark_as_unreaded:
+            db.update('Articles', vars = dict(aSerial = article_id), where = 'aSerial = $aSerial',
+                    aUpdatedDatetime= web.SQLLiteral('NOW()'))
     except:
         t.rollback()
         return (False, _('DATABASE_ERROR'))

@@ -9,7 +9,7 @@ def get_userid(uid):
 <form name="write_form" method="post" action="/${board_path}/+${action}">
 <div>
     <div class="heading">${_('Basic Information')}</div>
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Location')}</div>
         <span class="sep">:</span>
         <span>
@@ -21,7 +21,7 @@ def get_userid(uid):
         </span>
     </div>
 <!-- 게시판 이름 -->
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Name')}</div>
         <span class="sep">:</span>
         <span>
@@ -33,7 +33,7 @@ def get_userid(uid):
         </span>
     </div>
     <!-- 관리자 -->
-    <div id="row"> 
+    <div class="row"> 
         <div class="left-container">${_('Admin')}</div>
         <span class="sep">:</span>
         <span>
@@ -43,7 +43,7 @@ def get_userid(uid):
 
     <div class="heading">${_('Details')}</div>
     <!-- 타입 -->
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Type')}</div>
         <span class="sep">:</span>
         <span>
@@ -71,7 +71,7 @@ checked="checked" \
     </div>
 
     <!-- 커멘트 여부 -->
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Comments')}</div>
         <span class="sep">:</span>
         <span>
@@ -99,7 +99,7 @@ checked="checked" \
     </div>
 
     <!-- 글쓰기 여부 -->
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Guest Writing')}</div>
         <span class="sep">:</span>
         <span>
@@ -128,7 +128,7 @@ checked="checked" \
 
     <div class="heading">${_('Board Description')}</div>
     <!-- 한줄 설명 -->
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Short Description')}</div>
         <span class="sep">:</span>
         <span><input name="description" type="text" maxlength="255" style="width:300px"
@@ -141,7 +141,7 @@ value="${board_info.bDescription}" /> \
     </div>
 
     <!-- 한바닥 설명 -->
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Long Description')}</div>
         <span class="sep">:</span>
         <textarea name="information" style="font-size: 1.2em; width: 500px; height: 360px">

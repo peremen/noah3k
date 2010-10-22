@@ -15,7 +15,7 @@ def get_formatted_username(uid):
 %>
 <div id="article">
     <!-- 글 -->
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Title')}</div>
         <span class="sep">:</span>
 % if A.get_mark_status(article['aSerial']):
@@ -24,18 +24,18 @@ def get_formatted_username(uid):
         <span id="title">${article['aTitle']}</span>
 % endif
     </div>
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Author')}</div>
         <span class="sep">:</span>
         <span id="writer">${get_formatted_username(article['uSerial'])}</span>
     </div>
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Date/Time')}</div>
         <span class="sep">:</span>
         <span id="writetime">${article['aDatetime']}</span>
     </div>
 % if article.aEditedDatetime:
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Last Modified')}</div>
         <span class="sep">:</span>
         <span id="edittime">${article['aEditedDatetime']}</span>
@@ -43,7 +43,7 @@ def get_formatted_username(uid):
 % endif
 % if attachment is not UNDEFINED:
     % for a in attachment:
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Attachment')}</div>
         <span class="sep">:</span>
         <span class="attachment"><a class="filelink" href="${config.attachment_web_path}${article['aSerial']}/${urllib.quote(a)}">${a.decode('utf-8')}</a> (${A_.format_file_size(A_.get_attachment_size(article['aSerial'], a))})</span>
@@ -137,14 +137,14 @@ ${util.format(article['aContent'])}
 
     <!-- 이전글/다음글 -->
 % if prev_id > 0:
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Previous Article')}</div>
         <span class="sep">: </span>
         <span id="title"><a class="articlelink" href="/${board_path}/+read/${prev_id}">${A.get_title(prev_id)}</a></span> 
     </div>
 % endif
 % if next_id > 0:
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Next Article')}</div>
         <span class="sep">: </span>
         <span id="title"><a class="articlelink" href="/${board_path}/+read/${next_id}">${A.get_title(next_id)}</a></span> 

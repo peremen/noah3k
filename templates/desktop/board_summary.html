@@ -43,27 +43,27 @@ upper_admin_list.sort()
 <div>
     <div class="heading">${_('Basic Information')}</div>
 
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Location')}</div>
         <span class="sep">:</span>
         <span>${posixpath.dirname(board_info.bName)}</span>
     </div>
 
     <!-- 게시판 이름 -->
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Name')}</div>
         <span class="sep">:</span>
         <span>${posixpath.basename(board_info.bName)}</span>
     </div>
     <!-- 관리자 -->
-    <div id="row"> 
+    <div class="row"> 
         <div class="left-container">${_('Admin')}</div>
         <span class="sep">:</span>
         <span>${get_formatted_username(board_info.uSerial)}</span>
     </div>
 % if len(upper_admin_list) > 0:
     <!-- 상위 관리자 -->
-    <div id="row"> 
+    <div class="row"> 
         <div class="left-container">${_('Upper Admin(s)')}</div>
         <span class="sep">:</span>
         <span>${', '.join(upper_admin_list)}</span>
@@ -73,21 +73,21 @@ upper_admin_list.sort()
     <div class="heading">${_('Details')}</div>
     
     <!-- 타입 -->
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Type')}</div>
         <span class="sep">:</span>
         <span>${[_('Folder'), _('Board')][board_info.bType]}</span>
     </div>
 
     <!-- 커멘트 여부 -->
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Comments')}</div>
         <span class="sep">:</span>
         <span>${[_('Not Allow'), _('Allow')][board_info.bComment]}</span>
     </div>
 
     <!-- 글쓰기 여부 -->
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Guest Writing')}</div>
         <span class="sep">:</span>
         <span>${[_('Not Allow'), _('Allow')][board_info.bWrite]}</span>
@@ -95,14 +95,14 @@ upper_admin_list.sort()
 
     <div class="heading">${_('Board Description')}</div>
     <!-- 한줄 설명 -->
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Short Description')}</div>
         <span class="sep">:</span>
         <span>${board_info.bDescription}</span>
     </div>
 
     <!-- 한바닥 설명 -->
-    <div id="row">
+    <div class="row">
         <div class="left-container">${_('Long Description')}</div>
         <span class="sep">:</span>
         <div style="border: solid 1px lightgray; margin-left:9em">
