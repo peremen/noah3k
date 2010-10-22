@@ -12,7 +12,6 @@ from web_article import article_actions
 from web_board import board_actions
 from web_user import personal_page, personal_actions, personal_feeds
 from web_main import main_actions
-from web_labs import labs
 from web_noah2k_support import noah2k_support
 from config import render
 import i18n
@@ -24,8 +23,6 @@ urls = (
     r'/(\w*).jsp', 'noah2k_support',
     r'/(m|)', 'main_page',
     r'/(m/|)\+help/(\S*)', 'help',
-
-    r'/labs/(\S*)', 'labs',
 
     r'/(m/|)\+u/(\S*)/\+(\w*)', 'personal_feeds',
     r'/(m/|)\+u/\+(\w*)', 'personal_actions',
