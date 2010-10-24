@@ -219,12 +219,13 @@ def _board_search_comparator(b1, b2):
 
 def search_board(description):
     val = dict(desc = description)
-    list = []
+    ret = []
     for row in db.select('Boards', val, where="bDescription LIKE $desc"):
-        list.append(row)
+        ret.append(row)
 
-    list.sort(_board_search_comparator)
-    list = list[0:7]
-    list.reverse()
+    ret.sort(_board_search_comparator)
+    ret = ret[0:7]
+    ret.reverse()
     
-    return list
+    return ret
+

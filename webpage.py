@@ -102,6 +102,8 @@ class view_board:
         if board_name[0] == '/':
             board_name = board_name[1:]
         if not render.has_key(theme):
+            if theme == None:
+                theme = ''
             board_name = posixpath.join(theme, board_name)
             theme = 'default'
         if board_name == '*' or board_name == '^root':

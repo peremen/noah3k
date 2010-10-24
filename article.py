@@ -3,6 +3,7 @@
 
 import config
 import web
+import math
 
 import user, acl
 import posixpath
@@ -439,3 +440,38 @@ def delete_comment(uid, comment_id):
         return (False, _('DATABASE_ERROR'))
 
     return (True, comment_info.aSerial)
+
+def search_article(board_id, keyword, page_size=20, page_no = 1, author=False, title=True, body=True):
+    all_percent = True
+    for ch in keyword:
+        if ch == '%':
+            all_percent = all_percent and True
+        else:
+            all_percent= all_percent and False
+    if all_percent:
+        return (False, _('NO_KEYWORD_SPECIFIED'))
+    if len(keyword.strip()) == 0:
+        return (False, _('NO_KEYWORD_SPECIFIED'))
+    kw = '%' + keyword + '%'
+    author_base = 'aId LIKE $kw'
+    title_base = 'aTitle LIKE $kw'
+    body_base = 'aContent LIKE $kw'
+    cond_list = []
+
+    if author:
+        cond_list.append(author_base)
+    if title:
+        cond_list.append(title_base)
+    if body:
+        cond_list.append(body_base)
+    cond = " OR ".join(cond_list)
+    cond = 'bSerial = $board_id AND (' + cond + ')'
+    offset = (page_no - 1) * page_size
+    val = dict(board_id = board_id, kw = kw, page_size = page_size,
+            offset = offset)
+
+    ret = db.query('SELECT COUNT(*) AS result_count from Articles NATURAL LEFT JOIN (SELECT aSerial, COUNT(*) AS comment_count FROM Comments WHERE bSerial = $board_id GROUP BY aSerial) AS comment_group WHERE ' + cond + ' ORDER BY aIndex DESC', val)
+    total_pages = int(math.ceil(int(ret[0].result_count) / float(page_size)))
+
+    ret = db.query('SELECT * from Articles NATURAL LEFT JOIN (SELECT aSerial, COUNT(*) AS comment_count FROM Comments WHERE bSerial = $board_id GROUP BY aSerial) AS comment_group WHERE ' + cond + ' ORDER BY aIndex DESC LIMIT $offset, $page_size', val)
+    return (True, total_pages, ret)

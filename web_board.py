@@ -8,6 +8,7 @@ import board, user, article
 import util, attachment, acl
 from datetime import datetime
 from cgi import parse_qs
+import urllib
 import posixpath
 from render import render
 import i18n
@@ -317,3 +318,60 @@ class board_actions:
         else:
             return render[theme].error(error_message = ret[1], help_context='error')
 
+    @util.error_catcher
+    def search_get(self, theme, board_name, board_id):
+        board_info = board.get_board_info(board_id)
+        if web.ctx.query == '':
+            qs = dict()
+        else:
+            # XXX: http://bugs.python.org/issue8136
+            qs = parse_qs(urllib.unquote(web.ctx.query[1:]).encode('latin-1').decode('utf-8'))
+
+        if not qs.has_key('q'):
+            return render[theme].error(error_message = _('NO_KEYWORD_SPECIFIED'),
+                    help_context = 'error')
+        keyword = qs['q'][0]
+        if qs.has_key('size'):
+            page_size = int(qs['size'][0])
+        else:
+            page_size = config.page_size
+        if qs.has_key('page'):
+            page_no = int(qs['page'][0])
+        else:
+            page_no = 1
+        author = False
+        title = True
+        body = True
+        if qs.has_key('author'):
+            author = True
+            title = False
+            body = False
+        if qs.has_key('title'):
+            title = True
+            body = False
+        if qs.has_key('body'):
+            body = True
+        ret = article.search_article(board_id, keyword, page_size, page_no,
+                author, title, body)
+        search_qs = "/+search?"
+        if author:
+            search_qs += "author=1&"
+        if title:
+            search_qs += "title=1&"
+        if body:
+            search_qs += "body=1&"
+        if keyword:
+            search_qs += "q=%s" % urllib.quote(keyword.encode('utf-8'))
+        if ret[0]:
+            return render[theme].view_board(lang="ko",
+                title = board_info.bName,
+                board_path = board_info.bName[1:],
+                board_desc = _('Search Results'),
+                articles=ret[2], marked_articles = [],
+                total_page = ret[1], page = page_no, feed = False,
+                help_context = 'view_board', indent = False,
+                author_checked = author, title_checked = title,
+                body_checked = body, search_keyword = keyword,
+                search_qs = search_qs)
+        else:
+            return render[theme].error(error_message = ret[1], help_context='error')
