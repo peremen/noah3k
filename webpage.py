@@ -77,13 +77,11 @@ class main_page:
 
             notice_board_path = '/divisionCS/Notice'
             notice_board_id = board._get_board_id_from_path(notice_board_path)
-            page = article._get_total_page_count(notice_board_id, 5)
-            a = article.get_article_list(notice_board_id, 5, page)
+            a = article.get_recent_article_list(notice_board_id, 5)
 
             student_notice_board_path = '/divisionCS/studentNotice'
             student_notice_board_id = board._get_board_id_from_path(student_notice_board_path)
-            page = article._get_total_page_count(student_notice_board_id, 5)
-            b = article.get_article_list(student_notice_board_id, 5, page)
+            b = article.get_recent_article_list(student_notice_board_id, 5)
             return render[theme].main(title = u'전산학과 BBS 노아입니다', lang='ko',
                     board_desc = _('[KAIST CS BBS]'), board_path = '',
                     child_boards = child_board, notice_board_path = notice_board_path,

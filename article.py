@@ -31,6 +31,10 @@ def _get_total_page_count(board_id, page_size):
     total_article = _get_article_count(board_id)
     return  (total_article + page_size -1) / page_size
 
+def get_recent_article_list(board_id, count):
+    val = dict(board_id = board_id, limit = count)
+    return db.query('select * from Articles natural left join (select aSerial, COUNT(*) as comment_count from Comments where bSerial = $board_id group by aSerial) as comment_group where bSerial = $board_id order by aIndex DESC limit $limit', val)
+
 def get_article_list(board_id, page_size, page_number):
     total_article = _get_article_count(board_id)
     last_page = _get_total_page_count(board_id, page_size)
