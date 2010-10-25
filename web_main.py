@@ -13,6 +13,7 @@ from render import render
 import i18n
 _ = i18n.custom_gettext
 from web_board import board_actions
+import urllib, urllib2
 
 class main_actions:
     def GET(self, theme, action):
@@ -46,7 +47,22 @@ class main_actions:
     @util.confirmation_helper
     def join_post(self, theme):
         data = web.input()
-        username = data.id
+        recaptcha_url = 'http://www.google.com/recaptcha/api/verify'
+        recaptcha_data = dict(challenge = data.recaptcha_challenge_field,
+                response = data.recaptcha_response_field,
+                remoteip = web.ctx.ip,
+                privatekey = config.recaptcha_private_key)
+        req = urllib2.Request(recaptcha_url, urllib.urlencode(recaptcha_data))
+        response = urllib2.urlopen(req)
+        page = response.read().split('\n')
+        if page[0] == 'false':
+            if page[1].strip() == 'incorrect-captcha-sol':
+                return render[theme].error(error_message = _('INCORRECT_CAPTCHA'), help_context='error')
+            else:
+                return render[theme].error(error_message = _('CAPTCHA_ERROR'), help_context='error')
+        username = data.id.strip()
+        if username == '':
+            return render[theme].error(error_message = _('NO_USERNAME_SPECIFIED'), help_context='error')
         if user._get_uid_from_username(username) > 0:
             return render[theme].error(error_message = _('ID_ALREADY_EXISTS'), help_context='error')
         if data.password1 != data.password2:

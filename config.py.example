@@ -35,3 +35,4 @@ store_error_report = True
 error_report_path = os.path.join(os.path.dirname(__file__), 'error_report')
 
 logo_url = '/static/image/logo.png'
+recaptcha_private_key = 'PRIVATE_KEY_BY_GOOGLE'

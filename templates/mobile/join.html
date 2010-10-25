@@ -15,6 +15,19 @@ ${_('Repeat Password')}*: <input name="password2" type="password" style="width: 
 <hr />
 ${_('Nickname')}: <input name="nick" type="text" maxlength="16"><br />
 ${_('E-Mail')}: <input name="email" type="text" maxlength="32"><br />
+<hr />
+<script type="text/javascript"
+   src="http://www.google.com/recaptcha/api/challenge?k=6LeiJb4SAAAAAP7gvPt83GUXLHsv9WDzz61yDFvL">
+</script>
+<noscript>
+   <iframe src="http://www.google.com/recaptcha/api/noscript?k=6LeiJb4SAAAAAP7gvPt83GUXLHsv9WDzz61yDFvL"
+       height="300" width="500" frameborder="0"></iframe><br>
+   <textarea name="recaptcha_challenge_field" rows="3" cols="40">
+   </textarea>
+   <input type="hidden" name="recaptcha_response_field"
+       value="manual_challenge">
+</noscript>
+<hr />
 <input type="submit" name="ok" value="${_('Join')}">
 <input type="submit" name="cancel" value="${_('Cancel')}">
 <input type="hidden" name="referer" value="${referer}">

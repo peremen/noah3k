@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2010-10-24 18:40+0900\n"
-"PO-Revision-Date: 2010-10-24 18:40+0900\n"
+"POT-Creation-Date: 2010-10-26 02:12+0900\n"
+"PO-Revision-Date: 2010-10-26 02:12+0900\n"
 "Last-Translator: Park Shinjo <peremen@gmail.com>\n"
 "Language-Team: Korean <peremen@gmail.com>\n"
 "Language: ko\n"
@@ -114,7 +114,7 @@ msgstr "암호가 잘못되었습니다"
 msgid "INVALID_USERNAME"
 msgstr "사용자 이름이 잘못되었습니다"
 
-#: user.py:274 web_main.py:51
+#: user.py:274 web_main.py:67
 msgid "ID_ALREADY_EXISTS"
 msgstr "ID가 이미 존재합니다"
 
@@ -138,7 +138,7 @@ msgstr "공지 사항이 없습니다"
 msgid "INVALID_BOARD"
 msgstr "지정한 게시판이 없습니다"
 
-#: web_article.py:39 web_board.py:49 web_main.py:33 web_user.py:25
+#: web_article.py:39 web_board.py:49 web_main.py:34 web_user.py:25
 #: web_user.py:78
 msgid "INVALID_ACTION"
 msgstr "지원하지 않는 동작"
@@ -222,33 +222,45 @@ msgstr "이 게시판을 삭제하시겠습니까?"
 msgid "Search Results"
 msgstr "검색 결과"
 
-#: web_main.py:41 web_main.py:42 templates/desktop/header.html:54
-#: templates/desktop/header.html:57 templates/desktop/join.html:43
+#: web_main.py:42 web_main.py:43 templates/desktop/header.html:54
+#: templates/desktop/header.html:57 templates/desktop/join.html:55
 #: templates/mobile/base.html:123 templates/mobile/base.html:126
-#: templates/mobile/join.html:3 templates/mobile/join.html:18
+#: templates/mobile/join.html:3 templates/mobile/join.html:31
 msgid "Join"
 msgstr "가입"
 
-#: web_main.py:53 web_user.py:115
+#: web_main.py:60
+msgid "INCORRECT_CAPTCHA"
+msgstr "CAPTCHA 문자열을 다시 확인하십시오"
+
+#: web_main.py:62
+msgid "CAPTCHA_ERROR"
+msgstr "CAPTCHA 서버와 통신할 수 없음. 잠시 후 다시 시도하십시오."
+
+#: web_main.py:65
+msgid "NO_USERNAME_SPECIFIED"
+msgstr "사용자 이름을 입력하지 않았습니다"
+
+#: web_main.py:69 web_user.py:115
 msgid "PASSWORD_DO_NOT_MATCH"
 msgstr "암호가 일치하지 않습니다"
 
-#: web_main.py:55 web_user.py:117
+#: web_main.py:71 web_user.py:117
 msgid "PASSWORD_TOO_SHORT"
 msgstr "암호가 너무 짧습니다"
 
-#: web_main.py:88 web_main.py:117 templates/desktop/header.html:55
+#: web_main.py:104 web_main.py:133 templates/desktop/header.html:55
 #: templates/desktop/header.html:58 templates/desktop/login.html:33
 #: templates/mobile/base.html:124 templates/mobile/base.html:127
 #: templates/mobile/login.html:15
 msgid "Login"
 msgstr "로그인"
 
-#: web_main.py:101
+#: web_main.py:117
 msgid "No user ID or password specified."
 msgstr "사용자 ID나 암호를 입력하지 않았습니다."
 
-#: web_main.py:135 web_main.py:136 templates/mobile/base.html:139
+#: web_main.py:151 web_main.py:152 templates/mobile/base.html:139
 msgid "Credits"
 msgstr "개발자 정보"
 
@@ -465,9 +477,9 @@ msgstr "한 바닥 설명"
 msgid "Submit"
 msgstr "완료"
 
-#: templates/desktop/board_editor.html:158 templates/desktop/join.html:44
+#: templates/desktop/board_editor.html:158 templates/desktop/join.html:56
 #: templates/desktop/myinfo_edit.html:72 templates/desktop/question.html:14
-#: templates/mobile/board_editor.html:123 templates/mobile/join.html:19
+#: templates/mobile/board_editor.html:123 templates/mobile/join.html:32
 #: templates/mobile/myinfo_edit.html:34 templates/mobile/question.html:12
 msgid "Cancel"
 msgstr "취소"
