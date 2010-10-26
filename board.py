@@ -22,6 +22,8 @@ else:
     db = web.config._database
 
 def _get_board_id_from_path(path):
+    if path == '':
+        return 1
     if path != "":
         if not path.startswith('/'):
             path = '/%s' % path
