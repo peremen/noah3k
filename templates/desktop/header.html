@@ -3,7 +3,7 @@ import board, posixpath, pm, config
 from web import ctx
 def traverse_board_path(path):
     if path == '^root':
-        path = ''
+        path = '/'
     ret = ""
     id = board._get_board_id_from_path(path)
     while id != 1:
@@ -35,7 +35,7 @@ def traverse_child_board(path):
 
 def get_type(path):
     if path == '^root':
-        path = ''
+        path = '/'
     id = board._get_board_id_from_path(path)
     data = board.get_board_info(id)
     return data.bType

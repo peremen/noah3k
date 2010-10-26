@@ -39,6 +39,7 @@ class board_actions:
             theme = 'default'
         if board_name == '^root':
             board_id = 1
+            board_name = '/'
         else:
             board_id = board._get_board_id_from_path(board_name)
         if board_id < 0:
@@ -164,6 +165,8 @@ class board_actions:
     @util.error_catcher
     def summary_get(self, theme, board_name, board_id):
         board_info = board.get_board_info(board_id)
+        if board_id == 1:
+            board_name = '^root'
         return render[theme].board_summary(board_info = board_info,
                 board_path = board_name,
                 board_desc = board_info.bDescription, 
@@ -198,6 +201,8 @@ class board_actions:
         board_info = board.get_board_info(board_id)
         if not acl.is_allowed('board', board_id, current_uid, 'create'):
             return render[theme].error(error_message = _('NO_PERMISSION'), help_context='error')
+        if board_id == 1:
+            board_name = '^root'
         default_referer = posixpath.join('/', board_name, '+summary')
         if theme == 'default':
             default_referer = posixpath.join('/', default_referer)
@@ -251,6 +256,8 @@ class board_actions:
         board_info = board.get_board_info(board_id)
         if not acl.is_allowed('board', board_id, current_uid, 'modify'):
             return render[theme].error(error_message=_('NO_PERMISSION'), help_context='error')
+        if board_id == 1:
+            board_name = '^root'
         default_referer = posixpath.join('/', board_name, '+summary')
         if theme == 'default':
             default_referer = posixpath.join('/', default_referer)
@@ -294,6 +301,8 @@ class board_actions:
     @util.error_catcher
     @util.session_helper
     def delete_get(self, theme, board_name, board_id, current_uid = -1):
+        if board_id == 1:
+            board_name = '^root'
         if theme == 'default':
             default_referer = posixpath.join('/', board_name, '+summary')
             action = posixpath.join('/', board_name, '+delete')

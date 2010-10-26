@@ -108,7 +108,7 @@ def get_board_admins(board_id):
         return None
     admin_uids.append(current_board.uSerial)
     board_id = board.get_parent(board_id)
-    while board_id != 0:
+    while board_id > 0:
         current_board = board.get_board_info(board_id)
         admin_uids.append(current_board.uSerial)
         board_id = current_board.bParent
