@@ -6,7 +6,12 @@ import web
 import user
 
 import os, magic, StringIO
-from PIL import Image
+
+pil = True
+try:
+	from PIL import Image
+except:
+	pil = False
 
 """
 첨부 파일 클래스. 디스크에 저장된 첨부 파일에 접근한다.
@@ -90,15 +95,16 @@ def add_attachment(article_id, filename, content):
     upload.close()
     if mime_type.startswith('image'):
         image_file = StringIO.StringIO(content)
-        thumb_desktop = Image.open(image_file)
-        thumb_desktop.thumbnail(config.thumbnail_desktop_size, Image.ANTIALIAS)
-        thumb_desktop.save(os.path.join(thumb_path, filename))
-
-        image_file_2 = StringIO.StringIO(content)
-        thumb_mobile = Image.open(image_file_2)
-        thumb_mobile.thumbnail(config.thumbnail_mobile_size, Image.ANTIALIAS)
-        thumb_mobile.save(os.path.join(thumb_m_path, filename))
-
+	if pil:
+            thumb_desktop = Image.open(image_file)
+            thumb_desktop.thumbnail(config.thumbnail_desktop_size, Image.ANTIALIAS)
+            thumb_desktop.save(os.path.join(thumb_path, filename))
+    
+            image_file_2 = StringIO.StringIO(content)
+            thumb_mobile = Image.open(image_file_2)
+            thumb_mobile.thumbnail(config.thumbnail_mobile_size, Image.ANTIALIAS)
+            thumb_mobile.save(os.path.join(thumb_m_path, filename))
+    
 def remove_attachment(article_id, filename):
     # 첨부 파일을 디스크에서 삭제함
     orig_path = os.path.join(config.attachment_disk_path, str(article_id))
