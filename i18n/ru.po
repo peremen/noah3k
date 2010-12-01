@@ -1,23 +1,20 @@
 # Translations template for PROJECT.
 # Copyright (C) 2010 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
 #
-# Park Shinjo <peremen@gmail.com>, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2010-11-14 14:42+0900\n"
-"PO-Revision-Date: 2010-10-26 02:13+0900\n"
-"Last-Translator: Park Shinjo <peremen@gmail.com>\n"
-"Language-Team: English <peremen@gmail.com>\n"
-"Language: en\n"
+"PO-Revision-Date: 2010-11-14 16:12+0900\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.5\n"
-"X-Generator: Lokalize 1.1\n"
-"Plural-Forms: nplurals=2; plural=n!=1;\n"
 
 #: article.py:184 article.py:233 article.py:273 article.py:312 article.py:401
 #: article.py:440 board.py:109 board.py:138 board.py:193 web_article.py:91
@@ -26,403 +23,393 @@ msgstr ""
 #: web_board.py:203 web_board.py:222 web_board.py:258 web_board.py:277
 #: web_user.py:229 web_user.py:277 web_user.py:299
 msgid "NO_PERMISSION"
-msgstr "No permission"
+msgstr "Нет разрешения"
 
 #: article.py:187 article.py:236 article.py:276 article.py:315 article.py:404
 #: user.py:149 user.py:238
 msgid "NO_SUCH_USER"
-msgstr "No such user"
+msgstr "Нет такого пользователя"
 
 #: article.py:190 article.py:239 article.py:318 pm.py:110
 msgid "EMPTY_TITLE"
-msgstr "Empty title"
+msgstr "Без названия"
 
 #: article.py:192 article.py:241 article.py:320 pm.py:112
 msgid "EMPTY_BODY"
-msgstr "Empty body"
+msgstr "Без поля"
 
 #: article.py:200 article.py:328 board.py:102 board.py:141
 #: web_noah2k_support.py:38 web_noah2k_support.py:58 web_noah2k_support.py:70
 #: web_noah2k_support.py:88
 msgid "NO_SUCH_BOARD"
-msgstr "No such board"
+msgstr "Нет такого форума"
 
 #: article.py:202 article.py:330
 msgid "FOLDER"
-msgstr "Folder"
+msgstr "Папка"
 
 #: article.py:220 article.py:265 article.py:304 article.py:377 article.py:426
 #: article.py:444 pm.py:125 pm.py:136 user.py:282 user.py:339
 msgid "DATABASE_ERROR"
-msgstr "Database error (Please notify to administrator!)"
+msgstr "Ошибка  в базе данных"
 
 #: article.py:250 article.py:287 article.py:416 web_article.py:70
 msgid "NO_SUCH_ARTICLE"
-msgstr "No such article"
+msgstr "Нет такой статьи"
 
 #: article.py:296
 msgid "HAS_REPLY"
-msgstr "Article has replies"
+msgstr "Ответить"
 
 #: article.py:308 pm.py:128 pm.py:139 user.py:342
 msgid "SUCCESS"
-msgstr "Success"
+msgstr "Успех"
 
 #: article.py:407
 msgid "EMPTY_COMMENT"
-msgstr "Comment is empty"
+msgstr "Без комментариев"
 
 #: article.py:437
 msgid "NO_SUCH_COMMENT"
-msgstr "No such comment"
+msgstr "Нет такой ссылки"
 
 #: article.py:456 article.py:458 web_board.py:340
 msgid "NO_KEYWORD_SPECIFIED"
-msgstr "No keyword specified"
+msgstr "Без указанного ключевого слова"
 
 #: board.py:104 board.py:145
 msgid "INVALID_BOARDNAME"
-msgstr "Invalid board name"
+msgstr "Неверное имя форума"
 
 #: board.py:107 board.py:150
 msgid "BOARD_ALREADY_EXIST"
-msgstr "Board already exists"
+msgstr "Форум уже существуют"
 
 #: board.py:153
 msgid "INVALID_PARENT"
-msgstr "Invalid parent"
+msgstr "Недействительный источник"
 
 #: board.py:156
 msgid "NO_PERMISSION_ON_NEW_PARENT"
-msgstr "No permission on new parent board"
+msgstr "Нет разрешения на нового родителя"
 
 #: board.py:202
 msgid "HAS_CHILD"
-msgstr "Has child board(s)"
+msgstr "С ребенком"
 
 #: pm.py:106
 msgid "INVALID_SENDER"
-msgstr "Invalid sender"
+msgstr "Недействительный отправитель"
 
 #: pm.py:108 web_user.py:254
 msgid "INVALID_RECEIVER"
-msgstr "Invalid receiver"
+msgstr "Недействительный получатель"
 
 #: user.py:151 web_user.py:113 web_user.py:160
 msgid "INVALID_PASSWORD"
-msgstr "Invalid password"
+msgstr "Недействительный пароль"
 
 #: user.py:272
 msgid "INVALID_USERNAME"
-msgstr "Invalid username"
+msgstr "Недействительное имя пользователя"
 
 #: user.py:274 web_main.py:67
 msgid "ID_ALREADY_EXISTS"
-msgstr "ID is already occupied. Pick a new one"
+msgstr "Идентификатор уже существует"
 
 #: user.py:326
 msgid "HAS_BOARD"
-msgstr "Has child board"
+msgstr "Есть форум"
 
 #: util.py:35
 msgid "INVALID_UID"
-msgstr "Invalid UID"
+msgstr "Неверный идентификатор пользователя"
 
 #: util.py:179
 msgid "INVALID_NOTICE_BOARD"
-msgstr "Invalid notice board specified"
+msgstr "Недействительный  форум уведомления"
 
 #: util.py:183
 msgid "NO_NOTICE"
-msgstr "No notice"
+msgstr "Без предварительного уведомления"
 
 #: web_article.py:35 web_board.py:46 webpage.py:115
 msgid "INVALID_BOARD"
-msgstr "Invalid board"
+msgstr "Недействительный форум"
 
 #: web_article.py:39 web_board.py:50 web_main.py:34 web_user.py:25
 #: web_user.py:78
 msgid "INVALID_ACTION"
-msgstr "Invalid action"
+msgstr "Недействительное действие"
 
 #: web_article.py:96
 #, python-format
 msgid "From %s's Article %s:"
-msgstr ""
+msgstr "От кого: %s Статья: %s"
 
 #: web_article.py:98
 #, python-format
 msgid "Reply - /%s"
-msgstr ""
+msgstr "Ответить: - /%s"
 
 #: web_article.py:99
 msgid "Reply to the article"
-msgstr ""
+msgstr "Ответ на статью"
 
 #: web_article.py:143
 #, python-format
 msgid "Modify - /%s"
-msgstr ""
+msgstr "Изменить  - /%s"
 
 #: web_article.py:144 templates/desktop/editor.html:44
 msgid "Modify article"
-msgstr ""
+msgstr "Изменить статью"
 
 #: web_article.py:211
 msgid "Do you want to delete the article?"
-msgstr ""
+msgstr "Вы действительно хотите удалить эту статью?"
 
 #: web_article.py:212 web_board.py:313 web_user.py:307
 msgid "Confirmation"
-msgstr ""
+msgstr "Подтверждение"
 
 #: web_board.py:73
 #, python-format
 msgid "Write article - %s"
-msgstr ""
+msgstr "Написать статью - %s"
 
 #: web_board.py:74
 msgid "Write article"
-msgstr ""
+msgstr "Написать статью"
 
 #: web_board.py:173
 #, python-format
 msgid "Information - %s"
-msgstr ""
+msgstr "Информация - %s"
 
 #: web_board.py:180
 msgid "Main menu"
-msgstr ""
+msgstr "Заглавная страница"
 
 #: web_board.py:213
 #, python-format
 msgid "Create child board - %s"
-msgstr ""
+msgstr "Создать форум ребенка - %s"
 
 #: web_board.py:231 web_board.py:285
 msgid "NO_SUCH_USER_FOR_BOARD_ADMIN"
-msgstr "No such user for specified board administrator"
+msgstr "Нет такого пользователя для администратора форума"
 
 #: web_board.py:233
 msgid "NO_NAME_SPECIFIED"
-msgstr "No name specified"
+msgstr "Имя не указано"
 
 #: web_board.py:236
 msgid "BOARD_EXISTS"
-msgstr "Board already exists"
+msgstr "Форум существует"
 
 #: web_board.py:268
 #, python-format
 msgid "Modify information - %s"
-msgstr ""
+msgstr "Изменить информацию -%s"
 
 #: web_board.py:312
 msgid "Do you want to delete this board?"
-msgstr ""
+msgstr "Вы действительно хотите удалить этот раздел?"
 
 #: web_board.py:378
 msgid "Search Results"
-msgstr ""
+msgstr "Результат поиска"
 
 #: web_main.py:42 web_main.py:43 templates/desktop/header.html:54
 #: templates/desktop/header.html:57 templates/desktop/join.html:55
 #: templates/mobile/base.html:123 templates/mobile/base.html:126
 #: templates/mobile/join.html:3 templates/mobile/join.html:31
 msgid "Join"
-msgstr ""
+msgstr "Зарегистрироваться"
 
 #: web_main.py:60
 msgid "INCORRECT_CAPTCHA"
-msgstr "Incorrect CAPTCHA"
+msgstr "Неправильный CAPTCHA"
 
 #: web_main.py:62
 msgid "CAPTCHA_ERROR"
-msgstr "CAPTCHA error. Please retry again after few minutes."
+msgstr "Ошибка в CAPTCHA"
 
 #: web_main.py:65
 msgid "NO_USERNAME_SPECIFIED"
-msgstr "No username specified"
+msgstr "Имя не указано"
 
 #: web_main.py:69 web_user.py:115
 msgid "PASSWORD_DO_NOT_MATCH"
-msgstr "Password do not match"
+msgstr "Пароль не совпадает"
 
 #: web_main.py:71 web_user.py:117
 msgid "PASSWORD_TOO_SHORT"
-msgstr "Password too short"
+msgstr "Слишком короткий пароль"
 
 #: web_main.py:104 web_main.py:133 templates/desktop/header.html:55
 #: templates/desktop/header.html:58 templates/desktop/login.html:33
 #: templates/mobile/base.html:124 templates/mobile/base.html:127
 #: templates/mobile/login.html:15
 msgid "Login"
-msgstr ""
+msgstr "Войти"
 
 #: web_main.py:117
 msgid "No user ID or password specified."
-msgstr ""
+msgstr "Не указан идентификатор пользователя или пароль"
 
 #: web_main.py:151 web_main.py:152 templates/mobile/base.html:139
 msgid "Credits"
-msgstr ""
+msgstr "Кредиты"
 
 #: web_noah2k_support.py:23
 msgid "INVALID_NOAH2K_ACTION"
-msgstr "Unsupported Noah2K action"
+msgstr "Недействительное действие NOAH2K"
 
 #: web_noah2k_support.py:30 web_noah2k_support.py:51
 msgid "NO_BOARD_SPECIFIED"
-msgstr "No board specified"
+msgstr "Форум не указан"
 
-#: web_noah2k_support.py:55 web_noah2k_support.py:79
+#: web_noah2k_support.py :55 web_noah2k_support.py:79
 msgid "NO_ARTICLE_SPECIFIED"
-msgstr "No article specified"
+msgstr "Не указана статья"
 
 #: web_noah2k_support.py:97
 msgid "NO_ATTACHMENT_SPECIFIED"
-msgstr "No attachment specified"
+msgstr "Не указано приложение"
 
 #: web_user.py:62 templates/mobile/myinfo.html:6
 msgid "My Information"
-msgstr ""
+msgstr "Моя информация"
 
 #: web_user.py:84 web_user.py:85 templates/desktop/header.html:60
 #: templates/mobile/base.html:129
 msgid "New Article"
-msgstr ""
+msgstr "Новая статья"
 
 #: web_user.py:99 web_user.py:100 templates/mobile/myinfo_edit.html:5
 msgid "Edit My Information"
-msgstr ""
+msgstr "Изменить мою информацию"
 
 #: web_user.py:147 web_user.py:148 templates/desktop/myinfo.html:142
 #: templates/mobile/myinfo.html:91
 msgid "Leave NOAH"
-msgstr ""
+msgstr "Покинуть NOAH"
 
 #: web_user.py:178 web_user.py:179 templates/desktop/sidebar.html:14
 #: templates/mobile/base.html:132
 msgid "My Boards"
-msgstr ""
+msgstr "Мой форум"
 
 #: web_user.py:189 web_user.py:190
 msgid "Favorite Boards"
-msgstr ""
+msgstr "Избранный форум"
 
 #: web_user.py:208 web_user.py:209
 msgid "Inbox"
-msgstr ""
+msgstr "Входящие"
 
 #: web_user.py:226 web_user.py:274 web_user.py:296 web_user.py:325
 msgid "NO_SUCH_MESSAGE"
-msgstr "No such message"
+msgstr "Нет такого сообщения"
 
 #: web_user.py:230
 #, python-format
 msgid "From message \"%s\":"
-msgstr ""
+msgstr "Из сообщения \"%s\":"
 
 #: web_user.py:232
 msgid "Write Reply"
-msgstr ""
+msgstr "Написать ответ"
 
 #: web_user.py:240 templates/desktop/editor_mail.html:37
 #: templates/desktop/inbox.html:51 templates/desktop/read_mail.html:43
 msgid "Write Message"
-msgstr ""
+msgstr "Написать письмо"
 
 #: web_user.py:280
 msgid "Read Message"
-msgstr ""
+msgstr "Прочитать сообщение"
 
 #: web_user.py:306
 msgid "Do you want to delete the message?"
-msgstr ""
+msgstr "Вы хотите удалить сообщение?"
 
 #: webpage.py:86
 msgid "[KAIST CS BBS]"
-msgstr ""
+msgstr "[KAIST CS BBS]"
 
 #: webpage.py:95
 #, python-format
 msgid "Help: %s"
-msgstr ""
+msgstr "Справка: %s"
 
 #: templates/desktop/base.html:14 templates/desktop/error.html:7
 #: templates/desktop/header.html:77 templates/desktop/question.html:8
 #: templates/mobile/base.html:50 templates/mobile/base.html:87
 #: templates/mobile/question.html:6
 msgid "Error"
-msgstr ""
+msgstr "Ошибка"
 
 #: templates/desktop/base_mail.html:13
 msgid "Close this window"
-msgstr ""
+msgstr "Закрыть это окно"
 
 #: templates/desktop/board_editor.html:11
 #: templates/desktop/board_summary.html:44
-#: templates/mobile/board_editor.html:15
-#: templates/mobile/board_summary.html:19
+#: templates/mobile/board_editor.html:15 templates/mobile/board_summary.html:19
 msgid "Basic Information"
-msgstr ""
+msgstr "Основная информация"
 
 #: templates/desktop/board_editor.html:13
 #: templates/desktop/board_summary.html:47
-#: templates/mobile/board_editor.html:17
-#: templates/mobile/board_summary.html:21
+#: templates/mobile/board_editor.html:17 templates/mobile/board_summary.html:21
 msgid "Location"
-msgstr ""
+msgstr "Местоположение"
 
 #: templates/desktop/board_editor.html:25
 #: templates/desktop/board_summary.html:54
 #: templates/desktop/view_subboard_list_content.html:5
-#: templates/mobile/board_editor.html:24
-#: templates/mobile/board_summary.html:22
+#: templates/mobile/board_editor.html:24 templates/mobile/board_summary.html:22
 msgid "Name"
-msgstr ""
+msgstr "Имя"
 
 #: templates/desktop/board_editor.html:37
 #: templates/desktop/board_summary.html:60
-#: templates/mobile/board_editor.html:31
-#: templates/mobile/board_summary.html:23
+#: templates/mobile/board_editor.html:31 templates/mobile/board_summary.html:23
 msgid "Admin"
-msgstr ""
+msgstr "Администратор"
 
 #: templates/desktop/board_editor.html:44
 #: templates/desktop/board_summary.html:73
-#: templates/mobile/board_editor.html:33
-#: templates/mobile/board_summary.html:26
+#: templates/mobile/board_editor.html:33 templates/mobile/board_summary.html:26
 msgid "Details"
-msgstr ""
+msgstr "Подробности"
 
 #: templates/desktop/board_editor.html:47
 #: templates/desktop/board_summary.html:77
-#: templates/mobile/board_editor.html:35
-#: templates/mobile/board_summary.html:28
+#: templates/mobile/board_editor.html:35 templates/mobile/board_summary.html:28
 msgid "Type"
-msgstr ""
+msgstr "Тип"
 
 #: templates/desktop/board_editor.html:59
 #: templates/desktop/board_summary.html:79
-#: templates/mobile/board_editor.html:45
-#: templates/mobile/board_summary.html:28
+#: templates/mobile/board_editor.html:45 templates/mobile/board_summary.html:28
 msgid "Folder"
-msgstr ""
+msgstr "Папка"
 
 #: templates/desktop/board_editor.html:69
 #: templates/desktop/board_summary.html:79 templates/desktop/header.html:16
-#: templates/mobile/board_editor.html:55
-#: templates/mobile/board_summary.html:28
+#: templates/mobile/board_editor.html:55 templates/mobile/board_summary.html:28
 msgid "Board"
-msgstr ""
+msgstr "Форум"
 
 #: templates/desktop/board_editor.html:75
 #: templates/desktop/board_summary.html:84
-#: templates/mobile/board_editor.html:57
-#: templates/mobile/board_summary.html:29
-#, fuzzy
+#: templates/mobile/board_editor.html:57 templates/mobile/board_summary.html:29
 msgid "Comments"
-msgstr "Comments"
+msgstr "Комментарий"
 
 #: templates/desktop/board_editor.html:87
 #: templates/desktop/board_editor.html:115
@@ -432,7 +419,7 @@ msgstr "Comments"
 #: templates/mobile/board_summary.html:29
 #: templates/mobile/board_summary.html:30
 msgid "Allow"
-msgstr ""
+msgstr "Да"
 
 #: templates/desktop/board_editor.html:97
 #: templates/desktop/board_editor.html:125
@@ -442,77 +429,73 @@ msgstr ""
 #: templates/mobile/board_summary.html:29
 #: templates/mobile/board_summary.html:30
 msgid "Not Allow"
-msgstr ""
+msgstr "Нет"
 
 #: templates/desktop/board_editor.html:103
 #: templates/desktop/board_summary.html:91
-#: templates/mobile/board_editor.html:79
-#: templates/mobile/board_summary.html:30
+#: templates/mobile/board_editor.html:79 templates/mobile/board_summary.html:30
 msgid "Guest Writing"
-msgstr ""
+msgstr "Запись для гостей"
 
 #: templates/desktop/board_editor.html:129
 #: templates/desktop/board_summary.html:96
 #: templates/mobile/board_editor.html:103
 #: templates/mobile/board_summary.html:33
 msgid "Board Description"
-msgstr ""
+msgstr "Описание форума"
 
 #: templates/desktop/board_editor.html:132
 #: templates/desktop/board_summary.html:99
 #: templates/mobile/board_editor.html:105
 #: templates/mobile/board_summary.html:35
 msgid "Short Description"
-msgstr ""
+msgstr "Краткое описание"
 
 #: templates/desktop/board_editor.html:145
 #: templates/desktop/board_summary.html:106
 #: templates/mobile/board_editor.html:112
 #: templates/mobile/board_summary.html:36
 msgid "Long Description"
-msgstr ""
+msgstr "Полное описание"
 
 #: templates/desktop/board_editor.html:157 templates/desktop/editor.html:52
-#: templates/desktop/myinfo_edit.html:71
-#: templates/desktop/read_article.html:96
+#: templates/desktop/myinfo_edit.html:71 templates/desktop/read_article.html:96
 #: templates/mobile/board_editor.html:122 templates/mobile/editor.html:31
 #: templates/mobile/myinfo_edit.html:33 templates/mobile/read_article.html:62
 msgid "Submit"
-msgstr ""
+msgstr "ОК"
 
 #: templates/desktop/board_editor.html:158 templates/desktop/join.html:56
 #: templates/desktop/myinfo_edit.html:72 templates/desktop/question.html:14
 #: templates/mobile/board_editor.html:123 templates/mobile/join.html:32
 #: templates/mobile/myinfo_edit.html:34 templates/mobile/question.html:12
 msgid "Cancel"
-msgstr ""
+msgstr "Отмена"
 
 #: templates/desktop/board_summary.html:22 templates/desktop/myinfo.html:141
 #: templates/desktop/read_article.html:122
-#: templates/mobile/board_editor.html:11
-#: templates/mobile/board_summary.html:44 templates/mobile/myinfo.html:90
-#: templates/mobile/read_article.html:91
+#: templates/mobile/board_editor.html:11 templates/mobile/board_summary.html:44
+#: templates/mobile/myinfo.html:90 templates/mobile/read_article.html:91
 msgid "Modify"
-msgstr ""
+msgstr "Изменить"
 
 #: templates/desktop/board_summary.html:33
 #: templates/mobile/board_summary.html:53
 msgid "Delete This Board"
-msgstr ""
+msgstr "Удалить этот раздел"
 
 #: templates/desktop/board_summary.html:37
-#: templates/mobile/board_editor.html:13
-#: templates/mobile/board_summary.html:58
+#: templates/mobile/board_editor.html:13 templates/mobile/board_summary.html:58
 msgid "Create Child Board"
-msgstr ""
+msgstr "Создать форум ребенка"
 
 #: templates/desktop/board_summary.html:67
 msgid "Upper Admin(s)"
-msgstr ""
+msgstr "Верхний администратор(ы)"
 
 #: templates/desktop/cover.html:13 templates/mobile/cover.html:13
 msgid "No long description available."
-msgstr ""
+msgstr "Полное описание не доступно"
 
 #: templates/desktop/editor.html:8 templates/desktop/editor_mail.html:17
 #: templates/desktop/inbox.html:22 templates/desktop/main.html:9
@@ -523,168 +506,169 @@ msgstr ""
 #: templates/mobile/new_article.html:26 templates/mobile/view_board.html:30
 #: templates/mobile/view_board.html:137 templates/mobile/view_board.html:139
 msgid "Title"
-msgstr ""
+msgstr "Тема"
 
 #: templates/desktop/editor.html:18 templates/desktop/editor_mail.html:27
 #: templates/mobile/editor.html:13
 msgid "Content"
-msgstr ""
+msgstr "Содержание"
 
 #: templates/desktop/editor.html:18 templates/mobile/editor.html:13
 msgid "(BBCode Help)"
-msgstr ""
+msgstr "(BBCode Справка)"
 
 #: templates/desktop/editor.html:30 templates/mobile/editor.html:23
 #, python-format
 msgid "Attachment %s"
-msgstr ""
+msgstr "Приложение %s"
 
 #: templates/desktop/editor.html:32 templates/desktop/read_article.html:79
 #: templates/desktop/read_article.html:126 templates/desktop/read_mail.html:45
 #: templates/mobile/editor.html:23 templates/mobile/read_article.html:95
 msgid "Delete"
-msgstr ""
+msgstr "Удалить"
 
 #: templates/desktop/editor.html:39 templates/desktop/read_article.html:47
 #: templates/mobile/editor.html:28 templates/mobile/read_article.html:28
 msgid "Attachment"
-msgstr ""
+msgstr "Приложение "
 
 #: templates/desktop/editor.html:46
 msgid "MARK_AS_UNREADED"
-msgstr "Mark as unreaded article"
+msgstr "Отметить как непрочитанное"
 
 #: templates/desktop/editor.html:53 templates/desktop/editor_mail.html:38
 #: templates/desktop/error.html:22 templates/mobile/editor.html:32
 #: templates/mobile/error.html:22
 msgid "Go Back"
-msgstr ""
+msgstr "Назад"
 
 #: templates/desktop/editor_mail.html:4
 msgid "Write Private Message"
-msgstr ""
+msgstr "Написать личное сообщение"
 
 #: templates/desktop/editor_mail.html:7
 msgid "To"
-msgstr ""
+msgstr "Кому:"
 
 #: templates/desktop/error.html:10 templates/mobile/error.html:10
 msgid "Check error details and retry."
-msgstr ""
+msgstr "Проверь сведения об ошибках и повтори"
 
 #: templates/desktop/error.html:12 templates/mobile/error.html:12
 msgid "An error has occured. Sorry for inconvenience."
-msgstr ""
+msgstr "Произошла ошибка. Извините за причиненные неудобства."
 
 #: templates/desktop/error.html:13 templates/mobile/error.html:13
 msgid ""
-"Following information is reported to administrator. We will fix error soon."
-msgstr ""
+"Following information is reported to administrator. We will fix error "
+"soon."
+msgstr "Следующая информация сообщена администратору.Мы исправим ошибки в ближайшее время."
 
 #: templates/desktop/error.html:13 templates/mobile/error.html:13
 msgid "More"
-msgstr ""
+msgstr "Больше"
 
 #: templates/desktop/header.html:50
 msgid "Help"
-msgstr ""
+msgstr "Справка"
 
 #: templates/desktop/header.html:63 templates/desktop/header.html:65
 msgid "Mail"
-msgstr ""
+msgstr "Почта"
 
 #: templates/desktop/header.html:67 templates/mobile/base.html:134
 msgid "My Info"
-msgstr ""
+msgstr "Моя информация"
 
 #: templates/desktop/header.html:68 templates/mobile/base.html:135
 msgid "Logout"
-msgstr ""
+msgstr "Выход"
 
 #: templates/desktop/header.html:100 templates/mobile/base.html:15
 #: templates/mobile/base.html:99
 msgid "Boards"
-msgstr ""
+msgstr "Форумы"
 
 #: templates/desktop/inbox.html:10 templates/desktop/new_article.html:11
 #: templates/desktop/read_article.html:14 templates/desktop/read_mail.html:10
 #: templates/mobile/new_article.html:11 templates/mobile/read_article.html:14
 #: templates/mobile/view_board.html:13
 msgid "Former Member"
-msgstr ""
+msgstr "Бывший член"
 
 #: templates/desktop/inbox.html:14 templates/desktop/inbox.html:16
 msgid "No private messages."
-msgstr ""
+msgstr "Нет личных сообщений"
 
 #: templates/desktop/inbox.html:18
 #, python-format
 msgid "%s messages"
-msgstr ""
+msgstr "%s сообщения"
 
 #: templates/desktop/inbox.html:21
 msgid "From"
-msgstr ""
+msgstr "От"
 
 #: templates/desktop/inbox.html:23 templates/desktop/main.html:10
 #: templates/desktop/main.html:20 templates/desktop/new_article.html:28
 #: templates/desktop/view_board.html:27 templates/mobile/new_article.html:28
 #: templates/mobile/view_board.html:32
 msgid "Date"
-msgstr ""
+msgstr "Дата"
 
 #: templates/desktop/join.html:21 templates/desktop/login.html:30
 #: templates/desktop/myinfo_edit.html:41 templates/mobile/join.html:13
 #: templates/mobile/login.html:13
 msgid "Password"
-msgstr ""
+msgstr "Пароль"
 
 #: templates/desktop/join.html:26 templates/desktop/myinfo_edit.html:53
 #: templates/mobile/join.html:14 templates/mobile/myinfo_edit.html:25
 msgid "Repeat Password"
-msgstr ""
+msgstr "Повторный набор пароля"
 
 #: templates/desktop/join.html:32 templates/desktop/myinfo.html:14
 #: templates/desktop/myinfo_edit.html:13 templates/mobile/join.html:16
 #: templates/mobile/myinfo.html:10 templates/mobile/myinfo_edit.html:9
 msgid "Nickname"
-msgstr ""
+msgstr "Прозвище"
 
 #: templates/desktop/join.html:37 templates/desktop/myinfo.html:25
 #: templates/desktop/myinfo_edit.html:18 templates/mobile/join.html:17
 #: templates/mobile/myinfo.html:19 templates/mobile/myinfo_edit.html:10
 msgid "E-Mail"
-msgstr ""
+msgstr "Электронная почта"
 
 #: templates/desktop/login.html:8 templates/desktop/read_mail.html:14
 #: templates/mobile/login.html:20
 msgid "Internal Error"
-msgstr ""
+msgstr "Внутренняя ошибка"
 
 #: templates/desktop/login.html:10 templates/mobile/login.html:22
 msgid "No Notice"
-msgstr ""
+msgstr "Нет заметки"
 
 #: templates/desktop/login.html:17 templates/mobile/login.html:4
 msgid "To join NOAH, click <a href=\"/+join/\">here</a>"
-msgstr ""
+msgstr "Чтобы присоединиться к NOAH нажмите <a href=\"+join/\">здесь</a>"
 
 #: templates/desktop/main.html:5
 msgid "Department Notice"
-msgstr ""
+msgstr "Уведомление о Департаменте"
 
 #: templates/desktop/main.html:15 templates/desktop/sidebar.html:99
 msgid "Student Notice"
-msgstr ""
+msgstr "Уведомление о студентах"
 
 #: templates/desktop/main.html:62
 msgid "Board List"
-msgstr ""
+msgstr "Список форумов"
 
 #: templates/desktop/myinfo.html:7 templates/desktop/myinfo_edit.html:6
 #: templates/mobile/myinfo.html:7 templates/mobile/myinfo_edit.html:6
 msgid "Personal Information"
-msgstr ""
+msgstr "Личная информациия"
 
 #: templates/desktop/myinfo.html:17 templates/desktop/myinfo.html:19
 #: templates/desktop/myinfo.html:28 templates/desktop/myinfo.html:30
@@ -697,350 +681,335 @@ msgstr ""
 #: templates/mobile/myinfo.html:40 templates/mobile/myinfo.html:42
 #: templates/mobile/myinfo.html:51 templates/mobile/myinfo.html:53
 msgid "None"
-msgstr ""
+msgstr "Нет"
 
 #: templates/desktop/myinfo.html:36 templates/desktop/myinfo_edit.html:23
 #: templates/mobile/myinfo.html:28 templates/mobile/myinfo_edit.html:11
 msgid "Website"
-msgstr ""
+msgstr "Веб-сайт"
 
 #: templates/desktop/myinfo.html:47 templates/desktop/myinfo_edit.html:57
 #: templates/desktop/myinfo_edit.html:59 templates/mobile/myinfo.html:37
 #: templates/mobile/myinfo_edit.html:26
 msgid "Signature"
-msgstr ""
+msgstr "Подпись"
 
 #: templates/desktop/myinfo.html:60 templates/desktop/myinfo_edit.html:63
 #: templates/desktop/myinfo_edit.html:65 templates/mobile/myinfo.html:48
 #: templates/mobile/myinfo_edit.html:29
 msgid "Introduction"
-msgstr ""
+msgstr "Введение"
 
 #: templates/desktop/myinfo.html:72 templates/desktop/myinfo_edit.html:28
 #: templates/mobile/myinfo_edit.html:12
 msgid "Language"
-msgstr ""
+msgstr "Язык"
 
 #: templates/desktop/myinfo.html:78 templates/mobile/myinfo.html:61
 msgid "Usage Statistics"
-msgstr ""
+msgstr "Статистика использования"
 
 #: templates/desktop/myinfo.html:80 templates/mobile/myinfo.html:63
 msgid "Join Date"
-msgstr ""
+msgstr "Дата регистрации"
 
 #: templates/desktop/myinfo.html:85 templates/mobile/myinfo.html:64
 msgid "Login Count"
-msgstr ""
+msgstr "Счет входов"
 
 #: templates/desktop/myinfo.html:90 templates/mobile/myinfo.html:65
 msgid "Posts"
-msgstr ""
+msgstr "Запись"
 
 #: templates/desktop/myinfo.html:95 templates/mobile/myinfo.html:66
 msgid ""
 "_:Count\n"
 "Comments"
-msgstr "Comments"
+msgstr "Количество комментариев"
+
 
 #: templates/desktop/myinfo.html:102 templates/mobile/myinfo.html:69
 msgid "Last Login"
-msgstr ""
+msgstr "Последний вход"
 
 #: templates/desktop/myinfo.html:105 templates/desktop/myinfo.html:114
 #: templates/desktop/myinfo.html:116 templates/desktop/myinfo.html:132
 #: templates/mobile/myinfo.html:71 templates/mobile/myinfo.html:78
 #: templates/mobile/myinfo.html:80
 msgid "Unknown"
-msgstr ""
+msgstr "Неизвестный"
 
 #: templates/desktop/myinfo.html:111 templates/mobile/myinfo.html:76
 msgid "Last Login IP"
-msgstr ""
+msgstr "Последний IP вход"
 
 #: templates/desktop/myinfo.html:122
 msgid "Password Strength"
-msgstr ""
+msgstr "Прочность пароля"
 
 #: templates/desktop/myinfo.html:126
 msgid "Strong"
-msgstr ""
+msgstr "Прочный"
 
 #: templates/desktop/myinfo.html:128
 msgid "Normal"
-msgstr ""
+msgstr "Нормальный"
 
 #: templates/desktop/myinfo.html:128
 msgid "(Change password recommended)"
-msgstr ""
+msgstr "(Изменение пароля рекомендовано)"
 
 #: templates/desktop/myinfo.html:130
 msgid "Weak"
-msgstr ""
+msgstr "Слабый"
 
 #: templates/desktop/myinfo.html:130
 msgid "(Change password NOW)"
-msgstr ""
+msgstr "(Изменить пароль сейчас)"
 
 #: templates/desktop/myinfo.html:140 templates/mobile/myinfo.html:89
 msgid "My Posts"
-msgstr ""
+msgstr "Моя запись"
 
 #: templates/desktop/myinfo_edit.html:43 templates/mobile/myinfo_edit.html:23
 msgid "Current Password"
-msgstr ""
+msgstr "Текущий пароль"
 
 #: templates/desktop/myinfo_edit.html:48 templates/mobile/myinfo_edit.html:24
 msgid "New Password"
-msgstr ""
+msgstr "Новый пароль"
 
 #: templates/desktop/new_article.html:17 templates/mobile/new_article.html:17
 msgid "No new articles."
-msgstr ""
+msgstr "Нет новых статей"
 
-#: templates/desktop/new_article.html:27
-#: templates/desktop/read_article.html:28 templates/desktop/read_mail.html:23
-#: templates/desktop/view_board.html:26 templates/desktop/view_board.html:126
-#: templates/desktop/view_board.html:128 templates/mobile/new_article.html:27
-#: templates/mobile/view_board.html:31 templates/mobile/view_board.html:132
-#: templates/mobile/view_board.html:134
+#: templates/desktop/new_article.html:27 templates/desktop/read_article.html:28
+#: templates/desktop/read_mail.html:23 templates/desktop/view_board.html:26
+#: templates/desktop/view_board.html:126 templates/desktop/view_board.html:128
+#: templates/mobile/new_article.html:27 templates/mobile/view_board.html:31
+#: templates/mobile/view_board.html:132 templates/mobile/view_board.html:134
 msgid "Author"
-msgstr ""
+msgstr "Автор"
 
 #: templates/desktop/new_article.html:29 templates/desktop/view_board.html:28
 #: templates/mobile/new_article.html:29
 msgid "Hit"
-msgstr ""
+msgstr "Хит"
 
 #: templates/desktop/question.html:13 templates/mobile/question.html:11
 msgid "OK"
-msgstr ""
+msgstr "ОК"
 
 #: templates/desktop/read_article.html:33 templates/desktop/read_mail.html:28
 #: templates/mobile/read_article.html:22
 msgid "Date/Time"
-msgstr ""
+msgstr "Дата/Время"
 
-#: templates/desktop/read_article.html:39
-#: templates/mobile/read_article.html:20
+#: templates/desktop/read_article.html:39 templates/mobile/read_article.html:20
 msgid "Last Modified"
-msgstr ""
+msgstr "Последнее изменение"
 
 #: templates/desktop/read_article.html:91
 msgid "To post commment, please <a href=\"/+login\">log in</a>"
-msgstr ""
+msgstr "<a href=\"/+login\">Войдите</a> пожалуйста, чтобы послать комментарий"
 
-#: templates/desktop/read_article.html:94
-#: templates/mobile/read_article.html:60
-#, fuzzy
+#: templates/desktop/read_article.html:94 templates/mobile/read_article.html:60
 msgid "Write Comment"
-msgstr "Comments"
+msgstr "Написать комментарий"
 
 #: templates/desktop/read_article.html:111
 #: templates/desktop/read_article.html:113 templates/desktop/read_mail.html:39
 #: templates/mobile/read_article.html:80 templates/mobile/read_article.html:82
 msgid "List"
-msgstr ""
+msgstr "Список"
 
-#: templates/desktop/read_article.html:117
-#: templates/desktop/view_board.html:50 templates/mobile/read_article.html:86
-#: templates/mobile/view_board.html:55
+#: templates/desktop/read_article.html:117 templates/desktop/view_board.html:50
+#: templates/mobile/read_article.html:86 templates/mobile/view_board.html:55
 msgid "Write"
-msgstr ""
+msgstr "Написать"
 
 #: templates/desktop/read_article.html:118 templates/desktop/read_mail.html:41
 #: templates/mobile/read_article.html:87
 msgid "Reply"
-msgstr ""
+msgstr "Ответить"
 
 #: templates/desktop/read_article.html:131
 #: templates/mobile/read_article.html:100
 msgid "Unmark"
-msgstr ""
+msgstr "Отменить пометку"
 
 #: templates/desktop/read_article.html:133
 #: templates/mobile/read_article.html:102
 msgid "Mark"
-msgstr ""
+msgstr "Отметить"
 
 #: templates/desktop/read_article.html:141
 msgid "Previous Article"
-msgstr ""
+msgstr "Предыдущая статья"
 
 #: templates/desktop/read_article.html:148
 msgid "Next Article"
-msgstr ""
+msgstr "Следующая статья"
 
 #: templates/desktop/sidebar.html:17 templates/desktop/sidebar.html:62
 msgid "(toggle)"
-msgstr ""
+msgstr "(Переключить)"
 
 #: templates/desktop/sidebar.html:40
 msgid "You have no boards"
-msgstr ""
+msgstr "У вас нет форумов"
 
 #: templates/desktop/sidebar.html:47 templates/mobile/base.html:133
 msgid "Favorites"
-msgstr ""
+msgstr "Избранное"
 
 #: templates/desktop/sidebar.html:50 templates/desktop/sidebar.html:57
 msgid "(not available)"
-msgstr ""
+msgstr "(Недоступный)"
 
 #: templates/desktop/sidebar.html:52
 msgid "(remove)"
-msgstr ""
+msgstr "(Удалить)"
 
 #: templates/desktop/sidebar.html:54
 msgid "(add)"
-msgstr ""
+msgstr "(Добавить)"
 
 #: templates/desktop/sidebar.html:85
 msgid "No board in your favorites"
-msgstr ""
+msgstr "Нет форумов в избранных"
 
 #: templates/desktop/sidebar.html:87
 msgid "Feed"
-msgstr ""
+msgstr "Ввод"
 
 #: templates/desktop/sidebar.html:95 templates/mobile/base.html:117
 msgid "Department"
-msgstr ""
+msgstr "Департамент"
 
 #: templates/desktop/sidebar.html:98 templates/desktop/view_board.html:165
 #: templates/mobile/login.html:17
 msgid "Notice"
-msgstr ""
+msgstr "Уведомления"
 
 #: templates/desktop/sidebar.html:100
 msgid "To Dept."
-msgstr ""
+msgstr "Для Деп."
 
 #: templates/desktop/sidebar.html:103
 msgid "EVE Room"
-msgstr ""
+msgstr "EVE комната"
 
 #: templates/desktop/sidebar.html:104
 msgid "Job Offer"
-msgstr ""
+msgstr "О работе"
 
 #: templates/desktop/sidebar.html:109 templates/mobile/base.html:118
 msgid "Friends"
-msgstr ""
+msgstr "Друзья"
 
 #: templates/desktop/sidebar.html:111
 msgid "Undg."
-msgstr ""
+msgstr "Бклвр."
 
 #: templates/desktop/sidebar.html:116
 msgid "Mast."
-msgstr ""
+msgstr "Магистр."
 
 #: templates/desktop/sidebar.html:127 templates/mobile/base.html:119
 msgid "Courses"
-msgstr ""
+msgstr "Курсы"
 
 #: templates/desktop/sidebar.html:128
 msgid "(archive)"
-msgstr ""
+msgstr "(Архив)"
 
 #: templates/desktop/sidebar.html:143
 msgid "No course boards"
-msgstr ""
+msgstr "Нет форум курсов"
 
 #: templates/desktop/sidebar.html:149
 msgid "NOAH Mobile"
-msgstr ""
+msgstr "NOAH мобильный"
 
 #: templates/desktop/view_board.html:13 templates/mobile/view_board.html:20
 msgid "No articles in this board.<br />Press 'Write' to write one."
-msgstr ""
+msgstr "Нет статей в этом форуме.<br /> Нажмите 'Написать', чтобы создать."
 
 #: templates/desktop/view_board.html:15 templates/mobile/view_board.html:22
 msgid "No search results."
-msgstr ""
+msgstr "Ничего не найдено"
 
 #: templates/desktop/view_board.html:50 templates/mobile/view_board.html:55
 msgid "Write new article"
-msgstr ""
+msgstr "Написать новую статью"
 
 #: templates/desktop/view_board.html:53 templates/mobile/view_board.html:58
 msgid "Display and modify board information"
-msgstr ""
+msgstr "Показать и изменить информацию форума"
 
 #: templates/desktop/view_board.html:53
 #: templates/desktop/view_subboard_list_content.html:37
 #: templates/mobile/view_board.html:58
 #: templates/mobile/view_subboard_list.html:37
 msgid "Information"
-msgstr ""
+msgstr "Информация"
 
 #: templates/desktop/view_board.html:56 templates/mobile/view_board.html:61
 msgid "Unsubscribe from this board"
-msgstr ""
+msgstr "Отказаться от подписки на этот форум"
 
 #: templates/desktop/view_board.html:56 templates/mobile/view_board.html:61
 msgid "Unsubscribe"
-msgstr ""
+msgstr "Отказаться от подписки"
 
 #: templates/desktop/view_board.html:58 templates/mobile/view_board.html:63
 msgid "Subscribe to this board"
-msgstr ""
+msgstr "Подписаться на этот форум"
 
 #: templates/desktop/view_board.html:58 templates/mobile/view_board.html:63
 msgid "Subscribe"
-msgstr ""
+msgstr "Подписаться"
 
 #: templates/desktop/view_board.html:136 templates/desktop/view_board.html:138
 #: templates/mobile/view_board.html:142 templates/mobile/view_board.html:144
 msgid "Body"
-msgstr ""
+msgstr "Поле"
 
 #: templates/desktop/view_subboard_list_content.html:6
 msgid "Description"
-msgstr ""
+msgstr "Описание"
 
 #: templates/desktop/view_subboard_list_content.html:10
 #: templates/mobile/view_subboard_list.html:13
 msgid "No child boards."
-msgstr ""
+msgstr "Нет ребенка форума"
 
 #: templates/mobile/base.html:116
 msgid "Home"
-msgstr ""
+msgstr "Главная"
 
 #: templates/mobile/board_summary.html:18
 msgid "Board Information"
-msgstr ""
+msgstr "Информация о форуме"
 
 #: templates/mobile/read_article.html:57
 msgid "To post commment, please <a href=\"/m/+login\">log in</a>"
-msgstr ""
+msgstr "<a href=\"/m/+login\">Войдите</a> пожалуйста,чтобы отправить сообщение"
 
 #: templates/mobile/read_article.html:70
 msgid "Prev"
-msgstr ""
+msgstr "Пред"
 
 #: templates/mobile/read_article.html:73
 msgid "Next"
-msgstr ""
+msgstr "След"
 
 #: templates/mobile/view_subboard_list.html:6
 msgid "Child Boards"
-msgstr ""
+msgstr "Подразделы"
 
 #: templates/mobile/view_subboard_list.html:15
 msgid "No boards."
-msgstr ""
+msgstr "Нет форумов"
 
-#~ msgid "NOT_LOGGED_IN"
-#~ msgstr "Not logged in"
-
-#~ msgid "INVALID_USER"
-#~ msgstr "Invalid user"
-
-#~ msgid "LOOKING_OTHERS_NEW_ARTICLES"
-#~ msgstr "Looking other's new articles"
-
-#~ msgid "MODIFYING_OTHERS_INFORMATION"
-#~ msgstr "Modifying other's information"

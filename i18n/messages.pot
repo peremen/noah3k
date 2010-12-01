@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2010-10-26 02:12+0900\n"
+"POT-Creation-Date: 2010-11-14 14:42+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,84 +17,84 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.5\n"
 
-#: article.py:180 article.py:229 article.py:269 article.py:308 article.py:397
-#: article.py:436 board.py:107 board.py:136 board.py:191 web_article.py:91
+#: article.py:184 article.py:233 article.py:273 article.py:312 article.py:401
+#: article.py:440 board.py:109 board.py:138 board.py:193 web_article.py:91
 #: web_article.py:108 web_article.py:138 web_article.py:153 web_article.py:204
 #: web_article.py:221 web_article.py:236 web_article.py:267 web_article.py:278
-#: web_board.py:200 web_board.py:217 web_board.py:253 web_board.py:270
+#: web_board.py:203 web_board.py:222 web_board.py:258 web_board.py:277
 #: web_user.py:229 web_user.py:277 web_user.py:299
 msgid "NO_PERMISSION"
 msgstr ""
 
-#: article.py:183 article.py:232 article.py:272 article.py:311 article.py:400
+#: article.py:187 article.py:236 article.py:276 article.py:315 article.py:404
 #: user.py:149 user.py:238
 msgid "NO_SUCH_USER"
 msgstr ""
 
-#: article.py:186 article.py:235 article.py:314 pm.py:110
+#: article.py:190 article.py:239 article.py:318 pm.py:110
 msgid "EMPTY_TITLE"
 msgstr ""
 
-#: article.py:188 article.py:237 article.py:316 pm.py:112
+#: article.py:192 article.py:241 article.py:320 pm.py:112
 msgid "EMPTY_BODY"
 msgstr ""
 
-#: article.py:196 article.py:324 board.py:100 board.py:139
+#: article.py:200 article.py:328 board.py:102 board.py:141
 #: web_noah2k_support.py:38 web_noah2k_support.py:58 web_noah2k_support.py:70
 #: web_noah2k_support.py:88
 msgid "NO_SUCH_BOARD"
 msgstr ""
 
-#: article.py:198 article.py:326
+#: article.py:202 article.py:330
 msgid "FOLDER"
 msgstr ""
 
-#: article.py:216 article.py:261 article.py:300 article.py:373 article.py:422
-#: article.py:440 pm.py:125 pm.py:136 user.py:282 user.py:339
+#: article.py:220 article.py:265 article.py:304 article.py:377 article.py:426
+#: article.py:444 pm.py:125 pm.py:136 user.py:282 user.py:339
 msgid "DATABASE_ERROR"
 msgstr ""
 
-#: article.py:246 article.py:283 article.py:412 web_article.py:70
+#: article.py:250 article.py:287 article.py:416 web_article.py:70
 msgid "NO_SUCH_ARTICLE"
 msgstr ""
 
-#: article.py:292
+#: article.py:296
 msgid "HAS_REPLY"
 msgstr ""
 
-#: article.py:304 pm.py:128 pm.py:139 user.py:342
+#: article.py:308 pm.py:128 pm.py:139 user.py:342
 msgid "SUCCESS"
 msgstr ""
 
-#: article.py:403
+#: article.py:407
 msgid "EMPTY_COMMENT"
 msgstr ""
 
-#: article.py:433
+#: article.py:437
 msgid "NO_SUCH_COMMENT"
 msgstr ""
 
-#: article.py:452 article.py:454 web_board.py:331
+#: article.py:456 article.py:458 web_board.py:340
 msgid "NO_KEYWORD_SPECIFIED"
 msgstr ""
 
-#: board.py:102 board.py:143
+#: board.py:104 board.py:145
 msgid "INVALID_BOARDNAME"
 msgstr ""
 
-#: board.py:105 board.py:148
+#: board.py:107 board.py:150
 msgid "BOARD_ALREADY_EXIST"
 msgstr ""
 
-#: board.py:151
+#: board.py:153
 msgid "INVALID_PARENT"
 msgstr ""
 
-#: board.py:154
+#: board.py:156
 msgid "NO_PERMISSION_ON_NEW_PARENT"
 msgstr ""
 
-#: board.py:200
+#: board.py:202
 msgid "HAS_CHILD"
 msgstr ""
 
@@ -134,11 +134,11 @@ msgstr ""
 msgid "NO_NOTICE"
 msgstr ""
 
-#: web_article.py:35 web_board.py:45 webpage.py:117
+#: web_article.py:35 web_board.py:46 webpage.py:115
 msgid "INVALID_BOARD"
 msgstr ""
 
-#: web_article.py:39 web_board.py:49 web_main.py:34 web_user.py:25
+#: web_article.py:39 web_board.py:50 web_main.py:34 web_user.py:25
 #: web_user.py:78
 msgid "INVALID_ACTION"
 msgstr ""
@@ -170,55 +170,55 @@ msgstr ""
 msgid "Do you want to delete the article?"
 msgstr ""
 
-#: web_article.py:212 web_board.py:304 web_user.py:307
+#: web_article.py:212 web_board.py:313 web_user.py:307
 msgid "Confirmation"
 msgstr ""
 
-#: web_board.py:72
+#: web_board.py:73
 #, python-format
 msgid "Write article - %s"
 msgstr ""
 
-#: web_board.py:73
+#: web_board.py:74
 msgid "Write article"
 msgstr ""
 
-#: web_board.py:170
+#: web_board.py:173
 #, python-format
 msgid "Information - %s"
 msgstr ""
 
-#: web_board.py:177
+#: web_board.py:180
 msgid "Main menu"
 msgstr ""
 
-#: web_board.py:208
+#: web_board.py:213
 #, python-format
 msgid "Create child board - %s"
 msgstr ""
 
-#: web_board.py:226 web_board.py:278
+#: web_board.py:231 web_board.py:285
 msgid "NO_SUCH_USER_FOR_BOARD_ADMIN"
 msgstr ""
 
-#: web_board.py:228
+#: web_board.py:233
 msgid "NO_NAME_SPECIFIED"
 msgstr ""
 
-#: web_board.py:231
+#: web_board.py:236
 msgid "BOARD_EXISTS"
 msgstr ""
 
-#: web_board.py:261
+#: web_board.py:268
 #, python-format
 msgid "Modify information - %s"
 msgstr ""
 
-#: web_board.py:303
+#: web_board.py:312
 msgid "Do you want to delete this board?"
 msgstr ""
 
-#: web_board.py:369
+#: web_board.py:378
 msgid "Search Results"
 msgstr ""
 
@@ -337,11 +337,11 @@ msgstr ""
 msgid "Do you want to delete the message?"
 msgstr ""
 
-#: webpage.py:88
+#: webpage.py:86
 msgid "[KAIST CS BBS]"
 msgstr ""
 
-#: webpage.py:97
+#: webpage.py:95
 #, python-format
 msgid "Help: %s"
 msgstr ""
@@ -896,7 +896,7 @@ msgstr ""
 msgid "To Dept."
 msgstr ""
 
-#: templates/desktop/sidebar.html:101
+#: templates/desktop/sidebar.html:103
 msgid "EVE Room"
 msgstr ""
 
@@ -904,39 +904,31 @@ msgstr ""
 msgid "Job Offer"
 msgstr ""
 
-#: templates/desktop/sidebar.html:105
-msgid "Sports"
-msgstr ""
-
-#: templates/desktop/sidebar.html:106
-msgid "Lab Assignment"
-msgstr ""
-
-#: templates/desktop/sidebar.html:111 templates/mobile/base.html:118
+#: templates/desktop/sidebar.html:109 templates/mobile/base.html:118
 msgid "Friends"
 msgstr ""
 
-#: templates/desktop/sidebar.html:113
+#: templates/desktop/sidebar.html:111
 msgid "Undg."
 msgstr ""
 
-#: templates/desktop/sidebar.html:118
+#: templates/desktop/sidebar.html:116
 msgid "Mast."
 msgstr ""
 
-#: templates/desktop/sidebar.html:129 templates/mobile/base.html:119
+#: templates/desktop/sidebar.html:127 templates/mobile/base.html:119
 msgid "Courses"
 msgstr ""
 
-#: templates/desktop/sidebar.html:130
+#: templates/desktop/sidebar.html:128
 msgid "(archive)"
 msgstr ""
 
-#: templates/desktop/sidebar.html:145
+#: templates/desktop/sidebar.html:143
 msgid "No course boards"
 msgstr ""
 
-#: templates/desktop/sidebar.html:151
+#: templates/desktop/sidebar.html:149
 msgid "NOAH Mobile"
 msgstr ""
 

@@ -6,7 +6,7 @@ import config
 import web
 
 translations = web.storage()
-supported_languages = ['ko', 'en',]
+supported_languages = ['ko', 'en', 'ru']
 def get_translations(lang='ko'):
     if translations.has_key(lang):
         translation = translations[lang]
