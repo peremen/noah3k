@@ -15,7 +15,7 @@ import i18n
 _ = i18n.custom_gettext
 
 lang_map = { 'ko': u'한국어',
-             'en': u'English',}
+             'en': u'English',
              'ru': u'Русский', }
 
 def session_helper(func):
