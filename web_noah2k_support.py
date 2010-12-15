@@ -25,7 +25,10 @@ class noah2k_support:
     def list(self, query_string):
         board_id = -1
         if query_string.has_key('board'):
-            board_id = int(query_string['board'][0])
+            try:
+                board_id = int(query_string['board'][0])
+            except ValueError:
+                raise web.notfound(render['default'].error(error_message = _('NO_SUCH_BOARD'), help_context='error'))
         else:
             raise web.notfound(render['default'].error(error_message = _('NO_BOARD_SPECIFIED'), help_context='error'))
         if query_string.has_key('page'):
@@ -46,7 +49,10 @@ class noah2k_support:
         board_id = -1
         article_id = -1
         if query_string.has_key('board'):
-            board_id = int(query_string['board'][0])
+            try:
+                board_id = int(query_string['board'][0])
+            except ValueError:
+                raise web.notfound(render['default'].error(error_message = _('NO_SUCH_BOARD'), help_context='error'))
         else:
             raise web.notfound(render['default'].error(error_message = _('NO_BOARD_SPECIFIED'), help_context='error'))
         if query_string.has_key('serial'):
@@ -62,7 +68,10 @@ class noah2k_support:
     def select(self, query_string):
         board_id = -1
         if query_string.has_key('board'):
-            board_id = int(query_string['board'][0])
+            try:
+                board_id = int(query_string['board'][0])
+            except ValueError:
+                raise web.notfound(render['default'].error(error_message = _('NO_SUCH_BOARD'), help_context='error'))
         else:
             raise web.redirect('/*')
         path = board._get_path_from_board_id(board_id)
@@ -74,7 +83,10 @@ class noah2k_support:
     def feed(self, query_string):
         board_id = -1
         if query_string.has_key('board'):
-            board_id = int(query_string['board'][0])
+            try:
+                board_id = int(query_string['board'][0])
+            except ValueError:
+                raise web.notfound(render['default'].error(error_message = _('NO_SUCH_BOARD'), help_context='error'))
         else:
             raise web.notfound(render['default'].error(error_message = _('NO_ARTICLE_SPECIFIED'), help_context='error'))
         feed_size = 20
@@ -92,7 +104,10 @@ class noah2k_support:
     def download(self, query_string):
         attachment = -1
         if query_string.has_key('serial'):
-            board_id = int(query_string['serial'][0])
+            try:
+                board_id = int(query_string['serial'][0])
+            except ValueError:
+                raise web.notfound(render['default'].error(error_message = _('NO_SUCH_BOARD'), help_context='error'))
         else:
             raise web.notfound(render['default'].error(error_message = _('NO_ATTACHMENT_SPECIFIED'), help_context='error'))
         return # TODO: 첨부 파일 URL scheme 정할 것
