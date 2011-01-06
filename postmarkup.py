@@ -834,10 +834,9 @@ class PostMarkup(object):
         text_tokens = []
         TOKEN_TEXT = PostMarkup.TOKEN_TEXT
         for tag_type, tag_token, start_pos, end_pos in self.tokenize(postmarkup):
-
-            if tag_type == TOKEN_TEXT:
+	    if tag_type == TOKEN_TEXT:
                 text_tokens.append(_re_url.sub(repl, tag_token))
-            else:
+	    else:
                 text_tokens.append(tag_token)
 
         return u"".join(text_tokens)

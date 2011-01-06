@@ -396,6 +396,10 @@ def read_article(uid, aSerial):
     val = dict(uid = uid, aSerial = aSerial)
     db.delete('UserArticles', vars=val, where='uSerial = $uid and aSerial = $aSerial')
 
+def read_all_articles(uid):
+    val = dict(uid = uid)
+    db.delete('UserArticles', vars=val, where='uSerial = $uid')
+
 def is_unreaded_article(uid, aSerial):
     result = db.select('UserArticles', dict(uid=uid, aSerial=aSerial), where='uSerial = $uid and aSerial = $aSerial')
     return len(result)

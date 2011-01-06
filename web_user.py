@@ -86,6 +86,15 @@ class personal_actions:
 
     @util.error_catcher
     @util.session_helper
+    def clear_new_article_get(self, theme, current_uid = -1):
+		user.read_all_articles(current_uid)
+		if theme == 'default':
+			raise web.seeother('/+u/+new_article')
+		else:
+			raise web.seeother('/%s/+u/+new_article' % theme)
+
+    @util.error_catcher
+    @util.session_helper
     def modify_get(self, theme, current_uid = -1):
         user_id = current_uid
         usr = user.get_user(user_id)[1]
