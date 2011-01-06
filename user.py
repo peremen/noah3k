@@ -419,6 +419,10 @@ def update_unreaded_articles_board(uid, bSerial):
         db.update('Subscriptions', vars=dict(uSerial=uid, bSerial=sub.bSerial), where='uSerial=$uSerial and bSerial = $bSerial', lastSubscriptedDate = web.SQLLiteral('NOW()'))
 
 def update_unreaded_articles(uid):
+    result = db.query('select * from Articles where aUpdatedDatetime > NOW()')
+    if(len(result) == 0):
+        return;
+
     for subscription in get_subscription_board(uid):
         val = dict(uSerial = uid, bSerial = subscription.bSerial, subscriptedDate = subscription.lastSubscriptedDate)
         result = db.query('insert ignore into UserArticles (select $uSerial, aSerial, NOW() from Articles where bSerial = $bSerial and aUpdatedDatetime > $subscriptedDate)', val)
