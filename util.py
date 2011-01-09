@@ -7,11 +7,11 @@ import random
 import sys, traceback
 
 import web
-import postmarkup
 import board, article
 import config
 from render import render
 import i18n
+import bbcode
 _ = i18n.custom_gettext
 
 lang_map = { 'ko': u'한국어',
@@ -101,7 +101,7 @@ def validate_boardname(name):
         return False
 
 def format(original):
-    b = postmarkup.create(annotate_links = False)
+    b = bbcode.parse
     try:
         return b(process_noah12k_quote(original))
     except:
