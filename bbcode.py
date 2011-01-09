@@ -13,7 +13,7 @@ _tags = {"b": {"argc":1, "tmpl":"<b>%s</b>", "nest":True},
 		"img": {"argc":2, "tmpl":"<img src=\"%s\" alt=\"image\">%s</img>", "nest":True},
 		"color": {"argc":2, "tmpl":"<span style=\"color:%s;\">%s</span>", "nest":True},
 		"code": {"argc":2, "tmpl":"<pre type=\"%s\">%s</pre>", "nest":False},
-		"quote": {"argc":2, "tmpl":"<blockquote><em>%s</em><br/>%s</blockquote>", "nest":True},
+		"quote": {"argc":2, "tmpl":"<b>%s</b><br/><blockquote>%s</blockquote>", "nest":True},
 		};
 
 def getRegexStart(tags):
