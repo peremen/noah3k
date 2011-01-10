@@ -10,7 +10,7 @@ _tags = {"b": {"argc":1, "tmpl":"<b>%s</b>", "nest":True},
 		"center": {"argc":1, "tmpl":"<center>%s</center>", "nest":True},
 
 		"link": {"argc":2, "tmpl":"<a href=\"%s\">%s</a>", "nest":True},
-		"img": {"argc":2, "tmpl":"<img src=\"%s\" alt=\"image\">%s</img>", "nest":True},
+		"img": {"argc":2, "tmpl":"<img src=\"%s\" alt=\"%s\"/>", "nest":False},
 		"color": {"argc":2, "tmpl":"<span style=\"color:%s;\">%s</span>", "nest":True},
 		"code": {"argc":2, "tmpl":"<pre type=\"%s\">%s</pre>", "nest":False},
 		"quote": {"argc":2, "tmpl":"<b>%s</b><br/><blockquote>%s</blockquote>", "nest":True},
