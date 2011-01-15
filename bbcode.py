@@ -30,7 +30,8 @@ def _fmt_list(args):
 	elif args[0] == 'A':
 		style = 'list-style-type:upper-alpha'
 	
-	html = '<ol style="%s">'
+	html = '<ol style="%s">' % style
+	
 	for elem in _re_list.findall(args[1]):
 		html += '<li>' + _parse(elem, _tags) + '</li>'
 	html += '</ol>'
@@ -62,7 +63,7 @@ def getRegexStart(tags):
 _re_start = getRegexStart(_tags);
 
 def _escape(text):
-	return text.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;').replace('\n', '<br/>');
+	return text.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('\n', '<br/>');
 
 def _parse_url(text):
 	html = ''
@@ -87,10 +88,8 @@ def _parse(text, tags):
 		innerText, text = text.split('[/%s]' % tag, 1)
 		if tags[tag]["nest"]:
 			innerHtml = _parse(innerText, tags)
-		elif tag == "code":
-			innerHtml = innerText
 		else:
-			innerHtml = _escape(innerText)
+			innerHtml = innerText
 
 		html += tags[tag]["tmpl"]((arg, innerHtml))
 	return html + _parse_url(text)
