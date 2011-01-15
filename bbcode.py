@@ -45,8 +45,9 @@ _tags = {"b": {"tmpl":_fmt("<b>%s</b>"), "nest":True},
 		"link": {"tmpl":_fmt("<a href=\"%s\">%s</a>"), "nest":True},
 		"img": {"tmpl":_fmt("<img src=\"%s\" alt=\"%s\"/>"), "nest":False},
 		"color": {"tmpl":_fmt("<span style=\"color:%s;\">%s</span>"), "nest":True},
-		"code": {"tmpl":_fmt("<pre type=\"%s\">%s</pre>"), "nest":False},
+		"code": {"tmpl":_fmt("<pre class=\"brush: %s\">%s</pre>"), "nest":False},
 		"quote": {"tmpl":_fmt("<b>%s</b><br/><blockquote>%s</blockquote>"), "nest":True},
+
 		"video": {"tmpl":_fmt_video, "nest":False},
 		"list": {"tmpl":_fmt_list, "nest":False},
 		};
@@ -60,15 +61,18 @@ def getRegexStart(tags):
 
 _re_start = getRegexStart(_tags);
 
+def _escape(text):
+	return text.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;').replace('\n', '<br/>');
+
 def _parse_url(text):
 	html = ''
 	while True:
 		ro = _re_url.search(text)
 		if(ro == None):
 			break
-		html, text, url = html + text[:ro.start()], text[ro.end():], ro.groups()[0]
+		html, text, url = html + _escape(text[:ro.start()]), text[ro.end():], ro.groups()[0]
 		html += _tags["link"]["tmpl"]((url, url))
-	return html + text
+	return html + _escape(text)
 
 def _parse(text, tags):
 	html = ''
@@ -76,19 +80,20 @@ def _parse(text, tags):
 		ro = _re_start.search(text)
 		if(ro == None):
 			break
-		tag, arg = ro.groups()[0], ro.groups()[1]
+		tag, arg = ro.groups()
 		if arg == None:
 			arg = ''
 		html, text = html + _parse_url(text[:ro.start()]), text[ro.end():]
 		innerText, text = text.split('[/%s]' % tag, 1)
 		if tags[tag]["nest"]:
 			innerHtml = _parse(innerText, tags)
-		else:
+		elif tag == "code":
 			innerHtml = innerText
+		else:
+			innerHtml = _escape(innerText)
 
 		html += tags[tag]["tmpl"]((arg, innerHtml))
 	return html + _parse_url(text)
 
 def parse(text):
-	text = text.replace('\n', '<br/>')
 	return _parse(text, _tags);
