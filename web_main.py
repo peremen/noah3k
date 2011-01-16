@@ -106,12 +106,23 @@ class main_actions:
 
     @util.error_catcher
     def login_post(self, theme):
-        username, password = '', ''
+        user_input = web.input()
+        username, password = user_input.username.strip(), user_input.password.strip()
+        referer = user_input.url.strip()
+        if referer == '' or referer == 'None':
+            if theme == 'default':
+                referer = web.ctx.env.get('HTTP_REFERER', '/')
+            else:
+                referer = web.ctx.env.get('HTTP_REFERER', '/%s' % theme)
+        if referer.endswith('login'):
+            if theme == 'default':
+                referer = '/'
+            else:
+                referer = '/%s' % theme
         err = ''
         valid = True
         login = (False, 'UNDEFINED')
-        username, password = web.input().username, web.input().password
-        referer = web.input().url
+        autologin = user_input.has_key('autologin')
         username, password = username.strip(), password.strip()
         if username == '' or password == '':
             err = _('No user ID or password specified.')
@@ -125,6 +136,10 @@ class main_actions:
                 web.ctx.session.uid = uid
                 web.ctx.session.username = username
                 web.ctx.session.lang = login[1]
+                if autologin:
+                    web.ctx.session.persistent = True
+                else:
+                    web.ctx.session.persistent = False
                 user.update_last_login(uid, web.ctx.ip)
             else:
                 # 로그인 실패
@@ -133,7 +148,7 @@ class main_actions:
             return render[theme].login(title = _('Login'), board_desc=_('Login'),
                     lang="ko", error = err, referer = referer)
         else:
-            raise web.seeother(web.input().url)
+            raise web.seeother(referer)
             # 이전 페이지로 '묻지 않고' 되돌림
 
     @util.error_catcher

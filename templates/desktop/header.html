@@ -1,44 +1,6 @@
 <% from i18n import custom_gettext as _
-import board, posixpath, pm, config
+import util, config
 from web import ctx
-def traverse_board_path(path):
-    if path == '^root':
-        path = '/'
-    ret = ""
-    id = board._get_board_id_from_path(path)
-    while id != 1:
-        i = board.get_board_info(id)
-        if i.bType == 0:
-            ret = '&nbsp;&gt;&nbsp;<a class="dirlink" href="%s">%s</a>' % (i.bName, i.bName.split('/')[-1]) + ret
-        else:
-            ret = '&nbsp;&gt;&nbsp;<a class="boardlink" href="%s">%s</a>' % (i.bName, i.bName.split('/')[-1]) + ret
-        id = board.get_parent(id)
-    ret = (u'<a class="dirlink" href="/">%s</a>' % _('Board')) + ret
-    return ret
-
-def traverse_child_board(path):
-    sep = '&nbsp;|&nbsp;'
-    ret = ""
-    id = board._get_board_id_from_path(path)
-    children = board.get_child(id)
-    for child in children:
-        if child.bType == 0:
-            child_image = '/static/image/folder.png'
-        else:
-            child_image = '/static/image/board.png'
-        if child.bDescription.strip() == '':
-            child_desc = posixpath.basename(child.bName)
-        else:
-            child_desc = child.bDescription
-        ret = ret + '<a class="boardlink" href="%s"><img class="type" src="%s" />&nbsp;%s</a>%s' % (child.bName, child_image, child_desc, sep)
-    return ret[0:-len(sep)]
-
-def get_type(path):
-    if path == '^root':
-        path = '/'
-    id = board._get_board_id_from_path(path)
-    data = board.get_board_info(id)
-    return data.bType
 %>
 <div id="logo">
 	<a href="/"><img src="${config.logo_url}" border="0" /></a>
@@ -49,54 +11,13 @@ def get_type(path):
 %if help_context is not UNDEFINED:
         <li><a class="button" target="_blank" href="/+help/${help_context}">${_('Help')}</a></li>
 % endif
-        ## 로그인을 비롯한 다른 버튼들을 여기로.
-%if ctx.session is UNDEFINED:
-        <li><a class="button" href="/+join">${_('Join')}</a></li>
-        <li><a class="button" href="/+login">${_('Login')}</a></li>
-%elif not ctx.session.has_key('uid'):
-        <li><a class="button" href="/+join">${_('Join')}</a></li>
-        <li><a class="button" href="/+login">${_('Login')}</a></li>
-% else:
-        <li><a class="button" href="/+u/+new_article">${_('New Article')}</a></li>
-    <% read_cnt = pm.unread_count(ctx.session.uid) %>
-    %if read_cnt > 0:
-        <li><a class="button" style="background: red; color: white;" target="_blank" href="/+u/+inbox">${_('Mail')} (${read_cnt})</a></li>
-    % else:
-        <li><a class="button" target="_blank" href="/+u/+inbox">${_('Mail')}</a></li>
-    % endif
-        <li><a class="button" href="/+u">${_('My Info')}</a></li>
-        <li><a class="button" href="/+logout">${_('Logout')}</a></li>
-% endif
     </ul>
 </div>
 
-## 보드 설명
 <div id="title">
-%if board_path is UNDEFINED:
-    %if board_desc is UNDEFINED:
-    <a href="#">${_('Error')}</a>
-    %else:
-    <a href="#">${board_desc}</a>
-    %endif
-%else:
-    <a href="/${board_path}/+cover" target="_blank">${board_desc}</a>
-%endif
+    예제 메뉴
 </div>
 
-## 자식 보드
-% if board_path is not UNDEFINED:
-    % if get_type(board_path) > 0:
-    <div id="children">
-        ${traverse_child_board(board_path)}
-    </div>
-    % endif
-% endif
-
-## 부모 보드
 <div id="histnav">
-%if board_path is not UNDEFINED:
-    ${traverse_board_path(board_path)}
-%else:
-    <a class="dirlink" href="/">${_('Boards')}</a>
-%endif
+    예제 메뉴 2
 </div>

@@ -1,6 +1,6 @@
 ﻿<% from web import ctx
 from i18n import custom_gettext as _
-import user, board
+import user, board, posixpath, pm, config
 from datetime import datetime
 def get_friend_boards(type):
     friend_list = []
@@ -9,7 +9,87 @@ def get_friend_boards(type):
     	friend_list.append(dict(year = b.bDescription[3:5], board = b))
 
     return friend_list
+
+def traverse_board_path(path):
+    if path == '^root':
+        path = '/'
+    ret = ""
+    id = board._get_board_id_from_path(path)
+    while id != 1:
+        i = board.get_board_info(id)
+        if i.bType == 0:
+            ret = '&nbsp;&gt;&nbsp;<a class="dirlink" href="%s">%s</a>' % (i.bName, i.bName.split('/')[-1]) + ret
+        else:
+            ret = '&nbsp;&gt;&nbsp;<a class="boardlink" href="%s">%s</a>' % (i.bName, i.bName.split('/')[-1]) + ret
+        id = board.get_parent(id)
+    ret = (u'<a class="dirlink" href="/">%s</a>' % _('Board')) + ret
+    return ret
+
+def traverse_child_board(path):
+    sep = '\n'
+    ret = ""
+    id = board._get_board_id_from_path(path)
+    children = board.get_child(id)
+    for child in children:
+        if child.bType == 0:
+            child_image = '/static/image/folder.png'
+        else:
+            child_image = '/static/image/board.png'
+        if child.bDescription.strip() == '':
+            child_desc = posixpath.basename(child.bName)
+        else:
+            child_desc = child.bDescription
+            ret = ret + '<li><a class="boardlink" href="%s"><img class="type" src="%s" />&nbsp;%s</a></li>%s' % (child.bName, child_image, child_desc, sep)
+    return ret[0:-len(sep)]
+
+def get_type(path):
+    if path == '^root':
+        path = '/'
+    id = board._get_board_id_from_path(path)
+    data = board.get_board_info(id)
+    return data.bType
 %>
+<div class="personal_tools" style="display: inline;">
+%if ctx.session is UNDEFINED or (not ctx.session.has_key('uid')):
+    <form method="post" action="/+login">
+        <input name="url" type="hidden" value=""/>
+        <p><label for="username">${_('ID')}</label> <input id="username" name="username" type="text" tabindex="1" class="auth_input"/></p>
+        <p><label for="password">${_('Password')}</label> <input id="password" name="password" type="password" tabindex="2" class="auth_input"/></p>
+        <input class="button_side" type="submit" id="submit" tabindex="3" value="${_('Login')}"/> <a class="button_side" href="/+join">${_('Join')}</a> <a class="button_side" href="/+lost_login">${_('Lost Login?')}</a>
+        <br />
+        <input id="autologin" type="checkbox" name="autologin" value="on" /><label for="autologin">${_('Auto Login (max two weeks)')}</label>
+    </form>
+    <script> $("#username").focus(); </script>
+% else:
+<p>
+<div class="myinfo_left"><img src="/static/image/no_avatar.png" class="avatar_large" alt="Avatar" /></div>
+<div class="myinfo_right">
+    <a class="userinfo_side" href="/+u">${ctx.session.username}</a><br />
+    <a class="userinfo_side" href="/+u/+modify">${_('My Info')}</a></div>
+</p>
+<p>
+<a class="button_side" href="/+u/+new_article">${_('New Article')}</a>
+   <% read_cnt = pm.unread_count(ctx.session.uid) %>
+   %if read_cnt > 0:
+       <a class="button_side" style="background: red; color: white;" target="_blank" href="/+u/+inbox">${_('Mail')} (${read_cnt})</a>
+   % else:
+<a class="button_side" target="_blank" href="/+u/+inbox">${_('Mail')}</a>
+   % endif
+<a class="button_side" href="/+logout">${_('Logout')}</a>
+% endif
+</div>
+<br />
+
+% if board_path is not UNDEFINED:
+    % if get_type(board_path) == 1:
+<div class="heading">${_('Sub-boards')}</div>
+    <ul>
+        ${traverse_child_board(board_path)}
+    </ul>
+<br />
+    % endif
+% endif
+
 % if ctx.session.has_key('uid'):
 <div class="heading"><a class="plainlink" href="/+u/+my_board">${_('My Boards')}</a>
     <div style="float: right;">

@@ -1,10 +1,13 @@
 <%inherit file="base.html" />
 <%
-import user, article, acl, board
+import user, article, acl, board, util
 import attachment
 from web import ctx
 from i18n import custom_gettext as _
 %>
+## 보드 설명
+<p><a class="board_heading" href="/${board_path}/+cover" target="_blank">${board_desc}</a>&nbsp;&nbsp;<span class="board_path">${util.traverse_board_path(board_path)}</span></p>
+
 % if len(articles) == 0:
 <div align="center">
     <div style="width: 500px; padding: 25px">

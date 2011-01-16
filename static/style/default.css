@@ -424,3 +424,99 @@ a.quote {
     text-decoration: none;
     color: #555;
 }
+
+div.personal_tools .auth_left {
+    width: 150px;
+    float: left;
+}
+
+div.personal_tools p {
+    margin: 0 3px 0 0;
+    margin-bottom: 3px;
+}
+
+div.personal_tools p label {
+    display: block;
+    float: left;
+    width: 60px;
+}
+
+div.personal_tools .auth_input{
+    width: 120px;
+    margin: 0;
+    padding: 2px;
+    border: 1px solid gray;
+}
+
+.avatar_large {
+    width: 48px;
+    height: 48px;
+    border: 1px solid;
+    border-color: gray;
+}
+
+div.personal_tools .myinfo_left {
+    float: left;
+    width: 50px;
+    height: 50px;
+    margin-bottom: 6px;
+}
+
+div.personal_tools .myinfo_right {
+    height: 50px;
+    margin-bottom: 6px;
+    margin-left: 55px;
+}
+
+div.personal_tools a.userinfo_side {
+    color: gray;
+    text-decoration: none;
+}
+
+div.personal_tools a.userinfo_side:hover {
+    text-decoration: underline;
+}
+
+.board_heading {
+    text-decoration: none;
+    color: black;
+    font-size: 1.6em;
+    font-weight: bold;
+}
+
+.board_path {
+    text-decoration: none;
+    color: gray;
+    font-weight: normal;
+}
+
+.board_path a {
+    text-decoration: none;
+    color: gray;
+    font-weight: normal;
+}
+
+.board_path a:hover {
+    text-decoration: underline;
+    color: gray;
+    font-weight: normal;
+    background-color: white;
+}
+
+.button_side {
+    text-decoration: none;
+    color: black;
+    border: 1px solid silver; 
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    background: white; 
+    padding: 5px 5px 2px 2px;
+    margin: 2px;
+    font-size: 1.0em;
+    height: 1.8em;
+}
+input.button_side {
+    height: 1.8em;
+}
+
+.button_side:hover { background: gray; color: white }

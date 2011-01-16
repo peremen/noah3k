@@ -105,7 +105,10 @@ class Session(utils.ThreadedDict):
         cookie_name = self._config.cookie_name
         cookie_domain = self._config.cookie_domain
         if not self.get('_killed'):
-            web.setcookie(cookie_name, self.session_id, domain=cookie_domain)
+            if self.get('persistent', False):
+                web.setcookie(cookie_name, self.session_id, expires=self._config.timeout * 14, domain=cookie_domain)
+            else:
+                web.setcookie(cookie_name, self.session_id, domain=cookie_domain)
             self.store[self.session_id] = dict(self)
         else:
             web.setcookie(cookie_name, self.session_id, expires=-1, domain=cookie_domain)

@@ -1,5 +1,9 @@
-<% from i18n import custom_gettext as _ %>
-<!-- 하위 디렉토리 -->
+<% from i18n import custom_gettext as _
+import util %>
+
+<p><a class="board_heading" href="/${board_path}/+cover" target="_blank">${board_desc}</a>&nbsp;&nbsp;<span class="board_path">${util.traverse_board_path(board_path)}</span></p>
+
+<!-- 하위 디렉터리 -->
 <table border="0" cellspacing="0" cellpadding="4" width="100%" class="list">
     <tr class="head">
         <th width="20%">${_('Name')}</th>
