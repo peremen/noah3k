@@ -36,3 +36,6 @@ error_report_path = os.path.join(os.path.dirname(__file__), 'error_report')
 
 logo_url = '/static/image/logo.png'
 recaptcha_private_key = 'PRIVATE_KEY_BY_GOOGLE'
+
+tmpl_video_width = 640
+tmpl_video_height = 480

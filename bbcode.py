@@ -2,6 +2,12 @@
 # -*- coding: utf-8 -*-
 
 import re
+import config
+
+if "tmpl_video_width" not in dir(config):
+	config.tmpl_video_width = 640
+if "tmpl_video_height" not in dir(config):
+	config.tmpl_video_height = 480
 
 _re_url = re.compile(r"((https?):((//)|(\\\\))+[\w\d:#@%/;$()~_?\+-=\\\.&]*)", re.MULTILINE|re.UNICODE)
 _re_list = re.compile('\[\*\]([^[]*)')
@@ -12,13 +18,11 @@ def _fmt(tmpl):
 	return lambda args: tmpl % args;
 
 def _fmt_video(args):
-	width = 640
-	height = 480
-	url = ''
+	tpl = (config.tmpl_video_width, config.tmpl_video_height, args[1])
 	if(args[0] == "youtube"):
-		url = '<iframe title="YouTube video player" class="youtube-player" type="text/html" width="%s" height="%s" src="http://www.youtube.com/embed/%s?rel=0" frameborder="0"></iframe>' % (width, height, args[1])
+		url = '<iframe title="YouTube video player" class="youtube-player" type="text/html" width="%s" height="%s" src="http://www.youtube.com/embed/%s?rel=0" frameborder="0"></iframe>' % tpl
 	elif(args[0] == "vimeo"):
-		url = '<iframe width="%s" height="%s" src="http://player.vimeo.com/video/%s" frameborder="0"></iframe>' % (width, height, args[1])
+		url = '<iframe width="%s" height="%s" src="http://player.vimeo.com/video/%s" frameborder="0"></iframe>' % tpl
 	return url
 
 def _fmt_list(args):
