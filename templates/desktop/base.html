@@ -1,4 +1,4 @@
-<%! scripts = ['/static/scripts/jquery-1.4.2.min.js'] 
+<%! scripts = ['/static/scripts/jquery-1.4.2.min.js', '/static/scripts/sh/shCore.js', '/static/scripts/sh/shAutoloader.js']
 import user as U
 import config
 from i18n import custom_gettext as _
@@ -17,7 +17,8 @@ from web import ctx %><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
 % endif
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" type="text/css" href="/static/style/default.css">
-    <link rel="stylesheet" type="text/css" href="/static/style/code.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/sh/shCore.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/sh/shThemeDefault.css">
 % if board_path is not UNDEFINED:
 % if feed is not UNDEFINED:
     <link rel="alternate" type="application/rss+xml" href="/${board_path}/+rss" title="RSS 피드 (/${board_path})" />
@@ -44,15 +45,52 @@ ${self.head_scripts()}
 
 </script>
 <script type="text/javascript"> 
-var $buoop = {} 
-$buoop.ol = window.onload; 
-window.onload=function(){ 
- if ($buoop.ol) $buoop.ol(); 
- var e = document.createElement("script"); 
- e.setAttribute("type", "text/javascript"); 
- e.setAttribute("src", "http://browser-update.org/update.js"); 
- document.body.appendChild(e); 
-} 
+$(window).load(function(){ 
+	var e = document.createElement("script"); 
+	e.setAttribute("type", "text/javascript"); 
+	e.setAttribute("src", "http://browser-update.org/update.js"); 
+	document.body.appendChild(e); 
+
+	function path()
+	{
+		var args = arguments,
+		result = []
+		;
+	
+		for(var i = 0; i < args.length; i++)
+		result.push(args[i].replace('@', '/static/scripts/sh/'));
+	
+		return result
+	};
+
+	SyntaxHighlighter.autoloader.apply(null, path(
+			'applescript            @shBrushAppleScript.js',
+			'actionscript3 as3      @shBrushAS3.js',
+			'bash shell             @shBrushBash.js',
+			'coldfusion cf          @shBrushColdFusion.js',
+			'cpp c                  @shBrushCpp.js',
+			'c# c-sharp csharp      @shBrushCSharp.js',
+			'css                    @shBrushCss.js',
+			'delphi pascal          @shBrushDelphi.js',
+			'diff patch pas         @shBrushDiff.js',
+			'erl erlang             @shBrushErlang.js',
+			'groovy                 @shBrushGroovy.js',
+			'java                   @shBrushJava.js',
+			'jfx javafx             @shBrushJavaFX.js',
+			'js jscript javascript  @shBrushJScript.js',
+			'perl pl                @shBrushPerl.js',
+			'php                    @shBrushPhp.js',
+			'text plain             @shBrushPlain.js',
+			'py python              @shBrushPython.js',
+			'ruby rails ror rb      @shBrushRuby.js',
+			'sass scss              @shBrushSass.js',
+			'scala                  @shBrushScala.js',
+			'sql                    @shBrushSql.js',
+			'vb vbnet               @shBrushVb.js',
+			'xml xhtml xslt html    @shBrushXml.js'
+				));
+	SyntaxHighlighter.all();
+} );
 </script>
 </head>
 
