@@ -1,0 +1,51 @@
+<%inherit file="base_mail.html" />
+<% import util, user, config
+from web import ctx
+from i18n import custom_gettext as _
+def get_formatted_username(uid):
+    u = user.get_user(uid)
+    if u[0]:
+        return "%(id)s" % {'id': u[1]['uId']}
+    else:
+        return _('Former Member')
+%>
+<h1>${mailbox_name}</h1>
+% if mails is UNDEFINED:
+${_('No private messages.')}
+% elif len(mails) == 0:
+${_('No private messages.')}
+% else:
+${_('%s messages' % len(mails))}<br />
+<table border="0" cellspacing="0" cellpadding="4" style="width: 100%; margin-bottom: 0;" class="list">
+    <tr align="center" class="head">
+        <th>${_('From')}</th>
+        <th>${_('Title')}</th>
+        <th>${_('Date')}</th>
+    </tr>
+    <% i = 1 %>
+    % for m in mails:
+        % if i%2 == 0:
+    <tr class="even">
+        % else:
+    <tr class="odd">
+        % endif
+        <!-- 글쓴이 -->
+        <td>${get_formatted_username(m.mSenderSerial)}</td>
+
+        <!-- 제목 --> 
+        <td width="55%">
+        <a class="articlelink" href="/+u/+read_message?message_id=${m.mSerial}">${m.mTitle}
+        % if m.mMark == 0:
+        <span class="new">new</span>
+        % endif
+        </a>
+        </td>
+
+        <!-- 날짜 -->
+        <td align="center">${m.mDatetime.strftime('%Y-%m-%d')}</td>
+    </tr>
+    <% i = i + 1 %>
+    % endfor
+</table>
+% endif
+<p><a class="button" href="/+u/+write_message">${_('Write Message')}</a></p>

@@ -1,0 +1,15 @@
+<% from i18n import custom_gettext as _ %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko">
+<head>
+    <title>${title}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/static/style/default.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/code.css">
+</head>
+<body>
+${next.body()}
+    <p style="text-align: right;"><a class="servicelink" href="#" onclick="javascript:self.close();">${_('Close this window')}</a></p>
+</body>
+</html>

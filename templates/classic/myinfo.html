@@ -1,0 +1,144 @@
+<% import user as user_ 
+import util
+from web import ctx
+from i18n import custom_gettext as _ %>
+<%inherit file="base.html" />
+<div style="width: 640px">
+    <div class="heading">${_('Personal Information')}</div>
+    <div class="row">
+        <div class="left-container">ID</div>
+        <span class="sep">:</span>
+        <span>${user.uId}</span>
+    </div>
+    <div class="row">
+        <div class="left-container">${_('Nickname')}</div>
+        <span class="sep">:</span>
+%if user.uNick is UNDEFINED:
+        <span style='color: #aaaaaa'>${_('None')}</span>
+%elif user.uNick.strip() == '':
+        <span style='color: #aaaaaa'>${_('None')}</span>
+% else:
+        <span>${user.uNick}</span>
+% endif
+    </div>
+    <div class="row">
+        <div class="left-container">${_('E-Mail')}</div>
+        <span class="sep">:</span>
+%if user.uEmail is UNDEFINED:
+        <span style='color: #aaaaaa'>${_('None')}</span>
+%elif user.uEmail.strip() == '':
+        <span style='color: #aaaaaa'>${_('None')}</span>
+% else:
+        <span>${user.uEmail}</span>
+% endif
+    </div>
+    <div class="row">
+        <div class="left-container">${_('Website')}</div>
+        <span class="sep">:</span>
+%if user.uHomepage is UNDEFINED:
+        <span style='color: #aaaaaa'>${_('None')}</span>
+% elif user.uHomepage.strip() == '':
+        <span style='color: #aaaaaa'>${_('None')}</span>
+%else:
+        <span>${user.uHomepage}</span>
+% endif
+    </div>
+    <div class="row">
+        <div class="left-container">${_('Signature')}</div>
+        <span class="sep">:</span>
+        <div style="border: solid 1px lightgray; margin-left:9em">
+%if user.uSig is UNDEFINED:
+            <span style="font-size: 0.9em; color: #aaaaaa">${_('None')}</span>
+%elif user.uSig.strip() == '':
+            <span style="font-size: 0.9em; color: #aaaaaa">${_('None')}</span>
+% else:
+            <span style="font-size: 0.9em">${util.format(user.uSig)}</span>
+% endif
+        </div>
+    </div>
+    <div class="row">
+        <div class="left-container">${_('Introduction')}</div>
+        <span class="sep">:</span>
+        <div style="border: solid 1px lightgray; margin-left: 9em">
+%if user.uPlan is UNDEFINED:
+            <span style="font-size: 0.9em; color: #aaaaaa">${_('None')}</span>
+%elif user.uPlan.strip() == '':
+            <span style="font-size: 0.9em; color: #aaaaaa">${_('None')}</span>
+% else:
+            <span style="font-size: 0.9em">${util.format(user.uPlan)}</span>
+% endif
+        </div>
+    <div class="row">
+        <div class="left-container">${_('Language')}</div>
+        <span class="sep">:</span>
+        <span>${util.lcode_to_name(user.language)}</span>
+        </div>
+    </div>
+
+    <div class="heading">${_('Usage Statistics')}</div>
+    <div class="row">
+        <div class="left-container">${_('Join Date')}</div>
+        <span class="sep">:</span>
+        <span>${user.uDatetime}</span>
+    </div>
+    <div class="row"> 
+        <div class="left-container">${_('Login Count')}</div>
+        <span class="sep">:</span>
+        <span>${user.uNumLogin}</span>
+    </div>
+    <div class="row"> 
+        <div class="left-container">${_('Posts')}</div>
+        <span class="sep">:</span>
+        <span>${user_.get_post_count(user_id)}</span>
+    </div>
+    <div class="row"> 
+        <div class="left-container">${_('_:Count\nComments')}</div>
+        <span class="sep">:</span>
+        <span>${user_.get_comment_count(user_id)}</span>
+    </div>
+%if ctx.session is not UNDEFINED and ctx.session.has_key('uid'):
+    % if ctx.session.uid == 1 or ctx.session.uid == user_id:
+    <div class="row">
+        <div class="left-container">${_('Last Login')}</div>
+        <span class="sep">:</span>
+        %if user.uLastLogin is UNDEFINED:
+        <span style='color: #aa0000'>${_('Unknown')}</span>
+        % else:
+        <span>${user.uLastLogin}</span>
+        % endif
+    </div>
+    <div class="row"> 
+        <div class="left-container">${_('Last Login IP')}</div>
+        <span class="sep">:</span>
+        %if user.uLastHost is UNDEFINED:
+        <span style='color: #aa0000'>${_('Unknown')}</span>
+        %elif user.uLastHost.strip() == '':
+        <span style='color: #aa0000'>${_('Unknown')}</span>
+        % else:
+        <span>${user.uLastHost}</span>
+        % endif
+    </div>
+    <div class="row"> 
+        <div class="left-container">${_('Password Strength')}</div>
+        <span class="sep">:</span>
+        <% password_strength = user_.get_password_strength(user_id) %>
+        % if password_strength == 2:
+        <span style="color: green;">${_('Strong')}</span>
+        % elif password_strength == 1:
+        <span style="color: orange;">${_('Normal')} <a style="color: orange;" href="/+u/+modify">${_('(Change password recommended)')}</a></span>
+        % elif password_strength == 0:
+        <span style="color: red; font-weight: bold;">${_('Weak')} <a style="color: red;" href="/+u/+modify">${_('(Change password NOW)')}</a></span>
+        % else:
+        <span style="color: red; font-weight: bold;">${_('Unknown')}</span>
+        % endif
+    </div>
+    % endif
+% endif
+</div>
+<br />
+<div>
+    <a class="button" href="/+u/+my_posts">${_('My Posts')}</a>
+    <a class="button" href="/+u/+modify">${_('Modify')}</a>
+    <a class="button" href="/+u/+leave">${_('Leave NOAH')}</a>
+</div>
+
