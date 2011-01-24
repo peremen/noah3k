@@ -46,6 +46,7 @@ _tags = {"b": {"tmpl":_fmt("<b>%s</b>"), "nest":True},
 		"u": {"tmpl":_fmt("<u>%s</u>"), "nest":True},
 		"s": {"tmpl":_fmt("<s>%s</s>"), "nest":True},
 		"center": {"tmpl":_fmt("<center>%s</center>"), "nest":True},
+		"size": {"tmpl":_fmt('<font size="%s">%s</font>'), "nest":True},
 
 		"link": {"tmpl":_fmt("<a href=\"%s\">%s</a>"), "nest":True},
 		"img": {"tmpl":_fmt("<img src=\"%s\" alt=\"%s\"/>"), "nest":False},
@@ -75,9 +76,9 @@ def _parse_url(text):
 		ro = _re_url.search(text)
 		if(ro == None):
 			break
-		html, text, url = html + _escape(text[:ro.start()]), text[ro.end():], ro.groups()[0]
+		html, text, url = html + text[:ro.start()], text[ro.end():], ro.groups()[0]
 		html += _tags["link"]["tmpl"]((url, url))
-	return html + _escape(text)
+	return html + text
 
 def _parse(text, tags):
 	html = ''
@@ -89,14 +90,15 @@ def _parse(text, tags):
 		if arg == None:
 			arg = ''
 		html, text = html + _parse_url(text[:ro.start()]), text[ro.end():]
-		innerText, text = text.split('[/%s]' % tag, 1)
 		if tags[tag]["nest"]:
-			innerHtml = _parse(innerText, tags)
-		else:
-			innerHtml = innerText
+			text = _parse(text, tags)
 
-		html += tags[tag]["tmpl"]((arg, innerHtml))
-	return html + _parse_url(text)
+		innerText, text = text.split('[/%s]' % tag, 1)
+		if not tags[tag]["nest"]:
+			innerText = innerText.replace('<br/>', '\n');
+		html += tags[tag]["tmpl"]((arg, innerText))
+	return html + text
 
 def parse(text):
-	return _parse(text, _tags);
+	text = _escape(text);
+	return _parse(text, _tags)
