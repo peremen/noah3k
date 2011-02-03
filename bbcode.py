@@ -56,6 +56,8 @@ _tags = {"b": {"tmpl":_fmt("<b>%s</b>"), "nest":True},
 
 		"video": {"tmpl":_fmt_video, "nest":False},
 		"list": {"tmpl":_fmt_list, "nest":False},
+
+		"latex": {"tmpl":_fmt('<img src="http://l.wordpress.com/latex.php?bg=ffffff&fg=000000&latex=%s" alt="latex math"/>'), "nest":False},
 		};
 
 def getRegexStart(tags):
