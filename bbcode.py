@@ -99,7 +99,7 @@ def _parse(text, tags):
 		if not tags[tag]["nest"]:
 			innerText = innerText.replace('<br/>', '\n');
 		html += tags[tag]["tmpl"]((arg, innerText))
-	return html + text
+	return html + _parse_url(text)
 
 def parse(text):
 	text = _escape(text);
