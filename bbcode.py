@@ -2,6 +2,12 @@
 # -*- coding: utf-8 -*-
 
 import re
+import config
+
+if "tmpl_video_width" not in dir(config):
+	config.tmpl_video_width = 640
+if "tmpl_video_height" not in dir(config):
+	config.tmpl_video_height = 480
 
 _re_url = re.compile(r"((https?):((//)|(\\\\))+[\w\d:#@%/;$()~_?\+-=\\\.&]*)", re.MULTILINE|re.UNICODE)
 _re_list = re.compile('\[\*\]([^[]*)')
@@ -12,13 +18,11 @@ def _fmt(tmpl):
 	return lambda args: tmpl % args;
 
 def _fmt_video(args):
-	width = 640
-	height = 480
-	url = ''
+	tpl = (config.tmpl_video_width, config.tmpl_video_height, args[1])
 	if(args[0] == "youtube"):
-		url = '<iframe title="YouTube video player" class="youtube-player" type="text/html" width="%s" height="%s" src="http://www.youtube.com/embed/%s?rel=0" frameborder="0"></iframe>' % (width, height, args[1])
+		url = '<iframe title="YouTube video player" class="youtube-player" type="text/html" width="%s" height="%s" src="http://www.youtube.com/embed/%s?rel=0" frameborder="0"></iframe>' % tpl
 	elif(args[0] == "vimeo"):
-		url = '<iframe width="%s" height="%s" src="http://player.vimeo.com/video/%s" frameborder="0"></iframe>' % (width, height, args[1])
+		url = '<iframe width="%s" height="%s" src="http://player.vimeo.com/video/%s" frameborder="0"></iframe>' % tpl
 	return url
 
 def _fmt_list(args):
@@ -42,6 +46,7 @@ _tags = {"b": {"tmpl":_fmt("<b>%s</b>"), "nest":True},
 		"u": {"tmpl":_fmt("<u>%s</u>"), "nest":True},
 		"s": {"tmpl":_fmt("<s>%s</s>"), "nest":True},
 		"center": {"tmpl":_fmt("<center>%s</center>"), "nest":True},
+		"size": {"tmpl":_fmt('<font size="%s">%s</font>'), "nest":True},
 
 		"link": {"tmpl":_fmt("<a href=\"%s\">%s</a>"), "nest":True},
 		"img": {"tmpl":_fmt("<img src=\"%s\" alt=\"%s\"/>"), "nest":False},
@@ -51,6 +56,8 @@ _tags = {"b": {"tmpl":_fmt("<b>%s</b>"), "nest":True},
 
 		"video": {"tmpl":_fmt_video, "nest":False},
 		"list": {"tmpl":_fmt_list, "nest":False},
+
+		"latex": {"tmpl":_fmt('<img src="http://l.wordpress.com/latex.php?bg=ffffff&fg=000000&latex=%s" alt="latex math"/>'), "nest":False},
 		};
 
 def getRegexStart(tags):
@@ -71,9 +78,9 @@ def _parse_url(text):
 		ro = _re_url.search(text)
 		if(ro == None):
 			break
-		html, text, url = html + _escape(text[:ro.start()]), text[ro.end():], ro.groups()[0]
+		html, text, url = html + text[:ro.start()], text[ro.end():], ro.groups()[0]
 		html += _tags["link"]["tmpl"]((url, url))
-	return html + _escape(text)
+	return html + text
 
 def _parse(text, tags):
 	html = ''
@@ -85,14 +92,15 @@ def _parse(text, tags):
 		if arg == None:
 			arg = ''
 		html, text = html + _parse_url(text[:ro.start()]), text[ro.end():]
-		innerText, text = text.split('[/%s]' % tag, 1)
 		if tags[tag]["nest"]:
-			innerHtml = _parse(innerText, tags)
-		else:
-			innerHtml = innerText
+			text = _parse(text, tags)
 
-		html += tags[tag]["tmpl"]((arg, innerHtml))
+		innerText, text = text.split('[/%s]' % tag, 1)
+		if not tags[tag]["nest"]:
+			innerText = innerText.replace('<br/>', '\n');
+		html += tags[tag]["tmpl"]((arg, innerText))
 	return html + _parse_url(text)
 
 def parse(text):
-	return _parse(text, _tags);
+	text = _escape(text);
+	return _parse(text, _tags)

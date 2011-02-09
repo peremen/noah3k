@@ -9,15 +9,19 @@
     <li>[i]이탤릭[/i]: 지정한 텍스트를 <em>이탤릭체</em>로 표시합니다.</li>
     <li>[u]밑줄[/u]: 지정한 텍스트에 <u>밑줄</u>을 긋습니다.</li>
     <li>[s]취소선[/s]: 지정한 텍스트에 <s>취소선</s>을 긋습니다.</li>
+    <li>[size=숫자]크기[/size]: 지정한 텍스트의 크기를 정합니다.</li>
+    <li>[center]가운데[/center]: 지정한 텍스트를 가운데로 배치합니다.</li>
+
     <li>[quote=아무개]인용문[/quote]: 지정한 텍스트를 인용문 상자 안에 표시합니다. 답글을 다는 경우에는 원 글을 이 태그로 둘러쌉니다. '아무개'는 작성자 이름이나 원하는 값으로 바꿀 수 있으며, 이는 인용문 상자 위쪽에 출력됩니다.</li>
     <li>[link=http://haje.org]링크[/link]: 지정한 URL로 가는 링크를 겁니다. link=에 주어진 인자는 URL이며, 태그 안에 있는 텍스트는 표시할 텍스트입니다.</li>
-    <li>[code=python]import os[/code]: 코드를 입력할 때 사용하십시오. 이 태그를 사용하지 않고 코드를 입력하면 들여쓰기가 무시될 수도 있습니다. code=에 주어진 인자는 언어이며, 이 경우 언어에 따라서 구문 강조가 적용됩니다.</li>
     <li>[list=?]<br />
     [*] 항목<br />
     [*] 항목<br />
     [*] 항목<br />
     [/list]: 목록을 만듭니다. 목록을 열고 닫는 태그는 list이며, 목록의 각 항목의 시작마다 [*] 머릿글을 지정해야 합니다. list=에 인자를 주면 목록의 형태를 바꿀 수 있으며, 인자가 없는 경우에는 불릿, 1이면 숫자, a면 알파벳 소문자, A면 알파벳 대문자입니다.</li>
     <li>[color=red]빨간색[/color]: 글씨의 색깔을 <span style="color: red;">빨간색</span>으로 변경합니다. HTML 색상 이름이나 #abcdef 형식의 색상 코드를 쓸 수 있습니다.</li>
-    <li>[center]가운데[/center]: 지정한 텍스트를 가운데로 배치합니다.</li>
 	<li>[video=(type)](video_id)[/video]: 지정한 video_id를 가진 type의 video를 임베드시킵니다. type은 현재 youtube와 vimeo를 지원합니다. 예시: <ul><li>[video=vimeo]7379051[/video]</li><li>[video=youtube]DA7wDaitRS4[/video]</li></ul></li>
+
+    <li>[code=python]import os[/code]: 코드를 입력할 때 사용하십시오. 이 태그를 사용하지 않고 코드를 입력하면 들여쓰기가 무시될 수도 있습니다. code=에 주어진 인자는 언어이며, 이 경우 언어에 따라서 구문 강조가 적용됩니다.</li>
+	<li>[latex]e^{\i \pi} + 1 = 0[/latex]: latex 인라인 수식을 집어넣습니다. 자세한 사항은 latex 참조 문서를 참고하세요.</li>
 </ul>
