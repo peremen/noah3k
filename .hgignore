@@ -10,5 +10,6 @@ error_report/*
 static/uploads/*
 static/thumbs_desktop/*
 static/thumbs_mobile/*
+static/profile_image/*
 *.mo
 *.po~

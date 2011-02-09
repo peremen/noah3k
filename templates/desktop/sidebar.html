@@ -62,7 +62,17 @@ def get_type(path):
     <script> $("#username").focus(); </script>
 % else:
 <p>
-<div class="myinfo_left"><img src="/static/image/no_avatar.png" class="avatar_large" alt="Avatar" /></div>
+<div class="myinfo_left">
+% if ctx.session.has_key('uid'):
+    % if user.has_profile_image(ctx.session.uid):
+    <img src="${posixpath.join(config.pi_web_path, '%s.png' % ctx.session.uid)}" class="avatar_large" alt="Avatar" />
+    % else:
+    <img src="/static/image/no_avatar.png" class="avatar_large" alt="Avatar" />
+    % endif
+% else:
+    <img src="/static/image/no_avatar.png" class="avatar_large" alt="Avatar" />
+% endif
+</div>
 <div class="myinfo_right">
     <a class="userinfo_side" href="/+u">${ctx.session.username}</a><br />
     <a class="userinfo_side" href="/+u/+modify">${_('My Info')}</a></div>
@@ -86,19 +96,13 @@ def get_type(path):
     <ul>
         ${traverse_child_board(board_path)}
     </ul>
-<br />
     % endif
 % endif
 
 % if ctx.session.has_key('uid'):
-<div class="heading"><a class="plainlink" href="/+u/+my_board">${_('My Boards')}</a>
-    <div style="float: right;">
-        <span style="color: black; font-size: 0.9em; font-weight: normal;">
-            <a class="plainlink" href="#" id="fold_my_boards" onclick="$('#my_boards').toggle();">${_('(toggle)')}</a>
-        </span>
-    </div>
+<div class="heading"><span class="plainlink open" id="a_myboards">${_('My Boards')}</span>
 </div>
-<div id="my_boards" style="display: inline;">
+<div id="myboards" style="display: inline;">
 <ul>
 <% not_has_my_board = True %>
 % for my_board in user.get_owned_board(ctx.session.uid):
@@ -122,9 +126,8 @@ ${my_board.bDescription}\
 % endfor
 </ul>
 </div>
-<br />
 
-<div class="heading"><a class="plainlink" href="/+u/+favorites">${_('Favorites')}</a> <span style="color: black; font-size:0.9em; font-weight: normal;"><a class="favlink"\
+<div class="heading"><span class="plainlink open" id="a_favorites">${_('Favorites')}</span> <span style="color: black; font-size:0.9em; font-weight: normal;"><a class="favlink"\
 % if board_path is not UNDEFINED:
     % if board_path == '':
     href="#">${_('(not available)')}\
@@ -137,11 +140,6 @@ ${my_board.bDescription}\
 href="#">${_('(not available)')}\
 % endif
 </a></span>
-    <div style="float: right;">
-        <span style="color: black; font-size: 0.9em; font-weight: normal;">
-            <a style="color: black; text-decoration: none;" href="#" id="fold_favorites" onclick="$('#favorites').toggle();">${_('(toggle)')}</a>
-        </span>
-    </div>
 </div>
 <div id="favorites" style="display: inline;">
 <ul>
@@ -169,7 +167,6 @@ ${my_board.bDescription}\
 % endfor
 </ul>
 </div>
-<br />
 % endif
 
 <div class="heading"><a class="dirlink" href="/divisionCS"><span style="color: black">${_('Department')}</span></a></div>
@@ -183,49 +180,35 @@ ${my_board.bDescription}\
         <a class="boardlink" href="/divisionCS/EastOfEden">${_('EVE Room')}</a> /
         <a class="boardlink" href="/divisionCS/JobOffer">${_('Job Offer')}</a>
     </li>
-</ul>
-<br />
-
-<div class="heading"><a class="dirlink" href="/friends"><span style="color: black">${_('Friends')}</span></a></div>
-<ul>		
-    <li><span style="color: #3C78B5; font-weight: bold">${_('Undg.')}</span>
-% for b in get_friend_boards(u'학부'):
-<a class="boardlink" href="${b['board'].bName}">'${b['year']}</a> \
-% endfor
-    </li>
-    <li><span style="color: #3C78B5; font-weight: bold">${_('Mast.')}</span>
-% for b in get_friend_boards(u'석사'):
-<a class="boardlink" href="${b['board'].bName}">'${b['year']}</a> \
-% endfor
+    <li>
+        ${_('Friends')}: 
+        <a class="boardlink" href="/divisionCS/undergraduate">${_('Undergraduate')}</a> /
+        <a class="boardlink" href="/divisionCS/master">${_('Master')}</a>
     </li>
 </ul>
-<br />
 
 <!-- 과목 게시판 -->
-<div id="box">
-    <div class="heading">
-        <span style="color: black"><a class="dirlink" href="/course"><span style="color: black">${_('Courses')}</span></a></span>
-        <span style="color: black; font-size: 0.9em; font-weight: normal"><a href="/OldCourse">${_('(archive)')}</a></span>
-    </div>
-    <ul>
+<div class="heading">
+    <span style="color: black"><a class="dirlink" href="/course"><span style="color: black">${_('Courses')}</span></a></span>
+    <span style="color: black; font-size: 0.9em; font-weight: normal"><a href="/OldCourse">${_('(archive)')}</a></span>
+</div>
+<ul>
 <% not_has_subject_board = True %>
 % for my_board in board.get_child(board._get_board_id_from_path('/course')):
-    <li><a class="boardlink" href="${my_board.bName}">\
-    % if my_board.bDescription.strip() == '':
+<li><a class="boardlink" href="${my_board.bName}">\
+% if my_board.bDescription.strip() == '':
 ${my_board.bName}\
-    % else:
-${my_board.bDescription}\
-    % endif
-</a></li>
-    <% not_has_subject_board = False %>
 % else:
-    % if not_has_subject_board:
-    <li>${_('No course boards')}</li>
-    % endif
+${my_board.bDescription}\
+% endif
+</a></li>
+<% not_has_subject_board = False %>
+% else:
+% if not_has_subject_board:
+<li>${_('No course boards')}</li>
+% endif
 % endfor
-    </ul>
-</div>
-<br />
+</ul>
 <div class="heading"><a class="dirlink" href="/m"><span style="color: black">${_('NOAH Mobile')}</span></a></div>
 <a class="plainlink" href="/m"><img border="0" src="/static/image/qrcode.png" /></a>
 

@@ -1,33 +1,31 @@
 <%inherit file="base.html" />
 <% from i18n import custom_gettext as _
+import user as user_
+from web import ctx
 import util %>
-<form name="modify_form" method="post" action="/+u/+modify">
-<div style="width: 640px">
-    <div class="heading">${_('Personal Information')}</div>
-    <div class="row">
-        <div class="left-container">ID</div>
-        <span class="sep">:</span>
-        <span>${user.uId}</span>
-    </div>
-    <div class="row">
-        <div class="left-container">${_('Nickname')}</div>
-        <span class="sep">:</span>
-        <span><input name="nick" type="text" maxlength="16" style="width: 12em" value="${user.uNick}" /></span>
-    </div>
-    <div class="row">
-        <div class="left-container">${_('E-Mail')}</div>
-        <span class="sep">:</span>
-        <span><input name="email" type="text" maxlength="64" style="width: 12em" value="${user.uEmail}" /></span>
-    </div>
-    <div class="row">
-        <div class="left-container">${_('Website')}</div>
-        <span class="sep">:</span>
-        <span><input name="homepage" type="text" maxlength="64" style="width: 12em" value="${user.uHomepage}" /></span>
-    </div>
-    <div class="row">
-        <div class="left-container">${_('Language')}</div>
-        <span class="sep">:</span>
-        <span><select name="language"style="width: 12em">
+<form name="modify_form" enctype="multipart/form-data" method="post" action="/+u/+modify">
+<table class="prop_table">
+    <col style="width: 10em;" />
+    <col />
+    <tr>
+        <th>ID</th>
+        <td>${user.uId}</td>
+    </tr>
+    <tr>
+        <th>${_('Nickname')}</th>
+        <td><input name="nick" type="text" maxlength="16" style="width: 12em" value="${user.uNick}" /></td>
+    </tr>
+    <tr>
+        <th>${_('E-Mail')}</th>
+        <td><input name="email" type="text" maxlength="64" style="width: 12em" value="${user.uEmail}" /></td>
+    </tr>
+    <tr>
+        <th>${_('Website')}</th>
+        <td><input name="homepage" type="text" maxlength="64" style="width: 12em" value="${user.uHomepage}" /></td>
+    </tr>
+    <tr>
+        <th>${_('Language')}</th>
+        <td><select name="language"style="width: 12em">
 % for o in util.get_lang_map().keys():
     % if o == user.language:
             <option value="${o}" selected="selected">${util.lang_map[o]}</option>
@@ -35,44 +33,47 @@ import util %>
             <option value="${o}">${util.lang_map[o]}</option>
     % endif
 % endfor
-        </select></span>
-    </div>
-    <!-- 비밀번호 수정 -->
-    <div class="heading">${_('Password')}</div>
-    <div class="row">
-        <div class="left-container">${_('Current Password')}</div>
-        <span class="sep">:</span>
-        <span><input name="oldpass" type="password" style="width: 12em"></span>
-    </div>
-    <div class="row">
-        <div class="left-container">${_('New Password')}</div>
-        <span class="sep">:</span>
-        <span><input name="newpass1" type="password" style="width: 12em"></span>
-    </div>
-    <div class="row">
-        <div class="left-container">${_('Repeat Password')}</div>
-        <span class="sep">:</span>
-        <span><input name="newpass2" type="password" style="width: 12em"></span>
-    </div>
-    <div class="heading">${_('Signature')}</div>
-    <div class="row">
-        <div class="left-container">${_('Signature')}</div>
-        <span class="sep">:</span>
+        </select></td>
+    </tr>
+    <tr>
+        <th>${_('Profile Image')}</th>
+        <td><input name="profile_image" type="file" /><input name="delete_profile_image" id="delete_profile_image" type="checkbox" value="True" />
+        <label for="delete_profile_image">${_('Delete')}</label></td>
+    </tr>
+    <tr> <td colspan="2"> <hr /></td> </tr>
+    <!-- 암호 수정 -->
+    <tr>
+        <th>${_('Current Password')}</th>
+        <td><input name="oldpass" type="password" style="width: 12em"></td>
+    </tr>
+    <tr>
+        <th>${_('New Password')}</th>
+        <td><input name="newpass1" type="password" style="width: 12em"></td>
+    </tr>
+    <tr>
+        <th>${_('Repeat Password')}</th>
+        <td><input name="newpass2" type="password" style="width: 12em"></td>
+    </tr>
+    <tr> <td colspan="2"> <hr /></td> </tr>
+    <tr>
+        <th>${_('Signature')}</th>
+        <td>
         <textarea name="sig" style="font-size: 0.9em; width: 500px; height: 100px">${user.uSig}</textarea>
-    </div>
-    <div class="heading">${_('Introduction')}</div>
-    <div class="row">
-        <div class="left-container">${_('Introduction')}</div>
-        <span class="sep">:</span>
+        </td>
+    </tr>
+    <tr>
+        <th>${_('Introduction')}</th>
+        <td>
         <textarea name="introduction" style="font-size: 0.9em; width: 500px; height: 100px">${user.uPlan}</textarea>
-    </div>
+    </td>
+    </tr>
 <!-- 완료/취소 버튼 -->			
-<div>
-    <input type="submit" name="ok" value="${_('Submit')}" style="margin: 6px" />
-    <input type="submit" name="cancel" value="${_('Cancel')}" style="margin: 6px" />
-    <input type="hidden" name="referer" value="${referer}" />
-</div>
-
-
-</div>
+    <tr class="final_buttons">
+        <td colspan="2">
+            <input type="submit" name="ok" value="${_('Submit')}" style="margin: 6px" />
+            <input type="submit" name="cancel" value="${_('Cancel')}" style="margin: 6px" />
+            <input type="hidden" name="referer" value="${referer}" />
+        </td>
+    </tr>
+</table>
 </form>

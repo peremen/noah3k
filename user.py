@@ -9,6 +9,13 @@ import i18n
 import datetime
 _ = i18n.custom_gettext
 
+import os, magic, StringIO
+pil = True
+try:
+    from PIL import Image
+except:
+    pil = False
+
 """
 사용자 로그인, 로그아웃, 세션을 관리한다.
 """
@@ -300,6 +307,20 @@ def modify_user(uid, member):
     @rtype tuple
     @return: 정보 수정 성공 여부(T/F)와 오류 코드(실패 시)를 포함하는 튜플.
     """
+    profile_image_path = os.path.join(config.pi_disk_path, '%s.png' % member['user_id'])
+    m = magic.Magic(mime = True)
+    mime_type = m.from_buffer(member['profile_image'])
+    if member['delete_profile_image']:
+        if os.path.exists(profile_image_path):
+            os.remove(profile_image_path)
+    else:
+        if mime_type.startswith('image'):
+            image_file = StringIO.StringIO(member['profile_image'])
+            if pil:
+                pi = Image.open(image_file)
+                r = pi.resize(config.pi_size, Image.ANTIALIAS)
+                r.save(profile_image_path)
+
     t = db.transaction()
     try:
         result = db.update('Users', vars=member, where='uSerial = $user_id',
@@ -424,3 +445,6 @@ def update_unreaded_articles(uid):
         result = db.query('insert ignore into UserArticles (select $uSerial, aSerial, NOW() from Articles where bSerial = $bSerial and aUpdatedDatetime > $subscriptedDate)', val)
 
     db.update('Subscriptions', vars=dict(uSerial = uid), where = 'uSerial = $uSerial', lastSubscriptedDate = web.SQLLiteral('NOW()'))
+
+def has_profile_image(uid):
+    return os.path.exists(os.path.join(config.pi_disk_path, '%s.png' % uid))

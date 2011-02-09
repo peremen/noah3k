@@ -177,14 +177,7 @@ class article_actions:
         except:
             pass
 
-        mark_as_unreaded = False
-        try:
-            if web.input().unreaded == "True":
-                mark_as_unreaded = True
-        except:
-            pass
-
-
+        mark_as_unreaded = web.input().has_key('unreaded')
 
         a = dict(title = data.title, body = data.content)
         board_info = board.get_board_info(board_id)

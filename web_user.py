@@ -117,7 +117,7 @@ class personal_actions:
         user_id = current_uid
         usr = user.get_user(user_id)[1]
 
-        data = web.input()
+        data = web.input(profile_image = {})
         if not user.verify_password(user_id, data.oldpass):
             return render[theme].error(error_message=_('INVALID_PASSWORD'), help_context='error')
         if data.newpass1 != data.newpass2:
@@ -138,6 +138,9 @@ class personal_actions:
         change_lang = False
         if language != user_info[1].language:
             change_lang = True
+        profile_image = data.profile_image.value
+        delete_profile_image = data.has_key('delete_profile_image')
+
         ret = user.modify_user(user_id, locals())
         if change_lang:
             web.ctx.session.lang = language

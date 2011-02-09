@@ -221,11 +221,11 @@ class board_actions:
         if not acl.is_allowed('board', board_id, current_uid, 'create'):
             return render[theme].error(error_message = _('NO_PERMISSION'), help_context='error')
         user_data = web.input()
-        comment, write_by_other = 0, 0 # XXX: DB 스키마를 BOOLEAN으로 바꿔야 함
-        if user_data.commentable == 'yes':
-            comment = 1
-        if user_data.writable == 'yes':
-            write_by_other = 1
+        comment = 1 if data.has_key('commentable') else 0
+        write_by_other = 1 if data.has_key('writable') else 0
+        indexable = 1 if data.has_key('indexable') else 0
+        show_avatar = 1 if data.has_key('show_avatar') else 0
+
         owner_uid = user._get_uid_from_username(user_data.owner)
         if owner_uid < 0:
             return render[theme].error(error_message=_('NO_SUCH_USER_FOR_BOARD_ADMIN'), help_context='error')
@@ -241,6 +241,7 @@ class board_actions:
                 type = int(user_data.type),
                 guest_write = write_by_other,
                 can_comment = comment,
+                indexable = indexable, show_avatar = show_avatar,
                 current_uid = current_uid)
         ret = board.create_board(board_id, settings)
         if ret[0] == False:
@@ -275,20 +276,22 @@ class board_actions:
         board_info = board.get_board_info(board_id)
         if not acl.is_allowed('board', board_id, current_uid, 'modify'):
             return render[theme].error(error_message=_('NO_PERMISSION'), help_context='error')
-        comment, write_by_other = 0, 0 # XXX: DB 스키마를 BOOLEAN으로 바꿔야 함
-        if web.input().commentable.strip() == 'yes':
-            comment = 1
-        if web.input().writable.strip() == 'yes':
-            write_by_other = 1
+        data = web.input()
+        comment = 1 if data.has_key('commentable') else 0
+        write_by_other = 1 if data.has_key('writable') else 0
+        indexable = 1 if data.has_key('indexable') else 0
+        show_avatar = 1 if data.has_key('show_avatar') else 0
+
         owner_uid = user._get_uid_from_username(web.input().owner)
         if owner_uid < 0:
             return render[theme].error(error_message=_('NO_SUCH_USER_FOR_BOARD_ADMIN'), help_context='error')
 
-        board_info = dict(path = web.input().path, name = web.input().name,
-                owner = owner_uid, board_type = web.input().type,
+        board_info = dict(path = data.path, name = data.name,
+                owner = owner_uid, board_type = data.type,
                 can_comment = comment, can_write_by_other = write_by_other,
-                description = web.input().description,
-                cover = web.input().information)
+                indexable = indexable, show_avatar = show_avatar,
+                description = data.description,
+                cover = data.information)
         result = board.edit_board(current_uid, board_id, board_info)
         if result[0] == False:
             return render[theme].error(error_message = result[1], help_context='error')

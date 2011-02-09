@@ -3,142 +3,116 @@ import util
 from web import ctx
 from i18n import custom_gettext as _ %>
 <%inherit file="base.html" />
-<div style="width: 640px">
-    <div class="heading">${_('Personal Information')}</div>
-    <div class="row">
-        <div class="left-container">ID</div>
-        <span class="sep">:</span>
-        <span>${user.uId}</span>
-    </div>
-    <div class="row">
-        <div class="left-container">${_('Nickname')}</div>
-        <span class="sep">:</span>
-%if user.uNick is UNDEFINED:
-        <span style='color: #aaaaaa'>${_('None')}</span>
-%elif user.uNick.strip() == '':
-        <span style='color: #aaaaaa'>${_('None')}</span>
+<table class="prop_table">
+    <col style="width: 10em;" />
+    <col />
+    <tr>
+        <th>ID</th>
+        <td>${user.uId}</td>
+    </tr>
+    <tr>
+        <th>${_('Nickname')}</th>
+%if user.uNick is UNDEFINED or user.uNick.strip() == '':
+        <td class="none">${_('None')}</td>
 % else:
-        <span>${user.uNick}</span>
+        <td>${user.uNick}</td>
 % endif
-    </div>
-    <div class="row">
-        <div class="left-container">${_('E-Mail')}</div>
-        <span class="sep">:</span>
-%if user.uEmail is UNDEFINED:
-        <span style='color: #aaaaaa'>${_('None')}</span>
-%elif user.uEmail.strip() == '':
-        <span style='color: #aaaaaa'>${_('None')}</span>
+    </tr>
+    <tr>
+        <th>${_('E-Mail')}</th>
+%if user.uEmail is UNDEFINED or user.uEmail.strip() == '':
+        <td class="none">${_('None')}</td>
 % else:
-        <span>${user.uEmail}</span>
+        <td>${user.uEmail}</td>
 % endif
-    </div>
-    <div class="row">
-        <div class="left-container">${_('Website')}</div>
-        <span class="sep">:</span>
-%if user.uHomepage is UNDEFINED:
-        <span style='color: #aaaaaa'>${_('None')}</span>
-% elif user.uHomepage.strip() == '':
-        <span style='color: #aaaaaa'>${_('None')}</span>
+    </tr>
+    <tr>
+        <th>${_('Website')}</th>
+%if user.uHomepage is UNDEFINED or user.uHomepage.strip() == '':
+        <td class="none">${_('None')}</td>
 %else:
-        <span>${user.uHomepage}</span>
+        <td>${user.uHomepage}</td>
 % endif
-    </div>
-    <div class="row">
-        <div class="left-container">${_('Signature')}</div>
-        <span class="sep">:</span>
-        <div style="border: solid 1px lightgray; margin-left:9em">
-%if user.uSig is UNDEFINED:
-            <span style="font-size: 0.9em; color: #aaaaaa">${_('None')}</span>
-%elif user.uSig.strip() == '':
-            <span style="font-size: 0.9em; color: #aaaaaa">${_('None')}</span>
+    </tr>
+    <tr>
+        <th>${_('Signature')}</th>
+        <td class="small">
+            <!--<div style="border: solid 1px lightgray; margin-left:9em"> -->
+%if user.uSig is UNDEFINED or user.uSig.strip() == '':
+            <span class="none">${_('None')}</span>
 % else:
-            <span style="font-size: 0.9em">${util.format(user.uSig)}</span>
+            ${util.format(user.uSig)}
 % endif
-        </div>
-    </div>
-    <div class="row">
-        <div class="left-container">${_('Introduction')}</div>
-        <span class="sep">:</span>
-        <div style="border: solid 1px lightgray; margin-left: 9em">
-%if user.uPlan is UNDEFINED:
-            <span style="font-size: 0.9em; color: #aaaaaa">${_('None')}</span>
-%elif user.uPlan.strip() == '':
-            <span style="font-size: 0.9em; color: #aaaaaa">${_('None')}</span>
+        </td>
+    </tr>
+    <tr>
+        <th>${_('Introduction')}</th>
+        <td class="small">
+%if user.uPlan is UNDEFINED or user.uPlan.strip() == '':
+            <span class="none">${_('None')}</span>
 % else:
-            <span style="font-size: 0.9em">${util.format(user.uPlan)}</span>
+            ${util.format(user.uPlan)}
 % endif
-        </div>
-    <div class="row">
-        <div class="left-container">${_('Language')}</div>
-        <span class="sep">:</span>
-        <span>${util.lcode_to_name(user.language)}</span>
-        </div>
-    </div>
-
-    <div class="heading">${_('Usage Statistics')}</div>
-    <div class="row">
-        <div class="left-container">${_('Join Date')}</div>
-        <span class="sep">:</span>
-        <span>${user.uDatetime}</span>
-    </div>
-    <div class="row"> 
-        <div class="left-container">${_('Login Count')}</div>
-        <span class="sep">:</span>
-        <span>${user.uNumLogin}</span>
-    </div>
-    <div class="row"> 
-        <div class="left-container">${_('Posts')}</div>
-        <span class="sep">:</span>
-        <span>${user_.get_post_count(user_id)}</span>
-    </div>
-    <div class="row"> 
-        <div class="left-container">${_('_:Count\nComments')}</div>
-        <span class="sep">:</span>
-        <span>${user_.get_comment_count(user_id)}</span>
-    </div>
+        </td>
+    <tr>
+        <th>${_('Language')}</th>
+        <td>${util.lcode_to_name(user.language)}</td>
+    </tr>
+    <tr> <td colspan="2"> <hr /></td> </tr>
+    <tr>
+        <th>${_('Join Date')}</th>
+        <td>${user.uDatetime}</td>
+    </tr>
+    <tr> 
+        <th>${_('Login Count')}</th>
+        <td>${user.uNumLogin}</td>
+    </tr>
+    <tr> 
+        <th>${_('Posts')}</th>
+        <td>${user_.get_post_count(user_id)}</td>
+    </tr>
+    <tr> 
+        <th>${_('_:Count\nComments')}</th>
+        <td>${user_.get_comment_count(user_id)}</td>
+    </tr>
 %if ctx.session is not UNDEFINED and ctx.session.has_key('uid'):
     % if ctx.session.uid == 1 or ctx.session.uid == user_id:
-    <div class="row">
-        <div class="left-container">${_('Last Login')}</div>
-        <span class="sep">:</span>
+    <tr>
+        <th>${_('Last Login')}</div>
         %if user.uLastLogin is UNDEFINED:
-        <span style='color: #aa0000'>${_('Unknown')}</span>
+        <td><span style='color: #aa0000'>${_('Unknown')}</span></td>
         % else:
-        <span>${user.uLastLogin}</span>
+        <td>${user.uLastLogin}</td>
         % endif
-    </div>
-    <div class="row"> 
-        <div class="left-container">${_('Last Login IP')}</div>
-        <span class="sep">:</span>
-        %if user.uLastHost is UNDEFINED:
-        <span style='color: #aa0000'>${_('Unknown')}</span>
-        %elif user.uLastHost.strip() == '':
-        <span style='color: #aa0000'>${_('Unknown')}</span>
+    </tr>
+    <tr> 
+        <th>${_('Last Login IP')}</th>
+        %if user.uLastHost is UNDEFINED or user.uLastHost.strip() == '':
+        <td><span style='color: #aa0000'>${_('Unknown')}</span></td>
         % else:
-        <span>${user.uLastHost}</span>
+        <td>${user.uLastHost}</td>
         % endif
-    </div>
-    <div class="row"> 
-        <div class="left-container">${_('Password Strength')}</div>
-        <span class="sep">:</span>
+    </tr>
+    <tr> 
+        <th>${_('Password Strength')}</div>
         <% password_strength = user_.get_password_strength(user_id) %>
         % if password_strength == 2:
-        <span style="color: green;">${_('Strong')}</span>
+        <td><span style="color: green;">${_('Strong')}</span></td>
         % elif password_strength == 1:
-        <span style="color: orange;">${_('Normal')} <a style="color: orange;" href="/+u/+modify">${_('(Change password recommended)')}</a></span>
+        <td><span style="color: orange;">${_('Normal')} <a style="color: orange;" href="/+u/+modify">${_('(Change password recommended)')}</a></span></td>
         % elif password_strength == 0:
-        <span style="color: red; font-weight: bold;">${_('Weak')} <a style="color: red;" href="/+u/+modify">${_('(Change password NOW)')}</a></span>
+        <td><span style="color: red; font-weight: bold;">${_('Weak')} <a style="color: red;" href="/+u/+modify">${_('(Change password NOW)')}</a></span></td>
         % else:
-        <span style="color: red; font-weight: bold;">${_('Unknown')}</span>
+        <td><span style="color: red; font-weight: bold;">${_('Unknown')}</span></td>
         % endif
-    </div>
+    </tr>
     % endif
 % endif
-</div>
-<br />
-<div>
+    <tr class="final_buttons">
+        <td colspan="2">
     <a class="button" href="/+u/+my_posts">${_('My Posts')}</a>
     <a class="button" href="/+u/+modify">${_('Modify')}</a>
     <a class="button" href="/+u/+leave">${_('Leave NOAH')}</a>
-</div>
-
+        </td>
+    </tr>
+</table>

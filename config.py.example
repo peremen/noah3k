@@ -36,3 +36,7 @@ error_report_path = os.path.join(os.path.dirname(__file__), 'error_report')
 
 logo_url = '/static/image/logo.png'
 recaptcha_private_key = 'PRIVATE_KEY_BY_GOOGLE'
+
+pi_disk_path = os.path.join(os.path.dirname(__file__), 'static', 'profile_image')
+pi_web_path = '/static/profile_image/'
+pi_size = (48, 48)

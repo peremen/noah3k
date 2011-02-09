@@ -22,13 +22,13 @@ from i18n import custom_gettext as _
 </div>
 % else:
 <!-- 글 -->
-<table border="0" cellspacing="0" cellpadding="4" style="width: 100%; margin-bottom: 10px; " class="list">
+<table border="0" cellspacing="0" cellpadding="3" style="width: 100%; margin-bottom: 10px; " class="list">
     <tr align="center" class="head">
-        <th style="width:60px;">#</th>
+        <th style="width:30px;">#</th>
         <th>${_('Title')}</th>
-        <th style="width:80px;">${_('Author')}</th>
-        <th style="width:80px;">${_('Date')}</th>
-	<th style="width:40px;">${_('Hit')}</th>
+        <th style="width:60px;">${_('Author')}</th>
+        <th style="width:60px;">${_('Date')}</th>
+	<th style="width:30px;">${_('Hit')}</th>
     </tr>
     <% i = 1 %>
     %if marked_articles is not UNDEFINED:
@@ -52,8 +52,14 @@ from i18n import custom_gettext as _
 <!-- 글쓰기 -->
     <a class="button" href="/${board_path}/+write" title="${_('Write new article')}">${_('Write')}</a> 
 % endif
-<!-- 보드 관리 -->
-<a class="button" href="/${board_path}/+summary" title="${_('Display and modify board information')}">${_('Information')}</a> 
+%if ctx.session.has_key('uid') and acl.is_allowed('board', board._get_board_id_from_path('/%s' % board_path), ctx.session.uid, 'modify'):
+    <!-- 게시판 수정 -->
+    <a class="button" href="/${board_path}/+modify">${_('Modify Board')}</a>
+    <!-- 게시판 백업 -->
+    <a class="button" href="/${board_path}/+backup">${_('Backup Board')}</a>
+    <!-- 게시판 통계 -->
+    <a class="button" href="/${board_path}/+statistics">${_('Board Statistics')}</a>
+% endif
 %if ctx.session.has_key('uid'):
     % if user.is_subscribed(ctx.session.uid, board._get_board_id_from_path(board_path)):
     <a class="button" href="/${board_path}/+subscribe" title="${_('Unsubscribe from this board')}">${_('Unsubscribe')}</a> 

@@ -9,9 +9,9 @@ import os, magic, StringIO
 
 pil = True
 try:
-	from PIL import Image
+    from PIL import Image
 except:
-	pil = False
+    pil = False
 
 """
 첨부 파일 클래스. 디스크에 저장된 첨부 파일에 접근한다.

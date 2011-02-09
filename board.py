@@ -117,7 +117,8 @@ def create_board(parent_id, settings):
                 bDescription = settings['description'],
                 bType = settings['type'],
                 bReply = 1, bWrite = settings['guest_write'],
-                bComment = settings['can_comment'])
+                bComment = settings['can_comment'],
+                indexable = settings['indexable'], show_avatar = settings['show_avatar'])
     except:
         t.rollback()
     else:
@@ -134,6 +135,8 @@ def edit_board(current_uid, board_id, settings):
     # board_type: 0 - 폴더, 1 - 게시판
     # can_write_by_other: 쓰기 가능/불가능
     # can_comment: 0 - 불가능, 1 - 가능
+    # indexable: 0 - 검색 제외, 1 - 검색 포함
+    # show_avatar: 0 - 안 보임, 1 - 보임
     if not acl.is_allowed('board', board_id, current_uid, 'edit'):
         return (False, _('NO_PERMISSION'))
     original_board_info = get_board_info(board_id)
@@ -160,6 +163,7 @@ def edit_board(current_uid, board_id, settings):
         result = db.update('Boards', vars=settings, where='bSerial = $board_id',
                 bInformation = settings['cover'], bDescription = settings['description'],
                 bType = settings['board_type'], bReply = 1, bComment = settings['can_comment'],
+                indexable = settings['indexable'], show_avatar = settings['show_avatar'],
                 bWrite = settings['can_write_by_other'], uSerial = settings['owner'],
                 bName = new_path, bParent = new_parent_id)
         result = move_child_boards(board_id, old_path, new_path)

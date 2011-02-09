@@ -1,7 +1,7 @@
 <%inherit file="base.html" />
 <%
 import user, config, util, board, acl
-import urllib
+import urllib, posixpath
 import article as A
 from web import ctx
 import attachment as A_
@@ -13,34 +13,28 @@ def get_formatted_username(uid):
     else:
         return _("Former Member")
 %>
-<div id="article">
-    <!-- 글 -->
-    <div class="row">
-        <div class="left-container">${_('Title')}</div>
-        <span class="sep">:</span>
+<p><a class="board_heading" href="/${board_path}/+cover" target="_blank">${board_desc}</a>&nbsp;&nbsp;<span class="board_path">${util.traverse_board_path(board_path)}</span></p>
+<p>
+% if board.get_board_info(board._get_board_id_from_path('/%s' % board_path)).show_avatar:
+<div class="avatar_body">
+    %if user.has_profile_image(article['uSerial']):
+    <img src="${posixpath.join(config.pi_web_path, '%s.png' % article['uSerial'])}" class="avatar_large" alt="Avatar" />
+    % else:
+    <img src="/static/image/no_avatar.png" class="avatar_large" alt="Avatar" />
+    % endif
+</div>
+% endif
 % if A.get_mark_status(article['aSerial']):
-        <span class="emphasized" id="title">${article['aTitle']}</span>
+<span class="title"><span class="emphasized">${article['aTitle']}</span></span>
 % else:
-        <span id="title">${article['aTitle']}</span>
+<span class="title">${article['aTitle']}</span>
 % endif
-    </div>
-    <div class="row">
-        <div class="left-container">${_('Author')}</div>
-        <span class="sep">:</span>
-        <span id="writer">${get_formatted_username(article['uSerial'])}</span>
-    </div>
-    <div class="row">
-        <div class="left-container">${_('Date/Time')}</div>
-        <span class="sep">:</span>
-        <span id="writetime">${article['aDatetime']}</span>
-    </div>
+&nbsp;&nbsp;&nbsp;${get_formatted_username(article['uSerial'])}</p>
+<p>${_('Written on %s') % article['aDatetime']}
 % if article.aEditedDatetime:
-    <div class="row">
-        <div class="left-container">${_('Last Modified')}</div>
-        <span class="sep">:</span>
-        <span id="edittime">${article['aEditedDatetime']}</span>
-    </div>
+, ${_('Last modified on %s') % article['aEditedDatetime']}
 % endif
+</p>
 % if attachment is not UNDEFINED:
     % for a in attachment:
     <div class="row">
@@ -61,6 +55,17 @@ def get_formatted_username(uid):
     % endfor
 % endif
 ${util.format(article['aContent'])}
+    </div>
+    <!-- 이전글/다음글 -->
+    <div class="article-link">
+% if prev_id > 0:
+    <a class="articlelink prev-article" href="/${board_path}/+read/${prev_id}">&lt;&nbsp;${A.get_title(prev_id)}</a> 
+% endif
+% if next_id > 0:
+    <a class="articlelink next-article" href="/${board_path}/+read/${next_id}">${A.get_title(next_id)}&nbsp;&gt;</a> 
+% else:
+    <a class="articlelink next-article" href="#">&nbsp;</a> 
+% endif
     </div>
 % if acl.is_allowed('board', board._get_board_id_from_path('/%s' % board_path), 1, 'comment'):
     <!-- 코멘트 -->
@@ -135,19 +140,4 @@ ${util.format(article['aContent'])}
 % endif
     </ul>
 
-    <!-- 이전글/다음글 -->
-% if prev_id > 0:
-    <div class="row">
-        <div class="left-container">${_('Previous Article')}</div>
-        <span class="sep">: </span>
-        <span id="title"><a class="articlelink" href="/${board_path}/+read/${prev_id}">${A.get_title(prev_id)}</a></span> 
-    </div>
-% endif
-% if next_id > 0:
-    <div class="row">
-        <div class="left-container">${_('Next Article')}</div>
-        <span class="sep">: </span>
-        <span id="title"><a class="articlelink" href="/${board_path}/+read/${next_id}">${A.get_title(next_id)}</a></span> 
-    </div>
-% endif
 </div> <!-- end of menu -->

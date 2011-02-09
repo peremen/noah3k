@@ -2,7 +2,7 @@ body, div, textarea, input {
 	font-family: 나눔고딕, sans-serif;
 }
 
-a.button {
+/*a.button {
     text-decoration: none;
     color: black;
     border: 1px outset silver; 
@@ -12,7 +12,7 @@ a.button {
     font-size: 1.0em;
     height: 0.9em;
 }
-a.button:hover { background: gray; color: white }
+*/
 
 table    { width:100%; margin-bottom: 10px }
 table.list     { border-bottom: 2px solid #3C78B5; }
@@ -168,21 +168,32 @@ div#sidemenu br {
     line-height: 100%;
 }
 
-div#sidemenu div#box {
-    border: 1px solid #C0C0C0;
+div#sidemenu div.heading {
+    background-image: url('/static/image/div.png');
+    background-repeat: no-repeat;
+    font-weight: bold;
+    padding: 3px;
 }
 
-div#sidemenu div.heading {
-    font-weight: bold;
-    border-bottom: 1px solid #3C78B5;
-    background-color: #F0F0F0;
-    padding: 3px;
+div#sidemenu div.heading span.closed {
+    background-image: url('/static/image/closed.png');
+    background-repeat: no-repeat;
+    padding-left: 18px;
+    cursor: pointer;
+}
+
+div#sidemenu div.heading span.open {
+    background-image: url('/static/image/open.png');
+    background-repeat: no-repeat;
+    padding-left: 18px;
+    cursor: pointer;
 }
 
 div#sidemenu ul {
     list-style: none;
     margin: 0px 0px 0px 0px;
     padding: 3px;
+    padding-bottom: 6px;
 }
 
 div#sidemenu li {
@@ -483,6 +494,9 @@ div.personal_tools a.userinfo_side:hover {
     font-size: 1.6em;
     font-weight: bold;
 }
+.title {
+    font-size: 1.4em;
+}
 
 .board_path {
     text-decoration: none;
@@ -503,20 +517,54 @@ div.personal_tools a.userinfo_side:hover {
     background-color: white;
 }
 
-.button_side {
+a.button, .button_side {
     text-decoration: none;
     color: black;
     border: 1px solid silver; 
     border-radius: 5px;
     -moz-border-radius: 5px;
     background: white; 
-    padding: 5px 5px 2px 2px;
+    padding: 3px 5px 3px 5px;
     margin: 2px;
     font-size: 1.0em;
     height: 1.8em;
 }
+a.button:hover { background: gray; color: white }
+
 input.button_side {
     height: 1.8em;
 }
 
 .button_side:hover { background: gray; color: white }
+
+.none { color: #aaaaaa;}
+.small {font-size: 0.9em; }
+
+.prop_table th { text-align: right;}
+.prop_table th, td { padding-bottom: 5px;}
+.prop_table th { padding-right: 10px; vertical-align: top;}
+.prop_table hr { background-color: #aaaaaa; height: 1px;}
+tr.final_buttons { padding-top: 10px; text-align: right;}
+
+div.avatar_body {
+    float: right;
+}
+a.prev-article {
+    padding-top: 0;
+    padding-left: 40px;
+    text-align: left;
+    float: left;
+    width: 46%;
+}
+a.next-article {
+    padding-top: 0px;
+    padding-right: 40px;
+    width: 100%;
+}
+div.article-link {
+    display: block;
+    border-top: 1px solid silver;
+/*    border-bottom: 3px solid #3C78B5; */
+    padding: 6px;
+    text-align: right;
+}
