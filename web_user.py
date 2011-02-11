@@ -118,7 +118,7 @@ class personal_actions:
         usr = user.get_user(user_id)[1]
 
         data = web.input(profile_image = {})
-        if not user.verify_password(user_id, data.oldpass):
+        if data.newpass1 and not user.verify_password(user_id, data.oldpass):
             return render[theme].error(error_message=_('INVALID_PASSWORD'), help_context='error')
         if data.newpass1 != data.newpass2:
             return render[theme].error(error_message = _('PASSWORD_DO_NOT_MATCH'), help_context='error')

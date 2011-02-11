@@ -5,7 +5,6 @@ from web import ctx
 <div id="logo">
 	<a href="/"><img src="${config.logo_url}" border="0" /></a>
 </div>
-
 <div id="menu">
     <ul>
 %if help_context is not UNDEFINED:
@@ -15,9 +14,10 @@ from web import ctx
 </div>
 
 <div id="title">
-    예제 메뉴
+%if board_path is not UNDEFINED:
+<p><a class="board_heading" href="/${board_path}/+cover" target="_blank">${board_desc}</a>&nbsp;&nbsp;<span class="board_path">${util.traverse_board_path(board_path)}</span></p>
+%else:
+<p><a class="board_heading" href="#">오류</a></p>
+%endif
 </div>
 
-<div id="histnav">
-    예제 메뉴 2
-</div>

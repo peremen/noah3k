@@ -13,8 +13,33 @@ body, div, textarea, input {
     height: 0.9em;
 }
 */
+a.button, input.button {
+    text-decoration: none;
+    color: black;
+    border: 1px solid silver; 
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    background: white; 
+    padding: 3px 5px 3px 5px;
+    margin: 2px;
+    font-size: 1.0em;
+    height: 1.8em;
+}
+a.button:hover { background: gray; color: white }
 
-table    { width:100%; margin-bottom: 10px }
+input.button {
+    height: 1.8em;
+}
+
+.flat_input {
+    margin: 0;
+    padding: 2px;
+    border: 1px solid gray;
+}
+
+.button:hover { background: gray; color: white }
+
+table    { width:100%; margin-bottom: 4px; }
 table.list     { border-bottom: 2px solid #3C78B5; }
 table.list td     { border-right: 1px solid silver }
 table.list th     { font-weight: bold; border-bottom: 2px solid #3C78B5; padding-top: 8px; border-right: 1px solid silver }
@@ -64,7 +89,7 @@ a.favlink:hover        { text-decoration: underline }
 a.dirlink            { text-decoration: none; color: orange; font-weight: bold }
 a.dirlink:hover        { text-decoration: underline }
 a.boardlink            { text-decoration: none; color: black }
-a.boardlink:hover    { background-color: #E0E0FF }
+a.boardlink:hover    { text-decoration: underline }
 a.listlink            { text-decoration: none; color: black }
 a.listlink:hover    { color: red }
 a.articlelink        { text-decoration: none; color: black }
@@ -78,9 +103,12 @@ img.type {
 
 /* header --------------------------------------------- */
 div#header {
-    border-bottom: solid 1px #003399;
     font-size: 0.8em;
-    padding-bottom: 2px;
+    padding-bottom: 4px;
+    background-image: url('/static/image/border.png');
+    background-repeat: repeat-x;
+    background-position: bottom left;
+    height: 48px;
 }
 
 div#header div#logo {
@@ -90,7 +118,7 @@ div#header div#logo {
 
 div#header div#menu {
     float: right;
-    width: 30em;
+    width: 5em;
 }
 
 div#header div#menu ul { 
@@ -106,97 +134,69 @@ div#header div#menu li {
     margin: 0px 1px 0 0;
 }
 
-div#header div#menu div#shortcut {
-    clear: right;
-    text-align: right;
-}
-
-div#header div#menu div#shortcut form {
-    margin: 0;
-    padding: 0;
-}
-
 div#header div#title {
     vertical-align: bottom;
-    font-size: 1.6em;
-    height: 1.4em;
     margin-left: 220px;
     overflow: hidden;
 }
 
-div#header div#histnav {
-    margin-left: 220px;
-}
-
-div#header div#title a {
+.board_heading {
     text-decoration: none;
     color: black;
-    font-weight: bold;    
+    font-size: 1.6em;
+    font-weight: bold;
 }
+
 
 div#header div#title a:hover {
     text-decoration: underline;
 }
 
-div#header div#children {
-    float: right;
-    text-align: right;
-}
-
 /* side --------------------------------------------- */
-div#sidemenuOut {
+div#sidebar {
     float: left;
     width: 216px;
-    margin: 10px 0 0px 0;
-}
-
-/* only for non-IE browsers */
-div#sidemenuOut:after {
-    content: " ";
-    display: block;
-    height: 14px;
-}
-
-div#sidemenu {
-    padding-right: 16px;
-    border-right: 1px dashed #3C78B5;
+    margin: 0;
+    padding: 10px 0 0px 0;
+/*    border-right: 1px solid #003399; */
     line-height: 160%;
     font-size: 0.76em;
+    padding-right: 16px;
 }
 
-div#sidemenu br {
+div#sidebar br {
     line-height: 100%;
 }
 
-div#sidemenu div.heading {
+div#sidebar div.heading {
     background-image: url('/static/image/div.png');
     background-repeat: no-repeat;
     font-weight: bold;
     padding: 3px;
 }
 
-div#sidemenu div.heading span.closed {
+div#sidebar div.heading span.closed {
     background-image: url('/static/image/closed.png');
     background-repeat: no-repeat;
     padding-left: 18px;
     cursor: pointer;
 }
 
-div#sidemenu div.heading span.open {
+div#sidebar div.heading span.open {
     background-image: url('/static/image/open.png');
     background-repeat: no-repeat;
     padding-left: 18px;
     cursor: pointer;
 }
 
-div#sidemenu ul {
+div#sidebar ul {
     list-style: none;
     margin: 0px 0px 0px 0px;
     padding: 3px;
     padding-bottom: 6px;
 }
 
-div#sidemenu li {
+div#sidebar li {
     overflow: hidden;
     height: 1.5em;
     margin: 2px 0px 2px 0px;
@@ -220,7 +220,10 @@ div#body {
     margin: 10px 0px 10px 216px;
     padding: 0px 0px 0px 16px;
     font-size: 0.8em;
+    background-image: url('/static/image/border.png');
+    background-repeat: repeat-y;
 }
+
 
 div#body .heading {
     font-weight: bold;
@@ -336,16 +339,10 @@ div#comment div#input {
     text-align: center;
     color: gray;
 }
-#comment td.button {
+#comment td.delbutton {
     text-align: center;
     font-size: 0.9em;
     width: 5em;
-}
-
-div#body span#search {
-    margin: 0 10px 10px 10px;
-    text-align: right;
-    float: right;
 }
 
 div#body div#menu ul { 
@@ -386,9 +383,11 @@ div#body div#menu ul {
 div#footer {
     clear: both;
     margin: 0px;
-    border-top: solid 1px #003399;
     padding-top: 8px;
     font-size: 0.76em;
+    background-image: url('/static/image/border.png');
+    background-repeat: repeat-x;
+    background-position: top left;
 }
 
 div#footer div#banner {
@@ -488,14 +487,8 @@ div.personal_tools a.userinfo_side:hover {
     text-decoration: underline;
 }
 
-.board_heading {
-    text-decoration: none;
-    color: black;
-    font-size: 1.6em;
-    font-weight: bold;
-}
 .title {
-    font-size: 1.4em;
+    font-size: 1.3em;
 }
 
 .board_path {
@@ -516,27 +509,6 @@ div.personal_tools a.userinfo_side:hover {
     font-weight: normal;
     background-color: white;
 }
-
-a.button, .button_side {
-    text-decoration: none;
-    color: black;
-    border: 1px solid silver; 
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    background: white; 
-    padding: 3px 5px 3px 5px;
-    margin: 2px;
-    font-size: 1.0em;
-    height: 1.8em;
-}
-a.button:hover { background: gray; color: white }
-
-input.button_side {
-    height: 1.8em;
-}
-
-.button_side:hover { background: gray; color: white }
-
 .none { color: #aaaaaa;}
 .small {font-size: 0.9em; }
 

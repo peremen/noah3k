@@ -49,13 +49,14 @@ def get_type(path):
     data = board.get_board_info(id)
     return data.bType
 %>
+
 <div class="personal_tools" style="display: inline;">
 %if ctx.session is UNDEFINED or (not ctx.session.has_key('uid')):
     <form method="post" action="/+login">
         <input name="url" type="hidden" value=""/>
         <p><label for="username">${_('ID')}</label> <input id="username" name="username" type="text" tabindex="1" class="auth_input"/></p>
         <p><label for="password">${_('Password')}</label> <input id="password" name="password" type="password" tabindex="2" class="auth_input"/></p>
-        <input class="button_side" type="submit" id="submit" tabindex="3" value="${_('Login')}"/> <a class="button_side" href="/+join">${_('Join')}</a> <a class="button_side" href="/+lost_login">${_('Lost Login?')}</a>
+        <input class="button" type="submit" id="submit" tabindex="3" value="${_('Login')}"/> <a class="button" href="/+join">${_('Join')}</a> <a class="button" href="/+lost_login">${_('Lost Login?')}</a>
         <br />
         <input id="autologin" type="checkbox" name="autologin" value="on" /><label for="autologin">${_('Auto Login (max two weeks)')}</label>
     </form>
@@ -78,14 +79,14 @@ def get_type(path):
     <a class="userinfo_side" href="/+u/+modify">${_('My Info')}</a></div>
 </p>
 <p>
-<a class="button_side" href="/+u/+new_article">${_('New Article')}</a>
+<a class="button" href="/+u/+new_article">${_('New Article')}</a>
    <% read_cnt = pm.unread_count(ctx.session.uid) %>
    %if read_cnt > 0:
-       <a class="button_side" style="background: red; color: white;" target="_blank" href="/+u/+inbox">${_('Mail')} (${read_cnt})</a>
+       <a class="button" style="background: red; color: white;" target="_blank" href="/+u/+inbox">${_('Mail')} (${read_cnt})</a>
    % else:
-<a class="button_side" target="_blank" href="/+u/+inbox">${_('Mail')}</a>
+<a class="button" target="_blank" href="/+u/+inbox">${_('Mail')}</a>
    % endif
-<a class="button_side" href="/+logout">${_('Logout')}</a>
+<a class="button" href="/+logout">${_('Logout')}</a>
 % endif
 </div>
 <br />

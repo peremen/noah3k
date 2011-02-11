@@ -323,11 +323,17 @@ def modify_user(uid, member):
 
     t = db.transaction()
     try:
-        result = db.update('Users', vars=member, where='uSerial = $user_id',
-                uNick = member['nick'], uEmail = member['email'],
-                uSig = member['sig'], uPlan = member['introduction'],
-                language = member['language'],
-                uPasswd = generate_password(member['password']))
+        if member['password']:
+            result = db.update('Users', vars=member, where='uSerial = $user_id',
+                    uNick = member['nick'], uEmail = member['email'],
+                    uSig = member['sig'], uPlan = member['introduction'],
+                    language = member['language'],
+                    uPasswd = generate_password(member['password']))
+        else:
+            result = db.update('Users', vars=member, where='uSerial = $user_id',
+                    uNick = member['nick'], uEmail = member['email'],
+                    uSig = member['sig'], uPlan = member['introduction'],
+                    language = member['language'])
     except:
         t.rollback()
         return False

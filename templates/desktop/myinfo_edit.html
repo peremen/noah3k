@@ -13,15 +13,15 @@ import util %>
     </tr>
     <tr>
         <th>${_('Nickname')}</th>
-        <td><input name="nick" type="text" maxlength="16" style="width: 12em" value="${user.uNick}" /></td>
+        <td><input class="flat_input" name="nick" type="text" maxlength="16" style="width: 12em" value="${user.uNick}" /></td>
     </tr>
     <tr>
         <th>${_('E-Mail')}</th>
-        <td><input name="email" type="text" maxlength="64" style="width: 12em" value="${user.uEmail}" /></td>
+        <td><input class="flat_input" name="email" type="text" maxlength="64" style="width: 12em" value="${user.uEmail}" /></td>
     </tr>
     <tr>
         <th>${_('Website')}</th>
-        <td><input name="homepage" type="text" maxlength="64" style="width: 12em" value="${user.uHomepage}" /></td>
+        <td><input class="flat_input" name="homepage" type="text" maxlength="64" style="width: 12em" value="${user.uHomepage}" /></td>
     </tr>
     <tr>
         <th>${_('Language')}</th>
@@ -44,34 +44,34 @@ import util %>
     <!-- 암호 수정 -->
     <tr>
         <th>${_('Current Password')}</th>
-        <td><input name="oldpass" type="password" style="width: 12em"></td>
+        <td><input class="flat_input" name="oldpass" type="password" style="width: 12em"></td>
     </tr>
     <tr>
         <th>${_('New Password')}</th>
-        <td><input name="newpass1" type="password" style="width: 12em"></td>
+        <td><input class="flat_input" name="newpass1" type="password" style="width: 12em"></td>
     </tr>
     <tr>
         <th>${_('Repeat Password')}</th>
-        <td><input name="newpass2" type="password" style="width: 12em"></td>
+        <td><input class="flat_input" name="newpass2" type="password" style="width: 12em"></td>
     </tr>
     <tr> <td colspan="2"> <hr /></td> </tr>
     <tr>
         <th>${_('Signature')}</th>
         <td>
-        <textarea name="sig" style="font-size: 0.9em; width: 500px; height: 100px">${user.uSig}</textarea>
+        <textarea class="flat_input" name="sig" style="font-size: 0.9em; width: 500px; height: 100px">${user.uSig}</textarea>
         </td>
     </tr>
     <tr>
         <th>${_('Introduction')}</th>
         <td>
-        <textarea name="introduction" style="font-size: 0.9em; width: 500px; height: 100px">${user.uPlan}</textarea>
+        <textarea class="flat_input" name="introduction" style="font-size: 0.9em; width: 500px; height: 100px">${user.uPlan}</textarea>
     </td>
     </tr>
 <!-- 완료/취소 버튼 -->			
     <tr class="final_buttons">
         <td colspan="2">
-            <input type="submit" name="ok" value="${_('Submit')}" style="margin: 6px" />
-            <input type="submit" name="cancel" value="${_('Cancel')}" style="margin: 6px" />
+            <input class="button" type="submit" name="ok" value="${_('Submit')}" />
+            <input class="button" type="submit" name="cancel" value="${_('Cancel')}" />
             <input type="hidden" name="referer" value="${referer}" />
         </td>
     </tr>

@@ -6,7 +6,6 @@ from web import ctx
 from i18n import custom_gettext as _
 %>
 ## 보드 설명
-<p><a class="board_heading" href="/${board_path}/+cover" target="_blank">${board_desc}</a>&nbsp;&nbsp;<span class="board_path">${util.traverse_board_path(board_path)}</span></p>
 
 % if len(articles) == 0:
 <div align="center">
@@ -22,7 +21,7 @@ from i18n import custom_gettext as _
 </div>
 % else:
 <!-- 글 -->
-<table border="0" cellspacing="0" cellpadding="3" style="width: 100%; margin-bottom: 10px; " class="list">
+<table border="0" cellspacing="0" cellpadding="3" class="list">
     <tr align="center" class="head">
         <th style="width:30px;">#</th>
         <th>${_('Title')}</th>
@@ -48,6 +47,7 @@ from i18n import custom_gettext as _
 
 <!-- 페이지 네비게이트 , 글쓰기/관리 버튼-->
 <div id="listmenu">
+<p>
 %if ctx.session.has_key('uid') and acl.is_allowed('board', board._get_board_id_from_path('/%s' % board_path), ctx.session.uid, 'write'):
 <!-- 글쓰기 -->
     <a class="button" href="/${board_path}/+write" title="${_('Write new article')}">${_('Write')}</a> 
@@ -67,8 +67,9 @@ from i18n import custom_gettext as _
     <a class="button" href="/${board_path}/+subscribe" title="${_('Subscribe to this board')}">${_('Subscribe')}</a> 
     %endif
 %endif
+</p>
 
-<center>
+<p style="text-align: center;">
 %if search_qs is UNDEFINED:
 % if page > 0:
     % if page > 11:
@@ -126,11 +127,11 @@ from i18n import custom_gettext as _
     % endif
 % endif
 % endif
-</center>
+</p>
 
 <!-- 검색 -->					
-<span id="search">
-    <form name="search_form" method="get" style="margin: 0; padding: 0" action="/${board_path}/+search">
+<form name="search_form" method="get" action="/${board_path}/+search">
+    <p style="text-align: right;">
 %if author_checked is UNDEFINED or author_checked == False:
         <input type="checkbox" name="author" value="1" />${_('Author')}
 % else:
@@ -147,13 +148,13 @@ from i18n import custom_gettext as _
         <input type="checkbox" name="body" value="1"/>${_('Body')}
 % endif
 %if search_keyword is not UNDEFINED:
-        <input name="q" type="text" value="${search_keyword}" />
+        <input class="flat_input" name="q" type="text" value="${search_keyword}" />
 % else:
-        <input name="q" type="text" />
+        <input class="flat_input" name="q" type="text" />
 % endif
-        <input name="submit" type="submit" value="검색" />
-    </form>
-</span>
+        <input class="button" name="submit" type="submit" value="검색" />
+    </p>
+</form>
 
 </div> <!-- end of menu -->
 <%def name="put_article(a, i, mark=False)" >

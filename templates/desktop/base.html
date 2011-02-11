@@ -102,10 +102,8 @@ $(window).load(function(){
     </div>
 
     <!-- 사이드바 -->
-    <div id="sidemenuOut">
-        <div id="sidemenu">
+    <div id="sidebar">
         <%include file="sidebar.html" />
-        </div>
     </div>
 
     <div id="body">
@@ -115,8 +113,6 @@ ${next.body()}
     </div> <!-- end of body -->
 
     <!-- footer frame -->
-    <!-- IE에서 float으로만 이루어진 내용을 clear하면 layout이 이상해지는 관계로 땜질 -->
-    <div style="clear: both; font-size: 1px">&nbsp;</div>
     <div id="footer">
         <%include file="footer.html" />
     </div>

@@ -1,6 +1,6 @@
 <%inherit file="base.html" />
 <%
-import user, config, util, board, acl
+import user, config, util, board, acl, reldates
 import urllib, posixpath
 import article as A
 from web import ctx
@@ -13,7 +13,6 @@ def get_formatted_username(uid):
     else:
         return _("Former Member")
 %>
-<p><a class="board_heading" href="/${board_path}/+cover" target="_blank">${board_desc}</a>&nbsp;&nbsp;<span class="board_path">${util.traverse_board_path(board_path)}</span></p>
 <p>
 % if board.get_board_info(board._get_board_id_from_path('/%s' % board_path)).show_avatar:
 <div class="avatar_body">
@@ -30,9 +29,9 @@ def get_formatted_username(uid):
 <span class="title">${article['aTitle']}</span>
 % endif
 &nbsp;&nbsp;&nbsp;${get_formatted_username(article['uSerial'])}</p>
-<p>${_('Written on %s') % article['aDatetime']}
+<p style="font-family: monospace;" class="small">${_('Written on %s') % article['aDatetime']}
 % if article.aEditedDatetime:
-, ${_('Last modified on %s') % article['aEditedDatetime']}
+<br />${_('Modified on %s') % article['aEditedDatetime']}
 % endif
 </p>
 % if attachment is not UNDEFINED:
@@ -78,9 +77,9 @@ ${util.format(article['aContent'])}
                     <tr>
                         <td class="writer">${comment['cId']}</td>
                         <td class="content">${util.format(comment['cContent'])}</td>
-                        <td class="writetime">${comment['cDatetime']}</td>
+                        <td class="writetime"><span title="${comment['cDatetime']}">${reldates.timesince(comment['cDatetime'])}</span></td>
             %if ctx.session.has_key('uid') and ctx.session.uid == comment['uSerial']:
-                        <td class="button">
+                        <td class="delbutton">
                             <a class="button" href="/${board_path}/+comment_delete/${comment['cSerial']}">${_('Delete')}</a>
                         </td>
             % endif
@@ -97,8 +96,8 @@ ${util.format(article['aContent'])}
     % else:
             <form name="comment" method="post" action="/${board_path}/+comment/${article['aSerial']}">
                 ${_('Write Comment')}
-                <input id="read_article_comment" name="comment" type="text" maxlength="255" style="width: 30em">
-                <input type="submit" name="Submit" value="${_('Submit')}">
+                <input class="flat_input" id="read_article_comment" name="comment" type="text" maxlength="255" style="width: 30em">
+                <input class="button" type="submit" name="Submit" value="${_('Submit')}">
             </form>
     % endif
         </div>

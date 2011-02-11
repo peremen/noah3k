@@ -1,7 +1,6 @@
 <% from i18n import custom_gettext as _
-import util %>
-
-<p><a class="board_heading" href="/${board_path}/+cover" target="_blank">${board_desc}</a>&nbsp;&nbsp;<span class="board_path">${util.traverse_board_path(board_path)}</span></p>
+from web import ctx
+import board, acl, util %>
 
 <!-- 하위 디렉터리 -->
 <table border="0" cellspacing="0" cellpadding="4" width="100%" class="list">
@@ -37,6 +36,11 @@ import util %>
     % endfor
     % endif
 </table>
-%if board_path != '':
-<p> <a class="button" href="/${board_path}/+summary">${_('Information')}</a> </p> 
+%if board_path != '' and ctx.session.has_key('uid') and acl.is_allowed('board', board._get_board_id_from_path('/%s' % board_path), ctx.session.uid, 'modify'):
+    <!-- 게시판 수정 -->
+    <a class="button" href="/${board_path}/+modify">${_('Modify Board')}</a>
+    <!-- 게시판 백업 -->
+    <a class="button" href="/${board_path}/+backup">${_('Backup Board')}</a>
+    <!-- 게시판 통계 -->
+    <a class="button" href="/${board_path}/+statistics">${_('Board Statistics')}</a>
 % endif
