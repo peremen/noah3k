@@ -5,7 +5,7 @@ import config
 import web
 import user
 
-import os, magic, StringIO
+import os, magic, StringIO, time
 
 pil = True
 try:
@@ -22,12 +22,18 @@ except:
 def get_attachment(article_id):
     path = os.path.join(config.attachment_disk_path, str(article_id))
     file_list = []
+    file_list_2 = []
     try:
         file_list = os.listdir(path)
     except OSError:
         return []
-    file_list.sort()
-    return file_list
+    for f in file_list:
+        stats = os.stat(os.path.join(config.attachment_disk_path, str(article_id), f))
+        lastmod_date = time.localtime(stats[8])
+        file_list_2.append((lastmod_date, f))
+        
+    file_list_2.sort()
+    return file_list_2
 
 def get_thumbnail(article_id, mobile):
     if mobile:
