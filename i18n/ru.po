@@ -1,21 +1,25 @@
 # Translations template for PROJECT.
 # Copyright (C) 2010 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
 #
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+# Park Shinjo, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2011-02-14 03:19+0900\n"
-"PO-Revision-Date: 2010-11-14 16:12+0900\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2011-02-14 04:07+0900\n"
+"Last-Translator: Park Shinjo\n"
+"Language-Team: Korean <kde-i18n-doc@kde.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.5\n"
+"X-Generator: Lokalize 1.1\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%10>"
+"=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #: article.py:184 article.py:233 article.py:273 article.py:312 article.py:401
 #: article.py:440 board.py:109 board.py:141 board.py:197 web_article.py:91
@@ -54,7 +58,7 @@ msgstr "Папка"
 #: article.py:220 article.py:265 article.py:304 article.py:377 article.py:426
 #: article.py:444 pm.py:125 pm.py:136 user.py:289 user.py:366
 msgid "DATABASE_ERROR"
-msgstr "Ошибка  в базе данных"
+msgstr "Ошибка в базе данных"
 
 #: article.py:250 article.py:287 article.py:416 web_article.py:70
 msgid "NO_SUCH_ARTICLE"
@@ -111,52 +115,64 @@ msgstr "Недействительный получатель"
 #: reldates.py:26
 msgid "year"
 msgid_plural "years"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "год"
+msgstr[1] "года"
+msgstr[2] "лет"
+msgstr[3] "год"
 
 #: reldates.py:27
 msgid "month"
 msgid_plural "months"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "месяца"
+msgstr[1] "месяцев"
+msgstr[2] "месяцев"
+msgstr[3] "месяца"
 
 #: reldates.py:28
 msgid "week"
 msgid_plural "weeks"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "неделю"
+msgstr[1] "недели"
+msgstr[2] "недели"
+msgstr[3] "неделю"
 
 #: reldates.py:29
 msgid "day"
 msgid_plural "days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "день"
+msgstr[1] "дня"
+msgstr[2] "дней"
+msgstr[3] "день"
 
 #: reldates.py:30
 msgid "hour"
 msgid_plural "hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "час"
+msgstr[1] "часа"
+msgstr[2] "часов"
+msgstr[3] "час"
 
 #: reldates.py:31
 msgid "minute"
 msgid_plural "minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "минута"
+msgstr[1] "минуты"
+msgstr[2] "минут"
+msgstr[3] "минута"
 
 #: reldates.py:50
 msgid "minutes"
-msgstr ""
+msgstr "минут"
 
 #: reldates.py:55
 #, python-format
 msgid "%(number)d %(type)s"
-msgstr ""
+msgstr "%(number)d %(type)s"
 
 #: reldates.py:61
 #, python-format
 msgid ", %(number)d %(type)s"
-msgstr ""
+msgstr ", %(number)d %(type)s"
 
 #: user.py:158 web_user.py:122 web_user.py:172
 msgid "INVALID_PASSWORD"
@@ -312,18 +328,16 @@ msgid "No user ID or password specified."
 msgstr "Не указан идентификатор пользователя или пароль"
 
 #: web_main.py:165 web_main.py:166 templates/desktop/sidebar.html:59
-#, fuzzy
 msgid "Lost Login?"
-msgstr "Последний вход"
+msgstr "Забыли пароль?"
 
 #: web_main.py:186
-#, fuzzy
 msgid "NO_SUCH_MAIL_ADDRESS"
-msgstr "Нет такого сообщения"
+msgstr "Нет такого адреса электронной почты"
 
 #: web_main.py:191
 msgid "NOAH password recovery"
-msgstr ""
+msgstr "NOAH Восстановление пароля"
 
 #: web_main.py:192
 #, python-format
@@ -339,24 +353,32 @@ msgid ""
 "If you did not requested password recovery, then please log in into your "
 "account. This link will not be vaild after logging into the account."
 msgstr ""
+"Уважаемый NOAH пользователь,\n"
+"\n"
+"Некоторые пользователь на IP %s просил новый пароль вашего счета. После "
+"списка содержит ваши счета. Нажмите на соответствующую ссылку для "
+"восстановления пароль учетной записи.\n"
+"\n"
+"%s\n"
+"\n"
+"Если вы не просила для восстановления пароля, пожалуйста, войдите в свой "
+"счет. Эта связь не будет действовать после входа в аккаунт."
 
 #: web_main.py:200
 msgid "Message Sent. Please follow instructions on the message."
-msgstr ""
+msgstr "Сообщение передано. Пожалуйста, следуйте инструкциям на сообщение."
 
 #: web_main.py:211
-#, fuzzy
 msgid "INVALID_LINK"
-msgstr "Неверный идентификатор пользователя"
+msgstr "Неверная ссылка"
 
 #: web_main.py:220
-#, fuzzy
 msgid "INVALID_PASSWORD_KEY"
-msgstr "Недействительный пароль"
+msgstr "Неверный ключевые пароль"
 
 #: web_main.py:227
 msgid "CHANGE_PASSWORD_NOW"
-msgstr ""
+msgstr "Пароль восстановлен. Поменять пароль."
 
 #: web_main.py:232 web_main.py:233 templates/mobile/base.html:141
 msgid "Credits"
@@ -504,25 +526,23 @@ msgstr "Форум"
 
 #: templates/desktop/board_editor.html:94
 msgid "Alias"
-msgstr ""
+msgstr "Псевдоним"
 
 #: templates/desktop/board_editor.html:99
-#, fuzzy
 msgid "Allow Comment"
-msgstr "Комментарий"
+msgstr "Разрешить комментарии"
 
 #: templates/desktop/board_editor.html:114
-#, fuzzy
 msgid "Allow Guest Writing"
-msgstr "Запись для гостей"
+msgstr "Разрешить гостей письменном"
 
 #: templates/desktop/board_editor.html:129
 msgid "Include in Search"
-msgstr ""
+msgstr "Включить в поиск"
 
 #: templates/desktop/board_editor.html:144
 msgid "Show Profile Images"
-msgstr ""
+msgstr "Показать изображения профиля"
 
 #: templates/desktop/board_editor.html:161
 #: templates/desktop/board_summary.html:99
@@ -755,12 +775,11 @@ msgstr "Электронная почта"
 
 #: templates/desktop/leave.html:15
 msgid "To leave NOAH, please enter your password."
-msgstr ""
+msgstr "Чтобы оставить NOAH, введите свой пароль."
 
 #: templates/desktop/leave.html:29
-#, fuzzy
 msgid "Leave"
-msgstr "Покинуть NOAH"
+msgstr "Уходить"
 
 #: templates/desktop/login.html:8 templates/desktop/read_mail.html:14
 #: templates/mobile/login.html:20
@@ -780,27 +799,34 @@ msgid ""
 "To recover your login information, E-Mail address associated with your "
 "account is required."
 msgstr ""
+"Чтобы восстановить логин информации, E-Mail адрес, связанный с вашей учетной "
+"записью требуется."
 
 #: templates/desktop/lost_login.html:5
 msgid ""
 "If you didn't specified E-Mail address in your account, please contact <a "
 "href=\"/noah/ToSysop\">Administrator</a> directly."
 msgstr ""
+"Если вы не указан E-Mail адрес в учетной записи, пожалуйста, <a "
+"href=\"/noah/ToSysop\">обращайтесь</a> непосредственно к администратору."
 
 #: templates/desktop/lost_login.html:8
 msgid ""
 "By filling out this form, you will receive message with password recovery "
 "instructions."
 msgstr ""
+"Заполнив данную форму, вы получите сообщение с инструкциями для "
+"восстановления пароля."
 
 #: templates/desktop/lost_login.html:9
 msgid "Please follow the link on the message to recover login information."
 msgstr ""
+"Пожалуйста, перейдите по ссылке в сообщении для восстановления логин "
+"информации."
 
 #: templates/desktop/lost_login.html:38
-#, fuzzy
 msgid "Send Message"
-msgstr "Прочитать сообщение"
+msgstr "Отправить сообщение"
 
 #: templates/desktop/main.html:6
 msgid "Department Notice"
@@ -816,14 +842,12 @@ msgid "Courses"
 msgstr "Курсы"
 
 #: templates/desktop/main.html:40
-#, fuzzy
 msgid "Current Courses"
-msgstr "Текущий пароль"
+msgstr "Текущие курсы"
 
 #: templates/desktop/main.html:41
-#, fuzzy
 msgid "Old Courses"
-msgstr "Курсы"
+msgstr "Старый курсы"
 
 #: templates/desktop/main.html:46 templates/desktop/sidebar.html:173
 #: templates/mobile/base.html:119
@@ -849,71 +873,63 @@ msgstr "Друзья"
 
 #: templates/desktop/main.html:51 templates/desktop/sidebar.html:186
 msgid "Undergraduate"
-msgstr ""
+msgstr "Бакалавриат"
 
 #: templates/desktop/main.html:51 templates/desktop/sidebar.html:187
-#, fuzzy
 msgid "Master"
-msgstr "Магистр."
+msgstr "Магистров"
 
 #: templates/desktop/main.html:59
-#, fuzzy
 msgid "Community"
-msgstr "Комментарий"
+msgstr "Сообщество"
 
 #: templates/desktop/main.html:61
-#, fuzzy
 msgid "Free Board"
-msgstr "Избранный форум"
+msgstr "Общий форум"
 
 #: templates/desktop/main.html:62
 msgid "Tips"
-msgstr ""
+msgstr "Советы"
 
 #: templates/desktop/main.html:62
 msgid "Q&amp;A"
-msgstr ""
+msgstr "Вопросы и ответы"
 
 #: templates/desktop/main.html:63
 msgid "Club Room"
-msgstr ""
+msgstr "Клуб форума"
 
 #: templates/desktop/main.html:64
-#, fuzzy
 msgid "Personal Boards"
-msgstr "Личная информациия"
+msgstr "Личный форум"
 
 #: templates/desktop/main.html:69
-#, fuzzy
 msgid "Administration"
-msgstr "Подтверждение"
+msgstr "Администрация"
 
 #: templates/desktop/main.html:71
-#, fuzzy
 msgid "Old Boards"
-msgstr "Подразделы"
+msgstr "Старый форум"
 
 #: templates/desktop/main.html:72
 msgid "Old Personal Boards"
-msgstr ""
+msgstr "Старый личный форум"
 
 #: templates/desktop/main.html:73
-#, fuzzy
 msgid "System Notice"
-msgstr "Уведомление о студентах"
+msgstr "Система уведомления"
 
 #: templates/desktop/main.html:74
 msgid "To Administrator"
-msgstr ""
+msgstr "Для администратора"
 
 #: templates/desktop/main.html:74
 msgid "New Boards, System Error, Other Inquries"
-msgstr ""
+msgstr "Новый форум, системная ошибка, другие вопросы"
 
 #: templates/desktop/main.html:79
-#, fuzzy
 msgid "Advertisement"
-msgstr "Департамент"
+msgstr "Реклама"
 
 #: templates/desktop/main.html:86 templates/desktop/main.html:89
 msgid "NOAH Mobile"
@@ -921,16 +937,16 @@ msgstr "NOAH мобильный"
 
 #: templates/desktop/main.html:90
 msgid "NOAH Notifier for Chrome"
-msgstr ""
+msgstr "NOAH Оповещения для Chrome"
 
 #: templates/desktop/main.html:91
 msgid "NOAH Notifier for Android"
-msgstr ""
+msgstr "NOAH Оповещения для Android"
 
 #: templates/desktop/main.html:115 templates/desktop/read_article.html:76
 #, python-format
 msgid "%s ago"
-msgstr ""
+msgstr "%s назад"
 
 #: templates/desktop/myinfo.html:16 templates/desktop/myinfo.html:24
 #: templates/desktop/myinfo.html:32 templates/desktop/myinfo.html:42
@@ -1025,7 +1041,7 @@ msgstr "Моя запись"
 
 #: templates/desktop/myinfo_edit.html:39
 msgid "Profile Image"
-msgstr ""
+msgstr "Профиль изображения"
 
 #: templates/desktop/myinfo_edit.html:46 templates/mobile/myinfo_edit.html:23
 msgid "Current Password"
@@ -1053,21 +1069,21 @@ msgstr "Хит"
 
 #: templates/desktop/new_article.html:39
 msgid "Mark_All_Read"
-msgstr ""
+msgstr "Отметить все как прочитанное"
 
 #: templates/desktop/question.html:13 templates/mobile/question.html:11
 msgid "OK"
 msgstr "ОК"
 
 #: templates/desktop/read_article.html:32 templates/desktop/read_mail.html:25
-#, fuzzy, python-format
+#, python-format
 msgid "Written on %s"
-msgstr "Написать статью - %s"
+msgstr "Создан: %s"
 
 #: templates/desktop/read_article.html:34
-#, fuzzy, python-format
+#, python-format
 msgid "Modified on %s"
-msgstr "Изменить  - /%s"
+msgstr "Изменён: %s"
 
 #: templates/desktop/read_article.html:91
 msgid "To post commment, please <a href=\"/+login\">log in</a>"
@@ -1107,11 +1123,11 @@ msgstr "Отметить"
 
 #: templates/desktop/sidebar.html:57
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: templates/desktop/sidebar.html:61
 msgid "Auto Login (max two weeks)"
-msgstr ""
+msgstr "Авто Логин (не более двух недель)"
 
 #: templates/desktop/sidebar.html:79 templates/mobile/base.html:136
 msgid "My Info"
@@ -1126,9 +1142,8 @@ msgid "Logout"
 msgstr "Выход"
 
 #: templates/desktop/sidebar.html:96
-#, fuzzy
 msgid "Sub-boards"
-msgstr "Форумы"
+msgstr "Подфорум"
 
 #: templates/desktop/sidebar.html:125
 msgid "You have no boards"
@@ -1185,20 +1200,18 @@ msgstr "Написать новую статью"
 
 #: templates/desktop/view_board.html:57
 #: templates/desktop/view_subboard_list_content.html:41
-#, fuzzy
 msgid "Modify Board"
-msgstr "Мой форум"
+msgstr "Изменить форум"
 
 #: templates/desktop/view_board.html:59
 #: templates/desktop/view_subboard_list_content.html:43
 msgid "Backup Board"
-msgstr ""
+msgstr "Резервное копирование форум"
 
 #: templates/desktop/view_board.html:61
 #: templates/desktop/view_subboard_list_content.html:45
-#, fuzzy
 msgid "Board Statistics"
-msgstr "Статистика использования"
+msgstr "Статистика форума"
 
 #: templates/desktop/view_board.html:65 templates/mobile/view_board.html:61
 msgid "Unsubscribe from this board"

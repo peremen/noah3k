@@ -2,14 +2,14 @@
 # Copyright (C) 2010 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 #
-# Park Shinjo <peremen@gmail.com>, 2010.
+# Park Shinjo <peremen@gmail.com>, 2010, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2011-02-14 03:19+0900\n"
-"PO-Revision-Date: 2010-10-26 02:13+0900\n"
-"Last-Translator: Park Shinjo <peremen@gmail.com>\n"
+"PO-Revision-Date: 2011-02-14 03:27+0900\n"
+"Last-Translator: Park Shinjo\n"
 "Language-Team: English <peremen@gmail.com>\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
@@ -318,9 +318,8 @@ msgid "Lost Login?"
 msgstr ""
 
 #: web_main.py:186
-#, fuzzy
 msgid "NO_SUCH_MAIL_ADDRESS"
-msgstr "No such message"
+msgstr "No such mail address registered in NOAH"
 
 #: web_main.py:191
 msgid "NOAH password recovery"
@@ -346,18 +345,16 @@ msgid "Message Sent. Please follow instructions on the message."
 msgstr ""
 
 #: web_main.py:211
-#, fuzzy
 msgid "INVALID_LINK"
-msgstr "Invalid UID"
+msgstr "Invalid link"
 
 #: web_main.py:220
-#, fuzzy
 msgid "INVALID_PASSWORD_KEY"
-msgstr "Invalid password"
+msgstr "Invalid password recovery key"
 
 #: web_main.py:227
 msgid "CHANGE_PASSWORD_NOW"
-msgstr ""
+msgstr "Password recovered. Change password now."
 
 #: web_main.py:232 web_main.py:233 templates/mobile/base.html:141
 msgid "Credits"
@@ -508,9 +505,8 @@ msgid "Alias"
 msgstr ""
 
 #: templates/desktop/board_editor.html:99
-#, fuzzy
 msgid "Allow Comment"
-msgstr "Comments"
+msgstr ""
 
 #: templates/desktop/board_editor.html:114
 msgid "Allow Guest Writing"
@@ -590,9 +586,8 @@ msgstr ""
 #: templates/desktop/board_summary.html:84
 #: templates/mobile/board_editor.html:57
 #: templates/mobile/board_summary.html:29
-#, fuzzy
 msgid "Comments"
-msgstr "Comments"
+msgstr ""
 
 #: templates/desktop/board_summary.html:86
 #: templates/desktop/board_summary.html:93
@@ -851,9 +846,8 @@ msgid "Master"
 msgstr ""
 
 #: templates/desktop/main.html:59
-#, fuzzy
 msgid "Community"
-msgstr "Comments"
+msgstr ""
 
 #: templates/desktop/main.html:61
 msgid "Free Board"
@@ -1048,9 +1042,9 @@ msgid "OK"
 msgstr ""
 
 #: templates/desktop/read_article.html:32 templates/desktop/read_mail.html:25
-#, fuzzy, python-format
+#, python-format
 msgid "Written on %s"
-msgstr "Comments"
+msgstr ""
 
 #: templates/desktop/read_article.html:34
 #, python-format
@@ -1063,9 +1057,8 @@ msgstr ""
 
 #: templates/desktop/read_article.html:94
 #: templates/mobile/read_article.html:60
-#, fuzzy
 msgid "Write Comment"
-msgstr "Comments"
+msgstr ""
 
 #: templates/desktop/read_article.html:108
 #: templates/desktop/read_article.html:110 templates/desktop/read_mail.html:33

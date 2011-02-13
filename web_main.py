@@ -207,7 +207,7 @@ If you did not requested password recovery, then please log in into your account
             # XXX: http://bugs.python.org/issue8136
             qs = parse_qs(urllib.unquote(web.ctx.query[1:]).encode('latin-1').decode('utf-8'))
 
-        if not (qs.has_key('id') or qs.has_key('key')):
+        if not (qs.has_key('id') and qs.has_key('key')):
             return render[theme].error(error_message = _('INVALID_LINK'),
                     help_context = 'error')
         user_id = qs['id'][0]
