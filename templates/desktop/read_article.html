@@ -35,21 +35,20 @@ def get_formatted_username(uid):
 % endif
 </p>
 % if attachment is not UNDEFINED:
+    %if len(attachment) > 0:
+${_('Attachment')}:
     % for a in attachment:
-    <div class="row">
-        <div class="left-container">${_('Attachment')}</div>
-        <span class="sep">:</span>
         <span class="attachment"><a class="filelink" href="${config.attachment_web_path}${article['aSerial']}/${urllib.quote(a[1])}">${a[1].decode('utf-8')}</a> (${A_.format_file_size(A_.get_attachment_size(article['aSerial'], a[1]))})</span>
-    </div>
     % endfor 
+% endif
 % endif
 
     <div id="content">
 % if thumbnail is not UNDEFINED:
     % for t in thumbnail:
         <div class="image">
-            (${t.decode('utf-8')})<br />
-            <a href="${config.attachment_web_path}${article['aSerial']}/${urllib.quote(t)}" target="_blank"><img class="image" src="${config.thumbnail_desktop_web_path}${article['aSerial']}/${urllib.quote(t)}" /></a>
+            (${t[1].decode('utf-8')})<br />
+            <a href="${config.attachment_web_path}${article['aSerial']}/${urllib.quote(t[1])}" target="_blank"><img class="image" src="${config.thumbnail_desktop_web_path}${article['aSerial']}/${urllib.quote(t[1])}" /></a>
         </div>
     % endfor
 % endif
@@ -70,16 +69,15 @@ ${util.format(article['aContent'])}
     <!-- 코멘트 -->
     <div id="comment">
         <div id="list">
-                <table border="0" cellspacing="0" cellpadding="4" style="width: 100%">
+                <table border="0" cellspacing="0" cellpadding="6px" style="width: 100%">
     % if comments:
         % for comment in comments:
                     <tr>
-                        <td class="writer">${comment['cId']}</td>
-                        <td class="content">${util.format(comment['cContent'])}</td>
-                        <td class="writetime"><span title="${comment['cDatetime']}">${reldates.timesince(comment['cDatetime'])}</span></td>
+                        <td class="writer">${comment['cId']}<br /><span title="${comment['cDatetime']}">(${_('%s ago') % reldates.timesince(comment['cDatetime'])})</span>
+                        </td>
+                        <td class="content">${util.format(comment['cContent'])}
             %if ctx.session.has_key('uid') and ctx.session.uid == comment['uSerial']:
-                        <td class="delbutton">
-                            <a class="button" href="/${board_path}/+comment_delete/${comment['cSerial']}">${_('Delete')}</a>
+                        <a style="font-size: 0.9em;" href="/${board_path}/+comment_delete/${comment['cSerial']}">(${_('Delete')})</a>
                         </td>
             % endif
                     </tr>

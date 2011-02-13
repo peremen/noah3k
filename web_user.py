@@ -249,7 +249,7 @@ class personal_actions:
     @util.error_catcher
     @util.session_helper
     def write_message_get(self, theme, current_uid = -1):
-        return render['desktop'].editor_mail(title = _('Write Message'))
+        return render['default'].editor_mail(title = _('Write Message'))
 
     @util.error_catcher
     @util.session_helper

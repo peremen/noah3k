@@ -8,8 +8,10 @@
     <link rel="stylesheet" type="text/css" href="/static/style/default.css">
     <link rel="stylesheet" type="text/css" href="/static/style/code.css">
 </head>
-<body>
+<body style="padding: 10px; font-size: 0.8em;">
+    <div style="border-radius: 5px; -moz-border-radius: 5px; border: 1px solid #d1d1d1; padding: 5px;">
 ${next.body()}
-    <p style="text-align: right;"><a class="servicelink" href="#" onclick="javascript:self.close();">${_('Close this window')}</a></p>
+    <p style="text-align: right;"><a class="button" href="#" onclick="javascript:self.close();">${_('Close this window')}</a></p>
+    </div>
 </body>
 </html>

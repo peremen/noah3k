@@ -65,3 +65,10 @@ def custom_gettext(string):
         return unicode(string)
     return translation.ugettext(string)
 
+def custom_ngettext(single, plural, n):
+    translation = load_translations(get_language())
+    if translation is None:
+        if n:
+            return unicode(plural)
+        return unicode(single)
+    return translation.ungettext(single, plural, n)

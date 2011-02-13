@@ -5,14 +5,8 @@ Source: http://jehiah.cz/download/relativeDates.py.txt
 """
 
 import datetime
-
-def ungettext(a,b,count):
-    if count:
-        return b
-    return a
-
-def ugettext(a):
-    return a
+from i18n import custom_ngettext as ungettext
+from i18n import custom_gettext as ugettext
 
 def timesince(d, now=None):
     

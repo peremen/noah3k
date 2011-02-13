@@ -55,8 +55,8 @@ def get_formatted_username(uid):
 % if thumbnail is not UNDEFINED:
     % for t in thumbnail:
         <div class="image">
-            (${t.decode('utf-8')})<br />
-            <a href="${config.attachment_web_path}${article['aSerial']}/${urllib.quote(t)}" target="_blank"><img class="image" src="${config.thumbnail_desktop_web_path}${article['aSerial']}/${urllib.quote(t)}" /></a>
+            (${t[1].decode('utf-8')})<br />
+            <a href="${config.attachment_web_path}${article['aSerial']}/${urllib.quote(t[1])}" target="_blank"><img class="image" src="${config.thumbnail_desktop_web_path}${article['aSerial']}/${urllib.quote(t[1])}" /></a>
         </div>
     % endfor
 % endif

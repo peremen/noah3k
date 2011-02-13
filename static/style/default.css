@@ -2,17 +2,6 @@ body, div, textarea, input {
 	font-family: 나눔고딕, sans-serif;
 }
 
-/*a.button {
-    text-decoration: none;
-    color: black;
-    border: 1px outset silver; 
-    background: white; 
-    padding: 3px 3px 1px 2px;
-    margin: 1px;
-    font-size: 1.0em;
-    height: 0.9em;
-}
-*/
 a.button, input.button {
     text-decoration: none;
     color: black;
@@ -44,14 +33,13 @@ table.list     {
     border-top: 1px solid #d1d1d1;
     border-bottom: 1px solid #d1d1d1;
 }
-/*table.list td { border-right: 1px solid silver } */
+
 table.list th {
     font-weight: bold;
     border-bottom: 1px solid #d1d1d1;
     padding-top: 4px; 
     padding-bottom: 4px; 
     background: #e9e9e9;
-/*    border-right: 1px solid silver; */
  }
 table.list tr    { font-size: 1em; }
 table.list tr.even    { background: #ededed;}
@@ -68,14 +56,13 @@ span.new {
 }
 
 hr {
-    color: #3C78B5;
-    background-color: #3C78B5;
-    height: 2px;
+    color: #d1d1d1;
+    background-color: #d1d1d1;
+    height: 1px;
     border: 0;
 }
 
 body {
-/*    margin: 15px 10px 10px 10px; */
     margin: 0;
 }
 
@@ -114,6 +101,7 @@ div#header {
     background-position: bottom left;
     height: 48px;
     background-color: #f6f6f6;
+    overflow: hidden;
 }
 
 div#header div#logo {
@@ -264,7 +252,7 @@ span#attachment {
 }
 
 #content {
-    border-top: 1px solid #3C78B5;
+    border-top: 1px solid #d1d1d1;
     padding: 10px 15px 10px 15px;
     font-size: 1.0em;
     margin-top: 10px;
@@ -284,7 +272,7 @@ span#attachment {
 }
 
 #content blockquote {
-    border: 1px solid #3C78B5;
+    border: 1px solid #d1d1d1;
     margin-left: 20px;
     margin-top: 2px;
     padding: 5px 5px 5px 5px;
@@ -329,23 +317,23 @@ div#comment div#input {
 }
 #comment td.writer {
     width: 8em;
-    padding: 0px 2em 0px 0px;
+    padding: 0px 1em 0px 0px;
     font-size: 0.9em;
     color: gray;
     text-align: right;
 }
 #comment td.content {
     font-size: 1.0em;
-    padding-left: 10px;
+    padding-left: 5px;
 }
 #comment td.writetime {
-    width: 12em;
+    width: 10em;
     font-size: 0.9em;
     padding-right: 5px;
-    text-align: center;
+    text-align: left;
     color: gray;
 }
-#comment td.delbutton {
+a.delbutton {
     text-align: center;
     font-size: 0.9em;
     width: 5em;

@@ -9,7 +9,7 @@ def get_formatted_username(uid):
     else:
         return _('Former Member')
 %>
-<h1>${mailbox_name}</h1>
+<h1 style="font-size: 1.6em;" >${mailbox_name}</h1>
 % if mails is UNDEFINED:
 ${_('No private messages.')}
 % elif len(mails) == 0:

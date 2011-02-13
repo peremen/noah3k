@@ -221,10 +221,10 @@ class board_actions:
         if not acl.is_allowed('board', board_id, current_uid, 'create'):
             return render[theme].error(error_message = _('NO_PERMISSION'), help_context='error')
         user_data = web.input()
-        comment = 1 if data.has_key('commentable') else 0
-        write_by_other = 1 if data.has_key('writable') else 0
-        indexable = 1 if data.has_key('indexable') else 0
-        show_avatar = 1 if data.has_key('show_avatar') else 0
+        comment = 1 if user_data.has_key('commentable') else 0
+        write_by_other = 1 if user_data.has_key('writable') else 0
+        indexable = 1 if user_data.has_key('indexable') else 0
+        show_avatar = 1 if user_data.has_key('show_avatar') else 0
 
         owner_uid = user._get_uid_from_username(user_data.owner)
         if owner_uid < 0:

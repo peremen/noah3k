@@ -29,7 +29,7 @@ ${body}
 %for a in attachment:
     <tr>
         <th>${_('Attachment %s' % i)}</th>
-        <td><span>${a.decode('utf-8')} <input name="delete" type="checkbox" value="${a.decode('utf-8')}" /> ${_('Delete')}</span></td>
+        <td><span>${a[1].decode('utf-8')} <input name="delete" type="checkbox" value="${a[1].decode('utf-8')}" /> ${_('Delete')}</span></td>
     </tr>
 <% i = i + 1 %>
 % endfor

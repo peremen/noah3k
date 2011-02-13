@@ -20,7 +20,7 @@ ${_('Content')} <a href="/m/+help/editor#bbcode" target="_blank">${_('(BBCode He
 %if attachment is not UNDEFINED:
     <% i = 1 %>
     %for a in attachment:
-    ${_('Attachment %s') % i}: %{a.decode('utf-8')} <input name="delete" type="checkbox" value="${a.decode('utf-8')}" /> (${_('Delete')})<br />
+    ${_('Attachment %s') % i}: ${a[1].decode('utf-8')} <input name="delete" type="checkbox" value="${a[1].decode('utf-8')}" /> (${_('Delete')})<br />
     <% i = i + 1 %>
     % endfor
 % endif

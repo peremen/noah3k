@@ -1,5 +1,5 @@
 <%inherit file="base_mail.html" />
-<% import util, user, config
+<% import util, user, config, posixpath
 from web import ctx
 from i18n import custom_gettext as _
 def get_formatted_username(uid):
@@ -9,26 +9,20 @@ def get_formatted_username(uid):
     else:
         return _('Former Member')
 %>
-<h1>메시지 보기</h1>
+<h1 style="font-size: 1.6em;" >메시지 보기</h1>
 % if mail is UNDEFINED:
 ${_('Internal Error')}
 <% return %>
 % endif
-<div class="row">
-    <div class="left-container">${_('Title')}</div>
-    <span class="sep">:</span>
-    <span id="title">${mail.mTitle}</span>
+<div class="avatar_body">
+    %if user.has_profile_image(mail.mSenderSerial):
+    <img src="${posixpath.join(config.pi_web_path, '%s.png' % article['uSerial'])}" class="avatar_large" alt="Avatar" />
+    % else:
+    <img src="/static/image/no_avatar.png" class="avatar_large" alt="Avatar" />
+    % endif
 </div>
-<div class="row">
-    <div class="left-container">${_('Author')}</div>
-    <span class="sep">:</span>
-    <span id="writer">${get_formatted_username(mail.mSenderSerial)}</span>
-</div>
-<div class="row">
-    <div class="left-container">${_('Date/Time')}</div>
-    <span class="sep">:</span>
-    <span id="writetime">${mail.mDatetime.strftime('%Y-%m-%d %H:%M:%S')}</span>
-</div>
+<span class="title">${mail.mTitle}</span>&nbsp;&nbsp;&nbsp;${get_formatted_username(mail.mSenderSerial)}
+<p style="font-family: monospace;" class="small">${_('Written on %s') % mail.mDatetime.strftime('%Y-%m-%d %H:%M:%S')}</p>
 <div id="content">
 ${util.format(mail.mContent)}
 </div>

@@ -1,4 +1,5 @@
 ﻿<%inherit file="base.html" />
+<% from i18n import custom_gettext as _ %>
 <div style="border: 1px solid #C0C0C0; padding:15px; margin: 20px 0 20px 0; width: 40em; font-size: 10pt; font-family: 굴림체;">
     노아를 탈퇴합니다.<br />
     한 번 탈퇴한 후에는 복구가 불가능하므로, 신중하게 판단해 주세요.<br />
@@ -11,17 +12,24 @@
     탈퇴하기 전에 게시판을 모두 삭제해야 합니다.
 </div>
 
-<p>탈퇴하려면 암호를 입력하십시오.</p>
+<p>${_('To leave NOAH, please enter your password.')}</p>
 
-<form name="leave" method="post" action="/+u/${username}/+leave" >
-    <div style="width: 40em;">
-        <center><hr /></center>
-        <div class="row" style="margin: 0 20px 0 20px;">
-            <span class="left-container">암호</span>
-            <span><input id="password" name="password" type="password" maxlength="16" style="width: 8em"></span>
-            <span style="margin: 0 20px 0 20px;"><input type="submit" name="ok" value="탈퇴" /> <input type="submit" name="cancel" value="취소" /></span>
+<form name="leave" method="post" action="/+u/+leave" >
+    <table class="prop_table">
+    <col style="width: 10em;" />
+    <col />
+    <tr> <td colspan="2"> <hr /></td> </tr>
+    <tr>
+        <th>${_('Password')}</th>
+        <td><input class="flat_input" id="password" name="password" type="password" maxlength="16" style="width: 12em"></td>
+    </tr>
+    <tr> <td colspan="2"> <hr /></td> </tr>
+    <tr class="final_buttons">
+        <td colspan="2">
+            <input class="button" type="submit" name="ok" value="${_('Leave')}" />
+            <input class="button" type="submit" name="cancel" value="${_('Cancel')}" />
             <input type="hidden" name="referer" value="${referer}" />
-        </div>
-        <center><hr /></center>
-    </div>
+        </td>
+    </tr>
+    </table>
 </form>
