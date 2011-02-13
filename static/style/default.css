@@ -534,3 +534,49 @@ div.article-link {
     padding: 6px;
     text-align: right;
 }
+
+h2 {
+    display: inline;
+}
+div.mainmenu {
+    float: left;
+    margin-right: 4px;
+    clear: left;
+}
+
+div.main_notice {
+    height: 1.1em;
+    overflow: hidden;
+}
+
+table.mainmenu_table ul {
+    list-style-type:square;
+    margin-left: 160px;
+    padding: 0;
+}
+table.mainmenu_table li {
+    margin: 0;
+    padding: 0;
+}
+
+.advertisement img {
+    padding-top: 6px;
+    border: 1px solid black;
+}
+
+.othertools ul {
+    list-style: none;
+    padding-left: 0;
+}
+.othertools a, table.mainmenu_table a {
+    text-decoration: none;
+    color: black;
+    font-size: 1.1em;
+}
+.othertools a:hover, table.mainmenu_table a:hover {
+    text-decoration: underline;
+}
+
+.othertools img {
+    border: none;
+}

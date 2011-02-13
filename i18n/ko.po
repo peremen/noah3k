@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2011-02-13 18:14+0900\n"
-"PO-Revision-Date: 2011-02-13 18:18+0900\n"
+"POT-Creation-Date: 2011-02-13 21:42+0900\n"
+"PO-Revision-Date: 2011-02-13 21:45+0900\n"
 "Last-Translator: Park Shinjo\n"
 "Language-Team: Korean <peremen@gmail.com>\n"
 "Language: ko\n"
@@ -498,7 +498,7 @@ msgstr "하위 게시판 만들기"
 
 #: templates/desktop/board_editor.html:193 templates/desktop/editor.html:52
 #: templates/desktop/myinfo_edit.html:73
-#: templates/desktop/read_article.html:97
+#: templates/desktop/read_article.html:96
 #: templates/mobile/board_editor.html:122 templates/mobile/editor.html:31
 #: templates/mobile/myinfo_edit.html:33 templates/mobile/read_article.html:62
 msgid "Submit"
@@ -513,7 +513,7 @@ msgid "Cancel"
 msgstr "취소"
 
 #: templates/desktop/board_summary.html:22 templates/desktop/myinfo.html:114
-#: templates/desktop/read_article.html:120
+#: templates/desktop/read_article.html:119
 #: templates/mobile/board_editor.html:11
 #: templates/mobile/board_summary.html:44 templates/mobile/myinfo.html:90
 #: templates/mobile/read_article.html:91
@@ -572,7 +572,7 @@ msgstr "한 바닥 설명이 없습니다."
 
 #: templates/desktop/editor.html:11 templates/desktop/editor_mail.html:20
 #: templates/desktop/inbox.html:22 templates/desktop/main.html:9
-#: templates/desktop/main.html:19 templates/desktop/new_article.html:26
+#: templates/desktop/main.html:21 templates/desktop/new_article.html:26
 #: templates/desktop/view_board.html:27 templates/desktop/view_board.html:141
 #: templates/desktop/view_board.html:143 templates/mobile/editor.html:5
 #: templates/mobile/new_article.html:26 templates/mobile/view_board.html:30
@@ -595,8 +595,8 @@ msgid "Attachment %s"
 msgstr "첨부 %s"
 
 #: templates/desktop/editor.html:32 templates/desktop/myinfo_edit.html:41
-#: templates/desktop/read_article.html:81
-#: templates/desktop/read_article.html:124 templates/desktop/read_mail.html:39
+#: templates/desktop/read_article.html:80
+#: templates/desktop/read_article.html:123 templates/desktop/read_mail.html:39
 #: templates/mobile/editor.html:23 templates/mobile/read_article.html:95
 msgid "Delete"
 msgstr "삭제"
@@ -666,7 +666,7 @@ msgid "From"
 msgstr "보낸 사람"
 
 #: templates/desktop/inbox.html:23 templates/desktop/main.html:10
-#: templates/desktop/main.html:20 templates/desktop/new_article.html:28
+#: templates/desktop/main.html:22 templates/desktop/new_article.html:28
 #: templates/desktop/view_board.html:29 templates/mobile/new_article.html:28
 #: templates/mobile/view_board.html:32
 msgid "Date"
@@ -720,13 +720,116 @@ msgstr "노아에 가입하려면 <a href=\"/+join/\">여기</a>를 누르세요
 msgid "Department Notice"
 msgstr "전산학과 공지"
 
-#: templates/desktop/main.html:15 templates/desktop/sidebar.html:177
+#: templates/desktop/main.html:17 templates/desktop/sidebar.html:177
 msgid "Student Notice"
 msgstr "학생 공지"
 
+#: templates/desktop/main.html:37 templates/desktop/sidebar.html:193
+#: templates/mobile/base.html:121
+msgid "Courses"
+msgstr "개설 교과목"
+
+#: templates/desktop/main.html:39
+msgid "Current Courses"
+msgstr "이번 학기 과목"
+
+#: templates/desktop/main.html:40
+msgid "Old Courses"
+msgstr "예전 과목"
+
+#: templates/desktop/main.html:45 templates/desktop/sidebar.html:173
+#: templates/mobile/base.html:119
+msgid "Department"
+msgstr "전산학과"
+
+#: templates/desktop/main.html:47 templates/desktop/sidebar.html:178
+msgid "To Dept."
+msgstr "건의"
+
+#: templates/desktop/main.html:48 templates/desktop/sidebar.html:181
+msgid "EVE Room"
+msgstr "과기계실"
+
+#: templates/desktop/main.html:49 templates/desktop/sidebar.html:182
+msgid "Job Offer"
+msgstr "구인/구직"
+
+#: templates/desktop/main.html:50 templates/desktop/sidebar.html:185
+#: templates/mobile/base.html:120
+msgid "Friends"
+msgstr "친목"
+
+#: templates/desktop/main.html:50 templates/desktop/sidebar.html:186
+msgid "Undergraduate"
+msgstr "학부"
+
+#: templates/desktop/main.html:50 templates/desktop/sidebar.html:187
+msgid "Master"
+msgstr "석사"
+
+#: templates/desktop/main.html:58
+msgid "Community"
+msgstr "커뮤니티"
+
+#: templates/desktop/main.html:60
+msgid "Free Board"
+msgstr "자유 게시판"
+
+#: templates/desktop/main.html:61
+msgid "Tips"
+msgstr "팁"
+
+#: templates/desktop/main.html:61
+msgid "Q&amp;A"
+msgstr "질문과 답변"
+
 #: templates/desktop/main.html:62
-msgid "Board List"
-msgstr "게시판 목록"
+msgid "Club Room"
+msgstr "동아리방"
+
+#: templates/desktop/main.html:63
+msgid "Personal Boards"
+msgstr "개인 게시판"
+
+#: templates/desktop/main.html:68
+msgid "Administration"
+msgstr "관리"
+
+#: templates/desktop/main.html:70
+msgid "Old Boards"
+msgstr "과거 게시판"
+
+#: templates/desktop/main.html:71
+msgid "Old Personal Boards"
+msgstr "과거 개인 게시판"
+
+#: templates/desktop/main.html:72
+msgid "System Notice"
+msgstr "시스템 공지"
+
+#: templates/desktop/main.html:73
+msgid "To Administrator"
+msgstr "관리자 요청"
+
+#: templates/desktop/main.html:73
+msgid "New Boards, System Error, Other Inquries"
+msgstr "게시판 생성, 시스템 오류, 기타 질의"
+
+#: templates/desktop/main.html:78
+msgid "Advertisement"
+msgstr "광고"
+
+#: templates/desktop/main.html:85 templates/desktop/main.html:88
+msgid "NOAH Mobile"
+msgstr "노아 모바일"
+
+#: templates/desktop/main.html:89
+msgid "NOAH Notifier for Chrome"
+msgstr "Google 크롬용 노아 알림이"
+
+#: templates/desktop/main.html:90
+msgid "NOAH Notifier for Android"
+msgstr "안드로이드용 노아 알림이"
 
 #: templates/desktop/myinfo.html:16 templates/desktop/myinfo.html:24
 #: templates/desktop/myinfo.html:32 templates/desktop/myinfo.html:42
@@ -865,43 +968,43 @@ msgstr "작성: %s"
 msgid "Modified on %s"
 msgstr "수정: %s"
 
-#: templates/desktop/read_article.html:78
+#: templates/desktop/read_article.html:76
 #, python-format
 msgid "%s ago"
 msgstr "%s 전"
 
-#: templates/desktop/read_article.html:92
+#: templates/desktop/read_article.html:91
 msgid "To post commment, please <a href=\"/+login\">log in</a>"
 msgstr "댓글을 쓰려면 <a href=\"/+login\">로그인</a>해 주세요"
 
-#: templates/desktop/read_article.html:95
+#: templates/desktop/read_article.html:94
 #: templates/mobile/read_article.html:60
 msgid "Write Comment"
 msgstr "댓글 쓰기"
 
-#: templates/desktop/read_article.html:109
-#: templates/desktop/read_article.html:111 templates/desktop/read_mail.html:33
+#: templates/desktop/read_article.html:108
+#: templates/desktop/read_article.html:110 templates/desktop/read_mail.html:33
 #: templates/mobile/read_article.html:80 templates/mobile/read_article.html:82
 msgid "List"
 msgstr "목록"
 
-#: templates/desktop/read_article.html:115
+#: templates/desktop/read_article.html:114
 #: templates/desktop/view_board.html:53 templates/mobile/read_article.html:86
 #: templates/mobile/view_board.html:55
 msgid "Write"
 msgstr "글 쓰기"
 
-#: templates/desktop/read_article.html:116 templates/desktop/read_mail.html:35
+#: templates/desktop/read_article.html:115 templates/desktop/read_mail.html:35
 #: templates/mobile/read_article.html:87
 msgid "Reply"
 msgstr "답글"
 
-#: templates/desktop/read_article.html:129
+#: templates/desktop/read_article.html:128
 #: templates/mobile/read_article.html:100
 msgid "Unmark"
 msgstr "강조 해제"
 
-#: templates/desktop/read_article.html:131
+#: templates/desktop/read_article.html:130
 #: templates/mobile/read_article.html:102
 msgid "Mark"
 msgstr "강조"
@@ -962,42 +1065,10 @@ msgstr "즐겨찾는 게시판이 없습니다"
 msgid "Feed"
 msgstr "피드"
 
-#: templates/desktop/sidebar.html:173 templates/mobile/base.html:119
-msgid "Department"
-msgstr "전산학과"
-
 #: templates/desktop/sidebar.html:176 templates/desktop/view_board.html:175
 #: templates/mobile/login.html:17
 msgid "Notice"
 msgstr "공지"
-
-#: templates/desktop/sidebar.html:178
-msgid "To Dept."
-msgstr "건의"
-
-#: templates/desktop/sidebar.html:181
-msgid "EVE Room"
-msgstr "과기계실"
-
-#: templates/desktop/sidebar.html:182
-msgid "Job Offer"
-msgstr "구인/구직"
-
-#: templates/desktop/sidebar.html:185 templates/mobile/base.html:120
-msgid "Friends"
-msgstr "친목"
-
-#: templates/desktop/sidebar.html:186
-msgid "Undergraduate"
-msgstr "학부"
-
-#: templates/desktop/sidebar.html:187
-msgid "Master"
-msgstr "석사"
-
-#: templates/desktop/sidebar.html:193 templates/mobile/base.html:121
-msgid "Courses"
-msgstr "개설 교과목"
 
 #: templates/desktop/sidebar.html:194
 msgid "(archive)"
@@ -1006,10 +1077,6 @@ msgstr "(예전)"
 #: templates/desktop/sidebar.html:209
 msgid "No course boards"
 msgstr "과목 게시판이 없습니다"
-
-#: templates/desktop/sidebar.html:213
-msgid "NOAH Mobile"
-msgstr "노아 모바일"
 
 #: templates/desktop/view_board.html:15 templates/mobile/view_board.html:20
 msgid "No articles in this board.<br />Press 'Write' to write one."
@@ -1124,6 +1191,9 @@ msgstr "하위 게시판"
 #: templates/mobile/view_subboard_list.html:15
 msgid "No boards."
 msgstr "게시판이 없습니다."
+
+#~ msgid "Board List"
+#~ msgstr "게시판 목록"
 
 #~ msgid "Previous Article"
 #~ msgstr "이전글"

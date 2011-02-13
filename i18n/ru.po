@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2011-02-13 18:14+0900\n"
+"POT-Creation-Date: 2011-02-13 21:42+0900\n"
 "PO-Revision-Date: 2010-11-14 16:12+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -506,7 +506,7 @@ msgstr "Создать форум ребенка"
 
 #: templates/desktop/board_editor.html:193 templates/desktop/editor.html:52
 #: templates/desktop/myinfo_edit.html:73
-#: templates/desktop/read_article.html:97
+#: templates/desktop/read_article.html:96
 #: templates/mobile/board_editor.html:122 templates/mobile/editor.html:31
 #: templates/mobile/myinfo_edit.html:33 templates/mobile/read_article.html:62
 msgid "Submit"
@@ -521,7 +521,7 @@ msgid "Cancel"
 msgstr "Отмена"
 
 #: templates/desktop/board_summary.html:22 templates/desktop/myinfo.html:114
-#: templates/desktop/read_article.html:120
+#: templates/desktop/read_article.html:119
 #: templates/mobile/board_editor.html:11
 #: templates/mobile/board_summary.html:44 templates/mobile/myinfo.html:90
 #: templates/mobile/read_article.html:91
@@ -580,7 +580,7 @@ msgstr "Полное описание не доступно"
 
 #: templates/desktop/editor.html:11 templates/desktop/editor_mail.html:20
 #: templates/desktop/inbox.html:22 templates/desktop/main.html:9
-#: templates/desktop/main.html:19 templates/desktop/new_article.html:26
+#: templates/desktop/main.html:21 templates/desktop/new_article.html:26
 #: templates/desktop/view_board.html:27 templates/desktop/view_board.html:141
 #: templates/desktop/view_board.html:143 templates/mobile/editor.html:5
 #: templates/mobile/new_article.html:26 templates/mobile/view_board.html:30
@@ -603,8 +603,8 @@ msgid "Attachment %s"
 msgstr "Приложение %s"
 
 #: templates/desktop/editor.html:32 templates/desktop/myinfo_edit.html:41
-#: templates/desktop/read_article.html:81
-#: templates/desktop/read_article.html:124 templates/desktop/read_mail.html:39
+#: templates/desktop/read_article.html:80
+#: templates/desktop/read_article.html:123 templates/desktop/read_mail.html:39
 #: templates/mobile/editor.html:23 templates/mobile/read_article.html:95
 msgid "Delete"
 msgstr "Удалить"
@@ -676,7 +676,7 @@ msgid "From"
 msgstr "От"
 
 #: templates/desktop/inbox.html:23 templates/desktop/main.html:10
-#: templates/desktop/main.html:20 templates/desktop/new_article.html:28
+#: templates/desktop/main.html:22 templates/desktop/new_article.html:28
 #: templates/desktop/view_board.html:29 templates/mobile/new_article.html:28
 #: templates/mobile/view_board.html:32
 msgid "Date"
@@ -731,13 +731,126 @@ msgstr "Чтобы присоединиться к NOAH нажмите <a href=\
 msgid "Department Notice"
 msgstr "Уведомление о Департаменте"
 
-#: templates/desktop/main.html:15 templates/desktop/sidebar.html:177
+#: templates/desktop/main.html:17 templates/desktop/sidebar.html:177
 msgid "Student Notice"
 msgstr "Уведомление о студентах"
 
+#: templates/desktop/main.html:37 templates/desktop/sidebar.html:193
+#: templates/mobile/base.html:121
+msgid "Courses"
+msgstr "Курсы"
+
+#: templates/desktop/main.html:39
+#, fuzzy
+msgid "Current Courses"
+msgstr "Текущий пароль"
+
+#: templates/desktop/main.html:40
+#, fuzzy
+msgid "Old Courses"
+msgstr "Курсы"
+
+#: templates/desktop/main.html:45 templates/desktop/sidebar.html:173
+#: templates/mobile/base.html:119
+msgid "Department"
+msgstr "Департамент"
+
+#: templates/desktop/main.html:47 templates/desktop/sidebar.html:178
+msgid "To Dept."
+msgstr "Для Деп."
+
+#: templates/desktop/main.html:48 templates/desktop/sidebar.html:181
+msgid "EVE Room"
+msgstr "EVE комната"
+
+#: templates/desktop/main.html:49 templates/desktop/sidebar.html:182
+msgid "Job Offer"
+msgstr "О работе"
+
+#: templates/desktop/main.html:50 templates/desktop/sidebar.html:185
+#: templates/mobile/base.html:120
+msgid "Friends"
+msgstr "Друзья"
+
+#: templates/desktop/main.html:50 templates/desktop/sidebar.html:186
+msgid "Undergraduate"
+msgstr ""
+
+#: templates/desktop/main.html:50 templates/desktop/sidebar.html:187
+#, fuzzy
+msgid "Master"
+msgstr "Магистр."
+
+#: templates/desktop/main.html:58
+#, fuzzy
+msgid "Community"
+msgstr "Комментарий"
+
+#: templates/desktop/main.html:60
+#, fuzzy
+msgid "Free Board"
+msgstr "Избранный форум"
+
+#: templates/desktop/main.html:61
+msgid "Tips"
+msgstr ""
+
+#: templates/desktop/main.html:61
+msgid "Q&amp;A"
+msgstr ""
+
 #: templates/desktop/main.html:62
-msgid "Board List"
-msgstr "Список форумов"
+msgid "Club Room"
+msgstr ""
+
+#: templates/desktop/main.html:63
+#, fuzzy
+msgid "Personal Boards"
+msgstr "Личная информациия"
+
+#: templates/desktop/main.html:68
+#, fuzzy
+msgid "Administration"
+msgstr "Подтверждение"
+
+#: templates/desktop/main.html:70
+#, fuzzy
+msgid "Old Boards"
+msgstr "Подразделы"
+
+#: templates/desktop/main.html:71
+msgid "Old Personal Boards"
+msgstr ""
+
+#: templates/desktop/main.html:72
+#, fuzzy
+msgid "System Notice"
+msgstr "Уведомление о студентах"
+
+#: templates/desktop/main.html:73
+msgid "To Administrator"
+msgstr ""
+
+#: templates/desktop/main.html:73
+msgid "New Boards, System Error, Other Inquries"
+msgstr ""
+
+#: templates/desktop/main.html:78
+#, fuzzy
+msgid "Advertisement"
+msgstr "Департамент"
+
+#: templates/desktop/main.html:85 templates/desktop/main.html:88
+msgid "NOAH Mobile"
+msgstr "NOAH мобильный"
+
+#: templates/desktop/main.html:89
+msgid "NOAH Notifier for Chrome"
+msgstr ""
+
+#: templates/desktop/main.html:90
+msgid "NOAH Notifier for Android"
+msgstr ""
 
 #: templates/desktop/myinfo.html:16 templates/desktop/myinfo.html:24
 #: templates/desktop/myinfo.html:32 templates/desktop/myinfo.html:42
@@ -876,43 +989,43 @@ msgstr "Написать статью - %s"
 msgid "Modified on %s"
 msgstr "Изменить  - /%s"
 
-#: templates/desktop/read_article.html:78
+#: templates/desktop/read_article.html:76
 #, python-format
 msgid "%s ago"
 msgstr ""
 
-#: templates/desktop/read_article.html:92
+#: templates/desktop/read_article.html:91
 msgid "To post commment, please <a href=\"/+login\">log in</a>"
 msgstr "<a href=\"/+login\">Войдите</a> пожалуйста, чтобы послать комментарий"
 
-#: templates/desktop/read_article.html:95
+#: templates/desktop/read_article.html:94
 #: templates/mobile/read_article.html:60
 msgid "Write Comment"
 msgstr "Написать комментарий"
 
-#: templates/desktop/read_article.html:109
-#: templates/desktop/read_article.html:111 templates/desktop/read_mail.html:33
+#: templates/desktop/read_article.html:108
+#: templates/desktop/read_article.html:110 templates/desktop/read_mail.html:33
 #: templates/mobile/read_article.html:80 templates/mobile/read_article.html:82
 msgid "List"
 msgstr "Список"
 
-#: templates/desktop/read_article.html:115
+#: templates/desktop/read_article.html:114
 #: templates/desktop/view_board.html:53 templates/mobile/read_article.html:86
 #: templates/mobile/view_board.html:55
 msgid "Write"
 msgstr "Написать"
 
-#: templates/desktop/read_article.html:116 templates/desktop/read_mail.html:35
+#: templates/desktop/read_article.html:115 templates/desktop/read_mail.html:35
 #: templates/mobile/read_article.html:87
 msgid "Reply"
 msgstr "Ответить"
 
-#: templates/desktop/read_article.html:129
+#: templates/desktop/read_article.html:128
 #: templates/mobile/read_article.html:100
 msgid "Unmark"
 msgstr "Отменить пометку"
 
-#: templates/desktop/read_article.html:131
+#: templates/desktop/read_article.html:130
 #: templates/mobile/read_article.html:102
 msgid "Mark"
 msgstr "Отметить"
@@ -975,43 +1088,10 @@ msgstr "Нет форумов в избранных"
 msgid "Feed"
 msgstr "Ввод"
 
-#: templates/desktop/sidebar.html:173 templates/mobile/base.html:119
-msgid "Department"
-msgstr "Департамент"
-
 #: templates/desktop/sidebar.html:176 templates/desktop/view_board.html:175
 #: templates/mobile/login.html:17
 msgid "Notice"
 msgstr "Уведомления"
-
-#: templates/desktop/sidebar.html:178
-msgid "To Dept."
-msgstr "Для Деп."
-
-#: templates/desktop/sidebar.html:181
-msgid "EVE Room"
-msgstr "EVE комната"
-
-#: templates/desktop/sidebar.html:182
-msgid "Job Offer"
-msgstr "О работе"
-
-#: templates/desktop/sidebar.html:185 templates/mobile/base.html:120
-msgid "Friends"
-msgstr "Друзья"
-
-#: templates/desktop/sidebar.html:186
-msgid "Undergraduate"
-msgstr ""
-
-#: templates/desktop/sidebar.html:187
-#, fuzzy
-msgid "Master"
-msgstr "Магистр."
-
-#: templates/desktop/sidebar.html:193 templates/mobile/base.html:121
-msgid "Courses"
-msgstr "Курсы"
 
 #: templates/desktop/sidebar.html:194
 msgid "(archive)"
@@ -1020,10 +1100,6 @@ msgstr "(Архив)"
 #: templates/desktop/sidebar.html:209
 msgid "No course boards"
 msgstr "Нет форум курсов"
-
-#: templates/desktop/sidebar.html:213
-msgid "NOAH Mobile"
-msgstr "NOAH мобильный"
 
 #: templates/desktop/view_board.html:15 templates/mobile/view_board.html:20
 msgid "No articles in this board.<br />Press 'Write' to write one."
@@ -1140,6 +1216,9 @@ msgstr "Подразделы"
 #: templates/mobile/view_subboard_list.html:15
 msgid "No boards."
 msgstr "Нет форумов"
+
+#~ msgid "Board List"
+#~ msgstr "Список форумов"
 
 #~ msgid "Previous Article"
 #~ msgstr "Предыдущая статья"
