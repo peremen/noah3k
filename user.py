@@ -383,9 +383,31 @@ def update_last_login(uid, ip_address):
         t.commit()
     return result
 
+def update_new_article_hit(uid):
+    t = db.transaction()
+    try:
+        result = db.update('Users', vars=locals(), where = 'uSerial = $uid',
+                new_article_hit = web.SQLLiteral('new_article_hit + 1'))
+    except:
+        t.rollback()
+        return False
+    else:
+        t.commit()
+    return result
+
+def update_new_article_none_hit(uid):
+    t = db.transaction()
+    try:
+        result = db.update('Users', vars=locals(), where = 'uSerial = $uid',
+                new_article_none_hit = web.SQLLiteral('new_article_none_hit + 1'))
+    except:
+        t.rollback()
+        return False
+    else:
+        t.commit()
+    return result
 
 ###
-
 def get_subscription_board(uid):
     # bSerial만 돌아오므로 적절한 가공이 필요함.
     val = dict(uid = uid)

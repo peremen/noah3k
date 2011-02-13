@@ -62,6 +62,20 @@ class personal_page:
                 title = _('My Information'), board_desc = _('My Information'),
                 feeds = f, help_context='myinfo')
 
+class personal_page_others:
+    @util.error_catcher
+    @util.session_helper
+    def GET(self, theme, username, current_uid = -1):
+        if not render.has_key(theme):
+            theme = 'default'
+        user_id = user._get_uid_from_username(username)
+        if user_id < 0:
+            raise web.notfound(render[theme].error(error_message = _('NO_SUCH_USER'), help_context='error'))
+        return render[theme].myinfo(user = user.get_user(user_id)[1],
+                user_id = user_id,
+                title = _('User Information'), board_desc = _('User Information'),
+                help_context='myinfo')
+
 class personal_actions:
     def GET(self, theme, action):
         return self.caller(theme, action, 'get')
@@ -80,6 +94,7 @@ class personal_actions:
     @util.error_catcher
     @util.session_helper
     def new_article_get(self, theme, current_uid = -1):
+        user.update_new_article_hit(current_uid)
         return render[theme].new_article(articles = user.get_unreaded_articles(current_uid),
                 uid = current_uid, title = _('New Article'),
                 board_desc = _('New Article'))

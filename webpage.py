@@ -10,7 +10,7 @@ from datetime import datetime
 import posixpath
 from web_article import article_actions
 from web_board import board_actions
-from web_user import personal_page, personal_actions, personal_actions_unauthorized
+from web_user import personal_page, personal_actions, personal_actions_unauthorized, personal_page_others
 from web_main import main_actions
 from web_noah2k_support import noah2k_support
 from render import render
@@ -26,6 +26,7 @@ urls = (
 
     r'/(?:(\w+)/)?\+u/(\S*)/\+(\w*)', 'personal_actions_unauthorized',
     r'/(?:(\w+)/)?\+u/\+(\w*)', 'personal_actions',
+    r'/(?:(\w+)/)?\+u/(\w*)', 'personal_page_others',
     r'/(?:(\w+)/)?\+u', 'personal_page',
 
     r'/(?:(\w+)/)?\+(\w*)', 'main_actions',

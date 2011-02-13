@@ -75,6 +75,14 @@ from i18n import custom_gettext as _ %>
         <th>${_('_:Count\nComments')}</th>
         <td>${user_.get_comment_count(user_id)}</td>
     </tr>
+    <tr> 
+        <th>${_('New Article Hit Count')}</th>
+        <td>${user.new_article_hit}</td>
+    </tr>
+    <tr> 
+        <th>${_('No New Article Hit Count')}</th>
+        <td>${user.new_article_none_hit}</td>
+    </tr>
 %if ctx.session is not UNDEFINED and ctx.session.has_key('uid'):
     % if ctx.session.uid == 1 or ctx.session.uid == user_id:
     <tr>

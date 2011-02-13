@@ -202,7 +202,7 @@ if ctx.session.has_key('uid'):
 %endif
     </td>
     <!-- 글쓴이 -->
-    <td style="padding-left: 1em">${a.aId}</td>
+    <td style="padding-left: 1em"><a class="articlelink" href="/+u/${a.aId}">${a.aId}</a></td>
     <!-- 날짜 -->
     <td align="center">${a.aDatetime.strftime('%Y-%m-%d')}</td>
     <!-- 조회수 -->
