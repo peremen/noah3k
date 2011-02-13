@@ -26,7 +26,7 @@ upper_admin_list.sort()
         <th>${_('Location')}</th>
         <td>
         % if action == 'modify':
-            <input name="path" type="text" value="${posixpath.dirname(board_info.bName)}" />
+            <input name="path" class="flat_input" type="text" value="${posixpath.dirname(board_info.bName)}" style="width: 300px;" />
         %elif action == 'create_board':
             ${board_info.bName}
         % endif
@@ -37,9 +37,9 @@ upper_admin_list.sort()
         <th>${_('Name')}</th>
         <td>
         % if action == 'modify':
-            <input name="name" type="text" maxlength="255" style="width:300px" value="${posixpath.basename(board_info.bName)}" />
+            <input name="name" class="flat_input" type="text" maxlength="255" style="width:300px" value="${posixpath.basename(board_info.bName)}" />
         %elif action == 'create_board':
-            <input name="name" type="text" maxlength="255" style="width:300px" />
+            <input name="name" class="flat_input" type="text" maxlength="255" style="width:300px" />
         % endif
         </td>
     </tr>
@@ -47,7 +47,7 @@ upper_admin_list.sort()
     <tr>
         <th>${_('Admin')}</th>
         <td>
-            <input name="owner" type="text" size="12" value="${get_userid(board_info.uSerial)}">
+            <input name="owner" class="flat_input" type="text" size="12" value="${get_userid(board_info.uSerial)}" style="width: 300px;" />
         </td>
     </tr>
 % if len(upper_admin_list) > 0:
@@ -159,7 +159,7 @@ checked="checked" \
     <!-- 한줄 설명 -->
     <tr>
         <th>${_('Short Description')}</th>
-        <td><input name="description" type="text" maxlength="255" style="width:300px"
+        <td><input class="flat_input" name="description" type="text" maxlength="255" style="width: 550px"
 % if action == 'modify':
 value="${board_info.bDescription}" /> \
 % else:
@@ -172,7 +172,7 @@ value="${board_info.bDescription}" /> \
     <tr>
         <th>${_('Long Description')}</th>
         <td>
-        <textarea name="information" style="font-size: 1.2em; width: 500px; height: 360px">
+        <textarea class="flat_input" name="information" style="font-size: 1.2em; width: 550px; height: 360px">
 % if action == 'modify':
 ${board_info.bInformation}
 % endif
@@ -190,8 +190,8 @@ ${board_info.bInformation}
             <a class="button" href="/${board_path}/+create_board">${_('Create Child Board')}</a>
 % endif
             <!-- 완료/취소 버튼 -->			
-            <input type="submit" name="ok" value="${_('Submit')}">
-            <input type="submit" name="cancel" value="${_('Cancel')}">
+            <input class="button" type="submit" name="ok" value="${_('Submit')}">
+            <input class="button" type="submit" name="cancel" value="${_('Cancel')}">
             <input type="hidden" name="referer" value="${referer}">
         </td>
     </tr>

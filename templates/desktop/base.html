@@ -95,7 +95,6 @@ $(window).load(function(){
 </head>
 
 <body>
-<div class="area">
     <!-- 헤더프레임 -->
     <div id="header">
         <%include file="header.html" />
@@ -107,9 +106,7 @@ $(window).load(function(){
     </div>
 
     <div id="body">
-        <div class="area"> \
 ${next.body()}
-        </div> <!-- end of area -->
     </div> <!-- end of body -->
 
     <!-- footer frame -->
@@ -117,7 +114,6 @@ ${next.body()}
         <%include file="footer.html" />
     </div>
 	
-</div> <!-- end of area -->
 </body>
 </html>
 <%def name="head_scripts()">

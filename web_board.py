@@ -297,9 +297,9 @@ class board_actions:
             return render[theme].error(error_message = result[1], help_context='error')
         else:
             if theme == 'default':
-                raise web.seeother('%s/+summary' % result[1])
+                raise web.seeother('%s' % result[1])
             else:
-                raise web.seeother('/%s%s/+summary' % (theme, result[1]))
+                raise web.seeother('/%s%s' % (theme, result[1]))
 
     @util.error_catcher
     @util.session_helper
