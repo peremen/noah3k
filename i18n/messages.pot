@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2011-02-13 21:42+0900\n"
+"POT-Creation-Date: 2011-02-14 03:19+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -161,11 +161,11 @@ msgstr ""
 msgid "INVALID_PASSWORD"
 msgstr ""
 
-#: user.py:279
+#: user.py:279 web_main.py:217
 msgid "INVALID_USERNAME"
 msgstr ""
 
-#: user.py:281 web_main.py:67
+#: user.py:281 web_main.py:66
 msgid "ID_ALREADY_EXISTS"
 msgstr ""
 
@@ -189,7 +189,7 @@ msgstr ""
 msgid "INVALID_BOARD"
 msgstr ""
 
-#: web_article.py:39 web_board.py:50 web_main.py:34 web_user.py:25
+#: web_article.py:39 web_board.py:50 web_main.py:33 web_user.py:25
 #: web_user.py:78
 msgid "INVALID_ACTION"
 msgstr ""
@@ -213,7 +213,7 @@ msgstr ""
 msgid "Modify - /%s"
 msgstr ""
 
-#: web_article.py:144 templates/desktop/editor.html:43
+#: web_article.py:144 templates/desktop/editor.html:44
 msgid "Modify article"
 msgstr ""
 
@@ -273,44 +273,87 @@ msgstr ""
 msgid "Search Results"
 msgstr ""
 
-#: web_main.py:42 web_main.py:43 templates/desktop/join.html:54
+#: web_main.py:41 web_main.py:42 templates/desktop/join.html:54
 #: templates/desktop/sidebar.html:59 templates/mobile/base.html:125
 #: templates/mobile/base.html:128 templates/mobile/join.html:3
 #: templates/mobile/join.html:31
 msgid "Join"
 msgstr ""
 
-#: web_main.py:60
+#: web_main.py:59 web_main.py:181
 msgid "INCORRECT_CAPTCHA"
 msgstr ""
 
-#: web_main.py:62
+#: web_main.py:61 web_main.py:183
 msgid "CAPTCHA_ERROR"
 msgstr ""
 
-#: web_main.py:65
+#: web_main.py:64
 msgid "NO_USERNAME_SPECIFIED"
 msgstr ""
 
-#: web_main.py:69 web_user.py:124
+#: web_main.py:68 web_user.py:124
 msgid "PASSWORD_DO_NOT_MATCH"
 msgstr ""
 
-#: web_main.py:71 web_user.py:126
+#: web_main.py:70 web_user.py:126
 msgid "PASSWORD_TOO_SHORT"
 msgstr ""
 
-#: web_main.py:104 web_main.py:148 templates/desktop/login.html:33
+#: web_main.py:103 web_main.py:147 templates/desktop/login.html:33
 #: templates/desktop/sidebar.html:59 templates/mobile/base.html:126
 #: templates/mobile/base.html:129 templates/mobile/login.html:15
 msgid "Login"
 msgstr ""
 
-#: web_main.py:128
+#: web_main.py:127
 msgid "No user ID or password specified."
 msgstr ""
 
-#: web_main.py:166 web_main.py:167 templates/mobile/base.html:141
+#: web_main.py:165 web_main.py:166 templates/desktop/sidebar.html:59
+msgid "Lost Login?"
+msgstr ""
+
+#: web_main.py:186
+msgid "NO_SUCH_MAIL_ADDRESS"
+msgstr ""
+
+#: web_main.py:191
+msgid "NOAH password recovery"
+msgstr ""
+
+#: web_main.py:192
+#, python-format
+msgid ""
+"Dear NOAH user,\n"
+"\n"
+"Some user on IP %s requested new password of your account(s). Following "
+"list contains your account(s). Click on the corresponding link for "
+"recovering password of account.\n"
+"\n"
+"%s\n"
+"\n"
+"If you did not requested password recovery, then please log in into your "
+"account. This link will not be vaild after logging into the account."
+msgstr ""
+
+#: web_main.py:200
+msgid "Message Sent. Please follow instructions on the message."
+msgstr ""
+
+#: web_main.py:211
+msgid "INVALID_LINK"
+msgstr ""
+
+#: web_main.py:220
+msgid "INVALID_PASSWORD_KEY"
+msgstr ""
+
+#: web_main.py:227
+msgid "CHANGE_PASSWORD_NOW"
+msgstr ""
+
+#: web_main.py:232 web_main.py:233 templates/mobile/base.html:141
 msgid "Credits"
 msgstr ""
 
@@ -494,7 +537,7 @@ msgstr ""
 msgid "Create Child Board"
 msgstr ""
 
-#: templates/desktop/board_editor.html:193 templates/desktop/editor.html:52
+#: templates/desktop/board_editor.html:193 templates/desktop/editor.html:53
 #: templates/desktop/myinfo_edit.html:73 templates/desktop/read_article.html:96
 #: templates/mobile/board_editor.html:122 templates/mobile/editor.html:31
 #: templates/mobile/myinfo_edit.html:33 templates/mobile/read_article.html:62
@@ -502,10 +545,10 @@ msgid "Submit"
 msgstr ""
 
 #: templates/desktop/board_editor.html:194 templates/desktop/join.html:55
-#: templates/desktop/leave.html:30 templates/desktop/myinfo_edit.html:74
-#: templates/desktop/question.html:14 templates/mobile/board_editor.html:123
-#: templates/mobile/join.html:32 templates/mobile/myinfo_edit.html:34
-#: templates/mobile/question.html:12
+#: templates/desktop/leave.html:30 templates/desktop/lost_login.html:39
+#: templates/desktop/myinfo_edit.html:74 templates/desktop/question.html:14
+#: templates/mobile/board_editor.html:123 templates/mobile/join.html:32
+#: templates/mobile/myinfo_edit.html:34 templates/mobile/question.html:12
 msgid "Cancel"
 msgstr ""
 
@@ -563,8 +606,8 @@ msgid "No long description available."
 msgstr ""
 
 #: templates/desktop/editor.html:11 templates/desktop/editor_mail.html:20
-#: templates/desktop/inbox.html:22 templates/desktop/main.html:9
-#: templates/desktop/main.html:21 templates/desktop/new_article.html:26
+#: templates/desktop/inbox.html:22 templates/desktop/main.html:10
+#: templates/desktop/main.html:22 templates/desktop/new_article.html:26
 #: templates/desktop/view_board.html:27 templates/desktop/view_board.html:141
 #: templates/desktop/view_board.html:143 templates/mobile/editor.html:5
 #: templates/mobile/new_article.html:26 templates/mobile/view_board.html:30
@@ -577,32 +620,32 @@ msgstr ""
 msgid "Content"
 msgstr ""
 
-#: templates/desktop/editor.html:20 templates/mobile/editor.html:13
+#: templates/desktop/editor.html:21 templates/mobile/editor.html:13
 msgid "(BBCode Help)"
 msgstr ""
 
-#: templates/desktop/editor.html:31 templates/mobile/editor.html:23
+#: templates/desktop/editor.html:32 templates/mobile/editor.html:23
 #, python-format
 msgid "Attachment %s"
 msgstr ""
 
-#: templates/desktop/editor.html:32 templates/desktop/myinfo_edit.html:41
+#: templates/desktop/editor.html:33 templates/desktop/myinfo_edit.html:41
 #: templates/desktop/read_article.html:80
 #: templates/desktop/read_article.html:123 templates/desktop/read_mail.html:39
 #: templates/mobile/editor.html:23 templates/mobile/read_article.html:95
 msgid "Delete"
 msgstr ""
 
-#: templates/desktop/editor.html:39 templates/desktop/read_article.html:39
+#: templates/desktop/editor.html:40 templates/desktop/read_article.html:39
 #: templates/mobile/editor.html:28 templates/mobile/read_article.html:28
 msgid "Attachment"
 msgstr ""
 
-#: templates/desktop/editor.html:45
+#: templates/desktop/editor.html:46
 msgid "MARK_AS_UNREADED"
 msgstr ""
 
-#: templates/desktop/editor.html:53 templates/desktop/editor_mail.html:42
+#: templates/desktop/editor.html:54 templates/desktop/editor_mail.html:42
 #: templates/desktop/error.html:22 templates/mobile/editor.html:32
 #: templates/mobile/error.html:22
 msgid "Go Back"
@@ -658,8 +701,8 @@ msgstr ""
 msgid "From"
 msgstr ""
 
-#: templates/desktop/inbox.html:23 templates/desktop/main.html:10
-#: templates/desktop/main.html:22 templates/desktop/new_article.html:28
+#: templates/desktop/inbox.html:23 templates/desktop/main.html:11
+#: templates/desktop/main.html:23 templates/desktop/new_article.html:28
 #: templates/desktop/view_board.html:29 templates/mobile/new_article.html:28
 #: templates/mobile/view_board.html:32
 msgid "Date"
@@ -682,9 +725,10 @@ msgstr ""
 msgid "Nickname"
 msgstr ""
 
-#: templates/desktop/join.html:32 templates/desktop/myinfo.html:22
-#: templates/desktop/myinfo_edit.html:19 templates/mobile/join.html:17
-#: templates/mobile/myinfo.html:19 templates/mobile/myinfo_edit.html:10
+#: templates/desktop/join.html:32 templates/desktop/lost_login.html:17
+#: templates/desktop/myinfo.html:22 templates/desktop/myinfo_edit.html:19
+#: templates/mobile/join.html:17 templates/mobile/myinfo.html:19
+#: templates/mobile/myinfo_edit.html:10
 msgid "E-Mail"
 msgstr ""
 
@@ -709,119 +753,150 @@ msgstr ""
 msgid "To join NOAH, click <a href=\"/+join/\">here</a>"
 msgstr ""
 
-#: templates/desktop/main.html:5
+#: templates/desktop/lost_login.html:4
+msgid ""
+"To recover your login information, E-Mail address associated with your "
+"account is required."
+msgstr ""
+
+#: templates/desktop/lost_login.html:5
+msgid ""
+"If you didn't specified E-Mail address in your account, please contact <a"
+" href=\"/noah/ToSysop\">Administrator</a> directly."
+msgstr ""
+
+#: templates/desktop/lost_login.html:8
+msgid ""
+"By filling out this form, you will receive message with password recovery"
+" instructions."
+msgstr ""
+
+#: templates/desktop/lost_login.html:9
+msgid "Please follow the link on the message to recover login information."
+msgstr ""
+
+#: templates/desktop/lost_login.html:38
+msgid "Send Message"
+msgstr ""
+
+#: templates/desktop/main.html:6
 msgid "Department Notice"
 msgstr ""
 
-#: templates/desktop/main.html:17 templates/desktop/sidebar.html:177
+#: templates/desktop/main.html:18 templates/desktop/sidebar.html:177
 msgid "Student Notice"
 msgstr ""
 
-#: templates/desktop/main.html:37 templates/desktop/sidebar.html:193
+#: templates/desktop/main.html:38 templates/desktop/sidebar.html:193
 #: templates/mobile/base.html:121
 msgid "Courses"
 msgstr ""
 
-#: templates/desktop/main.html:39
+#: templates/desktop/main.html:40
 msgid "Current Courses"
 msgstr ""
 
-#: templates/desktop/main.html:40
+#: templates/desktop/main.html:41
 msgid "Old Courses"
 msgstr ""
 
-#: templates/desktop/main.html:45 templates/desktop/sidebar.html:173
+#: templates/desktop/main.html:46 templates/desktop/sidebar.html:173
 #: templates/mobile/base.html:119
 msgid "Department"
 msgstr ""
 
-#: templates/desktop/main.html:47 templates/desktop/sidebar.html:178
+#: templates/desktop/main.html:48 templates/desktop/sidebar.html:178
 msgid "To Dept."
 msgstr ""
 
-#: templates/desktop/main.html:48 templates/desktop/sidebar.html:181
+#: templates/desktop/main.html:49 templates/desktop/sidebar.html:181
 msgid "EVE Room"
 msgstr ""
 
-#: templates/desktop/main.html:49 templates/desktop/sidebar.html:182
+#: templates/desktop/main.html:50 templates/desktop/sidebar.html:182
 msgid "Job Offer"
 msgstr ""
 
-#: templates/desktop/main.html:50 templates/desktop/sidebar.html:185
+#: templates/desktop/main.html:51 templates/desktop/sidebar.html:185
 #: templates/mobile/base.html:120
 msgid "Friends"
 msgstr ""
 
-#: templates/desktop/main.html:50 templates/desktop/sidebar.html:186
+#: templates/desktop/main.html:51 templates/desktop/sidebar.html:186
 msgid "Undergraduate"
 msgstr ""
 
-#: templates/desktop/main.html:50 templates/desktop/sidebar.html:187
+#: templates/desktop/main.html:51 templates/desktop/sidebar.html:187
 msgid "Master"
 msgstr ""
 
-#: templates/desktop/main.html:58
+#: templates/desktop/main.html:59
 msgid "Community"
 msgstr ""
 
-#: templates/desktop/main.html:60
+#: templates/desktop/main.html:61
 msgid "Free Board"
 msgstr ""
 
-#: templates/desktop/main.html:61
+#: templates/desktop/main.html:62
 msgid "Tips"
 msgstr ""
 
-#: templates/desktop/main.html:61
+#: templates/desktop/main.html:62
 msgid "Q&amp;A"
 msgstr ""
 
-#: templates/desktop/main.html:62
+#: templates/desktop/main.html:63
 msgid "Club Room"
 msgstr ""
 
-#: templates/desktop/main.html:63
+#: templates/desktop/main.html:64
 msgid "Personal Boards"
 msgstr ""
 
-#: templates/desktop/main.html:68
+#: templates/desktop/main.html:69
 msgid "Administration"
 msgstr ""
 
-#: templates/desktop/main.html:70
+#: templates/desktop/main.html:71
 msgid "Old Boards"
 msgstr ""
 
-#: templates/desktop/main.html:71
+#: templates/desktop/main.html:72
 msgid "Old Personal Boards"
 msgstr ""
 
-#: templates/desktop/main.html:72
+#: templates/desktop/main.html:73
 msgid "System Notice"
 msgstr ""
 
-#: templates/desktop/main.html:73
+#: templates/desktop/main.html:74
 msgid "To Administrator"
 msgstr ""
 
-#: templates/desktop/main.html:73
+#: templates/desktop/main.html:74
 msgid "New Boards, System Error, Other Inquries"
 msgstr ""
 
-#: templates/desktop/main.html:78
+#: templates/desktop/main.html:79
 msgid "Advertisement"
 msgstr ""
 
-#: templates/desktop/main.html:85 templates/desktop/main.html:88
+#: templates/desktop/main.html:86 templates/desktop/main.html:89
 msgid "NOAH Mobile"
 msgstr ""
 
-#: templates/desktop/main.html:89
+#: templates/desktop/main.html:90
 msgid "NOAH Notifier for Chrome"
 msgstr ""
 
-#: templates/desktop/main.html:90
+#: templates/desktop/main.html:91
 msgid "NOAH Notifier for Android"
+msgstr ""
+
+#: templates/desktop/main.html:115 templates/desktop/read_article.html:76
+#, python-format
+msgid "%s ago"
 msgstr ""
 
 #: templates/desktop/myinfo.html:16 templates/desktop/myinfo.html:24
@@ -961,11 +1036,6 @@ msgstr ""
 msgid "Modified on %s"
 msgstr ""
 
-#: templates/desktop/read_article.html:76
-#, python-format
-msgid "%s ago"
-msgstr ""
-
 #: templates/desktop/read_article.html:91
 msgid "To post commment, please <a href=\"/+login\">log in</a>"
 msgstr ""
@@ -1002,10 +1072,6 @@ msgstr ""
 
 #: templates/desktop/sidebar.html:57
 msgid "ID"
-msgstr ""
-
-#: templates/desktop/sidebar.html:59
-msgid "Lost Login?"
 msgstr ""
 
 #: templates/desktop/sidebar.html:61

@@ -14,7 +14,7 @@ def mail(recv, subject, text):
     msg['To'] = recv
     msg['Subject'] = subject
 
-    msg.attach(MIMEText(text))
+    msg.attach(MIMEText(text.encode('utf-8')))
 
     mail_server = smtplib.SMTP(config.email_smtp_address, config.email_smtp_port)
     mail_server.ehlo()

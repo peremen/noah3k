@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2011-02-13 21:42+0900\n"
-"PO-Revision-Date: 2011-02-13 21:45+0900\n"
+"POT-Creation-Date: 2011-02-14 03:19+0900\n"
+"PO-Revision-Date: 2011-02-14 03:23+0900\n"
 "Last-Translator: Park Shinjo\n"
 "Language-Team: Korean <peremen@gmail.com>\n"
 "Language: ko\n"
@@ -156,11 +156,11 @@ msgstr " %(number)d%(type)s"
 msgid "INVALID_PASSWORD"
 msgstr "암호가 잘못되었습니다"
 
-#: user.py:279
+#: user.py:279 web_main.py:217
 msgid "INVALID_USERNAME"
 msgstr "사용자 이름이 잘못되었습니다"
 
-#: user.py:281 web_main.py:67
+#: user.py:281 web_main.py:66
 msgid "ID_ALREADY_EXISTS"
 msgstr "ID가 이미 존재합니다"
 
@@ -184,7 +184,7 @@ msgstr "공지 사항이 없습니다"
 msgid "INVALID_BOARD"
 msgstr "지정한 게시판이 없습니다"
 
-#: web_article.py:39 web_board.py:50 web_main.py:34 web_user.py:25
+#: web_article.py:39 web_board.py:50 web_main.py:33 web_user.py:25
 #: web_user.py:78
 msgid "INVALID_ACTION"
 msgstr "지원하지 않는 동작"
@@ -208,7 +208,7 @@ msgstr "답글을 씁니다"
 msgid "Modify - /%s"
 msgstr "글 수정 - /%s"
 
-#: web_article.py:144 templates/desktop/editor.html:43
+#: web_article.py:144 templates/desktop/editor.html:44
 msgid "Modify article"
 msgstr "글을 수정합니다"
 
@@ -268,44 +268,95 @@ msgstr "이 게시판을 삭제하시겠습니까?"
 msgid "Search Results"
 msgstr "검색 결과"
 
-#: web_main.py:42 web_main.py:43 templates/desktop/join.html:54
+#: web_main.py:41 web_main.py:42 templates/desktop/join.html:54
 #: templates/desktop/sidebar.html:59 templates/mobile/base.html:125
 #: templates/mobile/base.html:128 templates/mobile/join.html:3
 #: templates/mobile/join.html:31
 msgid "Join"
 msgstr "가입"
 
-#: web_main.py:60
+#: web_main.py:59 web_main.py:181
 msgid "INCORRECT_CAPTCHA"
 msgstr "CAPTCHA 문자열을 다시 확인하십시오"
 
-#: web_main.py:62
+#: web_main.py:61 web_main.py:183
 msgid "CAPTCHA_ERROR"
 msgstr "CAPTCHA 서버와 통신할 수 없음. 잠시 후 다시 시도하십시오."
 
-#: web_main.py:65
+#: web_main.py:64
 msgid "NO_USERNAME_SPECIFIED"
 msgstr "사용자 이름을 입력하지 않았습니다"
 
-#: web_main.py:69 web_user.py:124
+#: web_main.py:68 web_user.py:124
 msgid "PASSWORD_DO_NOT_MATCH"
 msgstr "암호가 일치하지 않습니다"
 
-#: web_main.py:71 web_user.py:126
+#: web_main.py:70 web_user.py:126
 msgid "PASSWORD_TOO_SHORT"
 msgstr "암호가 너무 짧습니다"
 
-#: web_main.py:104 web_main.py:148 templates/desktop/login.html:33
+#: web_main.py:103 web_main.py:147 templates/desktop/login.html:33
 #: templates/desktop/sidebar.html:59 templates/mobile/base.html:126
 #: templates/mobile/base.html:129 templates/mobile/login.html:15
 msgid "Login"
 msgstr "로그인"
 
-#: web_main.py:128
+#: web_main.py:127
 msgid "No user ID or password specified."
 msgstr "사용자 ID나 암호를 입력하지 않았습니다."
 
-#: web_main.py:166 web_main.py:167 templates/mobile/base.html:141
+#: web_main.py:165 web_main.py:166 templates/desktop/sidebar.html:59
+msgid "Lost Login?"
+msgstr "암호 찾기"
+
+#: web_main.py:186
+msgid "NO_SUCH_MAIL_ADDRESS"
+msgstr "이메일 주소가 등록되지 않았습니다"
+
+#: web_main.py:191
+msgid "NOAH password recovery"
+msgstr "노아 암호 찾기"
+
+#: web_main.py:192
+#, python-format
+msgid ""
+"Dear NOAH user,\n"
+"\n"
+"Some user on IP %s requested new password of your account(s). Following list "
+"contains your account(s). Click on the corresponding link for recovering "
+"password of account.\n"
+"\n"
+"%s\n"
+"\n"
+"If you did not requested password recovery, then please log in into your "
+"account. This link will not be vaild after logging into the account."
+msgstr ""
+"안녕하세요.\n"
+"\n"
+"IP %s을(를) 사용하는 사용자가 노아 암호 찾기를 요청하였습니다. 다음 목록에 있는 계정은 이 이메일 주소로 가입된 노아 계정입니다. "
+"암호를 복구하기 원하는 계정의 링크를 누르십시오.\n"
+"\n"
+"%s\n"
+"\n"
+"만약 암호 찾기를 요청하지 않으셨다면 지금 즉시 계정에 로그인하십시오. 이 링크는 계정에 로그인하기 전까지 사용할 수 있습니다."
+
+#: web_main.py:200
+msgid "Message Sent. Please follow instructions on the message."
+msgstr "메시지를 보냈습니다. 메시지에 있는 지시 사항을 참고하십시오."
+
+#: web_main.py:211
+msgid "INVALID_LINK"
+msgstr "잘못된 링크"
+
+#: web_main.py:220
+msgid "INVALID_PASSWORD_KEY"
+msgstr "잘못된 암호 찾기 키"
+
+#: web_main.py:227
+msgid "CHANGE_PASSWORD_NOW"
+msgstr "암호 찾기에 성공하였습니다. 지금 암호를 바꾸십시오."
+
+#: web_main.py:232 web_main.py:233 templates/mobile/base.html:141
 msgid "Credits"
 msgstr "개발자 정보"
 
@@ -496,7 +547,7 @@ msgstr "이 게시판 삭제하기"
 msgid "Create Child Board"
 msgstr "하위 게시판 만들기"
 
-#: templates/desktop/board_editor.html:193 templates/desktop/editor.html:52
+#: templates/desktop/board_editor.html:193 templates/desktop/editor.html:53
 #: templates/desktop/myinfo_edit.html:73
 #: templates/desktop/read_article.html:96
 #: templates/mobile/board_editor.html:122 templates/mobile/editor.html:31
@@ -505,10 +556,10 @@ msgid "Submit"
 msgstr "완료"
 
 #: templates/desktop/board_editor.html:194 templates/desktop/join.html:55
-#: templates/desktop/leave.html:30 templates/desktop/myinfo_edit.html:74
-#: templates/desktop/question.html:14 templates/mobile/board_editor.html:123
-#: templates/mobile/join.html:32 templates/mobile/myinfo_edit.html:34
-#: templates/mobile/question.html:12
+#: templates/desktop/leave.html:30 templates/desktop/lost_login.html:39
+#: templates/desktop/myinfo_edit.html:74 templates/desktop/question.html:14
+#: templates/mobile/board_editor.html:123 templates/mobile/join.html:32
+#: templates/mobile/myinfo_edit.html:34 templates/mobile/question.html:12
 msgid "Cancel"
 msgstr "취소"
 
@@ -571,8 +622,8 @@ msgid "No long description available."
 msgstr "한 바닥 설명이 없습니다."
 
 #: templates/desktop/editor.html:11 templates/desktop/editor_mail.html:20
-#: templates/desktop/inbox.html:22 templates/desktop/main.html:9
-#: templates/desktop/main.html:21 templates/desktop/new_article.html:26
+#: templates/desktop/inbox.html:22 templates/desktop/main.html:10
+#: templates/desktop/main.html:22 templates/desktop/new_article.html:26
 #: templates/desktop/view_board.html:27 templates/desktop/view_board.html:141
 #: templates/desktop/view_board.html:143 templates/mobile/editor.html:5
 #: templates/mobile/new_article.html:26 templates/mobile/view_board.html:30
@@ -585,32 +636,32 @@ msgstr "제목"
 msgid "Content"
 msgstr "내용"
 
-#: templates/desktop/editor.html:20 templates/mobile/editor.html:13
+#: templates/desktop/editor.html:21 templates/mobile/editor.html:13
 msgid "(BBCode Help)"
 msgstr "(BBCode 도움말)"
 
-#: templates/desktop/editor.html:31 templates/mobile/editor.html:23
+#: templates/desktop/editor.html:32 templates/mobile/editor.html:23
 #, python-format
 msgid "Attachment %s"
 msgstr "첨부 %s"
 
-#: templates/desktop/editor.html:32 templates/desktop/myinfo_edit.html:41
+#: templates/desktop/editor.html:33 templates/desktop/myinfo_edit.html:41
 #: templates/desktop/read_article.html:80
 #: templates/desktop/read_article.html:123 templates/desktop/read_mail.html:39
 #: templates/mobile/editor.html:23 templates/mobile/read_article.html:95
 msgid "Delete"
 msgstr "삭제"
 
-#: templates/desktop/editor.html:39 templates/desktop/read_article.html:39
+#: templates/desktop/editor.html:40 templates/desktop/read_article.html:39
 #: templates/mobile/editor.html:28 templates/mobile/read_article.html:28
 msgid "Attachment"
 msgstr "첨부"
 
-#: templates/desktop/editor.html:45
+#: templates/desktop/editor.html:46
 msgid "MARK_AS_UNREADED"
 msgstr "읽지 않은 상태로 표시"
 
-#: templates/desktop/editor.html:53 templates/desktop/editor_mail.html:42
+#: templates/desktop/editor.html:54 templates/desktop/editor_mail.html:42
 #: templates/desktop/error.html:22 templates/mobile/editor.html:32
 #: templates/mobile/error.html:22
 msgid "Go Back"
@@ -665,8 +716,8 @@ msgstr "메시지 %s개"
 msgid "From"
 msgstr "보낸 사람"
 
-#: templates/desktop/inbox.html:23 templates/desktop/main.html:10
-#: templates/desktop/main.html:22 templates/desktop/new_article.html:28
+#: templates/desktop/inbox.html:23 templates/desktop/main.html:11
+#: templates/desktop/main.html:23 templates/desktop/new_article.html:28
 #: templates/desktop/view_board.html:29 templates/mobile/new_article.html:28
 #: templates/mobile/view_board.html:32
 msgid "Date"
@@ -689,9 +740,10 @@ msgstr "암호 반복"
 msgid "Nickname"
 msgstr "닉네임"
 
-#: templates/desktop/join.html:32 templates/desktop/myinfo.html:22
-#: templates/desktop/myinfo_edit.html:19 templates/mobile/join.html:17
-#: templates/mobile/myinfo.html:19 templates/mobile/myinfo_edit.html:10
+#: templates/desktop/join.html:32 templates/desktop/lost_login.html:17
+#: templates/desktop/myinfo.html:22 templates/desktop/myinfo_edit.html:19
+#: templates/mobile/join.html:17 templates/mobile/myinfo.html:19
+#: templates/mobile/myinfo_edit.html:10
 msgid "E-Mail"
 msgstr "이메일"
 
@@ -716,120 +768,152 @@ msgstr "공지 없음"
 msgid "To join NOAH, click <a href=\"/+join/\">here</a>"
 msgstr "노아에 가입하려면 <a href=\"/+join/\">여기</a>를 누르세요"
 
-#: templates/desktop/main.html:5
+#: templates/desktop/lost_login.html:4
+msgid ""
+"To recover your login information, E-Mail address associated with your "
+"account is required."
+msgstr "암호를 찾으려면 노아에 가입할 때 입력한 이메일 주소를 입력하십시오."
+
+#: templates/desktop/lost_login.html:5
+msgid ""
+"If you didn't specified E-Mail address in your account, please contact <a "
+"href=\"/noah/ToSysop\">Administrator</a> directly."
+msgstr ""
+"회원 가입할 때 이메일 주소를 입력하지 않으셨다면 <a href=\"/noah/ToSysop\">노아 관리자</a>에게 연락해 주십시오."
+
+#: templates/desktop/lost_login.html:8
+msgid ""
+"By filling out this form, you will receive message with password recovery "
+"instructions."
+msgstr "메일 주소를 입력하면 이후 지시 사항을 전송합니다."
+
+#: templates/desktop/lost_login.html:9
+msgid "Please follow the link on the message to recover login information."
+msgstr "암호를 찾으려면 메시지에 있는 링크를 누르십시오."
+
+#: templates/desktop/lost_login.html:38
+msgid "Send Message"
+msgstr "메시지 보내기"
+
+#: templates/desktop/main.html:6
 msgid "Department Notice"
 msgstr "전산학과 공지"
 
-#: templates/desktop/main.html:17 templates/desktop/sidebar.html:177
+#: templates/desktop/main.html:18 templates/desktop/sidebar.html:177
 msgid "Student Notice"
 msgstr "학생 공지"
 
-#: templates/desktop/main.html:37 templates/desktop/sidebar.html:193
+#: templates/desktop/main.html:38 templates/desktop/sidebar.html:193
 #: templates/mobile/base.html:121
 msgid "Courses"
 msgstr "개설 교과목"
 
-#: templates/desktop/main.html:39
+#: templates/desktop/main.html:40
 msgid "Current Courses"
 msgstr "이번 학기 과목"
 
-#: templates/desktop/main.html:40
+#: templates/desktop/main.html:41
 msgid "Old Courses"
 msgstr "예전 과목"
 
-#: templates/desktop/main.html:45 templates/desktop/sidebar.html:173
+#: templates/desktop/main.html:46 templates/desktop/sidebar.html:173
 #: templates/mobile/base.html:119
 msgid "Department"
 msgstr "전산학과"
 
-#: templates/desktop/main.html:47 templates/desktop/sidebar.html:178
+#: templates/desktop/main.html:48 templates/desktop/sidebar.html:178
 msgid "To Dept."
 msgstr "건의"
 
-#: templates/desktop/main.html:48 templates/desktop/sidebar.html:181
+#: templates/desktop/main.html:49 templates/desktop/sidebar.html:181
 msgid "EVE Room"
 msgstr "과기계실"
 
-#: templates/desktop/main.html:49 templates/desktop/sidebar.html:182
+#: templates/desktop/main.html:50 templates/desktop/sidebar.html:182
 msgid "Job Offer"
 msgstr "구인/구직"
 
-#: templates/desktop/main.html:50 templates/desktop/sidebar.html:185
+#: templates/desktop/main.html:51 templates/desktop/sidebar.html:185
 #: templates/mobile/base.html:120
 msgid "Friends"
 msgstr "친목"
 
-#: templates/desktop/main.html:50 templates/desktop/sidebar.html:186
+#: templates/desktop/main.html:51 templates/desktop/sidebar.html:186
 msgid "Undergraduate"
 msgstr "학부"
 
-#: templates/desktop/main.html:50 templates/desktop/sidebar.html:187
+#: templates/desktop/main.html:51 templates/desktop/sidebar.html:187
 msgid "Master"
 msgstr "석사"
 
-#: templates/desktop/main.html:58
+#: templates/desktop/main.html:59
 msgid "Community"
 msgstr "커뮤니티"
 
-#: templates/desktop/main.html:60
+#: templates/desktop/main.html:61
 msgid "Free Board"
 msgstr "자유 게시판"
 
-#: templates/desktop/main.html:61
+#: templates/desktop/main.html:62
 msgid "Tips"
 msgstr "팁"
 
-#: templates/desktop/main.html:61
+#: templates/desktop/main.html:62
 msgid "Q&amp;A"
 msgstr "질문과 답변"
 
-#: templates/desktop/main.html:62
+#: templates/desktop/main.html:63
 msgid "Club Room"
 msgstr "동아리방"
 
-#: templates/desktop/main.html:63
+#: templates/desktop/main.html:64
 msgid "Personal Boards"
 msgstr "개인 게시판"
 
-#: templates/desktop/main.html:68
+#: templates/desktop/main.html:69
 msgid "Administration"
 msgstr "관리"
 
-#: templates/desktop/main.html:70
+#: templates/desktop/main.html:71
 msgid "Old Boards"
 msgstr "과거 게시판"
 
-#: templates/desktop/main.html:71
+#: templates/desktop/main.html:72
 msgid "Old Personal Boards"
 msgstr "과거 개인 게시판"
 
-#: templates/desktop/main.html:72
+#: templates/desktop/main.html:73
 msgid "System Notice"
 msgstr "시스템 공지"
 
-#: templates/desktop/main.html:73
+#: templates/desktop/main.html:74
 msgid "To Administrator"
 msgstr "관리자 요청"
 
-#: templates/desktop/main.html:73
+#: templates/desktop/main.html:74
 msgid "New Boards, System Error, Other Inquries"
 msgstr "게시판 생성, 시스템 오류, 기타 질의"
 
-#: templates/desktop/main.html:78
+#: templates/desktop/main.html:79
 msgid "Advertisement"
 msgstr "광고"
 
-#: templates/desktop/main.html:85 templates/desktop/main.html:88
+#: templates/desktop/main.html:86 templates/desktop/main.html:89
 msgid "NOAH Mobile"
 msgstr "노아 모바일"
 
-#: templates/desktop/main.html:89
+#: templates/desktop/main.html:90
 msgid "NOAH Notifier for Chrome"
 msgstr "Google 크롬용 노아 알림이"
 
-#: templates/desktop/main.html:90
+#: templates/desktop/main.html:91
 msgid "NOAH Notifier for Android"
 msgstr "안드로이드용 노아 알림이"
+
+#: templates/desktop/main.html:115 templates/desktop/read_article.html:76
+#, python-format
+msgid "%s ago"
+msgstr "%s 전"
 
 #: templates/desktop/myinfo.html:16 templates/desktop/myinfo.html:24
 #: templates/desktop/myinfo.html:32 templates/desktop/myinfo.html:42
@@ -968,11 +1052,6 @@ msgstr "작성: %s"
 msgid "Modified on %s"
 msgstr "수정: %s"
 
-#: templates/desktop/read_article.html:76
-#, python-format
-msgid "%s ago"
-msgstr "%s 전"
-
 #: templates/desktop/read_article.html:91
 msgid "To post commment, please <a href=\"/+login\">log in</a>"
 msgstr "댓글을 쓰려면 <a href=\"/+login\">로그인</a>해 주세요"
@@ -1012,10 +1091,6 @@ msgstr "강조"
 #: templates/desktop/sidebar.html:57
 msgid "ID"
 msgstr "ID"
-
-#: templates/desktop/sidebar.html:59
-msgid "Lost Login?"
-msgstr "암호 찾기"
 
 #: templates/desktop/sidebar.html:61
 msgid "Auto Login (max two weeks)"
