@@ -43,3 +43,8 @@ tmpl_video_height = 480
 pi_disk_path = os.path.join(os.path.dirname(__file__), 'static', 'profile_image')
 pi_web_path = '/static/profile_image/'
 pi_size = (48, 48)
+
+email_smtp_address = 'smtp.gmail.com'
+email_smtp_port = 587
+email_smtp_user = 'admin@example.com'
+email_smtp_password = 'changeme'

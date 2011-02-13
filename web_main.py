@@ -3,10 +3,9 @@
 
 import os
 import web
-import config
-import board, user, article
-from cgi import parse_qs
+import config, board, user, article, mail
 from datetime import datetime
+from cgi import parse_qs
 import posixpath
 import util
 from render import render
@@ -160,6 +159,73 @@ class main_actions:
         else:
             referer = web.ctx.env.get('HTTP_REFERER', '/%s' % theme)
         raise web.seeother(referer)
+
+    @util.error_catcher
+    def lost_login_get(self, theme):
+        return render[theme].lost_login(title=_('Lost Login?'), lang='ko',
+                board_desc = _('Lost Login?'))
+
+    @util.error_catcher
+    def lost_login_post(self, theme):
+        data = web.input()
+        recaptcha_url = 'http://www.google.com/recaptcha/api/verify'
+        recaptcha_data = dict(challenge = data.recaptcha_challenge_field,
+                response = data.recaptcha_response_field,
+                remoteip = web.ctx.ip,
+                privatekey = config.recaptcha_private_key)
+        req = urllib2.Request(recaptcha_url, urllib.urlencode(recaptcha_data))
+        response = urllib2.urlopen(req)
+        page = response.read().split('\n')
+        if page[0] == 'false':
+            if page[1].strip() == 'incorrect-captcha-sol':
+                return render[theme].error(error_message = _('INCORRECT_CAPTCHA'), help_context='error')
+            else:
+                return render[theme].error(error_message = _('CAPTCHA_ERROR'), help_context='error')
+        found_users = user.get_user_from_email(data.email)
+        if not found_users:
+            return render[theme].error(error_message = _('NO_SUCH_MAIL_ADDRESS'), help_context='error')
+        salt_string = ''
+        for u in found_users:
+            salt = user.get_password_salt(u.uSerial)
+            salt_string = salt_string + '* User %s: http://noah.kaist.ac.kr/+recover_password?id=%s&key=%s\n' % (u.uId, u.uId, salt)
+        message_title = _('NOAH password recovery')
+        message_body = _('''Dear NOAH user,
+
+Some user on IP %s requested new password of your account(s). Following list contains your account(s). Click on the corresponding link for recovering password of account.
+
+%s
+
+If you did not requested password recovery, then please log in into your account. This link will not be vaild after logging into the account.''') % (web.ctx.ip, salt_string)
+        mail.mail(data.email, message_title, message_body)
+        return _('Message Sent. Please follow instructions on the message.')
+         
+    @util.error_catcher
+    def recover_password_get(self, theme):
+        if web.ctx.query == '':
+            qs = dict()
+        else:
+            # XXX: http://bugs.python.org/issue8136
+            qs = parse_qs(urllib.unquote(web.ctx.query[1:]).encode('latin-1').decode('utf-8'))
+
+        if not (qs.has_key('id') or qs.has_key('key')):
+            return render[theme].error(error_message = _('INVALID_LINK'),
+                    help_context = 'error')
+        user_id = qs['id'][0]
+        key = qs['key'][0]
+        uid = user._get_uid_from_username(user_id)
+        if uid < 0:
+            return render[theme].error(error_message = _('INVALID_USERNAME'),
+                    help_context = 'error')
+        if user.get_password_salt(uid) != key:
+            return render[theme].error(error_message = _('INVALID_PASSWORD_KEY'),
+                    help_context = 'error')
+        web.ctx.session.uid = uid
+        web.ctx.session.username = user_id
+        web.ctx.session.lang = 'ko'
+        web.ctx.session.persistent = False
+        user.update_last_login(uid, web.ctx.ip)
+        return render[theme].error(error_message = _('CHANGE_PASSWORD_NOW'),
+                help_context = 'error')
 
     @util.error_catcher
     def credits_get(self, theme):

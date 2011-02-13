@@ -6,7 +6,7 @@ import web
 import crypt, hashlib, hmac
 import util
 import i18n
-import datetime
+import datetime, time
 _ = i18n.custom_gettext
 
 import os, magic, StringIO
@@ -454,3 +454,18 @@ def update_unreaded_articles(uid):
 
 def has_profile_image(uid):
     return os.path.exists(os.path.join(config.pi_disk_path, '%s.png' % uid))
+
+def get_user_from_email(mail):
+    result = db.select('Users', vars=locals(), where='uEmail = $mail')
+    return result
+
+def get_password_salt(uid):
+    # 암호 찾기 명령 실행 시 나오는 것.
+    # 마지막 로그인 시간과 사용자 ID의 조합이므로 로그인 한 번 하면 값이 변경됨.
+    u = get_user(uid)
+    if not u[0]:
+        return None
+    salt = str(int(time.mktime(u[1].uLastLogin.timetuple()))) + u[1].uId
+    return _generate_noah3k_password(salt)
+
+
