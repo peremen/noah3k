@@ -3,7 +3,7 @@ from i18n import custom_gettext as _ %>
 <%inherit file="base.html" />
 
 <div id="errorbox">
-    <img src="/static/image/error/${random.randint(1, 6)}.jpg" />
+    <img src="/static/image/error/${random.randint(1, 9)}.jpg" />
     <h3>${_('Error')} : <span style="color: red">${error_message}</span></h3>
     <hr />
 % if error_detail is UNDEFINED:
