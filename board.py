@@ -47,7 +47,7 @@ def _get_board_id_from_regex_path(path):
     regex = ''
     for front in fronts:
         regex = regex + '/%s[[:alnum:]]*' % front
-    regex = regex + '$'
+    regex = '^' + regex + '$'
 
     val = dict(board_regex = regex)
     result = db.query('select * from Boards where bName REGEXP $board_regex', val)

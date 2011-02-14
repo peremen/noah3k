@@ -195,7 +195,7 @@ def traverse_board_path(path):
         path = '/'
     ret = ""
     id = board._get_board_id_from_path(path)
-    while id != 1:
+    while id != 1 and id > 0:
         i = board.get_board_info(id)
         if i.bType == 0:
             ret = '/<a class="dirlink" href="%s">%s</a>' % (i.bName, i.bName.split('/')[-1]) + ret
