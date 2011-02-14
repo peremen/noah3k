@@ -473,11 +473,14 @@ div.personal_tools .myinfo_right {
 }
 
 div.personal_tools a.userinfo_side {
-    color: gray;
-    text-decoration: none;
+    color: black;
+	font-weight: bold;
+    text-decoration: underline;
 }
 
 div.personal_tools a.userinfo_side:hover {
+    color: black;
+	font-weight: bold;
     text-decoration: underline;
 }
 
@@ -579,4 +582,12 @@ table.mainmenu_table li {
 
 .othertools img {
     border: none;
+}
+
+.major {
+	color: black;
+}
+
+.miner {
+	color: gray;
 }

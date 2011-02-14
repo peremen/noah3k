@@ -74,9 +74,8 @@ class main_actions:
         ret = user.join(locals())
         if not ret[0]:
             return render[theme].error(error_message = ret[1], help_context='error')
-        uid = user._get_uid_from_username(username)
-        web.ctx.session.uid = uid
-        web.ctx.session.username = username
+
+        self.session_set(username)
         user.update_last_login(uid, web.ctx.ip)
         if theme == 'default':
             raise web.seeother('/')
@@ -131,15 +130,12 @@ class main_actions:
             login = user.login(username, password)
             if login[0]:
                 # 로그인 성공. referer로 돌아감.
-                uid = user._get_uid_from_username(username)
-                web.ctx.session.uid = uid
-                web.ctx.session.username = username
-                web.ctx.session.lang = login[1]
+                u = self.session_set(username)
                 if autologin:
                     web.ctx.session.persistent = True
                 else:
                     web.ctx.session.persistent = False
-                user.update_last_login(uid, web.ctx.ip)
+                user.update_last_login(u.uSerial, web.ctx.ip)
             else:
                 # 로그인 실패
                 err = login[1]
@@ -219,9 +215,8 @@ If you did not requested password recovery, then please log in into your account
         if user.get_password_salt(uid) != key:
             return render[theme].error(error_message = _('INVALID_PASSWORD_KEY'),
                     help_context = 'error')
-        web.ctx.session.uid = uid
-        web.ctx.session.username = user_id
-        web.ctx.session.lang = 'ko'
+
+        session_set(user_id);
         web.ctx.session.persistent = False
         user.update_last_login(uid, web.ctx.ip)
         return render[theme].error(error_message = _('CHANGE_PASSWORD_NOW'),
@@ -232,3 +227,10 @@ If you did not requested password recovery, then please log in into your account
         return render[theme].credits(title = _('Credits'),
                lang="ko", board_desc=_('Credits'), )
 
+    def session_set(self, username):
+        u = user.get_user(user._get_uid_from_username(username))[1];
+        web.ctx.session.uid = u.uSerial
+        web.ctx.session.username = u.uId
+        web.ctx.session.usernick = u.uNick
+        web.ctx.session.lang = u.language;
+        return u;

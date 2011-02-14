@@ -83,8 +83,7 @@ def _get_uid_from_username(username):
     @return: 이름에 해당하는 사용자 ID. 
     """
     val = dict(username = username)
-    result = db.query('SELECT * FROM Users WHERE uId = $username COLLATE utf8_general_ci',
-            vars = locals())
+    result = db.query('SELECT * FROM Users WHERE uId = $username COLLATE utf8_general_ci', vars = locals())
     try:
         retvalue = int(result[0]['uSerial'])
     except IndexError:
@@ -144,7 +143,7 @@ def login(username, password):
     @type password: string
     @param password: 암호. 평문으로 전송되어야 한다.
     @rtype tuple
-    @return: 로그인 성공 여부(T/F)와 언어(성공 시) 또는 오류 코드(실패 시)를 포함하는 튜플.
+    @return: 로그인 성공 여부(T/F)와 사용자 또는 오류 코드(실패 시)를 포함하는 튜플.
     """
     val = dict(username = username)
     result = db.query('SELECT * FROM Users WHERE uId = $username COLLATE utf8_general_ci',
@@ -158,7 +157,7 @@ def login(username, password):
         return (False, _('INVALID_PASSWORD'))
     if len(user.uPasswd) < 64:
         update_password(user.uSerial, password)
-    return (True, user.language)
+    return (True, user)
 
 def get_owned_board(uid):
     # 모든 정보가 돌아옴.

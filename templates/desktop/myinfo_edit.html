@@ -2,7 +2,7 @@
 <% from i18n import custom_gettext as _
 import user as user_
 from web import ctx
-import util %>
+import util, config %>
 <form name="modify_form" enctype="multipart/form-data" method="post" action="/+u/+modify">
 <table class="prop_table">
     <col style="width: 10em;" />
@@ -36,7 +36,7 @@ import util %>
         </select></td>
     </tr>
     <tr>
-        <th>${_('Profile Image')}</th>
+        <th>${_('Profile Image')}<br/><span class="miner">${config.pi_size[0]} x ${config.pi_size[1]}</span></th>
         <td><input name="profile_image" type="file" /><input name="delete_profile_image" id="delete_profile_image" type="checkbox" value="True" />
         <label for="delete_profile_image">${_('Delete')}</label></td>
     </tr>
