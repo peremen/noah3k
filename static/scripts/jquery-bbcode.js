@@ -89,7 +89,7 @@
             text = text + '</a>';
         }
         if(options.tag_math){
-            text = text + '<a href="#" id="math" title="">';
+            text = text + '<a href="#" id="latex" title="">';
             if(options.button_image){
                 text = text + '<img src="' + options.image_url + 'math.png" />';
             }else{
