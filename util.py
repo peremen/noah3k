@@ -21,7 +21,7 @@ lang_map = { 'ko': u'한국어',
 def session_helper(func):
     def _exec(*args, **kwargs):
         theme = args[1]
-        if theme == '':
+        if theme == '' or theme == None:
             theme = 'default'
         try:
             current_uid = web.ctx.session.uid
