@@ -41,7 +41,7 @@ def traverse_child_board(path):
             child_desc = posixpath.basename(child.bName)
         else:
             child_desc = child.bDescription
-            ret = ret + '<li><a class="boardlink" href="%s"><img class="type" src="%s" />&nbsp;%s</a></li>%s' % (child.bName, child_image, child_desc, sep)
+	ret = ret + '<li><a class="boardlink" href="%s"><img class="type" src="%s" />&nbsp;%s</a></li>%s' % (child.bName, child_image, child_desc, sep)
     return ret[0:-len(sep)]
 
 def get_type(path):
