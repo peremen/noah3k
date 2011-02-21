@@ -180,20 +180,4 @@
         }
     }
 
-    // hotkeys 
-    $(document).keyup(function (e) {
-    if(e.which == 17) isCtrl=false; }).keydown(function (e) {
-        if(e.which == 17) isCtrl=true; 
-        if (e.which == 66 && isCtrl == true) { // CTRL + B, bold
-            $("#b").click();
-            return false;
-        } else if (e.which == 73 && isCtrl == true) { // CTRL + I, italic
-            $("#i").click();
-            return false;
-        } else if (e.which == 85 && isCtrl == true) { // CTRL + U, underline
-            $("#u").click();
-            return false;
-        }
-    })
-
 })(jQuery)

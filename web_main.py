@@ -76,7 +76,7 @@ class main_actions:
             return render[theme].error(error_message = ret[1], help_context='error')
 
         self.session_set(username)
-        user.update_last_login(uid, web.ctx.ip)
+        user.update_last_login(web.ctx.session.uid, web.ctx.ip)
         if theme == 'default':
             raise web.seeother('/')
         else:
