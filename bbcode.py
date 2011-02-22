@@ -91,7 +91,7 @@ def _parse(text, tags):
 		tag, arg = ro.groups()
 		if arg == None:
 			arg = ''
-		html, text = html + _parse_url(text[:ro.start()]), text[ro.end():]
+		html, text = html + text[:ro.start()], text[ro.end():]
 		if tags[tag]["nest"]:
 			text = _parse(text, tags)
 
@@ -99,8 +99,9 @@ def _parse(text, tags):
 		if not tags[tag]["nest"]:
 			innerText = innerText.replace('<br/>', '\n');
 		html += tags[tag]["tmpl"]((arg, innerText))
-	return html + _parse_url(text)
+	return html + text
 
 def parse(text):
 	text = _escape(text);
+	text = _parse_url(text);
 	return _parse(text, _tags)
