@@ -16,7 +16,7 @@ ${_('Internal Error')}
 % endif
 <div class="avatar_body">
     %if user.has_profile_image(mail.mSenderSerial):
-    <img src="${posixpath.join(config.pi_web_path, '%s.png' % article['uSerial'])}" class="avatar_large" alt="Avatar" />
+    <img src="${posixpath.join(config.pi_web_path, '%s.png' % mail.mSenderSerial)}" class="avatar_large" alt="Avatar" />
     % else:
     <img src="/static/image/no_avatar.png" class="avatar_large" alt="Avatar" />
     % endif
