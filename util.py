@@ -190,7 +190,7 @@ def lcode_to_name(lcode):
 def get_lang_map():
     return lang_map
 
-def traverse_board_path(path):
+def traverse_board_path(path, theme=None):
     if path == '^root':
         path = '/'
     ret = ""
@@ -198,9 +198,15 @@ def traverse_board_path(path):
     while id != 1 and id > 0:
         i = board.get_board_info(id)
         if i.bType == 0:
-            ret = '/<a class="dirlink" href="%s">%s</a>' % (i.bName, i.bName.split('/')[-1]) + ret
+            if theme:
+                ret = '/<a class="dirlink" href="/%s%s">%s</a>' % (theme, i.bName, i.bName.split('/')[-1]) + ret
+            else:
+                ret = '/<a class="dirlink" href="%s">%s</a>' % (i.bName, i.bName.split('/')[-1]) + ret
         else:
-            ret = '/<a class="boardlink" href="%s">%s</a>' % (i.bName, i.bName.split('/')[-1]) + ret
+            if theme:
+                ret = '/<a class="boardlink" href="/%s%s">%s</a>' % (theme, i.bName, i.bName.split('/')[-1]) + ret
+            else:
+                ret = '/<a class="boardlink" href="%s">%s</a>' % (i.bName, i.bName.split('/')[-1]) + ret
         id = board.get_parent(id)
 #    ret = (u'<a class="dirlink" href="/">%s</a>' % _('Board')) + ret
     return ret

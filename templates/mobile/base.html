@@ -88,7 +88,7 @@ def get_type(path):
     <br />
 ## 부모 보드
 %if board_path is not UNDEFINED:
-    ${util.traverse_board_path(board_path)}
+    ${util.traverse_board_path(board_path, 'm')}
 %else:
     <a class="dirlink" href="/m">${_('Boards')}</a>
 %endif
