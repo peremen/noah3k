@@ -1,6 +1,6 @@
 ﻿<% from web import ctx
 from i18n import custom_gettext as _
-import user, board, posixpath, pm, config
+import user, board, posixpath, pm, config, util
 from datetime import datetime
 def get_friend_boards(type):
     friend_list = []
@@ -29,14 +29,6 @@ def traverse_child_board(path):
 	ret = ret + '<li><a class="boardlink" href="%s"><img class="type" src="%s" />&nbsp;%s</a></li>%s' % (child.bName, child_image, child_desc, sep)
     return ret[0:-len(sep)]
 
-def get_type(path):
-    if path == '^root':
-        path = '/'
-    id = board._get_board_id_from_path(path)
-    if id < 0:
-        return -1
-    data = board.get_board_info(id)
-    return data.bType
 %>
 
 <div class="personal_tools" style="display: inline;">
@@ -81,7 +73,7 @@ def get_type(path):
 <br />
 
 % if board_path is not UNDEFINED:
-    % if get_type(board_path) == 1:
+    % if util.get_type(board_path) == 1:
 <div class="heading">${_('Sub-boards')}</div>
     <ul>
         ${traverse_child_board(board_path)}

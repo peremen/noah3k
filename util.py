@@ -215,5 +215,7 @@ def get_type(path):
     if path == '^root':
         path = '/'
     id = board._get_board_id_from_path(path)
+    if id < 0:
+        return -1
     data = board.get_board_info(id)
     return data.bType
