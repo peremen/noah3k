@@ -216,7 +216,7 @@ If you did not requested password recovery, then please log in into your account
             return render[theme].error(error_message = _('INVALID_PASSWORD_KEY'),
                     help_context = 'error')
 
-        session_set(user_id);
+        self.session_set(user_id)
         web.ctx.session.persistent = False
         user.update_last_login(uid, web.ctx.ip)
         return render[theme].error(error_message = _('CHANGE_PASSWORD_NOW'),
@@ -232,5 +232,5 @@ If you did not requested password recovery, then please log in into your account
         web.ctx.session.uid = u.uSerial
         web.ctx.session.username = u.uId
         web.ctx.session.usernick = u.uNick
-        web.ctx.session.lang = u.language;
-        return u;
+        web.ctx.session.lang = u.language
+        return u

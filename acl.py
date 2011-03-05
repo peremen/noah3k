@@ -137,7 +137,11 @@ def is_allowed(object_type, object_id, user_id, permission):
 def is_allowed_board(board_id, user_id, permission):
     # comment, write는 별도로 빼낼 필요가 있음.
     board_admins = get_board_admins(board_id)
+    if not board_admins:
+        return False
     board_info = board.get_board_info(board_id)
+    if not board_info:
+        return False
     if permission == 'comment': # 댓글 허용/비허용은 모두에게 적용됨.
         return board_info.bComment == 1
     if user_id == 1: # 시삽
