@@ -116,7 +116,10 @@ class view_board:
                 raise web.notfound(render[theme].error(lang='ko', error_message=_('INVALID_BOARD'), help_context='error'))
             else:
                 path = board._get_path_from_board_id(board_id)
-                web.seeother(posixpath.join(theme, path))
+                if theme == 'default':
+                    raise web.seeother(path)
+                else:
+                    raise web.seeother(posixpath.join('/%s' % theme, path[1:]))
 
         board_info = board.get_board_info(board_id)
         if board_info.bType == 0: # 디렉터리
