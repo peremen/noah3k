@@ -219,3 +219,36 @@ def get_type(path):
         return -1
     data = board.get_board_info(id)
     return data.bType
+
+def choose_banner():
+    f = open(config.banner_path, 'r')
+    if not f:
+        return ""
+    banners = f.readlines()
+    f.close()
+    cumulative_list = []
+    j = 0
+    for b in banners:
+        banners[j] = b.strip().split(' ')
+        banners[j][2] = int(banners[j][2])
+        if len(cumulative_list) == 0:
+            cumulative_list.append(banners[j][2])
+        else:
+            cumulative_list.append(cumulative_list[-1] + banners[j][2])
+        j = j + 1
+    banner_id = random.randint(1, max(cumulative_list))
+    j = 0
+    ret = tuple()
+    print banners
+    cond = False
+    for i in cumulative_list:
+        if j == 0:
+            cond = (banner_id <= i)
+        else:
+            cond = (cumulative_list[j-1] < banner_id) and (banner_id <= i)
+        if cond:
+            ret = tuple((banners[j][0], banners[j][1]))
+            break
+        else:
+            j = j + 1
+    return ret

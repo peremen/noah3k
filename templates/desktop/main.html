@@ -1,5 +1,5 @@
 <% from i18n import custom_gettext as _ 
-import reldates %><%inherit file="base.html" />
+import reldates, util %><%inherit file="base.html" />
 <table cellpadding="5px">
     <tr>
         <td width="50%">
@@ -78,7 +78,8 @@ import reldates %><%inherit file="base.html" />
 </table>
 <h2>${_('Advertisement')}</h2>
 <div class="advertisement">
-    <img src="/static/banner/default.png" />
+<% banner = util.choose_banner() %>
+    <a href="${banner[1]}"><img src="/static/banner/${banner[0]}" /></a>
 </div>
 
 <div class="othertools">
