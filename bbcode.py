@@ -9,7 +9,7 @@ if "tmpl_video_width" not in dir(config):
 if "tmpl_video_height" not in dir(config):
     config.tmpl_video_height = 480
 
-_re_url = re.compile(r"((https?):((//)|(\\\\))+[\w\d:#@%/;$()~_?\+-=\\\.&]*)", re.MULTILINE|re.UNICODE)
+_re_url = re.compile(r"((https?):((//)|(\\\\))+[^\s]*)", re.MULTILINE|re.UNICODE)
 _re_list = re.compile('\[\*\]([^[]*)')
 
 def _fmt(tmpl):
@@ -36,8 +36,25 @@ def _fmt_list(args):
 
     html = '<ol style="%s">' % style
 
-    for elem in _re_list.findall(args[1]):
-        html += '<li>' + _parse(elem, _tags) + '</li>'
+    idx = args[1].find('[*]')
+    html, text = html + args[1][:idx], args[1][idx+3:]
+    while True:
+        if len(text) == 0:
+            break;
+        html += '<li>';
+        idx = text.find('[*]')
+
+        if(idx == -1):
+            innerText = text;
+            text = '';
+        else:
+            innerText, text = text[:idx], text[idx+3:]
+            
+        h, t = _parse(innerText, _tags)
+        html += h + t;
+        
+        html += '</li>';
+        
     html += '</ol>'
     return html
 
@@ -98,17 +115,18 @@ def _parse(text, tags):
         tag, arg = ro.groups()
         if arg == None:
             arg = ''
-        html, text = html + text[:ro.start()], text[ro.end():]
+        html, text = html + _parse_url(text[:ro.start()]), text[ro.end():]
         if tags[tag]["nest"]:
-            text = _parse(text, tags)
+            h, text = _parse(text, tags)
+            text = h + text
 
         innerText, text = text.split('[/%s]' % tag, 1)
         if not tags[tag]["nest"]:
             innerText = innerText.replace('<br/>', '\n');
         html += tags[tag]["tmpl"]((arg, innerText))
-    return html + text
+    return html, text
 
 def parse(text):
     text = _escape(text);
-    text = _parse_url(text);
-    return _parse(text, _tags)
+    html, text = _parse(text, _tags)
+    return html + _parse_url(text)

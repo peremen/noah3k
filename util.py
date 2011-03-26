@@ -105,7 +105,9 @@ def format(original):
     try:
         return b(process_noah12k_quote(original))
     except:
-        return process_noah12k_quote(original).replace(' ', '&nbsp;').replace('\n', '<br />\n')
+        text = traceback.format_exc()
+        text = process_noah12k_quote(original)
+        return text.replace(' ', '&nbsp;').replace('\n', '<br />\n')
 
 def remove_bracket(original):
     # BBCode 파서 안에 [/]이 들어가면 파서가 헷갈리므로
