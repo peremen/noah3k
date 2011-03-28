@@ -123,10 +123,7 @@ def _parse(text, tags):
         if arg == None:
             arg = ''
 
-        if tag != 'code':
-            t = _escape(text[:ro.start()])
-        else:  
-            t = text[:ro.start()]
+        t = _escape(text[:ro.start()])
 
         if tags[tag]["nest"] == True:
             l.append(_parse_url(t))
