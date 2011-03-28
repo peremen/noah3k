@@ -84,14 +84,14 @@ _tags = {"b": {"tmpl":_fmt("<b>%s</b>"), "nest":True},
         "latex": {"tmpl":_fmt('<img src="http://l.wordpress.com/latex.php?bg=ffffff&fg=000000&latex=%s" alt="latex math"/>'), "nest":False},
         };
 
-def getRegexStart(tags):
-    re_text = '\[('
+def getRegex(tags):
+    re_text = '\[(/)?('
     for tag in tags:
         re_text += '%s|' % tag
     re_text = re_text[:len(re_text)-1] + ')=?([^\]]*)]'
     return re.compile(re_text)
 
-_re_start = getRegexStart(_tags);
+_re = getRegex(_tags);
 
 def _escape(text):
     return text.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('\n', '<br/>');
@@ -106,27 +106,43 @@ def _parse_url(text):
         html += _tags["link"]["tmpl"]((url, url))
     return html + text
 
+def _fold(l):
+    return reduce(lambda a, b: a + b, l)
+
 def _parse(text, tags):
     html = ''
+    root = []
+    l = root
+    stack = []
+    stack.append(('root', '', root))
+
     while True:
-        ro = _re_start.search(text)
+        ro = _re.search(text)
         if(ro == None):
             break
-        tag, arg = ro.groups()
+        end, tag, arg = ro.groups()
+
         if arg == None:
             arg = ''
-        html, text = html + _parse_url(text[:ro.start()]), text[ro.end():]
-        if tags[tag]["nest"]:
-            h, text = _parse(text, tags)
-            text = h + text
 
-        innerText, text = text.split('[/%s]' % tag, 1)
-        if not tags[tag]["nest"]:
-            innerText = innerText.replace('<br/>', '\n');
-        html += tags[tag]["tmpl"]((arg, innerText))
-    return html, text
+        if tags[tag]["nest"] == True:
+            l.append(_parse_url(text[:ro.start()]))
+        else:
+            l.append(text[:ro.start()])
+
+        text = text[ro.end():]
+
+        if end == None:
+            l = []
+            stack.append((tag, arg, l))
+        elif stack[len(stack)-1][0] == tag:
+            e = stack.pop()
+            l = stack[len(stack)-1][2]
+            l.append(tags[e[0]]["tmpl"]((e[1], _fold(e[2]))))
+
+    root.append(_parse_url(text))
+    return _fold(root);
 
 def parse(text):
     text = _escape(text);
-    html, text = _parse(text, _tags)
-    return html + _parse_url(text)
+    return _parse(text, _tags)
