@@ -106,7 +106,7 @@ def format(original):
         return b(process_noah12k_quote(original))
     except:
         text = traceback.format_exc()
-        text = process_noah12k_quote(original)
+        #text = process_noah12k_quote(original)
         return text.replace(' ', '&nbsp;').replace('\n', '<br />\n')
 
 def remove_bracket(original):

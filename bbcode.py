@@ -50,9 +50,7 @@ def _fmt_list(args):
         else:
             innerText, text = text[:idx], text[idx+3:]
             
-        h, t = _parse(innerText, _tags)
-        html += h + t;
-        
+        html += _parse(innerText, _tags)
         html += '</li>';
         
     html += '</ol>'
@@ -125,10 +123,15 @@ def _parse(text, tags):
         if arg == None:
             arg = ''
 
+        if tag != 'code':
+            t = _escape(text[:ro.start()])
+        else:  
+            t = text[:ro.start()]
+
         if tags[tag]["nest"] == True:
-            l.append(_parse_url(text[:ro.start()]))
+            l.append(_parse_url(t))
         else:
-            l.append(text[:ro.start()])
+            l.append(t)
 
         text = text[ro.end():]
 
@@ -140,9 +143,8 @@ def _parse(text, tags):
             l = stack[len(stack)-1][2]
             l.append(tags[e[0]]["tmpl"]((e[1], _fold(e[2]))))
 
-    root.append(_parse_url(text))
+    root.append(_parse_url(_escape(text)))
     return _fold(root);
 
 def parse(text):
-    text = _escape(text);
     return _parse(text, _tags)
