@@ -23,17 +23,17 @@ urls = (
     r'/(.*)/', 'redirect',
     r'/(\w*).jsp', 'noah2k_support',
     r'/(' + config.theme_regex + ')', 'main_page',
-    r'/(?:(\w+)/)?\+help/(\S*)', 'help',
+    r'/(?:' + config.theme_regex + ')?\+help/(\S*)', 'help',
 
-    r'/(' + config.theme_regex + '/)?\+u/(\S*)/\+(\w*)', 'personal_actions_unauthorized',
-    r'/(' + config.theme_regex + '/)?\+u/\+(\w*)', 'personal_actions',
-    r'/(' + config.theme_regex + '/)?\+u/(\w*)', 'personal_page_others',
-    r'/(' + config.theme_regex + '/)?\+u', 'personal_page',
+    r'/(?:' + config.theme_regex + ')?\+u/(\S*)/\+(\w*)', 'personal_actions_unauthorized',
+    r'/(?:' + config.theme_regex + ')?\+u/\+(\w*)', 'personal_actions',
+    r'/(?:' + config.theme_regex + ')?\+u/(\w*)', 'personal_page_others',
+    r'/(?:' + config.theme_regex + ')?\+u', 'personal_page',
 
-    r'/(' + config.theme_regex + '/)?\+(\w*)', 'main_actions',
-    r'/(' + config.theme_regex + '/)?(\S*)/\+(\w*)/(\d*)', 'article_actions',
-    r'/(' + config.theme_regex + '/)?(\S*)/((?:\+)\w*|\*)', 'board_actions',
-    r'/(' + config.theme_regex + '/)?(\S*)', 'view_board',
+    r'/(?:' + config.theme_regex + ')?\+(\w*)', 'main_actions',
+    r'/(?:' + config.theme_regex + ')?(\S*)/\+(\w*)/(\d*)', 'article_actions',
+    r'/(?:' + config.theme_regex + ')?(\S*)/((?:\+)\w*|\*)', 'board_actions',
+    r'/(?:' + config.theme_regex + ')?(\S*)', 'view_board',
 )
 
 app = web.application(urls, globals(), autoreload = True)
@@ -126,6 +126,9 @@ class view_board:
         a = article.get_article_list(board_id, config.page_size, page)
         m = article.get_marked_article(board_id)
         t = article._get_total_page_count(board_id, config.page_size)
+
+        print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+
         return util.render().view_board(lang="ko",
             title = board_info.bName,
             board_path = board_info.bName[1:],

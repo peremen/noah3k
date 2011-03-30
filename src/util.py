@@ -5,6 +5,7 @@ import datetime
 import os, re
 import random
 import sys, traceback
+import posixpath
 
 import web
 import board, article
@@ -51,8 +52,6 @@ def theme(func):
         print args
         arglist = [args[0]]
         theme = args[1]
-        if theme is not None and theme.endswith('/'):
-            theme = theme[:len(theme)-1]
 
         if theme is None or theme == '':
             web.config.theme = 'default'
@@ -63,6 +62,8 @@ def theme(func):
 
         for i in range(2, len(args)):
             arglist.append(args[i])
+
+        print "theme set"
         return func(*tuple(arglist), **kwargs)
     return _exec
 
@@ -269,11 +270,13 @@ def choose_banner():
             j = j + 1
     return ret
 
+#always starts with traling /
 def link(url):
-	if web.config.theme == 'default':
-		return url
-	else:
-		return "%s/%s" % (web.config.theme, url)
+    if web.config.theme is not 'default':
+        url = posixpath.join(web.config.theme, url)
+    print url
+    return url
+
 
 def render():
     return config.render[web.config.theme]
