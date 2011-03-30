@@ -1,0 +1,90 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+import os
+from web.contrib.template import render_mako
+
+# Section 1: 데이터베이스
+db_host = "DB_HOST"
+db_port = "3305"
+db_type = "mysql"
+db_name = "DB_NAME"
+db_prefix = ""
+db_user= "DB_USER"
+db_password = "DB_PASSWORD"
+
+#constants
+#hmac_key should not be changed during service
+branding = u'노아'
+hmac_key = "HMAC_KEY_SHOULD_BE_LONG"
+page_size = 20
+feed_size = 30
+favorite_feed_size = 30
+mail_size = 10
+tmpl_video_width = 640
+tmpl_video_height = 480
+
+
+#attachment setting
+_path = os.path.dirname(__file__);
+_join = os.path.join
+
+attachment_disk_path = _join(_path, 'static', 'uploads')
+attachment_web_path = '/static/attachment/'
+thumbnail_desktop_disk_path = _join(_path, 'static', 'thumbs_desktop')
+thumbnail_desktop_web_path = '/static/thumbs_desktop/'
+thumbnail_desktop_size = (800, 600)
+thumbnail_mobile_disk_path = _join(_path, 'static', 'thumbs_mobile')
+thumbnail_mobile_web_path = '/static/thumbs_mobile/'
+thumbnail_mobile_size = (240, 320)
+
+i18n_path = _join(_path, '../i18n')
+
+store_error_report = True
+error_report_path = _join(_path, 'error_report')
+
+logo_url = '/static/image/logo.png'
+recaptcha_private_key = '6LeiJb4SAAAAAFYBA4DvzC6DCKNqLR0MP5G1WQrd'
+
+
+#profile image config
+pi_disk_path = _join(_path, 'static', 'profile_image')
+pi_web_path = '/static/profile_image/'
+pi_size = (48, 48)
+
+
+#email config
+email_smtp_address = 'smtp.gmail.com'
+email_smtp_port = 587
+email_smtp_user = 'admin@example.com'
+email_smtp_password = 'changeme'
+banner_path = _join(_path, 'static', 'banner', 'banner.txt')
+
+
+#templete config
+desktop_render = render_mako(
+    directories = [_join(_path, '../templates/desktop/').replace('\\','/'),],
+    input_encoding = 'utf-8', output_encoding = 'utf-8',
+)
+classic_render = render_mako(
+    directories = [_join(_path, '../templates/classic/').replace('\\','/'),],
+    input_encoding = 'utf-8', output_encoding = 'utf-8',
+)
+mobile_render = render_mako(
+    directories = [_join(_path, '../templates/mobile/').replace('\\','/'),],
+    input_encoding = 'utf-8', output_encoding = 'utf-8',
+)
+render = {
+        'default': desktop_render, 
+        'classic': classic_render, 
+        'm': mobile_render,
+}
+
+
+#set database
+if web.config.get('_database') is None:
+    db = web.database(dbn=db_type, user=db_user,
+            pw = db_password, db = db_name,
+            host=db_host, port=int(db_port))
+    web.config._database = db
+else:
+    db = web.config._database
