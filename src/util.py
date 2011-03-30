@@ -20,19 +20,15 @@ lang_map = { 'ko': u'한국어',
 
 def session_helper(func):
     def _exec(*args, **kwargs):
-        theme = args[1]
-        if theme == '' or theme == None:
-            theme = 'default'
         try:
             current_uid = web.ctx.session.uid
         except:
-            if theme == 'default':
-                raise web.seeother('/+login')
-            else:
-                raise web.seeother('/%s/+login' % theme)
+            raise web.seeother(link('/+login'))
             #raise web.unauthorized(render[mobile].error(error_message = _("NOT_LOGGED_IN"), help_context = 'error'))
         if current_uid < 1:
-            raise web.internalerror(render[mobile].error(error_message = _("INVALID_UID"), help_context = 'error'))
+            web.ctx.session.uid = 0
+            web.ctx.session.kill()
+            raise web.internalerror(default_render.error(error_message = _("INVALID_UID"), help_context = 'error'))
         kwargs.update({'current_uid': current_uid})
         return func(*args, **kwargs)
     _exec.__name__ == func.__name__
@@ -50,6 +46,26 @@ def confirmation_helper(func):
     _exec.__doc__ == func.__doc__
     return _exec
 
+def theme(func):
+    def _exec(*args, **kwargs):
+        print args
+        arglist = [args[0]]
+        theme = args[1]
+        if theme is not None and theme.endswith('/'):
+            theme = theme[:len(theme)-1]
+
+        if theme is None or theme == '':
+            web.config.theme = 'default'
+        elif theme in config.render:
+            web.config.theme = theme
+        else:
+            raise NameError('Invalid theme: ' + theme)
+
+        for i in range(2, len(args)):
+            arglist.append(args[i])
+        return func(*tuple(arglist), **kwargs)
+    return _exec
+
 def error_catcher(func):
     def _exec(*args, **kwargs):
         try:
@@ -57,13 +73,10 @@ def error_catcher(func):
         except (web.webapi.unauthorized, web.webapi._NotFound, web.webapi._InternalError, web.webapi.SeeOther): # 웹 프로그램의 오류. 대개 해결 가능.
             raise
         except Exception as e:
-            theme = args[1]
-            if theme == '':
-                theme = 'default'
             current_ctx = web.ctx
             error_text = traceback.format_exc()
             store_error(current_ctx, error_text)
-            raise web.internalerror(render[theme].error(error_message = e,
+            raise web.internalerror(config.default_render.error(error_message = e,
                 error_detail = error_text, help_context = 'error'))
     _exec.__name__ == func.__name__
     _exec.__doc__ == func.__doc__
@@ -255,3 +268,12 @@ def choose_banner():
         else:
             j = j + 1
     return ret
+
+def link(url):
+	if web.config.theme == 'default':
+		return url
+	else:
+		return "%s/%s" % (web.config.theme, url)
+
+def render():
+    return config.render[web.config.theme]

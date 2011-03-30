@@ -15,17 +15,16 @@ _ = i18n.custom_gettext
 import pm
 
 class personal_actions_unauthorized:
-    def GET(self, theme, username, action):
-        if not render.has_key(theme):
-            theme = 'default'
+    @util.theme
+    def GET(self, username, action):
         user_id = user._get_uid_from_username(username)
         try:
-            return eval('self.%s' % (action))(theme, username, user_id)
+            return eval('self.%s' % (action))(username, user_id)
         except AttributeError:
-            raise web.notfound(render[theme].error(error_message = _('INVALID_ACTION'), help_context='error'))
+            raise web.notfound(util.render().error(error_message = _('INVALID_ACTION'), help_context='error'))
 
     @util.error_catcher
-    def favorite_rss(self, theme, username, user_id):
+    def favorite_rss(self, username, user_id):
         articles = user.get_favorite_board_feed(user_id, config.favorite_feed_size)
         date = datetime.today()
         web.header('Content-Type', 'application/rss+xml')
@@ -36,7 +35,7 @@ class personal_actions_unauthorized:
                 link_address = 'http://noah.kaist.ac.kr/+u/%s' % username)
 
     @util.error_catcher
-    def favorite_atom(self, theme, username, user_id):
+    def favorite_atom(self, username, user_id):
         articles = user.get_favorite_board_feed(user_id, config.favorite_feed_size)
         date = datetime.today()
         web.header('Content-Type', 'application/atom+xml')
@@ -50,14 +49,13 @@ class personal_actions_unauthorized:
 class personal_page:
     @util.error_catcher
     @util.session_helper
-    def GET(self, theme, current_uid = -1):
-        if not render.has_key(theme):
-            theme = 'default'
+    @util.theme
+    def GET(self, current_uid = -1):
         user_id = web.ctx.session.uid
 
         f = [{'type':'rss', 'path':'/+u/+favorite_rss', 'name':u'즐겨찾기 피드 (RSS)'},
              {'type':'atom', 'path':'/+u/+favorite_atom', 'name':u'즐겨찾기 피드 (Atom)'},]
-        return render[theme].myinfo(user = user.get_user(user_id)[1],
+        return util.render().myinfo(user = user.get_user(user_id)[1],
                 user_id = user_id,
                 title = _('My Information'), board_desc = _('My Information'),
                 feeds = f, help_context='myinfo')
@@ -65,13 +63,12 @@ class personal_page:
 class personal_page_others:
     @util.error_catcher
     @util.session_helper
-    def GET(self, theme, username, current_uid = -1):
-        if not render.has_key(theme):
-            theme = 'default'
+    @util.theme
+    def GET(self, username, current_uid = -1):
         user_id = user._get_uid_from_username(username)
         if user_id < 0:
-            raise web.notfound(render[theme].error(error_message = _('NO_SUCH_USER'), help_context='error'))
-        return render[theme].myinfo(user = user.get_user(user_id)[1],
+            raise web.notfound(util.render().error(error_message = _('NO_SUCH_USER'), help_context='error'))
+        return util.render().myinfo(user = user.get_user(user_id)[1],
                 user_id = user_id,
                 title = _('User Information'), board_desc = _('User Information'),
                 help_context='myinfo')
@@ -83,42 +80,35 @@ class personal_actions:
     def POST(self, theme, action):
         return self.caller(theme, action, 'post')
 
-    def caller(self, theme, action, method):
-        if not render.has_key(theme):
-            theme ='default'
+    @util.theme
+    def caller(self, action, method):
         try:
-            return eval('self.%s_%s' % (action, method))(theme)
+            return eval('self.%s_%s' % (action, method))()
         except AttributeError:
-            raise web.notfound(render[theme].error(error_message = _('INVALID_ACTION'), help_context='error'))
+            raise web.notfound(util.render().error(error_message = _('INVALID_ACTION'), help_context='error'))
 
     @util.error_catcher
     @util.session_helper
-    def new_article_get(self, theme, current_uid = -1):
+    def new_article_get(self, current_uid = -1):
         user.update_new_article_hit(current_uid)
-        return render[theme].new_article(articles = user.get_unreaded_articles(current_uid),
+        return util.render().new_article(articles = user.get_unreaded_articles(current_uid),
                 uid = current_uid, title = _('New Article'),
                 board_desc = _('New Article'))
 
     @util.error_catcher
     @util.session_helper
-    def clear_new_article_get(self, theme, current_uid = -1):
+    def clear_new_article_get(self, current_uid = -1):
 		user.read_all_articles(current_uid)
-		if theme == 'default':
-			raise web.seeother('/+u/+new_article')
-		else:
-			raise web.seeother('/%s/+u/+new_article' % theme)
+		raise web.seeother(util.link('/+u/+new_article'))
 
     @util.error_catcher
     @util.session_helper
-    def modify_get(self, theme, current_uid = -1):
+    def modify_get(self, current_uid = -1):
         user_id = current_uid
         usr = user.get_user(user_id)[1]
 
-        if theme == 'default':
-            referer = '/+u'
-        else:
-            referer = '/%s/+u' % theme
-        return render[theme].myinfo_edit(user = user.get_user(user_id)[1],
+        referer = util.link('/+u')
+        return util.render().myinfo_edit(user = user.get_user(user_id)[1],
                 user_id = user_id,
                 title = _('Edit My Information'),
                 board_desc = _('Edit My Information'),
@@ -128,17 +118,17 @@ class personal_actions:
     @util.error_catcher
     @util.confirmation_helper
     @util.session_helper
-    def modify_post(self, theme, current_uid = -1):
+    def modify_post(self, current_uid = -1):
         user_id = current_uid
         usr = user.get_user(user_id)[1]
 
         data = web.input(profile_image = {})
         if data.newpass1 and not user.verify_password(user_id, data.oldpass):
-            return render[theme].error(error_message=_('INVALID_PASSWORD'), help_context='error')
+            return util.render().error(error_message=_('INVALID_PASSWORD'), help_context='error')
         if data.newpass1 != data.newpass2:
-            return render[theme].error(error_message = _('PASSWORD_DO_NOT_MATCH'), help_context='error')
+            return util.render().error(error_message = _('PASSWORD_DO_NOT_MATCH'), help_context='error')
         if len(data.newpass1) > 0 and len(data.newpass1) < 6:
-            return render[theme].error(error_message = _('PASSWORD_TOO_SHORT'), help_context='error')
+            return util.render().error(error_message = _('PASSWORD_TOO_SHORT'), help_context='error')
         if len(data.newpass1) == 0:
             password = data.oldpass
         else:
@@ -159,66 +149,60 @@ class personal_actions:
         ret = user.modify_user(user_id, locals())
         if change_lang:
             web.ctx.session.lang = language
-        if theme == 'default':
-            raise web.seeother('/+u')
-        else:
-            raise web.seeother('/%s/+u' % theme)
+        raise web.seeother(util.link('/+u'))
 
     @util.error_catcher
     @util.session_helper
-    def leave_get(self, theme, current_uid = -1):
+    def leave_get(self, current_uid = -1):
         user_id = current_uid
         usr = user.get_user(user_id)[1]
 
         default_referer = posixpath.join('/', '+u')
-        return render[theme].leave(board_desc = _('Leave NOAH'),
+        return util.render().leave(board_desc = _('Leave NOAH'),
                 title=_('Leave NOAH'),
                 referer = web.ctx.env.get('HTTP_REFERER', default_referer),)
 
     @util.error_catcher
     @util.confirmation_helper
     @util.session_helper
-    def leave_post(self, theme, current_uid = -1):
+    def leave_post(self, current_uid = -1):
         user_id = current_uid
         usr = user.get_user(user_id)[1]
 
         password = web.input().password
         if not user.verify_password(user_id, password):
-            return render[theme].error(error_message= _('INVALID_PASSWORD'), help_context='error')
+            return util.render().error(error_message= _('INVALID_PASSWORD'), help_context='error')
 
         result = user.delete_user(user_id)
         if not result[0]:
-            return render[theme].error(error_message = result[1], help_context='error')
+            return util.render().error(error_message = result[1], help_context='error')
         web.ctx.session.uid = 0
         web.ctx.session.kill()
-        if theme == 'default':
-            raise web.seeother('/')
-        else:
-            raise web.seeother('/%s' % theme)
+        raise web.seeother(util.link('/'))
 
     @util.error_catcher
     @util.session_helper
-    def my_board_get(self, theme, current_uid = -1):
+    def my_board_get(self, current_uid = -1):
         my_board = user.get_owned_board(current_uid)
-        return render[theme].view_subboard_list(
+        return util.render().view_subboard_list(
             child_boards = my_board, board_path = '',
             title=_('My Boards'), board_desc = _('My Boards'),
             list_type = _('My Boards'))
 
     @util.error_catcher
     @util.session_helper
-    def favorites_get(self, theme, current_uid = -1):
+    def favorites_get(self, current_uid = -1):
         fav_board = []
         for b in user.get_favorite_board(current_uid):
             fav_board.append(board.get_board_info(b.bSerial))
-        return render[theme].view_subboard_list(
+        return util.render().view_subboard_list(
             child_boards = fav_board, board_path = '',
             title=_('Favorite Boards'), board_desc = _('Favorite Boards'),
             list_type = _('Favorite Boards'))
 
     @util.error_catcher
     @util.session_helper
-    def inbox_get(self, theme, current_uid = -1):
+    def inbox_get(self, current_uid = -1):
         user_id = current_uid
         usr = user.get_user(user_id)[1]
 
@@ -231,14 +215,14 @@ class personal_actions:
         else:
             page = 1
         mails = pm.inbox(user_id, page, config.mail_size)
-        return render['default'].inbox(mails = mails, 
+        return config.default_render.inbox(mails = mails, 
                 mailbox_name = _('Inbox'),
                 title = '%s - %s' % (_('Inbox'), usr['uId']),
                 page = page, total_page = pm.inbox_count(user_id) / config.mail_size + 1)
 
     @util.error_catcher
     @util.session_helper
-    def reply_message_get(self, theme, current_uid = -1):
+    def reply_message_get(self, current_uid = -1):
         user_id = current_uid
         usr = user.get_user(user_id)[1]
 
@@ -250,10 +234,10 @@ class personal_actions:
         if qs:
             message_id = int(qs['message_id'][0])
         else:
-            raise web.notfound(render[theme].error(error_message=_('NO_SUCH_MESSAGE'), help_context='error'))
+            raise web.notfound(util.render().error(error_message=_('NO_SUCH_MESSAGE'), help_context='error'))
         mail = pm.get_mail(message_id)
         if mail.mReceiverSerial != current_uid:
-            raise web.unauthorized(render[theme].error(error_message=_('NO_PERMISSION'), help_context='error'))
+            raise web.unauthorized(util.render().error(error_message=_('NO_PERMISSION'), help_context='error'))
         quote_text = _('From message \"%s\":') % mail.mTitle
         return render['default'].editor_mail(
             title = _('Write Reply'),
@@ -263,12 +247,12 @@ class personal_actions:
 
     @util.error_catcher
     @util.session_helper
-    def write_message_get(self, theme, current_uid = -1):
+    def write_message_get(self, current_uid = -1):
         return render['default'].editor_mail(title = _('Write Message'))
 
     @util.error_catcher
     @util.session_helper
-    def write_message_post(self, theme, current_uid = -1):
+    def write_message_post(self, current_uid = -1):
         user_id = current_uid
         usr = user.get_user(user_id)[1]
 
@@ -278,16 +262,16 @@ class personal_actions:
         receiver_id = data.id
         receiver_uid = user._get_uid_from_username(receiver_id)
         if receiver_uid < 0:
-            raise web.notfound(render[theme].error(error_message=_('INVALID_RECEIVER'), help_context='error'))
+            raise web.notfound(util.render().error(error_message=_('INVALID_RECEIVER'), help_context='error'))
         result = pm.send_mail(current_uid, receiver_uid, title, body)
         if not result[0]:
-            raise web.internalerror(render[theme].error(error_message=result[1], help_context='error'))
+            raise web.internalerror(util.render().error(error_message=result[1], help_context='error'))
         else:
             raise web.seeother('/+u/+inbox')
 
     @util.error_catcher
     @util.session_helper
-    def read_message_get(self, theme, current_uid = -1):
+    def read_message_get(self, current_uid = -1):
         # XXX: 현재는 메시지 번호를 Query String에 담아서 전달한다.
         # 차후 정규 표현식을 고쳐서 다른 게시판처럼 만들어야 한다.
         message_id = -1
@@ -298,10 +282,10 @@ class personal_actions:
         if qs:
             message_id = int(qs['message_id'][0])
         else:
-            raise web.notfound(render[theme].error(error_message=_('NO_SUCH_MESSAGE'), help_context='error'))
+            raise web.notfound(util.render().error(error_message=_('NO_SUCH_MESSAGE'), help_context='error'))
         mail = pm.get_mail(message_id)
         if mail.mReceiverSerial != current_uid:
-            raise web.unauthorized(render[theme].error(error_message=_('NO_PERMISSION'), help_context='error'))
+            raise web.unauthorized(util.render().error(error_message=_('NO_PERMISSION'), help_context='error'))
         pm.mark_as_read(message_id)
         return render['default'].read_mail(mail = mail, 
                 title = '%s - %s' % (_('Read Message'), mail.mTitle)
@@ -309,7 +293,7 @@ class personal_actions:
 
     @util.error_catcher
     @util.session_helper
-    def delete_message_get(self, theme, current_uid = -1):
+    def delete_message_get(self, current_uid = -1):
         # XXX: 현재는 메시지 번호를 Query String에 담아서 전달한다.
         # 차후 정규 표현식을 고쳐서 다른 게시판처럼 만들어야 한다.
         message_id = -1
@@ -320,17 +304,13 @@ class personal_actions:
         if qs:
             message_id = int(qs['message_id'][0])
         else:
-            raise web.notfound(render[theme].error(error_message=_('NO_SUCH_MESSAGE'), help_context='error'))
+            raise web.notfound(util.render().error(error_message=_('NO_SUCH_MESSAGE'), help_context='error'))
         mail = pm.get_mail(message_id)
         if mail.mReceiverSerial != current_uid:
-            raise web.unauthorized(render[theme].error(error_message=_('NO_PERMISSION'), help_context='error'))
-        if theme == 'default':
-            default_referer = posixpath.join('/+u', '+inbox')
-            action='%s?message_id=%s' % (posixpath.join('/+u', '+delete_message'), message_id)
-        else:
-            default_referer = posixpath.join('/%s/+u' % theme, '+inbox')
-            action='%s?message_id=%s' % (posixpath.join('/%s/+u' % theme, '+delete_message'), message_id)
-        return render[theme].question(question=_('Do you want to delete the message?'),
+            raise web.unauthorized(util.render().error(error_message=_('NO_PERMISSION'), help_context='error'))
+        default_referer = posixpath.join(util.link('/+u'), '+inbox')
+        action='%s?message_id=%s' % (posixpath.join(util.link('/+u'), '+delete_message'), message_id)
+        return util.render().question(question=_('Do you want to delete the message?'),
                 board_path = '', board_desc = _('Confirmation'), title=_('Confirmation'),
                 action = action,
                 referer=web.ctx.env.get('HTTP_REFERER', default_referer))
@@ -338,7 +318,7 @@ class personal_actions:
     @util.error_catcher
     @util.confirmation_helper
     @util.session_helper
-    def delete_message_post(self, theme, current_uid = -1):
+    def delete_message_post(self, current_uid = -1):
         # XXX: 현재는 메시지 번호를 Query String에 담아서 전달한다.
         # 차후 정규 표현식을 고쳐서 다른 게시판처럼 만들어야 한다.
         message_id = -1
@@ -349,14 +329,11 @@ class personal_actions:
         if qs:
             message_id = int(qs['message_id'][0])
         else:
-            raise web.notfound(render[theme].error(error_message=_('NO_SUCH_MESSAGE'), help_context='error'))
+            raise web.notfound(util.render().error(error_message=_('NO_SUCH_MESSAGE'), help_context='error'))
         mail = pm.get_mail(message_id)
         result = pm.delete_mail(message_id)
         if result[0]:
-            if theme == 'default':
-                raise web.seeother('/+u/+inbox')
-            else:
-                raise web.seeother('/%s/+u/+inbox' % theme)
+            raise web.seeother(util.link('/+u/+inbox'))
         else:
-            return config.render[theme].error(error_message = ret[1],
+            return config.util.render().error(error_message = ret[1],
                     help_context = 'error')
