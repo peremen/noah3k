@@ -1,0 +1,114 @@
+<%inherit file="base.html" />
+<%
+import user, board, util, acl
+import posixpath
+from web import ctx
+from i18n import custom_gettext as _ 
+def get_formatted_username(uid):
+    u = user.get_user(uid)[1]
+    return "%(id)s (%(nick)s)" % {'id': u['uId'], 'nick':u['uNick']}
+
+upper_admin_list = []
+for i in acl.get_board_admins(board_info.bSerial):
+    if (i != board_info.uSerial) and (i != 1):
+        upper_admin_list.append(get_formatted_username(i))
+
+upper_admin_list.sort()
+%>
+<div>
+    <div style="float: left; margin: 0 5px 0 5px;">
+%if ctx.session.has_key('uid') and acl.is_allowed('board', board_info.bSerial, ctx.session.uid, 'modify'):
+        <!-- 게시판 수정 -->
+        <a class="button" href="/${board_path}/+modify">${_('Modify')}</a>
+##        <!-- 게시판 백업 -->
+##        <a class="button" href="/${board_path}/+backup">${_('Backup')}</a>
+##        <!-- 게시판 통계 -->
+% endif
+##        <a class="button" href="/${board_path}/+statistics">${_('Statistics')}</a>
+    </div>
+
+    <div style="float: right; margin: 0 5px 0 5px;">
+%if ctx.session.has_key('uid') and acl.is_allowed('board', board_info.bSerial, ctx.session.uid, 'delete'):
+    <!-- 게시판 삭제 -->
+        <a class="button" href="/${board_path}/+delete">${_('Delete This Board')}</a>
+% endif
+%if ctx.session.has_key('uid') and acl.is_allowed('board', board_info.bSerial, ctx.session.uid, 'create'):
+    <!-- 게시판 생성  -->
+        <a class="button" href="/${board_path}/+create_board">${_('Create Child Board')}</a>
+% endif
+    </div>
+</div>
+<br />
+<br />
+<div>
+    <div class="heading">${_('Basic Information')}</div>
+
+    <div class="row">
+        <div class="left-container">${_('Location')}</div>
+        <span class="sep">:</span>
+        <span>${posixpath.dirname(board_info.bName)}</span>
+    </div>
+
+    <!-- 게시판 이름 -->
+    <div class="row">
+        <div class="left-container">${_('Name')}</div>
+        <span class="sep">:</span>
+        <span>${posixpath.basename(board_info.bName)}</span>
+    </div>
+    <!-- 관리자 -->
+    <div class="row"> 
+        <div class="left-container">${_('Admin')}</div>
+        <span class="sep">:</span>
+        <span>${get_formatted_username(board_info.uSerial)}</span>
+    </div>
+% if len(upper_admin_list) > 0:
+    <!-- 상위 관리자 -->
+    <div class="row"> 
+        <div class="left-container">${_('Upper Admin(s)')}</div>
+        <span class="sep">:</span>
+        <span>${', '.join(upper_admin_list)}</span>
+    </div>
+% endif
+
+    <div class="heading">${_('Details')}</div>
+    
+    <!-- 타입 -->
+    <div class="row">
+        <div class="left-container">${_('Type')}</div>
+        <span class="sep">:</span>
+        <span>${[_('Folder'), _('Board')][board_info.bType]}</span>
+    </div>
+
+    <!-- 커멘트 여부 -->
+    <div class="row">
+        <div class="left-container">${_('Comments')}</div>
+        <span class="sep">:</span>
+        <span>${[_('Not Allow'), _('Allow')][board_info.bComment]}</span>
+    </div>
+
+    <!-- 글쓰기 여부 -->
+    <div class="row">
+        <div class="left-container">${_('Guest Writing')}</div>
+        <span class="sep">:</span>
+        <span>${[_('Not Allow'), _('Allow')][board_info.bWrite]}</span>
+    </div>
+
+    <div class="heading">${_('Board Description')}</div>
+    <!-- 한줄 설명 -->
+    <div class="row">
+        <div class="left-container">${_('Short Description')}</div>
+        <span class="sep">:</span>
+        <span>${board_info.bDescription}</span>
+    </div>
+
+    <!-- 한바닥 설명 -->
+    <div class="row">
+        <div class="left-container">${_('Long Description')}</div>
+        <span class="sep">:</span>
+        <div style="border: solid 1px lightgray; margin-left:9em">
+            <span style="font-size: 0.9em">${util.format(board_info.bInformation)}</span>
+        </div>
+    </div>
+</div>
+
+<div style="height: 10px"></div>

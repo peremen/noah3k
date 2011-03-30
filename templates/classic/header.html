@@ -1,0 +1,25 @@
+<% from i18n import custom_gettext as _
+import util, config
+from web import ctx
+%>
+<div id="logo">
+	<a href="/"><img src="${config.logo_url}" border="0" /></a>
+</div>
+<div id="menu">
+    <ul>
+%if help_context is not UNDEFINED:
+        <li><a class="button" target="_blank" href="/+help/${help_context}">${_('Help')}</a></li>
+% endif
+    </ul>
+</div>
+
+<div id="title">
+%if board_path is not UNDEFINED:
+<p><a class="board_heading" href="/${board_path}/+cover" target="_blank">${board_desc}</a>&nbsp;&nbsp;<span class="board_path">${util.traverse_board_path(board_path)}</span></p>
+%elif board_desc is not UNDEFINED:
+<p><a class="board_heading" href="#">${board_desc}</a></p>
+% else:
+<p><a class="board_heading" href="#"></a></p>
+%endif
+</div>
+

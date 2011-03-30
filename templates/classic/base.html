@@ -1,4 +1,4 @@
-<%! scripts = ['/static/scripts/jquery-1.4.2.min.js', '/static/scripts/sh/shCore.js', '/static/scripts/sh/shAutoloader.js']
+<%! scripts = ['/static/scripts/jquery-1.4.2.min.js', '/static/scripts/jquery-cookie.js', '/static/scripts/default.js', '/static/scripts/sh/shCore.js', '/static/scripts/sh/shAutoloader.js']
 import user as U
 import config
 from i18n import custom_gettext as _
@@ -16,7 +16,7 @@ from web import ctx %><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
     <title>${title} - ${config.branding}</title>
 % endif
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" type="text/css" href="/static/style/classic.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/default.css">
     <link rel="stylesheet" type="text/css" href="/static/style/sh/shCore.css">
     <link rel="stylesheet" type="text/css" href="/static/style/sh/shThemeDefault.css">
 % if board_path is not UNDEFINED:
@@ -87,7 +87,8 @@ $(window).load(function(){
 			'scala                  @shBrushScala.js',
 			'sql                    @shBrushSql.js',
 			'vb vbnet               @shBrushVb.js',
-			'xml xhtml xslt html    @shBrushXml.js'
+			'xml xhtml xslt html    @shBrushXml.js',
+			'clojure clj scheme     @shBrushClojure.js'
 				));
 	SyntaxHighlighter.all();
 } );
@@ -95,33 +96,25 @@ $(window).load(function(){
 </head>
 
 <body>
-<div class="area">
     <!-- 헤더프레임 -->
     <div id="header">
         <%include file="header.html" />
     </div>
 
     <!-- 사이드바 -->
-    <div id="sidemenuOut">
-        <div id="sidemenu">
+    <div id="sidebar">
         <%include file="sidebar.html" />
-        </div>
     </div>
 
     <div id="body">
-        <div class="area"> \
 ${next.body()}
-        </div> <!-- end of area -->
     </div> <!-- end of body -->
 
     <!-- footer frame -->
-    <!-- IE에서 float으로만 이루어진 내용을 clear하면 layout이 이상해지는 관계로 땜질 -->
-    <div style="clear: both; font-size: 1px">&nbsp;</div>
     <div id="footer">
         <%include file="footer.html" />
     </div>
 	
-</div> <!-- end of area -->
 </body>
 </html>
 <%def name="head_scripts()">

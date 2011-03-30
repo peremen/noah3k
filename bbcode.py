@@ -124,11 +124,7 @@ def _parse(text, tags):
             arg = ''
 
         t = _escape(text[:ro.start()])
-
-        if tags[tag]["nest"] == True:
-            l.append(_parse_url(t))
-        else:
-            l.append(t)
+        l.append(_parse_url(t))
 
         text = text[ro.end():]
 

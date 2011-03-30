@@ -1,0 +1,43 @@
+<%inherit file="base.html" />
+<% from i18n import custom_gettext as _ %>
+<p>
+${_('To recover your login information, E-Mail address associated with your account is required.')}<br />
+${_("If you didn't specified E-Mail address in your account, please contact <a href=\"/noah/ToSysop\">Administrator</a> directly.")}
+</p>
+<p>
+${_('By filling out this form, you will receive message with password recovery instructions.')}<br />
+${_('Please follow the link on the message to recover login information.')}
+</p>
+<form name="lost_login" method="post" action="/+lost_login" >
+    <table class="prop_table">
+    <col style="width: 10em;" />
+    <col />
+    <tr> <td colspan="2"> <hr /></td> </tr>
+    <tr>
+        <th>${_('E-Mail')}</th>
+        <td><input class="flat_input" id="email" name="email" type="text" style="width: 12em"></td>
+    </tr>
+    <tr>
+        <td colspan="2">
+        <script type="text/javascript"
+           src="http://www.google.com/recaptcha/api/challenge?k=6LeiJb4SAAAAAP7gvPt83GUXLHsv9WDzz61yDFvL">
+        </script>
+        <noscript>
+           <iframe src="http://www.google.com/recaptcha/api/noscript?k=6LeiJb4SAAAAAP7gvPt83GUXLHsv9WDzz61yDFvL"
+               height="300" width="500" frameborder="0"></iframe><br>
+           <textarea name="recaptcha_challenge_field" rows="3" cols="40">
+           </textarea>
+           <input type="hidden" name="recaptcha_response_field"
+               value="manual_challenge">
+        </noscript>
+        </td>
+    </tr>
+    <tr> <td colspan="2"> <hr /></td> </tr>
+    <tr class="final_buttons">
+        <td colspan="2">
+            <input class="button" type="submit" name="ok" value="${_('Send Message')}" />
+            <input class="button" type="submit" name="cancel" value="${_('Cancel')}" />
+        </td>
+    </tr>
+    </table>
+</form>

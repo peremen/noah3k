@@ -1,0 +1,71 @@
+<%inherit file="base.html" />
+<%
+import user, article, acl, board
+from web import ctx
+from i18n import custom_gettext as _
+def get_formatted_username(uid):
+    u = user.get_user(uid)
+    if u[0]:
+        return "%(id)s" % {'id': u[1]['uId']}
+    else:
+        return _('Former Member')
+%>
+% if len(articles) == 0:
+<div align="center">
+    <div style="width: 500px; padding: 25px">
+        <hr />
+        <% user.update_new_article_none_hit(ctx.session.uid) %>
+        ${_('No new articles.')}
+        <hr />
+    </div>
+</div>
+% else:
+<!-- 글 -->
+<table border="0" cellspacing="0" cellpadding="4" style="width: 100%; margin-bottom: 10px; " class="list">
+    <tr align="center" class="head">
+        <th>#</th>
+        <th>${_('Title')}</th>
+        <th>${_('Author')}</th>
+        <th>${_('Date')}</th>
+        <th>${_('Hit')}</th>
+    </tr>
+    <% i = 1 %>
+    %if articles is not UNDEFINED:
+        % for a in articles:
+        ${put_article(a, i)}
+        <% i = i + 1 %>
+        % endfor
+    % endif
+</table>
+<a class="button" href="/+u/+clear_new_article">${_('Mark_All_Read')}</a> 
+% endif
+
+<%def name="put_article(a, i)" >
+<% board_path = board._get_path_from_board_id(a.bSerial) %>
+% if i%2 == 0:
+<tr class="even">
+% else:
+<tr class="odd">
+% endif
+    <!-- 글번호 -->
+    <td align="center"><a href="${board_path}/+read/${a.aSerial}" class="articlelink">${a.aIndex}</a></td>
+    <!-- 제목 --> 
+    <td width="55%">
+%if a.aLevel > 0:
+        <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (a.aLevel-1)}px" />
+%endif
+        <b><a href="${board_path}/+read/${a.aSerial}" class="articlelink">${a.aTitle}
+        <% cmt_cnt = article.get_comment_count(a.aSerial) %>
+        % if cmt_cnt > 0:
+        [${cmt_cnt}]
+        % endif
+        </a></b>
+    </td>
+    <!-- 글쓴이 -->
+    <td style="padding-left: 1em"><a class="articlelink" href="/+u/${a.aId}">${a.aId}</a></td>
+    <!-- 날짜 -->
+    <td align="center">${a.aDatetime.strftime('%Y-%m-%d')}</td>
+    <!-- 조회수 -->
+    <td align="center">${a.aHit}</td>
+</tr>
+</%def>

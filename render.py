@@ -22,4 +22,3 @@ render = {
         'classic': classic_render, 
         'm': mobile_render,
 }
-
