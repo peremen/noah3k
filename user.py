@@ -7,6 +7,7 @@ import crypt, hashlib, hmac
 import util
 import i18n
 import datetime, time
+import random, string
 _ = i18n.custom_gettext
 
 import os, magic, StringIO
@@ -489,4 +490,6 @@ def get_password_salt(uid):
     salt = str(int(time.mktime(u[1].uLastLogin.timetuple()))) + u[1].uId
     return _generate_noah3k_password(salt)
 
-
+def generate_random_password(length = 8):
+    chars = string.letters + string.digits
+    return ''.join([random.choice(chars) for i in range(length)])

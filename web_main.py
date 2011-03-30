@@ -193,7 +193,8 @@ Some user on IP %s requested new password of your account(s). Following list con
 
 If you did not requested password recovery, then please log in into your account. This link will not be vaild after logging into the account.''') % (web.ctx.ip, salt_string)
         mail.mail(data.email, message_title, message_body)
-        return _('Message Sent. Please follow instructions on the message.')
+        return render[theme].error(error_message = _('Message Sent. Please follow instructions on the message.'),
+                error_class = _('Information'))
          
     @util.error_catcher
     def recover_password_get(self, theme):
@@ -219,8 +220,10 @@ If you did not requested password recovery, then please log in into your account
         self.session_set(user_id)
         web.ctx.session.persistent = False
         user.update_last_login(uid, web.ctx.ip)
-        return render[theme].error(error_message = _('CHANGE_PASSWORD_NOW'),
-                help_context = 'error')
+        new_pw = user.generate_random_password()
+        user.update_password(uid, new_pw)
+        return render[theme].error(error_message = _('Your temporary password is "%s"(case-sensitive). Change password now.') % new_pw,
+                error_class = _('Information'))
 
     @util.error_catcher
     def credits_get(self, theme):

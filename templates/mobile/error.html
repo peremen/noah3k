@@ -5,7 +5,11 @@ from i18n import custom_gettext as _ %>
 <p style="text-align: center;">
 <img style="margin: 5px;" src="/static/image/error_m/${random.randint(1, 9)}.jpg" width="240" height="180" />
 </p>
-<h3 style="margin-bottom: 5px;">오류 : <span style="color: red">${error_message}</span></h3>
+% if error_class is UNDEFINED:
+<h3 style="margin-bottom: 5px;">${_('Error')}: <span style="color: red">${error_message}</span></h3>
+% else:
+<h3 style="margin-bottom: 5px;">${error_class}: <span style="color: red">${error_message}</span></h3>
+% endif
 % if error_detail is UNDEFINED:
     ${_('Check error details and retry.')}<br />
 % else:

@@ -223,11 +223,13 @@ def get_type(path):
     return data.bType
 
 def choose_banner():
-    f = open(config.banner_path, 'r')
-    if not f:
-        return ""
-    banners = f.readlines()
-    f.close()
+    banners = []
+    try:
+        f = open(config.banner_path, 'r')
+        banners = f.readlines()
+        f.close()
+    except IOError:
+        return ['default.png', '#']
     cumulative_list = []
     j = 0
     for b in banners:
@@ -241,7 +243,6 @@ def choose_banner():
     banner_id = random.randint(1, max(cumulative_list))
     j = 0
     ret = tuple()
-    print banners
     cond = False
     for i in cumulative_list:
         if j == 0:

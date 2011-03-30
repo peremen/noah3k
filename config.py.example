@@ -48,3 +48,4 @@ email_smtp_address = 'smtp.gmail.com'
 email_smtp_port = 587
 email_smtp_user = 'admin@example.com'
 email_smtp_password = 'changeme'
+banner_path = os.path.join(os.path.dirname(__file__), 'static', 'banner', 'banner.txt')
