@@ -79,7 +79,7 @@ render = {
         'm': mobile_render,
 }
 default_render = desktop_render
-theme_regex = '[classic|m]'
+theme_regex = '(classic/|m/)'
 
 
 #set database

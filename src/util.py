@@ -53,6 +53,9 @@ def theme(func):
         arglist = [args[0]]
         theme = args[1]
 
+        if theme is not None and theme.endswith('/'):
+            theme = theme[:len(theme)-1]
+
         if theme is None or theme == '':
             web.config.theme = 'default'
         elif theme in config.render:
