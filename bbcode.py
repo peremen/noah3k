@@ -38,6 +38,7 @@ def _fmt_list(args):
 
     idx = args[1].find('[*]')
     html, text = html + args[1][:idx], args[1][idx+3:]
+    text = text.replace('<br/>', '')
     while True:
         if len(text) == 0:
             break;
