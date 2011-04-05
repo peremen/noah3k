@@ -36,25 +36,10 @@ def _fmt_list(args):
 
     html = '<ol style="%s">' % style
 
-    idx = args[1].find('[*]')
-    html, text = html + args[1][:idx], args[1][idx+3:]
-    text = text.replace('<br/>', '')
-    while True:
-        if len(text) == 0:
-            break;
-        html += '<li>';
-        idx = text.find('[*]')
+    text = args[1].replace('[*]', '<li>', 1);
+    text = text.replace('[*]', '</li><li>');
 
-        if(idx == -1):
-            innerText = text;
-            text = '';
-        else:
-            innerText, text = text[:idx], text[idx+3:]
-            
-        html += _parse(innerText, _tags)
-        html += '</li>';
-        
-    html += '</ol>'
+    html += text + '</ol>'
     return html
 
 def _fmt_code(args):
