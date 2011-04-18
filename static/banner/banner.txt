@@ -1,2 +1,3 @@
-equilibrium.gif http://globalgamejam.org/2011/equilibrium 9
+equilibrium.gif http://globalgamejam.org/2011/equilibrium 1
 default.png http://noah.kaist.ac.kr/noah/ToSysop 1
+noah_banner_1.png http://noah.kaist.ac.kr/noah/ToSysop 9

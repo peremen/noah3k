@@ -1,4 +1,5 @@
 ﻿<% from web import ctx
+import web
 from i18n import custom_gettext as _
 import user, board, posixpath, pm, config, util
 from datetime import datetime
@@ -37,7 +38,7 @@ def traverse_child_board(path):
         <input name="url" type="hidden" value=""/>
         <p><label for="username">${_('ID')}</label> <input id="username" name="username" type="text" tabindex="1" class="auth_input"/></p>
         <p><label for="password">${_('Password')}</label> <input id="password" name="password" type="password" tabindex="2" class="auth_input"/></p>
-        <input class="button" type="submit" id="submit" tabindex="3" value="${_('Login')}"/> <a class="button" href="/+join">${_('Join')}</a> <a class="button" href="/+lost_login">${_('Lost Login?')}</a>
+        <input class="button" type="submit" id="submit" tabindex="3" value="${_('Login')}"/> <a class="button" href="${util.link('/+join')}">${_('Join')}</a> <a class="button" href="${util.link('/+lost_login')}">${_('Lost Login?')}</a>
         <br />
         <input id="autologin" type="checkbox" name="autologin" value="on" /><label for="autologin">${_('Auto Login (max two weeks)')}</label>
     </form>
@@ -56,18 +57,18 @@ def traverse_child_board(path):
 % endif
 </div>
 <div class="myinfo_right">
-    <a class="userinfo_side" href="/+u">${ctx.session.usernick} (${ctx.session.username})</a><br />
-    <a class="userinfo_side" href="/+u/+modify">${_('My Info')}</a></div>
+    <a class="userinfo_side" href="${util.link('/+u')}">${ctx.session.usernick} (${ctx.session.username})</a><br />
+    <a class="userinfo_side" href="${util.link('/+u/+modify')}">${_('My Info')}</a></div>
 </p>
 <p>
-<a class="button" href="/+u/+new_article">${_('New Article')}</a>
+<a class="button" href="${util.link('/+u/+new_article')}">${_('New Article')}</a>
    <% read_cnt = pm.unread_count(ctx.session.uid) %>
    %if read_cnt > 0:
-       <a class="button" style="background: red; color: white;" target="_blank" href="/+u/+inbox">${_('Mail')} (${read_cnt})</a>
+       <a class="button" style="background: red; color: white;" target="_blank" href="${util.link('/+u/+inbox')}">${_('Mail')} (${read_cnt})</a>
    % else:
-<a class="button" target="_blank" href="/+u/+inbox">${_('Mail')}</a>
+<a class="button" target="_blank" href="${util.link('/+u/+inbox')}">${_('Mail')}</a>
    % endif
-<a class="button" href="/+logout">${_('Logout')}</a>
+<a class="button" href="${util.link('/+logout')}">${_('Logout')}</a>
 % endif
 </div>
 <br />
@@ -88,7 +89,7 @@ def traverse_child_board(path):
 <ul>
 <% not_has_my_board = True %>
 % for my_board in user.get_owned_board(ctx.session.uid):
-    <li><a class="boardlink" href="${my_board.bName}">\
+    <li><a class="boardlink" href="${util.link(my_board.bName)}">\
     % if my_board.bType == 0:
 <img class="type" src="/static/image/folder.png" /> \
     % else:
@@ -114,9 +115,9 @@ ${my_board.bDescription}\
     % if board_path == '':
     href="#">${_('(not available)')}\
     % elif user.is_favorite(ctx.session.uid, board._get_board_id_from_path(board_path)):
-    href="/${board_path}/+remove_from_favorites">${_('(remove)')}\
+    href="${util.link('/'+board_path)}/+remove_from_favorites">${_('(remove)')}\
     % else:
-    href="/${board_path}/+add_to_favorites">${_('(add)')}\
+    href="${util.link('/'+board_path)}/+add_to_favorites">${_('(add)')}\
     % endif
 % else:
 href="#">${_('(not available)')}\
@@ -127,7 +128,7 @@ href="#">${_('(not available)')}\
 <ul>
 <% not_has_fav_board = True %>
 % for my_board in user.get_favorite_board_with_detail(ctx.session.uid):
-    <li><a class="boardlink" href="${my_board.bName}">\
+    <li><a class="boardlink" href="${util.link(my_board.bName)}">\
     % if my_board.bType == 0:
 <img class="type" src="/static/image/folder.png" /> \
     % else:
@@ -144,40 +145,41 @@ ${my_board.bDescription}\
     % if not_has_fav_board:
     <li>${_('No board in your favorites')}</li>
     % else:
-    <li><img src="/static/image/feed.png" /> ${_('Feed')}: <a href="/+u/${ctx.session.username}/+favorite_rss">RSS</a>, <a href="/+u/${ctx.session.username}/+favorite_atom">Atom</a></li>
+    <li><img src="/static/image/feed.png" /> ${_('Feed')}: <a href="${util.link('/+u')}/${ctx.session.username}/+favorite_rss">RSS</a>, 
+        <a href="${util.link('/+u')}/${ctx.session.username}/+favorite_atom">Atom</a></li>
     % endif
 % endfor
 </ul>
 </div>
 % endif
 
-<div class="heading"><a class="dirlink" href="/divisionCS"><span style="color: black">${_('Department')}</span></a></div>
+<div class="heading"><a class="dirlink" href="${util.link('/divisionCS')}"><span style="color: black">${_('Department')}</span></a></div>
 <ul>
     <li>
-        <a class="boardlink" href="/divisionCS/Notice">${_('Notice')}</a> / 
-        <a class="boardlink" href="/divisionCS/studentNotice">${_('Student Notice')}</a> / 
-        <a class="boardlink" href="/divisionCS/HowAbout">${_('To Dept.')}</a> 
+        <a class="boardlink" href="${util.link('/divisionCS/Notice')}">${_('Notice')}</a> / 
+        <a class="boardlink" href="${util.link('/divisionCS/studentNotice')}">${_('Student Notice')}</a> / 
+        <a class="boardlink" href="${util.link('/divisionCS/HowAbout')}">${_('To Dept.')}</a> 
     </li>
     <li>
-        <a class="boardlink" href="/divisionCS/EastOfEden">${_('EVE Room')}</a> /
-        <a class="boardlink" href="/divisionCS/JobOffer">${_('Job Offer')}</a>
+        <a class="boardlink" href="${util.link('/divisionCS/EastOfEden')}">${_('EVE Room')}</a> /
+        <a class="boardlink" href="${util.link('/divisionCS/JobOffer')}">${_('Job Offer')}</a>
     </li>
     <li>
         ${_('Friends')}: 
-        <a class="boardlink" href="/divisionCS/undergraduate">${_('Undergraduate')}</a> /
-        <a class="boardlink" href="/divisionCS/master">${_('Master')}</a>
+        <a class="boardlink" href="${util.link('/divisionCS/undergraduate')}">${_('Undergraduate')}</a> /
+        <a class="boardlink" href="${util.link('/divisionCS/master')}">${_('Master')}</a>
     </li>
 </ul>
 
 <!-- 과목 게시판 -->
 <div class="heading">
-    <span style="color: black"><a class="dirlink" href="/course"><span style="color: black">${_('Courses')}</span></a></span>
-    <span style="color: black; font-size: 0.9em; font-weight: normal"><a href="/OldCourse">${_('(archive)')}</a></span>
+    <span style="color: black"><a class="dirlink" href="${util.link('/course')}"><span style="color: black">${_('Courses')}</span></a></span>
+    <span style="color: black; font-size: 0.9em; font-weight: normal"><a href="${util.link('/OldCourse')}">${_('(archive)')}</a></span>
 </div>
 <ul>
 <% not_has_subject_board = True %>
 % for my_board in board.get_child(board._get_board_id_from_path('/course')):
-<li><a class="boardlink" href="${my_board.bName}">\
+<li><a class="boardlink" href="${util.link(my_board.bName)}">\
 % if my_board.bDescription.strip() == '':
 ${my_board.bName}\
 % else:
@@ -195,8 +197,8 @@ ${my_board.bDescription}\
 %if feed is not UNDEFINED:
 <!-- 피드 (for Google Chrome) -->
 <div id="feeds"> 
-    <a href="/${board_path}/+rss" class="feed"><img style="border-style: none;" src="/static/image/feed.png" /> RSS</a> 
-    <a href="/${board_path}/+atom" class="feed"><img style="border-style: none;" src="/static/image/feed.png" /> Atom</a> 
+    <a href="${util.link('/'+board_path)}/+rss" class="feed"><img style="border-style: none;" src="/static/image/feed.png" /> RSS</a> 
+    <a href="${util.link('/'+board_path)}/+atom" class="feed"><img style="border-style: none;" src="/static/image/feed.png" /> Atom</a> 
 </div> 
 <br />
 % endif
