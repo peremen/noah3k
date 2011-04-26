@@ -19,11 +19,12 @@
         <th>${_('Content')}</th>
         <td>
         <a href="/+help/editor#bbcode" target="_blank">${_('(BBCode Help)')}</a>
-        <textarea id="e_content" class="flat_input" name="content" tabindex="2" style="font-size: 0.9em; width: 550px; height: 360px" >
 %if body is not UNDEFINED:
-${body}
+        <textarea id="e_content" class="flat_input" name="content" tabindex="2" style="font-size: 0.9em; width: 550px; height: 360px" >${body}</textarea>
+% else:
+        <textarea id="e_content" class="flat_input" name="content" tabindex="2" style="font-size: 0.9em; width: 550px; height: 360px" />
 %endif
-        </textarea></td>
+        </td>
     </tr>
 %if attachment is not UNDEFINED:
 <% i = 1 %>

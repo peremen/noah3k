@@ -32,6 +32,8 @@ class board_actions:
     @util.theme
     def caller(self, board_name, action, method):
         board_id = board._get_board_id_from_path(board_name)
+        if board_name == '^root':
+            board_id = 1
         if board_id < 0:
             raise web.notfound(util.render().error(error_message = _('INVALID_BOARD'), help_context='error'))
         try:
@@ -207,7 +209,10 @@ class board_actions:
             return util.render().error(error_message=_('NO_SUCH_USER_FOR_BOARD_ADMIN'), help_context='error')
         if user_data.name.strip() == '':
             return util.render().error(error_message = _('NO_NAME_SPECIFIED'), help_context='error')
-        new_path = posixpath.join('/', board_name, user_data.name)
+        if board_name == '^root':
+            new_path = posixpath.join('/', user_data.name)
+        else:
+            new_path = posixpath.join('/', board_name, user_data.name)
         if board._get_board_id_from_path(new_path) > 0:
             return util.render().error(error_message = _('BOARD_EXISTS'), help_context='error')
 
