@@ -71,11 +71,23 @@ class main_page:
             student_notice_board_path = '/divisionCS/studentNotice'
             student_notice_board_id = board._get_board_id_from_path(student_notice_board_path)
             b = article.get_recent_article_list(student_notice_board_id, 5)
+
+            freeboard_path = '/garbage'
+            freeboard_id = board._get_board_id_from_path(freeboard_path)
+            c = article.get_recent_article_list(freeboard_id, 5)
+
+            undergraduate_path = '/divisionCS/undergraduate'
+            undergraduate_id = board._get_board_id_from_path(undergraduate_path)
+            d = article.get_recent_article_list(undergraduate_id, 5)
+
             return util.render().main(title = u'전산학과 BBS 노아입니다', lang='ko',
                     board_desc = _('[KAIST CS BBS]'), board_path = '',
-                    child_boards = child_board, notice_board_path = notice_board_path,
-                    notice_articles = a, student_notice_board_path = student_notice_board_path,
-                    student_notice_articles = b, help_context = 'main')
+                    child_boards = child_board,
+                    notice_board_path = notice_board_path, notice_articles = a,
+                    student_notice_board_path = student_notice_board_path, student_notice_articles = b, 
+                    freeboard_path = freeboard_path, freeboard_articles = c,
+                    undergraduate_path = undergraduate_path, undergraduate_articles = d,
+                    help_context = 'main')
 
 class help:
     @util.theme

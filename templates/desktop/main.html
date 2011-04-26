@@ -4,29 +4,55 @@ import reldates, util %><%inherit file="base.html" />
     <tr>
         <td width="50%">
             <span style="font-size: 1.4em; font-weight: bold;"><a style="color: #000; text-decoration: none;" href="${notice_board_path}">${_('Department Notice')}</a></span>
-    <!-- 학과 공지 -->
-    <table border="0" cellspacing="0" cellpadding="4" style="margin-bottom: 0px" class="list">
-        <tr align="center" class="head">
-            <th>${_('Title')}</th>
-            <th style="width:100px;">${_('Date')}</th>
-        </tr>
-        <% i = 1 %>
-        ${put_article(notice_articles, i, notice_board_path)}
-    </table>
-    </td>
-    <td>
-    <span style="font-size: 1.4em; font-weight: bold;"><a style="color: #000; text-decoration: none;" href="${student_notice_board_path}">${_('Student Notice')}</a></span>
-    <!-- 학생 공지 -->
-    <table border="0" cellspacing="0" cellpadding="4" style="margin-bottom: 0px" class="list">
-        <tr align="center" class="head">
-            <th>${_('Title')}</th>
-            <th style="width:100px;">${_('Date')}</th>
-        </tr>
-        <% i = 1 %>
-        ${put_article(student_notice_articles, i, student_notice_board_path)}
-    </table>
-    </td>
-</tr>
+<!-- 학과 공지 -->
+<table border="0" cellspacing="0" cellpadding="4" style="margin-bottom: 0px" class="list">
+    <tr align="center" class="head">
+        <th>${_('Title')}</th>
+        <th style="width:100px;">${_('Date')}</th>
+    </tr>
+    <% i = 1 %>
+    ${put_article(notice_articles, i, notice_board_path)}
+</table>
+        </td>
+        <td>
+        <span style="font-size: 1.4em; font-weight: bold;"><a style="color: #000; text-decoration: none;" href="${student_notice_board_path}">${_('Student Notice')}</a></span>
+<!-- 학생 공지 -->
+<table border="0" cellspacing="0" cellpadding="4" style="margin-bottom: 0px" class="list">
+    <tr align="center" class="head">
+        <th>${_('Title')}</th>
+        <th style="width:100px;">${_('Date')}</th>
+    </tr>
+    <% i = 1 %>
+    ${put_article(student_notice_articles, i, student_notice_board_path)}
+</table>
+        </td>
+    </tr>
+    <tr>
+        <td width="50%">
+            <span style="font-size: 1.4em; font-weight: bold;"><a style="color: #000; text-decoration: none;" href="${freeboard_path}">${_('Free Board')}</a></span>
+<!-- garbage -->
+<table border="0" cellspacing="0" cellpadding="4" style="margin-bottom: 0px" class="list">
+    <tr align="center" class="head">
+        <th>${_('Title')}</th>
+        <th style="width:100px;">${_('Date')}</th>
+    </tr>
+    <% i = 1 %>
+    ${put_article(freeboard_articles, i, freeboard_path)}
+</table>
+        </td>
+        <td>
+        <span style="font-size: 1.4em; font-weight: bold;"><a style="color: #000; text-decoration: none;" href="${undergraduate_path}">${_('Friends')}: ${_('Undergraduate')}</a></span>
+<!-- 학부 친목보드 -->
+<table border="0" cellspacing="0" cellpadding="4" style="margin-bottom: 0px" class="list">
+    <tr align="center" class="head">
+        <th>${_('Title')}</th>
+        <th style="width:100px;">${_('Date')}</th>
+    </tr>
+    <% i = 1 %>
+    ${put_article(undergraduate_articles, i, undergraduate_path)}
+</table>
+        </td>
+    </tr>
 </table>
 
 <table class="mainmenu_table">
@@ -109,6 +135,9 @@ import reldates, util %><%inherit file="base.html" />
             <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (a.aLevel-1)}px" />
 %endif
             <a href="${board_path}/+read/${a.aSerial}" class="articlelink">${a.aTitle}
+% if a.comment_count > 0:
+            <span class="commentCount">[${a.comment_count}]</span>
+% endif
             </a>
             </div>
             </td>
