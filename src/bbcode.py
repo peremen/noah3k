@@ -43,10 +43,11 @@ def _fmt_list(args):
     return html
 
 def _fmt_code(args):
+    text = re.sub(r'\n\<br\/\>','\n',args[1])
     if args[0]:
-        html = "<pre class=\"brush: %s\">%s</pre>" % (args[0], args[1])
+        html = "<pre class=\"brush: %s\">%s</pre>" % (args[0], text)
     else:
-        html = "<pre class=\"brush: plain\">%s</pre>" % (args[1])
+        html = "<pre class=\"brush: plain\">%s</pre>" % (text)
     return html
 
 _tags = {"b": {"tmpl":_fmt("<b>%s</b>"), "nest":True},
@@ -78,7 +79,7 @@ def getRegex(tags):
 _re = getRegex(_tags);
 
 def _escape(text):
-    return text.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('\n', '<br/>');
+    return text.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('\n', '\n<br/>');
 
 def _parse_url(text):
     html = ''
