@@ -384,8 +384,7 @@ def get_comment_count(article_id):
 
 def get_comment(article_id):
     val = dict(article_id = int(article_id))
-    result = db.select('Comments', val, where='aSerial = $article_id',
-            order = 'cDatetime ASC')
+    result = db.query('SELECT Comments.*, Users.uNick FROM Comments LEFT JOIN Users ON Comments.uSerial=Users.uSerial WHERE Comments.aSerial=$article_id ORDER BY cDatetime ASC', val);
     return result
 
 def write_comment(uid, board_id, article_id, comment):

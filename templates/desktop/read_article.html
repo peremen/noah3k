@@ -69,11 +69,26 @@ ${util.format(article['aContent'])}
     <!-- 코멘트 -->
     <div id="comment">
         <div id="list">
-                <table border="0" cellspacing="0" cellpadding="6px" style="width: 100%">
+                <table border="0" cellspacing="2px" cellpadding="6px" style="width: 100%">
     % if comments:
         % for comment in comments:
                     <tr>
-                        <td class="writer"><b class="major">${comment['cId']}</b><br /><span title="${comment['cDatetime']}">(${_('%s ago') % reldates.timesince(comment['cDatetime'])})</span>
+% if board.get_board_info(board._get_board_id_from_path('/%s' % board_path)).show_avatar:
+                        <td class="avatar">
+    %if user.has_profile_image(comment['uSerial']):
+    <img src="${posixpath.join(config.pi_web_path, '%s.png' % comment['uSerial'])}" class="avatar_small" alt="Avatar" />
+    % else:
+    <img src="/static/image/no_avatar.png" class="avatar_small" alt="Avatar" />
+    % endif
+                        </td>
+% endif
+                        <td class="writer">
+% if comment['uNick'] == '' or comment['uNick'] == comment['cId']:
+<b class="major">${comment['cId']}</b>
+% else:
+<b class="major">${comment['cId']}</b><br /><b>${comment['uNick']}</b>
+% endif
+<br /><span title="${comment['cDatetime']}">(${_('%s ago') % reldates.timesince(comment['cDatetime'])})</span>
                         </td>
                         <td class="content">${util.format(comment['cContent'])}
             %if ctx.session.has_key('uid') and ctx.session.uid == comment['uSerial']:

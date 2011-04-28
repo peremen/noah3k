@@ -315,16 +315,22 @@ div#comment div#input {
 #comment tr {
     padding: 5px;
 }
+#comment td.avatar {
+    width: 30px;
+    vertical-align: top;
+}
 #comment td.writer {
     width: 8em;
     padding: 0px 1em 0px 0px;
     font-size: 0.9em;
     color: gray;
     text-align: right;
+    vertical-align: top;
 }
 #comment td.content {
     font-size: 1.0em;
     padding-left: 5px;
+    vertical-align: top;
 }
 #comment td.writetime {
     width: 10em;
@@ -455,6 +461,13 @@ div.personal_tools .auth_input{
 .avatar_large {
     width: 48px;
     height: 48px;
+    border: 1px solid;
+    border-color: gray;
+}
+
+.avatar_small {
+    width: 24px;
+    height: 24px;
     border: 1px solid;
     border-color: gray;
 }

@@ -89,7 +89,6 @@ class board_actions:
             except:
                 pass
             url = util.link('/%s/+read/%s' % (board_name, ret[1]))
-            print url
             raise web.seeother(url)
         else:
             return util.render().error(error_message = ret[1], help_context='error')
