@@ -9,7 +9,8 @@ from i18n import custom_gettext as _
 def get_formatted_username(uid):
     u = user.get_user(uid)
     if u[0]:
-        return "<a class=\"articlelink\" href=\"/+u/%(id)s\">%(id)s (%(nick)s)</a>" % {'id': u[1]['uId'], 'nick':u[1]['uNick']}
+        url = util.link("/+u/%s" % u[1]['uId'])
+        return '<a class=\"articlelink\" href=\"%(url)s">%(id)s (%(nick)s)</a>' % {'url':url, 'id': u[1]['uId'], 'nick':u[1]['uNick']}
     else:
         return _("Former Member")
 %>
@@ -57,10 +58,10 @@ ${util.format(article['aContent'])}
     <!-- 이전글/다음글 -->
     <div class="article-link">
 % if prev_id > 0:
-    <a class="articlelink prev-article" href="/${board_path}/+read/${prev_id}">&lt;&nbsp;${A.get_title(prev_id)}</a> 
+    <a class="articlelink prev-article" href="${util.link('/%s/+read/%s' % (board_path, prev_id))}">&lt;&nbsp;${A.get_title(prev_id)}</a> 
 % endif
 % if next_id > 0:
-    <a class="articlelink next-article" href="/${board_path}/+read/${next_id}">${A.get_title(next_id)}&nbsp;&gt;</a> 
+    <a class="articlelink next-article" href="${util.link('/%s/+read/%s' % (board_path, next_id))}">${A.get_title(next_id)}&nbsp;&gt;</a> 
 % else:
     <a class="articlelink next-article" href="#">&nbsp;</a> 
 % endif
@@ -92,7 +93,7 @@ ${util.format(article['aContent'])}
                         </td>
                         <td class="content">${util.format(comment['cContent'])}
             %if ctx.session.has_key('uid') and ctx.session.uid == comment['uSerial']:
-                        <a style="font-size: 0.9em;" href="/${board_path}/+comment_delete/${comment['cSerial']}">(${_('Delete')})</a>
+                        <a style="font-size: 0.9em;" href="${util.link('/%s/+comment_delete/%s' % (board_path, comment['cSerial']))}">(${_('Delete')})</a>
                         </td>
             % endif
                     </tr>
@@ -103,9 +104,9 @@ ${util.format(article['aContent'])}
 
         <div id="input">
     % if not ctx.session.has_key('uid'):
-            ${_('To post commment, please <a href="/+login">log in</a>')}
+            ${_('To post commment, please <a href="${util.link("/+login")}">log in</a>')}
     % else:
-            <form name="comment" method="post" action="/${board_path}/+comment/${article['aSerial']}">
+            <form name="comment" method="post" action="${util.link('/%s/+comment/%s' % (board_path, article['aSerial']))}">
                 ${_('Write Comment')}
                 <input class="flat_input" id="read_article_comment" name="comment" type="text" maxlength="255" style="width: 30em">
                 <input class="button" type="submit" name="Submit" value="${_('Submit')}">
@@ -120,29 +121,29 @@ ${util.format(article['aContent'])}
     <div id="menu">
         <ul>
     % if page_no is UNDEFINED:
-            <li> <a class="button" href="/${board_path}">${_('List')}</a></li>
+            <li> <a class="button" href="${util.link('/%s' % board_path)}">${_('List')}</a></li>
     % else:
-            <li> <a class="button" href="/${board_path}?page=${page_no}">${_('List')}</a></li>
+            <li> <a class="button" href="${util.link('/%s?page=%s' % (board_path, page_no))}">${_('List')}</a></li>
     % endif
     %if ctx.session.has_key('uid') and acl.is_allowed('board', board._get_board_id_from_path('/%s' % board_path), ctx.session.uid, 'write'):
             <!-- 쓰기 권한 -->	
-            <li><a class="button" href="/${board_path}/+write">${_('Write')}</a></li>
-            <li><a class="button" href="/${board_path}/+reply/${article['aSerial']}">${_('Reply')}</a></li>
+            <li><a class="button" href="${util.link('/%s/+write' % (board_path))}">${_('Write')}</a></li>
+            <li><a class="button" href="${util.link('/%s/+reply/%s' % (board_path, article['aSerial']))}">${_('Reply')}</a></li>
     % endif
     %if ctx.session.has_key('uid') and acl.is_allowed('article', article.aSerial, ctx.session.uid, 'modify'):
             <!-- 로그인 --> 
-            <li><a class="button" href="/${board_path}/+modify/${article['aSerial']}">${_('Modify')}</a></li>
+            <li><a class="button" href="${util.link('/%s/+modify/%s' % (board_path, article['aSerial']))}">${_('Modify')}</a></li>
     % endif
     %if ctx.session.has_key('uid') and acl.is_allowed('article', article.aSerial, ctx.session.uid, 'delete'):
             <!-- 삭제 권한 --> 
-            <li><a class="button" href="/${board_path}/+delete/${article['aSerial']}">${_('Delete')}</a></li>
+            <li><a class="button" href="${util.link('/%s/+delete/%s' % (board_path, article['aSerial']))}">${_('Delete')}</a></li>
     % endif
     %if ctx.session.has_key('uid') and acl.is_allowed('board', article.bSerial, ctx.session.uid, 'mark'):
         % if A.get_mark_status(article['aSerial']):
             <!-- 강조 권한 --> 
-            <li><a class="button" href="/${board_path}/+unmark/${article['aSerial']}">${_('Unmark')}</a></li>
+            <li><a class="button" href="${util.link('/%s/+unmark/%s' % (board_path, article['aSerial']))}">${_('Unmark')}</a></li>
         % else:
-            <li><a class="button" href="/${board_path}/+mark/${article['aSerial']}">${_('Mark')}</a></li>
+            <li><a class="button" href="${util.link('/%s/+mark/%s' % (board_path, article['aSerial']))}">${_('Mark')}</a></li>
         % endif
     % endif
         </ul>
