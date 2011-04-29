@@ -224,7 +224,10 @@ def traverse_board_path(path, theme=None):
                 ret = '/<a class="boardlink" href="/%s%s">%s</a>' % (theme, i.bName, i.bName.split('/')[-1]) + ret
             else:
                 ret = '/<a class="boardlink" href="%s">%s</a>' % (i.bName, i.bName.split('/')[-1]) + ret
-        id = board.get_parent(id)
+        new_id = board.get_parent(id)
+        if new_id == id:
+            break
+        id = new_id
 #    ret = (u'<a class="dirlink" href="/">%s</a>' % _('Board')) + ret
     return ret
 
