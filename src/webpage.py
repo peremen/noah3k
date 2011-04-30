@@ -15,6 +15,7 @@ from web_board import board_actions
 from web_user import personal_page, personal_actions, personal_actions_unauthorized, personal_page_others
 from web_main import main_actions
 from web_noah2k_support import noah2k_support
+from web_api import api
 import i18n
 _ = i18n.custom_gettext
 
@@ -22,6 +23,7 @@ urls = (
 # 다른 모든 action은 view_board 위로 올라가야 함.
     r'/(.*)/', 'redirect',
     r'/(\w*).jsp', 'noah2k_support',
+    r'/\+api', 'api',
     r'/(?:' + config.theme_regex_main + ')?', 'main_page',
     r'/(?:' + config.theme_regex + ')?\+help/(\S*)', 'help',
 
