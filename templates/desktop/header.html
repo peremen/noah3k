@@ -15,7 +15,7 @@ from web import ctx
 
 <div id="title">
 %if board_path is not UNDEFINED:
-<p><a class="board_heading" href="${util.link('/%s/+cover % board_path)}" target="_blank">${board_desc}</a>&nbsp;&nbsp;<span class="board_path">${util.traverse_board_path(board_path)}</span></p>
+<p><a class="board_heading" href="${util.link('/%s/+cover' % board_path)}" target="_blank">${board_desc}</a>&nbsp;&nbsp;<span class="board_path">${util.traverse_board_path(board_path)}</span></p>
 %elif board_desc is not UNDEFINED:
 <p><a class="board_heading" href="#">${board_desc}</a></p>
 % else:
