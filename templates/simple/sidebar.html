@@ -27,14 +27,14 @@ def traverse_child_board(path):
             child_desc = posixpath.basename(child.bName)
         else:
             child_desc = child.bDescription
-	ret = ret + '<li><a class="boardlink" href="%s"><img class="type" src="%s" />&nbsp;%s</a></li>%s' % (child.bName, child_image, child_desc, sep)
+	ret = ret + '<li><a class="boardlink" href="%s"><img class="type" src="%s" />&nbsp;%s</a></li>%s' % (util.link(child.bName), child_image, child_desc, sep)
     return ret[0:-len(sep)]
 
 %>
 
 <div class="personal_tools" style="display: inline;">
 %if ctx.session is UNDEFINED or (not ctx.session.has_key('uid')):
-    <form method="post" action="/+login">
+    <form method="post" action="${util.link('/+login')}">
         <input name="url" type="hidden" value=""/>
         <p><label for="username">${_('ID')}</label> <input id="username" name="username" type="text" tabindex="1" class="auth_input"/></p>
         <p><label for="password">${_('Password')}</label> <input id="password" name="password" type="password" tabindex="2" class="auth_input"/></p>
