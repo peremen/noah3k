@@ -29,7 +29,7 @@ _path = os.path.dirname(__file__);
 _join = os.path.join
 
 attachment_disk_path = _join(_path, 'static', 'uploads')
-attachment_web_path = '/static/attachment/'
+attachment_web_path = '/static/uploads/'
 thumbnail_desktop_disk_path = _join(_path, 'static', 'thumbs_desktop')
 thumbnail_desktop_web_path = '/static/thumbs_desktop/'
 thumbnail_desktop_size = (800, 600)
