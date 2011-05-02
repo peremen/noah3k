@@ -1,7 +1,7 @@
 <%inherit file="base.html" />
 <% import util
 from i18n import custom_gettext as _ %>
-${_('To join NOAH, click <a href="/+join/">here</a>')}
+${_('To join NOAH, click <a href="%s">here</a>' % util.link('/+join/'))}
 % if error is not UNDEFINED:
     <br /><span style="color: red">${error}</span>
 % endif

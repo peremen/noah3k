@@ -1,9 +1,10 @@
 <% from i18n import custom_gettext as _ 
+import util
 import reldates, util %><%inherit file="base.html" />
 <table cellpadding="5px">
     <tr>
         <td width="50%">
-            <span style="font-size: 1.4em; font-weight: bold;"><a style="color: #000; text-decoration: none;" href="${notice_board_path}">${_('Department Notice')}</a></span>
+            <span style="font-size: 1.4em; font-weight: bold;"><a style="color: #000; text-decoration: none;" href="${util.link(notice_board_path)}">${_('Department Notice')}</a></span>
 <!-- 학과 공지 -->
 <table border="0" cellspacing="0" cellpadding="4" style="margin-bottom: 0px" class="list">
     <tr align="center" class="head">
@@ -15,7 +16,7 @@ import reldates, util %><%inherit file="base.html" />
 </table>
         </td>
         <td>
-        <span style="font-size: 1.4em; font-weight: bold;"><a style="color: #000; text-decoration: none;" href="${student_notice_board_path}">${_('Student Notice')}</a></span>
+        <span style="font-size: 1.4em; font-weight: bold;"><a style="color: #000; text-decoration: none;" href="${util.link(student_notice_board_path)}">${_('Student Notice')}</a></span>
 <!-- 학생 공지 -->
 <table border="0" cellspacing="0" cellpadding="4" style="margin-bottom: 0px" class="list">
     <tr align="center" class="head">
@@ -29,7 +30,7 @@ import reldates, util %><%inherit file="base.html" />
     </tr>
     <tr>
         <td width="50%">
-            <span style="font-size: 1.4em; font-weight: bold;"><a style="color: #000; text-decoration: none;" href="${freeboard_path}">${_('Free Board')}</a></span>
+            <span style="font-size: 1.4em; font-weight: bold;"><a style="color: #000; text-decoration: none;" href="${util.link(freeboard_path)}">${_('Free Board')}</a></span>
 <!-- garbage -->
 <table border="0" cellspacing="0" cellpadding="4" style="margin-bottom: 0px" class="list">
     <tr align="center" class="head">
@@ -41,7 +42,7 @@ import reldates, util %><%inherit file="base.html" />
 </table>
         </td>
         <td>
-        <span style="font-size: 1.4em; font-weight: bold;"><a style="color: #000; text-decoration: none;" href="${undergraduate_path}">${_('Friends')}: ${_('Undergraduate')}</a></span>
+        <span style="font-size: 1.4em; font-weight: bold;"><a style="color: #000; text-decoration: none;" href="${util.link(undergraduate_path)}">${_('Friends')}: ${_('Undergraduate')}</a></span>
 <!-- 학부 친목보드 -->
 <table border="0" cellspacing="0" cellpadding="4" style="margin-bottom: 0px" class="list">
     <tr align="center" class="head">
@@ -134,7 +135,7 @@ import reldates, util %><%inherit file="base.html" />
 %if a.aLevel > 0:
             <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (a.aLevel-1)}px" />
 %endif
-            <a href="${board_path}/+read/${a.aSerial}" class="articlelink">${a.aTitle}
+            <a href="${util.link('%s/+read/%s' % (board_path, a.aSerial))}" class="articlelink">${a.aTitle}
 % if a.comment_count > 0:
             <span class="commentCount">[${a.comment_count}]</span>
 % endif

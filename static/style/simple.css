@@ -1,5 +1,5 @@
 #top_container {
-    margin: 0 auto;
+    margin: auto;
 	margin-top: 20px;
 	padding: 20px;
 
@@ -16,4 +16,21 @@ body {
 
 div#header {
     background-color: white;
+}
+
+div#header div#title {
+    vertical-align: bottom;
+    margin-left: 20px;
+    overflow: hidden;
+}
+
+div#header {
+    height: auto;
+}
+
+a.branding_title {
+    text-decoration: none;
+    color: gray;
+    font-size: 4.0em;
+    font-weight: bold;
 }
