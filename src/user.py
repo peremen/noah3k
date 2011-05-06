@@ -322,13 +322,15 @@ def modify_user(uid, member):
                     uSig = member['sig'], uPlan = member['introduction'],
                     uHomepage = member['homepage'],
                     language = member['language'],
+                    theme = member['theme'],
                     uPasswd = generate_password(member['password']))
         else:
             result = db.update('Users', vars=member, where='uSerial = $user_id',
                     uNick = member['nick'], uEmail = member['email'],
                     uHomepage = member['homepage'],
                     uSig = member['sig'], uPlan = member['introduction'],
-                    language = member['language'])
+                    language = member['language'],
+                    theme = member['theme'])
     except:
         t.rollback()
         return False

@@ -36,6 +36,18 @@ import util, config %>
         </select></td>
     </tr>
     <tr>
+        <th>${_('Theme')}</th>
+        <td><select name="theme"style="width: 12em">
+% for o in config.render.keys():
+    % if o == user.theme:
+            <option value="${o}" selected="selected">${o}</option>
+    % else:
+            <option value="${o}">${o}</option>
+    % endif
+% endfor
+        </select></td>
+    </tr>
+    <tr>
         <th>${_('Profile Image')}<br/><span class="miner">${config.pi_size[0]} x ${config.pi_size[1]}</span></th>
         <td><input name="profile_image" type="file" /><input name="delete_profile_image" id="delete_profile_image" type="checkbox" value="True" />
         <label for="delete_profile_image">${_('Delete')}</label></td>

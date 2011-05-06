@@ -6,6 +6,7 @@ import os, re
 import random
 import sys, traceback
 import posixpath
+import user
 
 import web
 import board, article
@@ -285,4 +286,11 @@ def link(url):
 
 
 def render():
-    return config.render[web.config.theme]
+    try:
+        if web.config.theme == 'default':
+            return config.render[user.get_user(web.ctx.session.uid)[1].theme]
+        else:
+            return config.render[web.config.theme]
+    except:
+        print traceback.format_exc()
+        return config.render[web.config.theme]
