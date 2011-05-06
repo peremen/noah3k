@@ -7,6 +7,10 @@ from i18n import custom_gettext as _
 %>
 ## 보드 설명
 
+<style>
+${stylesheet}
+</style>
+
 % if len(articles) == 0:
 <div align="center">
     <div style="width: 500px; padding: 25px">
@@ -32,14 +36,14 @@ from i18n import custom_gettext as _
     <% i = 1 %>
     %if marked_articles is not UNDEFINED:
         % for a in marked_articles:
-        ${put_article(a, i, True)}
-        <% i = i + 1 %>
+            ${put_article(a, i, True)}
+            <% i = i + 1 %>
         % endfor
     % endif
     %if articles is not UNDEFINED:
         % for a in articles:
-        ${put_article(a, i, False)}
-        <% i = i + 1 %>
+            ${put_article(a, i, False)}
+            <% i = i + 1 %>
         % endfor
     % endif
 </table>

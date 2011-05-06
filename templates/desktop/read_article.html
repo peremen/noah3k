@@ -14,6 +14,11 @@ def get_formatted_username(uid):
     else:
         return _("Former Member")
 %>
+
+<style>
+${stylesheet}
+</style>
+
 <div>
 % if board.get_board_info(board._get_board_id_from_path('/%s' % board_path)).show_avatar:
 <div class="avatar_body">

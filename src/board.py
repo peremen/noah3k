@@ -154,9 +154,13 @@ def edit_board(current_uid, board_id, settings):
     try:
         result = db.update('Boards', vars=settings, where='bSerial = $board_id',
                 bInformation = settings['cover'], bDescription = settings['description'],
-                bType = settings['board_type'], bReply = 1, bComment = settings['can_comment'],
-                indexable = settings['indexable'], show_avatar = settings['show_avatar'],
-                bWrite = settings['can_write_by_other'], uSerial = settings['owner'],
+                bType = settings['board_type'], 
+                bReply = 1, bComment = settings['can_comment'],
+                indexable = settings['indexable'], 
+                stylesheet = settings['stylesheet'],
+                show_avatar = settings['show_avatar'],
+                bWrite = settings['can_write_by_other'], 
+                uSerial = settings['owner'],
                 bName = new_path, bParent = new_parent_id)
         result = move_child_boards(board_id, old_path, new_path)
     except:

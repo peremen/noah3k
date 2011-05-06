@@ -8,6 +8,7 @@
 	border-radius: 20px;
 
 	background-color: white;
+    overflow: hidden;
 }
 
 body {

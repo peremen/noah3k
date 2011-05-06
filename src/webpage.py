@@ -143,6 +143,7 @@ class view_board:
             title = board_info.bName,
             board_path = board_info.bName[1:],
             board_desc = board_info.bDescription,
+            stylesheet = board_info.stylesheet,
             articles=a, marked_articles = m,
             total_page = t, page = page, feed = True,
             help_context = 'view_board')

@@ -292,5 +292,4 @@ def render():
         else:
             return config.render[web.config.theme]
     except:
-        print traceback.format_exc()
         return config.render[web.config.theme]

@@ -72,6 +72,7 @@ class article_actions:
 
         return util.render().read_article(article = a,
             title = u"%s - %s" % (a.aIndex, a.aTitle),
+            stylesheet = board_info.stylesheet,
             board_path = board_name, board_desc = board_desc,
             comments = comment, page_no = page_no,
             prev_id = prev_id, next_id = next_id, feed = True,
@@ -89,8 +90,11 @@ class article_actions:
         article_ = article.get_article(board_id, article_id)
         quote_text = _('From %s\'s Article %s:') % (user._get_username_from_uid(article_.uSerial), util.remove_bracket(article_.aTitle))
         body = '\n\n\n[quote=%s]%s\n[/quote]\n\n%s' % (quote_text, article_.aContent, user_info.uSig)
-        return util.render().editor(title = _('Reply - /%s') % board_name,
-                action='reply/%s' % article_id, action_name = _('Reply to the article'),
+        return util.render().editor(
+                title = _('Reply - /%s') % board_name,
+                stylesheet = board_info.stylesheet,
+                action='reply/%s' % article_id, 
+                action_name = _('Reply to the article'),
                 board_path = board_name, board_desc = board_desc,
                 body = body, article_title = article_.aTitle,
                 help_context = 'editor')
@@ -131,8 +135,11 @@ class article_actions:
         board_desc = board_info.bDescription
         article_ = article.get_article(board_id, article_id)
         uploads = attachment.get_attachment(article_id)
-        return util.render().editor(title = _('Modify - /%s')% board_name,
-                action='modify/%s' % article_id, action_name = _('Modify article'),
+        return util.render().editor(
+                title = _('Modify - /%s')% board_name,
+                stylesheet = board_info.stylesheet,
+                action='modify/%s' % article_id, 
+                action_name = _('Modify article'),
                 board_path = board_name, board_desc = board_desc,
                 article_title = article_.aTitle, body = article_.aContent,
                 attachment = uploads, help_context = 'editor')
@@ -185,8 +192,10 @@ class article_actions:
             return util.render().error(error_message = _('NO_PERMISSION'), help_context='error')
         default_referer = os.path.join(util.link('/'), board_name, '+read', str(article_id))
         action=os.path.join(util.link('/'), board_name, '+delete', str(article_id))
-        return util.render().question(question=_('Do you want to delete the article?'),
-                board_path = board_name, board_desc = _('Confirmation'), title=_('Confirmation'),
+        return util.render().question(
+                question=_('Do you want to delete the article?'),
+                board_path = board_name, 
+                board_desc = _('Confirmation'), title=_('Confirmation'),
                 action = action,
                 referer=web.ctx.env.get('HTTP_REFERER', default_referer))
 

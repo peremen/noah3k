@@ -155,6 +155,17 @@ checked="checked" \
 % endif
         </td>
     </tr>
+    <!-- stylesheet -->
+    <tr>
+        <th>${_('Stylesheet')}</th>
+        <td>
+        <textarea class="flat_input" name="stylesheet" style="font-size: 1.2em; width: 550px; height: 360px">
+% if action == 'modify':
+${board_info.stylesheet}
+% endif
+</textarea>
+        </td>
+    </tr>
 
     <tr> <td colspan="2"> <hr /></td> </tr>
     <!-- 한줄 설명 -->

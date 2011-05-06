@@ -1,6 +1,11 @@
 <%inherit file="base.html" />
 <% from i18n import custom_gettext as _ %>
 <%! scripts = [ '/static/scripts/jquery-multifile.js', '/static/scripts/jquery-bbcode.js', '/static/scripts/editor.js' ] %>
+
+<style>
+${stylesheet}
+</style>
+
 <p>${action_name}</p>
 
 <form enctype="multipart/form-data" method="POST" action="/${board_path}/+${action}">
