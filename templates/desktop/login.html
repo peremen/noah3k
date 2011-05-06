@@ -14,12 +14,12 @@ ${util.format(util.get_login_notice())}
         <br />
     </div>
     <div style="padding-top: 20px; width: 42em; line-height:1.6em; text-align: left">
-    ${_('To join NOAH, click <a href="/+join/">here</a>')}
+    ${_('To join NOAH, click <a href="%s">here</a>' % util.link('/+join/'))}
 % if error is not UNDEFINED:
     <br /><span style="color: red">${error}</span>
 % endif
     <hr />
-    <form method="post" action="/+login">
+    <form method="post" action="${util.link('/+login')}">
         <input name="url" type="hidden" value="${referer}" />
         <div style="height: 1.8em">
             <div style="height: 1.8em; width: 18em; float: left">

@@ -1,0 +1,36 @@
+#top_container {
+    margin: auto;
+	margin-top: 20px;
+	padding: 20px;
+
+	width: 900px;
+	border: 0px solid;
+	border-radius: 20px;
+
+	background-color: white;
+}
+
+body {
+	background-color: #888;
+}
+
+div#header {
+    background-color: white;
+}
+
+div#header div#title {
+    vertical-align: bottom;
+    margin-left: 20px;
+    overflow: hidden;
+}
+
+div#header {
+    height: auto;
+}
+
+a.branding_title {
+    text-decoration: none;
+    color: gray;
+    font-size: 4.0em;
+    font-weight: bold;
+}

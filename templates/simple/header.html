@@ -1,0 +1,20 @@
+<% from i18n import custom_gettext as _
+import util, config
+from web import ctx
+%>
+<div id="title">
+<p style="float:left;">
+%if board_path is not UNDEFINED:
+<a class="board_heading" href="${util.link('/%s' % board_path)}" target="_blank">${board_desc}</a>&nbsp;&nbsp;<span class="board_path">${util.traverse_board_path(board_path)}</span>
+%elif board_desc is not UNDEFINED:
+<a class="board_heading" href="#">${board_desc}</a>
+% else:
+<a class="board_heading" href="#"></a>
+%endif
+</p>
+
+<div style="float:right;">
+<a class="branding_title" href="${util.link('/')}">${config.branding}</a>
+</div>
+
+</div>

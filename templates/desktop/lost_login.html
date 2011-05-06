@@ -1,5 +1,6 @@
 <%inherit file="base.html" />
-<% from i18n import custom_gettext as _ %>
+<%import util
+from i18n import custom_gettext as _ %>
 <p>
 ${_('To recover your login information, E-Mail address associated with your account is required.')}<br />
 ${_("If you didn't specified E-Mail address in your account, please contact <a href=\"/noah/ToSysop\">Administrator</a> directly.")}

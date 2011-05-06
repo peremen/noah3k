@@ -1,0 +1,130 @@
+<%! scripts = ['/static/scripts/jquery-1.4.2.min.js', '/static/scripts/jquery-cookie.js', '/static/scripts/default.js', '/static/scripts/sh/shCore.js', '/static/scripts/sh/shAutoloader.js']
+import user as U
+import config
+from i18n import custom_gettext as _
+from web import ctx %><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+%if lang is UNDEFINED:
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko">
+% else:
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="${lang}">
+% endif
+<head>
+% if title is UNDEFINED:
+    <title>${_('Error')}</title>
+% else:
+    <title>${title} - ${config.branding}</title>
+% endif
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/static/style/default.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/simple.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/sh/shCore.css">
+    <link rel="stylesheet" type="text/css" href="/static/style/sh/shThemeDefault.css">
+% if board_path is not UNDEFINED:
+% if feed is not UNDEFINED:
+    <link rel="alternate" type="application/rss+xml" href="/${board_path}/+rss" title="RSS 피드 (/${board_path})" />
+    <link rel="alternate" type="application/atom+xml" href="/${board_path}/+atom" title="Atom 피드 (/${board_path})" />
+% endif
+% endif
+%if feeds is not UNDEFINED:
+%for f in feeds:
+    <link rel="alternate" type="application/${f['type']}+xml" href="${f['path']}" title="${f['name']}" />
+% endfor
+% endif
+${self.head_scripts()}
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-368496-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script type="text/javascript"> 
+$(window).load(function(){ 
+	var e = document.createElement("script"); 
+	e.setAttribute("type", "text/javascript"); 
+	e.setAttribute("src", "http://browser-update.org/update.js"); 
+	document.body.appendChild(e); 
+
+	function path()
+	{
+		var args = arguments,
+		result = []
+		;
+	
+		for(var i = 0; i < args.length; i++)
+		result.push(args[i].replace('@', '/static/scripts/sh/'));
+	
+		return result
+	};
+
+	SyntaxHighlighter.autoloader.apply(null, path(
+			'applescript            @shBrushAppleScript.js',
+			'actionscript3 as3      @shBrushAS3.js',
+			'bash shell             @shBrushBash.js',
+			'coldfusion cf          @shBrushColdFusion.js',
+			'cpp c                  @shBrushCpp.js',
+			'c# c-sharp csharp      @shBrushCSharp.js',
+			'css                    @shBrushCss.js',
+			'delphi pascal          @shBrushDelphi.js',
+			'diff patch pas         @shBrushDiff.js',
+			'erl erlang             @shBrushErlang.js',
+			'groovy                 @shBrushGroovy.js',
+			'java                   @shBrushJava.js',
+			'jfx javafx             @shBrushJavaFX.js',
+			'js jscript javascript  @shBrushJScript.js',
+			'perl pl                @shBrushPerl.js',
+			'php                    @shBrushPhp.js',
+			'text plain             @shBrushPlain.js',
+			'py python              @shBrushPython.js',
+			'ruby rails ror rb      @shBrushRuby.js',
+			'sass scss              @shBrushSass.js',
+			'scala                  @shBrushScala.js',
+			'sql                    @shBrushSql.js',
+			'vb vbnet               @shBrushVb.js',
+			'xml xhtml xslt html    @shBrushXml.js',
+			'clojure clj scheme     @shBrushClojure.js'
+				));
+	SyntaxHighlighter.all();
+} );
+</script>
+</head>
+
+<body>
+	<div id="top_container">
+		<!-- 헤더프레임 -->
+		<div id="header">
+			<%include file="header.html" />
+		</div>
+
+		<!-- 사이드바 -->
+		<div id="sidebar">
+			<%include file="sidebar.html" />
+		</div>
+
+		<div id="body">
+	${next.body()}
+		</div> <!-- end of body -->
+		<hr style="clear:both;"/>
+
+	</div>
+</body>
+</html>
+<%def name="head_scripts()">
+<% 
+    all_scripts = []
+    t = self
+    while t:
+      all_scripts = getattr(t.module, 'scripts', []) + all_scripts
+      t = t.inherits
+%>
+% for script in all_scripts:
+    <script src="${script}" type="text/javascript"></script>
+% endfor
+</%def>

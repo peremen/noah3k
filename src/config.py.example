@@ -29,7 +29,7 @@ _path = os.path.dirname(__file__);
 _join = os.path.join
 
 attachment_disk_path = _join(_path, 'static', 'uploads')
-attachment_web_path = '/static/attachment/'
+attachment_web_path = '/static/uploads/'
 thumbnail_desktop_disk_path = _join(_path, 'static', 'thumbs_desktop')
 thumbnail_desktop_web_path = '/static/thumbs_desktop/'
 thumbnail_desktop_size = (800, 600)
@@ -65,22 +65,28 @@ desktop_render = render_mako(
     directories = [_join(_path, '../templates/desktop/').replace('\\','/'),],
     input_encoding = 'utf-8', output_encoding = 'utf-8',
 )
-classic_render = render_mako(
-    directories = [_join(_path, '../templates/classic/').replace('\\','/'),],
-    input_encoding = 'utf-8', output_encoding = 'utf-8',
-)
 mobile_render = render_mako(
     directories = [_join(_path, '../templates/mobile/').replace('\\','/'),],
     input_encoding = 'utf-8', output_encoding = 'utf-8',
 )
+simple_render = render_mako(
+    directories = [_join(_path, '../templates/simple/').replace('\\','/'),],
+    input_encoding = 'utf-8', output_encoding = 'utf-8',
+)
+test_render = render_mako(
+    directories = [_join(_path, '../templates/desktop/').replace('\\','/'),],
+    input_encoding = 'utf-8', output_encoding = 'utf-8',
+)
+
 render = {
         'default': desktop_render, 
-        'classic': classic_render, 
         'm': mobile_render,
+        'simple': simple_render, 
+		'test': test_render,
 }
 default_render = desktop_render
-theme_regex = '(classic/|m/)'
-theme_regex_main = '(classic|m)'
+theme_regex = '(classic/|m/|simple/|test/)'
+theme_regex_main = '(classic|m|simple|test)'
 
 
 #set database

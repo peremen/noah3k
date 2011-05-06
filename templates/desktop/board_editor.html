@@ -18,7 +18,7 @@ for i in acl.get_board_admins(board_info.bSerial):
 
 upper_admin_list.sort()
 %>
-<form name="write_form" method="post" action="/${board_path}/+${action}">
+<form name="write_form" method="post" action="${util.link('/%s/+%s' % (board_path, action))}">
 <table class="prop_table">
     <col style="width: 12em;" />
     <col />
@@ -184,11 +184,11 @@ ${board_info.bInformation}
         <td colspan="2">
 %if ctx.session.has_key('uid') and acl.is_allowed('board', board_info.bSerial, ctx.session.uid, 'delete'):
             <!-- 게시판 삭제 -->
-            <a class="button" href="/${board_path}/+delete">${_('Delete This Board')}</a>
+            <a class="button" href="${util.link('/%s/+delete' % board_path)}">${_('Delete This Board')}</a>
 % endif
 %if ctx.session.has_key('uid') and acl.is_allowed('board', board_info.bSerial, ctx.session.uid, 'create'):
             <!-- 게시판 생성  -->
-            <a class="button" href="/${board_path}/+create_board">${_('Create Child Board')}</a>
+            <a class="button" href="${util.link('/%s/+create_board' % board_path)}">${_('Create Child Board')}</a>
 % endif
             <!-- 완료/취소 버튼 -->			
             <input class="button" type="submit" name="ok" value="${_('Submit')}">

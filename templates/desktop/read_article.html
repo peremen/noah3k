@@ -14,7 +14,7 @@ def get_formatted_username(uid):
     else:
         return _("Former Member")
 %>
-<p>
+<div>
 % if board.get_board_info(board._get_board_id_from_path('/%s' % board_path)).show_avatar:
 <div class="avatar_body">
     %if user.has_profile_image(article['uSerial']):
@@ -104,7 +104,7 @@ ${util.format(article['aContent'])}
 
         <div id="input">
     % if not ctx.session.has_key('uid'):
-            ${_('To post commment, please <a href="${util.link("/+login")}">log in</a>')}
+            ${_('To post commment, please <a href="%s">log in</a>' % util.link("/+login"))}
     % else:
             <form name="comment" method="post" action="${util.link('/%s/+comment/%s' % (board_path, article['aSerial']))}">
                 ${_('Write Comment')}

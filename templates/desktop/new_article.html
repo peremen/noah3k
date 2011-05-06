@@ -1,6 +1,6 @@
 <%inherit file="base.html" />
 <%
-import user, article, acl, board
+import user, article, acl, board, util
 from web import ctx
 from i18n import custom_gettext as _
 def get_formatted_username(uid):
@@ -37,7 +37,7 @@ def get_formatted_username(uid):
         % endfor
     % endif
 </table>
-<a class="button" href="/+u/+clear_new_article">${_('Mark_All_Read')}</a> 
+<a class="button" href="${util.link('/+u/+clear_new_article')}">${_('Mark_All_Read')}</a> 
 % endif
 
 <%def name="put_article(a, i)" >
@@ -48,13 +48,13 @@ def get_formatted_username(uid):
 <tr class="odd">
 % endif
     <!-- 글번호 -->
-    <td align="center"><a href="${board_path}/+read/${a.aSerial}" class="articlelink">${a.aIndex}</a></td>
+    <td align="center"><a href="${util.link('%s/+read/%s' % (board_path, a.aSerial))}" class="articlelink">${a.aIndex}</a></td>
     <!-- 제목 --> 
     <td width="55%">
 %if a.aLevel > 0:
         <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (a.aLevel-1)}px" />
 %endif
-        <b><a href="${board_path}/+read/${a.aSerial}" class="articlelink">${a.aTitle}
+        <b><a href="${util.link('%s/+read/%s' % (board_path, a.aSerial))}" class="articlelink">${a.aTitle}
         <% cmt_cnt = article.get_comment_count(a.aSerial) %>
         % if cmt_cnt > 0:
         [${cmt_cnt}]
@@ -62,7 +62,7 @@ def get_formatted_username(uid):
         </a></b>
     </td>
     <!-- 글쓴이 -->
-    <td style="padding-left: 1em"><a class="articlelink" href="/+u/${a.aId}">${a.aId}</a></td>
+    <td style="padding-left: 1em"><a class="articlelink" href="${util.link('/+u/%s' % a.aId)}">${a.aId}</a></td>
     <!-- 날짜 -->
     <td align="center">${a.aDatetime.strftime('%Y-%m-%d')}</td>
     <!-- 조회수 -->

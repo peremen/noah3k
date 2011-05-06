@@ -139,6 +139,7 @@ class personal_actions:
         sig = data.sig
         introduction = data.introduction
         language = data.language
+        theme = data.theme
         user_info = user.get_user(user_id)
         change_lang = False
         if language != user_info[1].language:

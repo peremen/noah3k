@@ -19,22 +19,22 @@ upper_admin_list.sort()
     <div style="float: left; margin: 0 5px 0 5px;">
 %if ctx.session.has_key('uid') and acl.is_allowed('board', board_info.bSerial, ctx.session.uid, 'modify'):
         <!-- 게시판 수정 -->
-        <a class="button" href="/${board_path}/+modify">${_('Modify')}</a>
+        <a class="button" href="${util.link('/%s/+modify' % board_path)}">${_('Modify')}</a>
 ##        <!-- 게시판 백업 -->
-##        <a class="button" href="/${board_path}/+backup">${_('Backup')}</a>
+##        <a class="button" href="${util.link('/%s/+backup' % board_path)}">${_('Backup')}</a>
 ##        <!-- 게시판 통계 -->
 % endif
-##        <a class="button" href="/${board_path}/+statistics">${_('Statistics')}</a>
+##        <a class="button" href="${util.link('/%s/+statistics' % board_path)}">${_('Statistics')}</a>
     </div>
 
     <div style="float: right; margin: 0 5px 0 5px;">
 %if ctx.session.has_key('uid') and acl.is_allowed('board', board_info.bSerial, ctx.session.uid, 'delete'):
     <!-- 게시판 삭제 -->
-        <a class="button" href="/${board_path}/+delete">${_('Delete This Board')}</a>
+        <a class="button" href="${util.link('/%s/+delete' % board_path)}">${_('Delete This Board')}</a>
 % endif
 %if ctx.session.has_key('uid') and acl.is_allowed('board', board_info.bSerial, ctx.session.uid, 'create'):
     <!-- 게시판 생성  -->
-        <a class="button" href="/${board_path}/+create_board">${_('Create Child Board')}</a>
+        <a class="button" href="${util.link('/%s/+create_board' % board_path)}">${_('Create Child Board')}</a>
 % endif
     </div>
 </div>
