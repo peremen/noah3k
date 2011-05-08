@@ -64,9 +64,9 @@ def traverse_child_board(path):
 <a class="button" href="${util.link('/+u/+new_article')}">${_('New Article')}</a>
    <% read_cnt = pm.unread_count(ctx.session.uid) %>
    %if read_cnt > 0:
-       <a class="button" style="background: red; color: white;" target="_blank" href="${util.link('/+u/+inbox')}">${_('Mail')} (${read_cnt})</a>
+       <a class="button" style="background: red; color: white;" href="${util.link('/+u/+inbox')}">${_('Mail')} (${read_cnt})</a>
    % else:
-<a class="button" target="_blank" href="${util.link('/+u/+inbox')}">${_('Mail')}</a>
+<a class="button" href="${util.link('/+u/+inbox')}">${_('Mail')}</a>
    % endif
 <a class="button" href="${util.link('/+logout')}">${_('Logout')}</a>
 % endif
