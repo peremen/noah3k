@@ -17,6 +17,7 @@ from web_main import main_actions
 from web_noah2k_support import noah2k_support
 import i18n
 _ = i18n.custom_gettext
+import linesman.middleware
 
 urls = (
 # 다른 모든 action은 view_board 위로 올라가야 함.
@@ -149,6 +150,7 @@ class view_board:
             help_context = 'view_board')
 
 application = app.wsgifunc()
+#application = linesman.middleware.ProfilingMiddleware(app.wsgifunc(), session_history_path = os.path.join(os.path.dirname(__file__), 'error_report', 'sessions.dat'))
 
 if __name__ == "__main__":
     app.run()
