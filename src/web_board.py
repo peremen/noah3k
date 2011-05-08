@@ -59,12 +59,12 @@ class board_actions:
         board_info = board.get_board_info(board_id)
         board_desc = board_info.bDescription
         user_info = user.get_user(current_uid)[1]
-        return util.render().editor(
+        return util.render().article_edit(
                 title = _('Write article - %s') % (board_name),
                 action='write', action_name = _('Write article'),
                 board_path = board_name, board_desc = board_desc, lang="ko",
                 stylesheet = board_info.stylesheet,
-                body = '\n\n\n%s' % user_info['uSig'], help_context='editor')
+                body = '\n\n\n%s' % user_info['uSig'], help_context='article_edit')
 
     @util.error_catcher
     @util.session_helper
@@ -168,7 +168,7 @@ class board_actions:
             board_path = board_name
             if board_name[0] != '/':
                 board_name = '/%s' % (board_name)
-        return util.render().view_subboard_list(
+        return util.render().subboard_list(
                 lang="ko",
                 title = board_name,
                 board_path = board_path,
@@ -193,7 +193,7 @@ class board_actions:
         if board_id == 1:
             board_name = '^root'
         default_referer = posixpath.join(util.link('/'), board_name, '+summary')
-        return util.render().board_editor(
+        return util.render().board_edit(
                 action='create_board', board_info = board_info,
                 board_path = board_name, 
                 board_desc = board_info.bDescription, 
@@ -249,7 +249,7 @@ class board_actions:
             board_name = '^root'
         default_referer = posixpath.join(util.link('/'), board_name, '+summary')
 
-        return util.render().board_editor(
+        return util.render().board_edit(
                 action='modify', board_info = board_info,
                 board_path = board_name, 
                 board_desc = board_info.bDescription, 
@@ -281,7 +281,7 @@ class board_actions:
                 stylesheet = data.stylesheet,
                 description = data.description,
                 cover = data.information)
-        result = board.edit_board(current_uid, board_id, board_info)
+        result = board.board_edit(current_uid, board_id, board_info)
         if result[0] == False:
             return util.render().error(error_message = result[1], help_context='error')
         else:

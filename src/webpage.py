@@ -17,7 +17,7 @@ from web_main import main_actions
 from web_noah2k_support import noah2k_support
 import i18n
 _ = i18n.custom_gettext
-import linesman.middleware
+#import linesman.middleware
 
 urls = (
 # 다른 모든 action은 view_board 위로 올라가야 함.
@@ -140,14 +140,14 @@ class view_board:
         m = article.get_marked_article(board_id)
         t = article._get_total_page_count(board_id, config.page_size)
 
-        return util.render().view_board(lang="ko",
+        return util.render().board(lang="ko",
             title = board_info.bName,
             board_path = board_info.bName[1:],
             board_desc = board_info.bDescription,
             stylesheet = board_info.stylesheet,
             articles=a, marked_articles = m,
             total_page = t, page = page, feed = True,
-            help_context = 'view_board')
+            help_context = 'board')
 
 application = app.wsgifunc()
 #application = linesman.middleware.ProfilingMiddleware(app.wsgifunc(), session_history_path = os.path.join(os.path.dirname(__file__), 'error_report', 'sessions.dat'))

@@ -1,0 +1,68 @@
+<%inherit file="base.html" />
+<% from i18n import custom_gettext as _ %>
+<%! scripts = [ '/static/scripts/jquery-multifile.js', '/static/scripts/jquery-bbcode.js', '/static/scripts/editor.js' ] %>
+
+<style>
+${stylesheet}
+</style>
+
+<p>${action_name}</p>
+
+<form enctype="multipart/form-data" method="POST" action="/${board_path}/+${action}">
+<table class="prop_table">
+    <col style="width: 6em;" />
+    <col />
+    <tr>
+        <th>${_('Title')}</th>
+        <td><input class="flat_input" name="title" tabindex="1" type="text" maxlength="255" style="font-size: 0.9em; width: 550px; height: 1.6em" \
+%if article_title is not UNDEFINED:
+	value="${article_title}"\
+%endif
+        /></td>
+    </tr>
+    <tr>
+        <th>${_('Content')}</th>
+        <td>
+        <a href="/+help/editor#bbcode" target="_blank">${_('(BBCode Help)')}</a>
+%if body is not UNDEFINED:
+        <textarea id="e_content" class="flat_input" name="content" tabindex="2" style="font-size: 0.9em; width: 550px; height: 360px" >${body}</textarea>
+% else:
+        <textarea id="e_content" class="flat_input" name="content" tabindex="2" style="font-size: 0.9em; width: 550px; height: 360px" />
+%endif
+        </td>
+    </tr>
+%if attachment is not UNDEFINED:
+<% i = 1 %>
+%for a in attachment:
+    <tr>
+        <th>${_('Attachment %s' % i)}</th>
+        <td><span>${a[1].decode('utf-8')} <input name="delete" type="checkbox" value="${a[1].decode('utf-8')}" /> ${_('Delete')}</span></td>
+    </tr>
+<% i = i + 1 %>
+% endfor
+% endif
+
+    <tr>
+        <th>${_('Attachment')}</th>
+        <td><input name="new_attachment" tabindex="3" class="multi" type="file" /></td>
+    </tr>
+
+%if action_name == _('Modify article'):
+    <tr>
+        <th>${_("MARK_AS_UNREADED")}</th>
+        <td><input type="checkbox" tabindex="4" name="unreaded" value="True"/></td>
+    </tr>
+%endif
+
+    <tr class="final_buttons">
+        <td colspan="2">
+            <input class="button" type="submit" tabindex="5" name="ok" value="${_('Submit')}">
+            <input class="button" type="button" tabindex="6" value="${_('Go Back')}" onclick="history.back()">
+        </td>
+    </tr>
+</table>
+</form>
+
+<script type="text/javascript">
+    $("#editor_title").focus();
+</script>

@@ -1,0 +1,212 @@
+<%inherit file="base.html" />
+<% import user, board, util, acl
+import posixpath
+from web import ctx
+from i18n import custom_gettext as _ 
+def get_userid(uid):
+    u = user.get_user(uid)[1]
+    return '%s' % u.uId
+
+def get_formatted_username(uid):
+    u = user.get_user(uid)[1]
+    return "%(id)s (%(nick)s)" % {'id': u['uId'], 'nick':u['uNick']}
+
+upper_admin_list = []
+for i in acl.get_board_admins(board_info.bSerial):
+    if (i != board_info.uSerial) and (i != 1):
+        upper_admin_list.append(get_formatted_username(i))
+
+upper_admin_list.sort()
+%>
+<form name="write_form" method="post" action="${util.link('/%s/+%s' % (board_path, action))}">
+<table class="prop_table">
+    <col style="width: 12em;" />
+    <col />
+    <tr>
+        <th>${_('Location')}</th>
+        <td>
+        % if action == 'modify':
+            <input name="path" class="flat_input" type="text" value="${posixpath.dirname(board_info.bName)}" style="width: 300px;" />
+        %elif action == 'create_board':
+            ${board_info.bName}
+        % endif
+        </td>
+    </tr>
+    <!-- 게시판 이름 -->
+    <tr>
+        <th>${_('Name')}</th>
+        <td>
+        % if action == 'modify':
+            <input name="name" class="flat_input" type="text" maxlength="255" style="width:300px" value="${posixpath.basename(board_info.bName)}" />
+        %elif action == 'create_board':
+            <input name="name" class="flat_input" type="text" maxlength="255" style="width:300px" />
+        % endif
+        </td>
+    </tr>
+    <!-- 관리자 -->
+    <tr>
+        <th>${_('Admin')}</th>
+        <td>
+            <input name="owner" class="flat_input" type="text" size="12" value="${get_userid(board_info.uSerial)}" style="width: 300px;" />
+        </td>
+    </tr>
+% if len(upper_admin_list) > 0:
+    <!-- 상위 관리자 -->
+    <tr>
+        <th>${_('Upper Admin(s)')}</th>
+        <td>${', '.join(upper_admin_list)}</td>
+    </tr>
+% endif
+    <tr> <td colspan="2"> <hr /></td> </tr>
+    <!-- 타입 -->
+    <tr>
+        <th>${_('Type')}</th>
+        <td>
+% if action == 'modify':
+        <input id="radio_dir" type="radio" name="type" onclick="dirclick()" value="0" \
+        % if board_info.bType == 0:
+checked="checked" \
+        %endif 
+        />
+% elif action == 'create_board':
+        <input id="radio_dir" type="radio" name="type" onclick="dirclick()" value="0">
+% endif
+        <label for="radio_dir">${_('Folder')}</label>
+% if action == 'modify':
+        <input id="radio_board" type="radio" name="type" onclick="boardclick()" value="1" \
+        % if board_info.bType == 1:
+checked="checked" \
+        %endif 
+        />
+% elif action == 'create_board':
+        <input id="radio_board" type="radio" name="type" onclick="boardclick()" value="1" checked="checked">
+% endif
+        <label for="radio_board">${_('Board')}</label>
+        <!--
+% if action == 'modify':
+        <input id="radio_alias" type="radio" name="type" onclick="boardclick()" value="2" \
+        % if board_info.bType == 2:
+checked="checked" \
+        %endif 
+        />
+% elif action == 'create_board':
+        <input id="radio_alias" type="radio" name="type" onclick="boardclick()" value="2">
+% endif
+<label for="radio_alias">${_('Alias')}</label> -->
+        </td>
+    </tr>
+    <!-- 커멘트 여부 -->
+    <tr>
+        <th><label for="commentable">${_('Allow Comment')}</label></th>
+        <td>
+% if action == 'modify':
+        <input id="commentable" type="checkbox" name="commentable" value="yes" \
+    % if board_info.bComment == 1:
+checked="checked" \
+    %endif 
+        />
+% elif action == 'create_board':
+        <input id="commentable" type="checkbox" name="commentable" value="yes" checked="checked" />
+% endif
+        </td>
+    </tr>
+    <!-- 글쓰기 여부 -->
+    <tr>
+        <th><label for="writable">${_('Allow Guest Writing')}</label></th>
+        <td>
+% if action == 'modify':
+        <input id="writable" type="checkbox" name="writable" value="yes" \
+    % if board_info.bWrite == 1:
+checked="checked" \
+    %endif 
+/>
+% elif action == 'create_board':
+        <input id="writable" type="checkbox" name="writable" value="yes" checked="checked" />
+% endif
+        </td>
+    </tr>
+    <!-- 통계 집계 여부 -->
+    <tr>
+        <th><label for="indexable">${_('Include in Search')}</label></th>
+        <td>
+% if action == 'modify':
+        <input id="indexable" type="checkbox" name="indexable" value="yes" \
+    % if board_info.indexable == 1:
+checked="checked" \
+    %endif 
+/>
+% elif action == 'create_board':
+        <input id="indexable"  type="checkbox" name="writable" value="yes" checked="checked" />
+% endif
+        </td>
+    </tr>
+    <!-- 아바타 표시 여부 -->
+    <tr>
+        <th><label for="show_avatar">${_('Show Profile Images')}</label></th>
+        <td>
+% if action == 'modify':
+        <input id="show_avatar" type="checkbox" name="show_avatar" value="yes" \
+    % if board_info.show_avatar == 1:
+checked="checked" \
+    %endif 
+/>
+% elif action == 'create_board':
+        <input id="show_avatar" type="checkbox" name="writable" value="yes" checked="checked" />
+% endif
+        </td>
+    </tr>
+    <!-- stylesheet -->
+    <tr>
+        <th>${_('Stylesheet')}</th>
+        <td>
+        <textarea class="flat_input" name="stylesheet" style="font-size: 1.2em; width: 550px; height: 360px">
+% if action == 'modify':
+${board_info.stylesheet}
+% endif
+</textarea>
+        </td>
+    </tr>
+
+    <tr> <td colspan="2"> <hr /></td> </tr>
+    <!-- 한줄 설명 -->
+    <tr>
+        <th>${_('Short Description')}</th>
+        <td><input class="flat_input" name="description" type="text" maxlength="255" style="width: 550px"
+% if action == 'modify':
+value="${board_info.bDescription}" /> \
+% else:
+/> \
+% endif
+        </td>
+    </tr>
+
+    <!-- 한바닥 설명 -->
+    <tr>
+        <th>${_('Long Description')}</th>
+        <td>
+        <textarea class="flat_input" name="information" style="font-size: 1.2em; width: 550px; height: 360px">
+% if action == 'modify':
+${board_info.bInformation}
+% endif
+        </textarea>
+        </td>
+    </tr>
+    <tr class="final_buttons">
+        <td colspan="2">
+%if ctx.session.has_key('uid') and acl.is_allowed('board', board_info.bSerial, ctx.session.uid, 'delete'):
+            <!-- 게시판 삭제 -->
+            <a class="button" href="${util.link('/%s/+delete' % board_path)}">${_('Delete This Board')}</a>
+% endif
+%if ctx.session.has_key('uid') and acl.is_allowed('board', board_info.bSerial, ctx.session.uid, 'create'):
+            <!-- 게시판 생성  -->
+            <a class="button" href="${util.link('/%s/+create_board' % board_path)}">${_('Create Child Board')}</a>
+% endif
+            <!-- 완료/취소 버튼 -->			
+            <input class="button" type="submit" name="ok" value="${_('Submit')}">
+            <input class="button" type="submit" name="cancel" value="${_('Cancel')}">
+            <input type="hidden" name="referer" value="${referer}">
+        </td>
+    </tr>
+</table>
+</form>
+

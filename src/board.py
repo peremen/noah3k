@@ -118,7 +118,7 @@ def create_board(parent_id, settings):
 
     return (True, 'SUCCESS')
 
-def edit_board(current_uid, board_id, settings):
+def board_edit(current_uid, board_id, settings):
     # settings로 넘어오는 내용
     # path, name: 보드 전체 경로
     # description: 보드 짧은 설명

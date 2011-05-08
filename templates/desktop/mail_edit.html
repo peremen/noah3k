@@ -1,0 +1,46 @@
+<% from web import ctx
+from i18n import custom_gettext as _ %>
+<%inherit file="base.html" />
+<h1 style="font-size: 1.6em;" >${_('Write Private Message')}</h1>
+<form name="write_form" method="post" action="/+u/+write_message">
+<table class="prop_table">
+    <col style="width: 6em;" />
+    <col />
+    <tr>
+        <th>${_('To')}</th>
+        <td>
+% if mail_receiver is UNDEFINED:
+        <input class="flat_input" name="id" type="text" style="font-size: 0.9em; width: 200px; height: 1.6em" />
+% else:
+        <input class="flat_input" name="id" type="text" style="font-size: 0.9em; width: 200px; height: 1.6em" value="${mail_receiver}"/>
+% endif
+        </td>
+    </tr>
+    <tr>
+        <th>${_('Title')}</th>
+        <td>
+% if mail_title is UNDEFINED:
+        <input class="flat_input" name="title" type="text" maxlength="255" style="font-size: 0.9em; width: 500px; height: 1.6em" />
+% else:
+        <input class="flat_input" name="title" type="text" maxlength="255" style="font-size: 0.9em; width: 500px; height: 1.6em" value="${mail_title}" />
+% endif
+        </td>
+    </tr>
+    <tr>
+        <th>${_('Content')}</th>
+        <td>
+        <textarea class="flat_input" name="body" style="font-size: 0.9em; width: 500px; height: 360px">
+% if mail_body is not UNDEFINED:
+${mail_body}
+% endif
+        </textarea>
+        </td>
+    </tr>
+    <tr class="final_buttons">
+        <td colspan="2">
+            <input class="button" type="submit" name="Submit" value="${_('Write Message')}" />
+            <input class="button" type="button" value="${_('Go Back')}" onclick="history.back()" />
+        </td>
+    </tr>
+</table>
+</form>

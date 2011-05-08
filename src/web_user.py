@@ -185,7 +185,7 @@ class personal_actions:
     @util.session_helper
     def my_board_get(self, current_uid = -1):
         my_board = user.get_owned_board(current_uid)
-        return util.render().view_subboard_list(
+        return util.render().subboard_list(
             child_boards = my_board, board_path = '',
             title=_('My Boards'), board_desc = _('My Boards'),
             list_type = _('My Boards'))
@@ -196,7 +196,7 @@ class personal_actions:
         fav_board = []
         for b in user.get_favorite_board(current_uid):
             fav_board.append(board.get_board_info(b.bSerial))
-        return util.render().view_subboard_list(
+        return util.render().subboard_list(
             child_boards = fav_board, board_path = '',
             title=_('Favorite Boards'), board_desc = _('Favorite Boards'),
             list_type = _('Favorite Boards'))
@@ -240,7 +240,7 @@ class personal_actions:
         if mail.mReceiverSerial != current_uid:
             raise web.unauthorized(util.render().error(error_message=_('NO_PERMISSION'), help_context='error'))
         quote_text = _('From message \"%s\":') % mail.mTitle
-        return render['default'].editor_mail(
+        return render['default'].mail_edit(
             title = _('Write Reply'),
             mail_title = 'Re: %s' % mail.mTitle,
             mail_body = '\n\n[quote=%s]%s\n[/quote]' % (quote_text, mail.mContent),
@@ -249,7 +249,7 @@ class personal_actions:
     @util.error_catcher
     @util.session_helper
     def write_message_get(self, current_uid = -1):
-        return render['default'].editor_mail(title = _('Write Message'))
+        return render['default'].mail_edit(title = _('Write Message'))
 
     @util.error_catcher
     @util.session_helper
@@ -288,7 +288,7 @@ class personal_actions:
         if mail.mReceiverSerial != current_uid:
             raise web.unauthorized(util.render().error(error_message=_('NO_PERMISSION'), help_context='error'))
         pm.mark_as_read(message_id)
-        return render['default'].read_mail(mail = mail, 
+        return render['default'].mail(mail = mail, 
                 title = '%s - %s' % (_('Read Message'), mail.mTitle)
                 )
 
@@ -311,8 +311,11 @@ class personal_actions:
             raise web.unauthorized(util.render().error(error_message=_('NO_PERMISSION'), help_context='error'))
         default_referer = posixpath.join(util.link('/+u'), '+inbox')
         action='%s?message_id=%s' % (posixpath.join(util.link('/+u'), '+delete_message'), message_id)
-        return util.render().question(question=_('Do you want to delete the message?'),
-                board_path = '', board_desc = _('Confirmation'), title=_('Confirmation'),
+        return util.render().question(
+				question=_('Do you want to delete the message?'),
+                board_path = '', 
+				board_desc = _('Confirmation'), 
+				title=_('Confirmation'),
                 action = action,
                 referer=web.ctx.env.get('HTTP_REFERER', default_referer))
 

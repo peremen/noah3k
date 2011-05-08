@@ -1,0 +1,34 @@
+<%inherit file="base.html" />
+<% from i18n import custom_gettext as _ %>
+<h3>${action_name}</h3>
+<form name="write_form" enctype="multipart/form-data" method="POST" action="/m/${board_path}/+${action}">
+${_('Title')}
+%if article_title is UNDEFINED:
+    <input name="title" type="text" style="width: 60%;"maxlength="255" value="">
+%else:
+    <input name="title" type="text" style="width: 60%;" maxlength="255" value="${article_title}">
+%endif
+<br />
+
+${_('Content')} <a href="/m/+help/editor#bbcode" target="_blank">${_('(BBCode Help)')}</a><br />
+%if body is UNDEFINED:
+    <textarea name="content" style="width: 100%; height: 320px;"></textarea>
+%else:
+    <textarea name="content" style="width: 100%; height: 320px;">${body}</textarea>
+%endif
+<br />
+%if attachment is not UNDEFINED:
+    <% i = 1 %>
+    %for a in attachment:
+    ${_('Attachment %s') % i}: ${a[1].decode('utf-8')} <input name="delete" type="checkbox" value="${a[1].decode('utf-8')}" /> (${_('Delete')})<br />
+    <% i = i + 1 %>
+    % endfor
+% endif
+<br />
+${_('Attachment')} <input name="new_attachment" class="multi" type="file" />
+<br />
+<br />
+<input type="submit" name="ok" value="${_('Submit')}">
+<input type="button" value="${_('Go Back')}" onclick="history.back()">
+</form>
+<!-- <iframe id="sessionKeeper" src="sessionkeeper.jsp" scrolling="no" frameborder="0" width="1px" height="1px"></iframe> -->

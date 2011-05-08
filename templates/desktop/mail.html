@@ -1,0 +1,42 @@
+<%inherit file="base.html" />
+<% import util, user, config, posixpath
+from web import ctx
+from i18n import custom_gettext as _
+def get_formatted_username(uid):
+    u = user.get_user(uid)
+    if u[0]:
+        return "%(id)s (%(nick)s)" % {'id': u[1]['uId'], 'nick': u[1]['uNick']}
+    else:
+        return _('Former Member')
+%>
+<h1 style="font-size: 1.6em;" >메시지 보기</h1>
+% if mail is UNDEFINED:
+${_('Internal Error')}
+<% return %>
+% endif
+<div class="avatar_body">
+    %if user.has_profile_image(mail.mSenderSerial):
+    <img src="${posixpath.join(config.pi_web_path, '%s.png' % mail.mSenderSerial)}" class="avatar_large" alt="Avatar" />
+    % else:
+    <img src="/static/image/no_avatar.png" class="avatar_large" alt="Avatar" />
+    % endif
+</div>
+<span class="title">${mail.mTitle}</span>&nbsp;&nbsp;&nbsp;${get_formatted_username(mail.mSenderSerial)}
+<p style="font-family: monospace;" class="small">${_('Written on %s') % mail.mDatetime.strftime('%Y-%m-%d %H:%M:%S')}</p>
+<div id="content">
+${util.format(mail.mContent)}
+</div>
+<!-- 버튼: 목록/편지쓰기/답장/삭제 -->
+<div class="menu">
+<ul>
+    <!-- 목록 -->
+    <li><a class="button" href="/+u/+inbox">${_('List')}</a></li>
+    <!-- 답장 쓰기 -->
+    <li><a class="button" href="/+u/+reply_message?message_id=${mail.mSerial}">${_('Reply')}</a></li>
+    <!-- 편지 쓰기 -->	
+    <li><a class="button" href="/+u/+write_message">${_('Write Message')}</a></li>
+    <!-- 삭제 --> 
+    <li><a class="button" href="/+u/+delete_message?message_id=${mail.mSerial}">${_('Delete')}</a></li>
+</ul>
+</div>
+<br />

@@ -70,7 +70,7 @@ class article_actions:
         uploads = attachment.get_attachment(article_id)
         thumbs = attachment.get_thumbnail(article_id, web.config.theme)
 
-        return util.render().read_article(article = a,
+        return util.render().article(article = a,
             title = u"%s - %s" % (a.aIndex, a.aTitle),
             stylesheet = board_info.stylesheet,
             board_path = board_name, board_desc = board_desc,
@@ -90,14 +90,14 @@ class article_actions:
         article_ = article.get_article(board_id, article_id)
         quote_text = _('From %s\'s Article %s:') % (user._get_username_from_uid(article_.uSerial), util.remove_bracket(article_.aTitle))
         body = '\n\n\n[quote=%s]%s\n[/quote]\n\n%s' % (quote_text, article_.aContent, user_info.uSig)
-        return util.render().editor(
+        return util.render().article_edit(
                 title = _('Reply - /%s') % board_name,
                 stylesheet = board_info.stylesheet,
                 action='reply/%s' % article_id, 
                 action_name = _('Reply to the article'),
                 board_path = board_name, board_desc = board_desc,
                 body = body, article_title = article_.aTitle,
-                help_context = 'editor')
+                help_context = 'article_edit')
 
     @util.error_catcher
     @util.session_helper
@@ -135,14 +135,14 @@ class article_actions:
         board_desc = board_info.bDescription
         article_ = article.get_article(board_id, article_id)
         uploads = attachment.get_attachment(article_id)
-        return util.render().editor(
+        return util.render().article_edit(
                 title = _('Modify - /%s')% board_name,
                 stylesheet = board_info.stylesheet,
                 action='modify/%s' % article_id, 
                 action_name = _('Modify article'),
                 board_path = board_name, board_desc = board_desc,
                 article_title = article_.aTitle, body = article_.aContent,
-                attachment = uploads, help_context = 'editor')
+                attachment = uploads, help_context = 'article_edit')
 
     @util.error_catcher
     @util.session_helper
