@@ -216,7 +216,7 @@ class personal_actions:
         else:
             page = 1
         mails = pm.inbox(user_id, page, config.mail_size)
-        return config.default_render.inbox(mails = mails, 
+        return config.render().inbox(mails = mails, 
                 mailbox_name = _('Inbox'),
                 title = '%s - %s' % (_('Inbox'), usr['uId']),
                 page = page, total_page = pm.inbox_count(user_id) / config.mail_size + 1)
@@ -240,7 +240,7 @@ class personal_actions:
         if mail.mReceiverSerial != current_uid:
             raise web.unauthorized(util.render().error(error_message=_('NO_PERMISSION'), help_context='error'))
         quote_text = _('From message \"%s\":') % mail.mTitle
-        return render['default'].mail_edit(
+        return config.render().mail_edit(
             title = _('Write Reply'),
             mail_title = 'Re: %s' % mail.mTitle,
             mail_body = '\n\n[quote=%s]%s\n[/quote]' % (quote_text, mail.mContent),
@@ -249,7 +249,7 @@ class personal_actions:
     @util.error_catcher
     @util.session_helper
     def write_message_get(self, current_uid = -1):
-        return render['default'].mail_edit(title = _('Write Message'))
+        return config.render()mail_edit(title = _('Write Message'))
 
     @util.error_catcher
     @util.session_helper
@@ -288,7 +288,7 @@ class personal_actions:
         if mail.mReceiverSerial != current_uid:
             raise web.unauthorized(util.render().error(error_message=_('NO_PERMISSION'), help_context='error'))
         pm.mark_as_read(message_id)
-        return render['default'].mail(mail = mail, 
+        return config.render().mail(mail = mail, 
                 title = '%s - %s' % (_('Read Message'), mail.mTitle)
                 )
 
