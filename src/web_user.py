@@ -216,7 +216,7 @@ class personal_actions:
         else:
             page = 1
         mails = pm.inbox(user_id, page, config.mail_size)
-        return config.render().inbox(mails = mails, 
+        return util.render().inbox(mails = mails, 
                 mailbox_name = _('Inbox'),
                 title = '%s - %s' % (_('Inbox'), usr['uId']),
                 page = page, total_page = pm.inbox_count(user_id) / config.mail_size + 1)
@@ -249,7 +249,7 @@ class personal_actions:
     @util.error_catcher
     @util.session_helper
     def write_message_get(self, current_uid = -1):
-        return config.render()mail_edit(title = _('Write Message'))
+        return config.render().mail_edit(title = _('Write Message'))
 
     @util.error_catcher
     @util.session_helper
