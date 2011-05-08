@@ -107,15 +107,15 @@ def add_attachment(article_id, filename, content):
     upload.close()
     if mime_type.startswith('image'):
         image_file = StringIO.StringIO(content)
-	if pil:
-            thumb_desktop = Image.open(image_file)
-            thumb_desktop.thumbnail(config.thumbnail_desktop_size, Image.ANTIALIAS)
-            thumb_desktop.save(os.path.join(thumb_path, filename))
-    
-            image_file_2 = StringIO.StringIO(content)
-            thumb_mobile = Image.open(image_file_2)
-            thumb_mobile.thumbnail(config.thumbnail_mobile_size, Image.ANTIALIAS)
-            thumb_mobile.save(os.path.join(thumb_m_path, filename))
+    if pil:
+        thumb_desktop = Image.open(image_file)
+        thumb_desktop.thumbnail(config.thumbnail_desktop_size, Image.ANTIALIAS)
+        thumb_desktop.save(os.path.join(thumb_path, filename))
+
+        image_file_2 = StringIO.StringIO(content)
+        thumb_mobile = Image.open(image_file_2)
+        thumb_mobile.thumbnail(config.thumbnail_mobile_size, Image.ANTIALIAS)
+        thumb_mobile.save(os.path.join(thumb_m_path, filename))
     
 def remove_attachment(article_id, filename):
     # 첨부 파일을 디스크에서 삭제함

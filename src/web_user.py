@@ -98,8 +98,8 @@ class personal_actions:
     @util.error_catcher
     @util.session_helper
     def clear_new_article_get(self, current_uid = -1):
-		user.read_all_articles(current_uid)
-		raise web.seeother(util.link('/+u/+new_article'))
+        user.read_all_articles(current_uid)
+        raise web.seeother(util.link('/+u/+new_article'))
 
     @util.error_catcher
     @util.session_helper
@@ -312,10 +312,10 @@ class personal_actions:
         default_referer = posixpath.join(util.link('/+u'), '+inbox')
         action='%s?message_id=%s' % (posixpath.join(util.link('/+u'), '+delete_message'), message_id)
         return util.render().question(
-				question=_('Do you want to delete the message?'),
+                question=_('Do you want to delete the message?'),
                 board_path = '', 
-				board_desc = _('Confirmation'), 
-				title=_('Confirmation'),
+                board_desc = _('Confirmation'), 
+                title=_('Confirmation'),
                 action = action,
                 referer=web.ctx.env.get('HTTP_REFERER', default_referer))
 

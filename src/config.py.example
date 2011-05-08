@@ -80,7 +80,7 @@ test_render = render_mako(
 
 render = {
         'default': desktop_render, 
-		'classic': desktop_render,
+        'classic': desktop_render,
         'm': mobile_render,
         'simple': simple_render, 
 }
