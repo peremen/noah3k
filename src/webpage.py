@@ -102,6 +102,7 @@ class view_board:
         if board_name == '*' or board_name == '^root':
             v = board_actions()
             return v.subboard_list_get()
+
         board_id = board._get_board_id_from_path(board_name)
         if board_id < 0:
             #try to find regex match
@@ -122,23 +123,20 @@ class view_board:
             uid = web.ctx.session.uid
             user.update_unreaded_articles_board(uid, board_id)
 
-
         qs = web.ctx.query
         if len(qs) > 0:
             qs = qs[1:]
             qs = parse_qs(qs)
 
+
+        t = article._get_total_page_count(board_id, config.page_size)
         if qs:
             page = int(qs['page'][0])
         else:
-            page = article._get_total_page_count(board_id, config.page_size)
+            page = t
 
-        # bSerial: board_id, bName: 전체 경로, uSerial: 보대, bParent: 부모 보드, bDescription: 보드 짧은 설명
-        # bDatetime: 개설 시간, bInformation: 보드 긴 설명, bType = 디렉터리/보드/블로그,
-        # bReply: bWrite: bComment: 모름
         a = article.get_article_list(board_id, config.page_size, page)
         m = article.get_marked_article(board_id)
-        t = article._get_total_page_count(board_id, config.page_size)
 
         return util.render().board(lang="ko",
             title = board_info.bName,

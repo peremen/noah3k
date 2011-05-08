@@ -42,6 +42,44 @@ class board_actions:
             raise web.notfound(util.render().error(error_message = _('INVALID_ACTION'), help_context='error'))
 
     @util.error_catcher
+    def all_get(self, board_name, board_id, current_uid = -1):
+        board_id = board._get_board_id_from_path(board_name)
+        if board_id < 0:
+            path = board._get_path_from_board_id(board_id)
+            raise web.seeother(util.link(path))
+
+        board_info = board.get_board_info(board_id)
+        board_name = board_info.bName;
+
+        if web.ctx.session.has_key('uid'):
+            uid = web.ctx.session.uid
+            user.update_unreaded_articles_board(uid, board_id)
+
+        qs = web.ctx.query
+        if len(qs) > 0:
+            qs = qs[1:]
+            qs = parse_qs(qs)
+
+        t = article._get_recurse_page_count(board_name, config.page_size)
+        if qs:
+            page = int(qs['page'][0])
+        else:
+            page = t
+
+        a = article.get_recurse_article_list(board_name, 
+            config.page_size, page)
+        m = article.get_marked_article(board_id)
+
+        return util.render().board(lang="ko",
+            title = board_info.bName,
+            board_path = board_info.bName[1:],
+            board_desc = board_info.bDescription,
+            stylesheet = board_info.stylesheet,
+            articles=a, marked_articles = m,
+            total_page = t, page = page, feed = True,
+            help_context = 'board')
+
+    @util.error_catcher
     @util.session_helper
     def subscribe_get(self, board_name, board_id, current_uid = -1):
         referer = web.ctx.env.get('HTTP_REFERER', util.link('/'))
