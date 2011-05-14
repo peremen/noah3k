@@ -293,3 +293,9 @@ def render():
             return config.render[web.config.theme]
     except:
         return config.render[web.config.theme]
+
+def strip_path(path):
+    elems = path.split('/')
+    for i in range(len(elems)-1):
+        elems[i] = elems[i][:1]
+    return '/'.join(elems)

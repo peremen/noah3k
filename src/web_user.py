@@ -352,3 +352,25 @@ class personal_actions:
                 title = _('Manage subscribed and favorite boards'),
                 board_desc = _('Manage subscribed and favorite boards'),
                 )
+
+    @util.error_catcher
+    @util.session_helper
+    def my_article_get(self, current_uid = -1):
+        qs = web.ctx.query
+        if len(qs) > 0:
+            qs = qs[1:]
+            qs = parse_qs(qs)
+
+        t = (user.get_post_count(current_uid) + config.page_size -1) / config.page_size
+        if qs:
+            page = int(qs['page'][0])
+        else:
+            page = 1
+
+        my_article = user.get_article_list_by_user(current_uid, config.page_size, page)
+        return util.render().my_article(lang="ko",
+            title = _('My Posts'),
+            board_desc = _('My Posts'),
+            articles=my_article,
+            total_page = t, page = page,
+            help_context = 'board')

@@ -50,7 +50,7 @@ def get_article_list(board_id, page_size, page_number):
         if(end_index > total_article):
             end_index = total_article
     val = dict(board_id = board_id, begin_index = begin_index, end_index = end_index)
-    result = db.query('select * from Articles natural left join (select aSerial, COUNT(*) as comment_count from Comments where bSerial = $board_id group by aSerial) as comment_group where bSerial = $board_id and aIndex BETWEEN $begin_index AND $end_index order by aIndex ASC', val)
+    result = db.query('SELECT * FROM Articles NATURAL LEFT JOIN (SELECT aSerial, COUNT(*) AS comment_count FROM Comments WHERE bSerial = $board_id GROUP BY aSerial) AS comment_group WHERE bSerial = $board_id AND aIndex BETWEEN $begin_index AND $end_index ORDER BY aIndex ASC', val)
 
     return result
 

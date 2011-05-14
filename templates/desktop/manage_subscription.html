@@ -1,0 +1,55 @@
+<%inherit file="base.html" />
+<% from i18n import custom_gettext as _
+from web import ctx
+import board, acl, util %>
+
+<span class="title">${_('Subscribed Boards')}</span>
+<% put_boards(subscribed_boards, 'subscription') %>
+
+<span class="title">${_('Favorite Boards')}</span>
+<% put_boards(favorite_boards, 'favorite') %>
+
+<%def name="put_boards(boards, type)">
+<% print boards %>
+<table border="0" cellspacing="0" cellpadding="4" width="100%" class="list">
+    <tr class="head">
+        <th width="20%">${_('Name')}</th>
+        <th width="73%">${_('Description')}</th>
+        <th width="7%">${_('Delete')}</th>
+    </tr>
+    % if len(boards) == 0:
+    <tr>
+        <td colspan="3">${_('No boards.')}</td>
+    </tr>
+    %else:
+    <% i = 1 %>
+    % for dest_board in boards:
+    % if i%2 == 0:
+    <tr class="even">
+    % else:
+    <tr class="odd">
+    %endif
+    <% i = i + 1 %>
+        <td width="20%">
+            %if dest_board.bType == 0:
+            <img class="type" src="/static/image/folder.png" alt="디렉터리" />
+            %else:
+            <img class="type" src="/static/image/board.png" alt="게시판" />
+            %endif
+            <a href= "${dest_board.bName}" class="boardlink">${dest_board.bName}&nbsp;</a>
+        </td>
+        <td width="73%">
+            <a href= "${dest_board.bName}" class="boardlink">${dest_board.bDescription}&nbsp; </a>
+        </td>
+        <td style="text-align: center;"><input type="checkbox" name="${type}_delete_${dest_board.bSerial}" /> </td>
+    </tr>
+    % endfor
+    % endif
+</table>
+<p>
+<a class="button">${_('Add')}</a>
+<a class="button">${_('Delete')}</a>
+<a class="button"><img src="/static/image/feed.png" /> RSS</a> 
+<a class="button"><img src="/static/image/feed.png" /> Atom</a> 
+</p>
+</%def>

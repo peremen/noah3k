@@ -495,3 +495,25 @@ def get_password_salt(uid):
 def generate_random_password(length = 8):
     chars = string.letters + string.digits
     return ''.join([random.choice(chars) for i in range(length)])
+
+def get_article_list_by_user(uid, page_size, page_number):
+    val = dict(uid = uid)
+    total_article = get_post_count(uid)
+    if total_article < 0:
+        return []
+
+    last_page = (total_article + page_size - 1) / page_size
+
+    if not (page_number >= 1 and page_number <= last_page):
+        return []
+
+    begin = page_size * (page_number - 1)
+
+    val = dict(uid = uid, begin = begin, page_size = page_size)
+    result = db.query('''SELECT * FROM Articles
+NATURAL LEFT JOIN (SELECT aSerial, COUNT(*) AS comment_count FROM Comments GROUP BY aSerial) AS comment_group
+NATURAL LEFT JOIN (SELECT bSerial, bName AS board_name FROM Boards) AS board_group
+WHERE uSerial=$uid
+ORDER BY aSerial DESC
+LIMIT $begin, $page_size''', val)
+    return result
