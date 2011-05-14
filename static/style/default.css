@@ -14,6 +14,11 @@ a.button, input.button {
     font-size: 1.0em;
     height: 1.8em;
 }
+
+a.button img, input.button img {
+    border-style: none;
+    vertical-align: bottom;
+}
 a.button:hover { background: gray; color: white }
 
 input.button {
@@ -209,6 +214,10 @@ a.feed {
     padding: 0 3px;
 }
 
+a.feed img {
+    border-style: none;
+    vertical-align: bottom;
+}
 /* body --------------------------------------------- */
 div#body {
     margin: 0 0 0 225px;

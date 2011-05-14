@@ -227,3 +227,9 @@ def search_board(description):
     
     return ret
 
+def get_boardname_by_prefix(boardname, count=5):
+    val = dict(boardname = boardname + '%')
+    ret = []
+    for row in db.select('Boards', val, what='bName', where="bName LIKE $boardname", order='bName', limit=count):
+        ret.append(row.bName)
+    return ret

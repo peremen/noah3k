@@ -48,3 +48,13 @@ class api:
             return json.dumps([False])
 
 
+    @json_header
+    def get_boardname_by_prefix(self, qs):
+        boardname = qs['boardname'][0]
+        count = 5
+        if qs.has_key('count'):
+            count = int(qs['count'][0])
+        if count < 0:
+            return json.dumps([False])
+        board_list = board.get_boardname_by_prefix(boardname, count)
+        return json.dumps([True, board_list])

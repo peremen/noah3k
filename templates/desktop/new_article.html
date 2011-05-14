@@ -19,6 +19,11 @@ def get_formatted_username(uid):
         <hr />
     </div>
 </div>
+<div id="listmenu">
+<p>
+    <a class="button" href="${util.link('/+u/+manage_subscription')}" title="${_('Manage new article and favorites')}">${_('Manage')}</a> 
+</p>
+</div>
 % else:
 <!-- 글 -->
 <table border="0" cellspacing="0" cellpadding="4" style="width: 100%; margin-bottom: 10px; " class="list">
@@ -37,7 +42,12 @@ def get_formatted_username(uid):
         % endfor
     % endif
 </table>
-<a class="button" href="${util.link('/+u/+clear_new_article')}">${_('Mark_All_Read')}</a> 
+<div id="listmenu">
+<p>
+    <a class="button" href="${util.link('/+u/+manage_subscription')}" title="${_('Manage new article and favorites')}">${_('Manage')}</a> 
+    <a class="button" href="${util.link('/+u/+clear_new_article')}">${_('Mark_All_Read')}</a> 
+</p>
+</div>
 % endif
 
 <%def name="put_article(a, i)" >

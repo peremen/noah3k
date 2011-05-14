@@ -405,6 +405,11 @@ def update_new_article_none_hit(uid):
     return result
 
 ###
+def get_subscription_board_with_detail(uid):
+    val = dict(uid = uid)
+    result = db.query('SELECT * FROM Boards INNER JOIN Subscriptions WHERE Subscriptions.uSerial = $uid AND Boards.bSerial = Subscriptions.bSerial', val)
+    return result
+
 def get_subscription_board(uid):
     # bSerial만 돌아오므로 적절한 가공이 필요함.
     val = dict(uid = uid)

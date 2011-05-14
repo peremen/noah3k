@@ -336,5 +336,16 @@ class personal_actions:
         if result[0]:
             raise web.seeother(util.link('/+u/+inbox'))
         else:
-            return config.util.render().error(error_message = ret[1],
+            return util.render().error(error_message = ret[1],
                     help_context = 'error')
+
+    @util.error_catcher
+    @util.session_helper
+    def manage_subscription_get(self, current_uid = -1):
+        subscribed_boards = user.get_subscription_board_with_detail(current_uid)
+        favorite_boards = user.get_favorite_board_with_detail(current_uid)
+        return util.render().manage_subscription(subscribed_boards = subscribed_boards,
+                favorite_boards = favorite_boards,
+                title = _('Manage subscribed and favorite boards'),
+                board_desc = _('Manage subscribed and favorite boards'),
+                )
