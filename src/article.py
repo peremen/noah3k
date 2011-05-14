@@ -14,13 +14,21 @@ _ = i18n.custom_gettext
 """
 글 모듈. 글을 읽어오기 위하여 필요한 일부 게시판 기능과 글 및 댓글에 접근한다.
 """
-def _get_article_count( board_id):
+def _get_article_count(board_id):
     val = dict(board_id = board_id)
     result = db.query('SELECT COUNT(*) AS article_count FROM Articles WHERE bSerial=$board_id', val);
     return result[0].article_count
 
+def _get_recurse_article_count(board_path):
+    result = db.query('SELECT COUNT(*) AS article_count FROM Articles WHERE bSerial in (SELECT bSerial from Boards WHERE bName regexp "^' + board_path + '")')
+    return result[0].article_count
+
 def _get_total_page_count(board_id, page_size):
     total_article = _get_article_count(board_id)
+    return  (total_article + page_size -1) / page_size
+
+def _get_recurse_page_count(board_path, page_size):
+    total_article = _get_recurse_article_count(board_path)
     return  (total_article + page_size -1) / page_size
 
 def get_recent_article_list(board_id, count):
@@ -45,6 +53,24 @@ def get_article_list(board_id, page_size, page_number):
     result = db.query('select * from Articles natural left join (select aSerial, COUNT(*) as comment_count from Comments where bSerial = $board_id group by aSerial) as comment_group where bSerial = $board_id and aIndex BETWEEN $begin_index AND $end_index order by aIndex ASC', val)
 
     return result
+
+def get_recurse_article_list(board_path, page_size, page_number):
+    total_article = _get_recurse_article_count(board_path)
+    last_page = _get_recurse_page_count(board_path, page_size)
+    result = db.query('select * from Articles natural left join (select aSerial, COUNT(*) as comment_count from Comments where bSerial in (select bSerial from Boards where bName regexp "^' + board_path + '") group by aSerial) as comment_group where bSerial in (select bSerial from Boards where bName regexp "^' + board_path + '") order by aSerial DESC')
+    l = []
+    count = 0
+    for row in result:
+        count += 1
+        if count <= (last_page - page_number) * page_size:
+            continue;
+        elif len(l) < page_size:
+            l.append(row)
+        else:
+            break
+    l.reverse()
+
+    return l
 
 def get_article_feed(board_id, feed_size):
     # 게시판의 피드로 사용할 수 있도록 aSerial 기준으로 글을 모아 줌.

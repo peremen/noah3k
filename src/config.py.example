@@ -80,13 +80,13 @@ test_render = render_mako(
 
 render = {
         'default': desktop_render, 
+        'classic': desktop_render,
         'm': mobile_render,
         'simple': simple_render, 
-		'test': test_render,
 }
 default_render = desktop_render
-theme_regex = '(classic/|m/|simple/|test/)'
-theme_regex_main = '(classic|m|simple|test)'
+theme_regex = '(classic/|m/|simple/)'
+theme_regex_main = '(classic|m|simple)'
 
 
 #set database

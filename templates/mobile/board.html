@@ -1,0 +1,189 @@
+<%inherit file="base.html" />
+<%
+from web import ctx
+import user, article, acl, board
+import attachment
+import datetime
+from i18n import custom_gettext as _
+def get_formatted_username(uid):
+    u = user.get_user(uid)
+    if u[0]:
+        return "%(id)s" % {'id': u[1]['uId']}
+    else:
+        return _('Former Member')
+today = datetime.datetime.today()
+%>
+%if len(articles) == 0:
+<div align="center">
+    <hr />
+    %if search_keyword is UNDEFINED:
+    ${_('No articles in this board.<br />Press \'Write\' to write one.')}
+    % else:
+    ${_('No search results.')}
+    % endif
+    <hr />
+</div>
+%else:
+<!-- 글 -->
+<table border="0" cellspacing="0" cellpadding="4" style="width: 100%; margin-bottom: 10px; " class="list">
+    <tr align="center" class="head">
+        <th>${_('Title')}</th>
+        <th>${_('Author')}</th>
+        <th>${_('Date')}</th>
+    </tr>
+    <% i = 1 %>
+
+    %if marked_articles is not UNDEFINED:
+        % for a in marked_articles:
+        ${put_article(a, i, True)}
+        <% i = i + 1 %>
+        % endfor
+    % endif
+    %if articles is not UNDEFINED:
+        % for a in articles:
+        ${put_article(a, i, False)}
+        <% i = i + 1 %>
+        % endfor
+    % endif
+</table>
+% endif
+
+
+<ul class="buttonlist">
+%if ctx.session.has_key('uid') and acl.is_allowed('board', board._get_board_id_from_path('/%s' % board_path), ctx.session.uid, 'write'):
+    <!-- 글쓰기 -->
+    <li><a class="button" href="/m/${board_path}/+write" title="${_('Write new article')}">${_('Write')}</a></li>
+% endif
+    <!-- 보드 관리 -->
+    <li><a class="button" href="/m/${board_path}/+summary" title="${_('Display and modify board information')}">${_('Information')}</a></li>
+%if ctx.session.has_key('uid'):
+    % if user.is_subscribed(ctx.session.uid, board._get_board_id_from_path(board_path)):
+    <li><a class="button" href="/m/${board_path}/+subscribe" title="${_('Unsubscribe from this board')}">${_('Unsubscribe')}</a> </li>
+    % else:
+    <li><a class="button" href="/m/${board_path}/+subscribe" title="${_('Subscribe to this board')}">${_('Subscribe')}</a> </li>
+    %endif
+%endif
+</ul>
+
+<p style="text-align: center;">
+%if search_qs is UNDEFINED:
+% if page > 0:
+    % if page > 11:
+<a href="/m/${board_path}?page=1"><img src="/static/image/arrows/first.png" alt="first" border="0" style="vertical-align: top" /></a>&nbsp;
+    % endif
+    % if page > 2:
+<a href="/m/${board_path}?page=${max(1, page-10)}"><img src="/static/image/arrows/more_prev.png" alt="more_prev" border="0" style="vertical-align: top" /></a>&nbsp;
+    % endif
+    % if page > 1:
+<a href="/m/${board_path}?page=${page-1}"><img src="/static/image/arrows/prev.png" alt="prev" border="0" style="vertical-align: top" /> </a>&nbsp;
+    % endif
+    % for i in range(((page-1)/10)*10+1, min(total_page, ((page-1)/10*10+10))+1):
+        % if i == page:
+<b>${i}</b>
+        % else:
+<a class="listlink" href="/m/${board_path}?page=${i}">${i}</a>
+        % endif
+    % endfor
+    % if page < total_page - 1:
+<a href="/m/${board_path}?page=${page+1}"><img src="/static/image/arrows/next.png" alt="next" border="0" style="vertical-align: top" /></a>&nbsp;
+    % endif
+    % if page < total_page - 2:
+<a href="/m/${board_path}?page=${min(total_page, page+10)}"><img src="/static/image/arrows/more_next.png" alt="more_next" border="0" style="vertical-align: top" /></a>&nbsp;
+    % endif
+    % if page < total_page - 11:
+<a href="/m/${board_path}?page=${total_page}"><img src="/static/image/arrows/last.png" alt="last" border="0" style="vertical-align: top" /></a>&nbsp;
+    % endif
+% endif
+% else:
+% if page > 0:
+    % if page > 11:
+<a href="/m/${board_path}${search_qs}&page=1"><img src="/static/image/arrows/first.png" alt="first" border="0" style="vertical-align: top" /></a>&nbsp;
+    % endif
+    % if page > 2:
+<a href="/m/${board_path}${search_qs}&page=${max(1, page-10)}"><img src="/static/image/arrows/more_prev.png" alt="more_prev" border="0" style="vertical-align: top" /></a>&nbsp;
+    % endif
+    % if page > 1:
+<a href="/m/${board_path}${search_qs}&page=${page-1}"><img src="/static/image/arrows/prev.png" alt="prev" border="0" style="vertical-align: top" /> </a>&nbsp;
+    % endif
+    % for i in range(((page-1)/10)*10+1, min(total_page, ((page-1)/10*10+10))+1):
+        % if i == page:
+<b>${i}</b>
+        % else:
+<a class="listlink" href="/m/${board_path}${search_qs}&page=${i}">${i}</a>
+        % endif
+    % endfor
+    % if page < total_page - 1:
+<a href="/m/${board_path}${search_qs}&page=${page+1}"><img src="/static/image/arrows/next.png" alt="next" border="0" style="vertical-align: top" /></a>&nbsp;
+    % endif
+    % if page < total_page - 2:
+<a href="/m/${board_path}${search_qs}&page=${min(total_page, page+10)}"><img src="/static/image/arrows/more_next.png" alt="more_next" border="0" style="vertical-align: top" /></a>&nbsp;
+    % endif
+    % if page < total_page - 11:
+<a href="/m/${board_path}${search_qs}&page=${total_page}"><img src="/static/image/arrows/last.png" alt="last" border="0" style="vertical-align: top" /></a>&nbsp;
+    % endif
+% endif
+% endif
+</p>
+
+<!-- 검색 -->					
+<p style="text-align: center;">
+<form name="search_form" method="get" style="margin: 0; padding: 0; text-align: center;" action="/m/${board_path}/+search">
+%if author_checked is UNDEFINED or author_checked == False:
+    <input type="checkbox" name="author" value="1" />${_('Author')}
+% else:
+    <input type="checkbox" name="author" value="1" checked="checked" />${_('Author')}
+% endif
+%if title_checked is UNDEFINED or title_checked == True:
+    <input type="checkbox" name="title" value="1" checked="checked" />${_('Title')}
+% else:
+    <input type="checkbox" name="title" value="1" />${_('Title')}
+% endif
+%if body_checked is UNDEFINED or body_checked == True:
+    <input type="checkbox" name="body" value="1" checked="checked" />${_('Body')}
+% else:
+    <input type="checkbox" name="body" value="1"/>${_('Body')}
+% endif
+%if search_keyword is not UNDEFINED:
+    <input name="q" type="text" value="${search_keyword}" />
+% else:
+    <input name="q" type="text" />
+% endif
+    <input name="submit" type="submit" value="검색" />
+</form>
+</p>
+
+<%def name="put_article(a, i, mark=False)" >
+% if i%2 == 0:
+<tr class="even">
+% else:
+<tr class="odd">
+% endif
+    <!-- 제목 --> 
+%if mark:
+    <td width="65%" class="emphasized">
+% else:
+    <td width="65%">
+% endif
+    %if (indent is UNDEFINED or indent == True) and a.aLevel > 0:
+        <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (a.aLevel-1)}px" />
+    %endif
+        <a href="/m/${board_path}/+read/${a.aSerial}" class="articlelink">${a.aTitle}
+    <% attach_cnt = len(attachment.get_attachment(a.aSerial)) %>
+    % if attach_cnt > 0:
+    <img src="/static/image/file.png" alt="attachment" />
+    % endif
+	% if a.comment_count > 0:
+        [${a.comment_count}]
+        % endif
+        </a>
+    </td>
+    <!-- 글쓴이 -->
+    <td align="left">${get_formatted_username(a.uSerial)}</td>
+    <!-- 날짜 -->
+    %if a.aDatetime.year == today.year:
+    <td align="center">${a.aDatetime.strftime('%m-%d')}</td>
+    % else:
+    <td align="center">${a.aDatetime.strftime('%Y')}</td>
+    % endif
+</tr>
+</%def>

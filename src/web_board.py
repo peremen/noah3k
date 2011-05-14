@@ -42,6 +42,44 @@ class board_actions:
             raise web.notfound(util.render().error(error_message = _('INVALID_ACTION'), help_context='error'))
 
     @util.error_catcher
+    def all_get(self, board_name, board_id, current_uid = -1):
+        board_id = board._get_board_id_from_path(board_name)
+        if board_id < 0:
+            path = board._get_path_from_board_id(board_id)
+            raise web.seeother(util.link(path))
+
+        board_info = board.get_board_info(board_id)
+        board_name = board_info.bName;
+
+        if web.ctx.session.has_key('uid'):
+            uid = web.ctx.session.uid
+            user.update_unreaded_articles_board(uid, board_id)
+
+        qs = web.ctx.query
+        if len(qs) > 0:
+            qs = qs[1:]
+            qs = parse_qs(qs)
+
+        t = article._get_recurse_page_count(board_name, config.page_size)
+        if qs:
+            page = int(qs['page'][0])
+        else:
+            page = t
+
+        a = article.get_recurse_article_list(board_name, 
+            config.page_size, page)
+        m = article.get_marked_article(board_id)
+
+        return util.render().board(lang="ko",
+            title = board_info.bName,
+            board_path = board_info.bName[1:],
+            board_desc = board_info.bDescription,
+            stylesheet = board_info.stylesheet,
+            articles=a, marked_articles = m,
+            total_page = t, page = page, feed = True,
+            help_context = 'board')
+
+    @util.error_catcher
     @util.session_helper
     def subscribe_get(self, board_name, board_id, current_uid = -1):
         referer = web.ctx.env.get('HTTP_REFERER', util.link('/'))
@@ -59,10 +97,12 @@ class board_actions:
         board_info = board.get_board_info(board_id)
         board_desc = board_info.bDescription
         user_info = user.get_user(current_uid)[1]
-        return util.render().editor(title = _('Write article - %s') % (board_name),
+        return util.render().article_edit(
+                title = _('Write article - %s') % (board_name),
                 action='write', action_name = _('Write article'),
                 board_path = board_name, board_desc = board_desc, lang="ko",
-                body = '\n\n\n%s' % user_info['uSig'], help_context='editor')
+                stylesheet = board_info.stylesheet,
+                body = '\n\n\n%s' % user_info['uSig'], help_context='article_edit')
 
     @util.error_catcher
     @util.session_helper
@@ -148,9 +188,11 @@ class board_actions:
         board_info = board.get_board_info(board_id)
         if board_id == 1:
             board_name = '^root'
-        return util.render().board_summary(board_info = board_info,
+        return util.render().board_summary(
+                board_info = board_info,
                 board_path = board_name,
                 board_desc = board_info.bDescription, 
+                stylesheet = board_info.stylesheet,
                 title = _('Information - %s') % (board_info.bName))
 
     @util.error_catcher
@@ -164,16 +206,19 @@ class board_actions:
             board_path = board_name
             if board_name[0] != '/':
                 board_name = '/%s' % (board_name)
-        return util.render().view_subboard_list(lang="ko",
+        return util.render().subboard_list(
+                lang="ko",
                 title = board_name,
                 board_path = board_path,
                 board_desc = board_info.bDescription,
+                stylesheet = board_info.stylesheet,
                 child_boards = child_board)
 
     @util.error_catcher
     def cover_get(self, board_name, board_id):
         board_info = board.get_board_info(board_id)
-        return render['default'].cover(title = board_name,
+        return render['default'].cover(
+                title = board_name,
                 board_cover = board_info.bInformation)
 
     @util.error_catcher
@@ -181,12 +226,16 @@ class board_actions:
     def create_board_get(self, board_name, board_id, current_uid = -1):
         board_info = board.get_board_info(board_id)
         if not acl.is_allowed('board', board_id, current_uid, 'create'):
-            return util.render().error(error_message = _('NO_PERMISSION'), help_context='error')
+            return util.render().error(
+                error_message = _('NO_PERMISSION'), help_context='error')
         if board_id == 1:
             board_name = '^root'
         default_referer = posixpath.join(util.link('/'), board_name, '+summary')
-        return util.render().board_editor(action='create_board', board_info = board_info,
-                board_path = board_name, board_desc = board_info.bDescription, 
+        return util.render().board_edit(
+                action='create_board', board_info = board_info,
+                board_path = board_name, 
+                board_desc = board_info.bDescription, 
+                stylesheet = board_info.stylesheet,
                 title = _('Create child board - %s') % (board_info.bName),
                 referer = web.ctx.env.get('HTTP_REFERER', default_referer))
 
@@ -238,8 +287,11 @@ class board_actions:
             board_name = '^root'
         default_referer = posixpath.join(util.link('/'), board_name, '+summary')
 
-        return util.render().board_editor(action='modify', board_info = board_info,
-                board_path = board_name, board_desc = board_info.bDescription, 
+        return util.render().board_edit(
+                action='modify', board_info = board_info,
+                board_path = board_name, 
+                board_desc = board_info.bDescription, 
+                stylesheet = board_info.stylesheet,
                 title = _('Modify information - %s') % (board_info.bName),
                 referer = web.ctx.env.get('HTTP_REFERER', default_referer))
 
@@ -264,9 +316,10 @@ class board_actions:
                 owner = owner_uid, board_type = data.type,
                 can_comment = comment, can_write_by_other = write_by_other,
                 indexable = indexable, show_avatar = show_avatar,
+                stylesheet = data.stylesheet,
                 description = data.description,
                 cover = data.information)
-        result = board.edit_board(current_uid, board_id, board_info)
+        result = board.board_edit(current_uid, board_id, board_info)
         if result[0] == False:
             return util.render().error(error_message = result[1], help_context='error')
         else:
@@ -279,7 +332,8 @@ class board_actions:
             board_name = '^root'
         default_referer = posixpath.join(util.link('/'), board_name, '+summary')
         action = posixpath.join(util.link('/'), board_name, '+delete')
-        return util.render().question(question=_('Do you want to delete this board?'),
+        return util.render().question(
+                question=_('Do you want to delete this board?'),
                 board_path = board_name, board_desc = _('Confirmation'), title=_('Confirmation'),
                 action=action,
                 referer=web.ctx.env.get('HTTP_REFERER', default_referer))
@@ -343,6 +397,7 @@ class board_actions:
                 title = board_info.bName,
                 board_path = board_info.bName[1:],
                 board_desc = _('Search Results'),
+                stylesheet = board_info.stylesheet,
                 articles=ret[2], marked_articles = [],
                 total_page = ret[1], page = page_no, feed = False,
                 help_context = 'view_board', indent = False,

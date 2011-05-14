@@ -66,7 +66,7 @@ class Magic:
         return magic_file(self.cookie, filename)
 
     def __del__(self):
-	magic_close(self.cookie)
+        magic_close(self.cookie)
 
 _magic_mime = None
 _magic = None

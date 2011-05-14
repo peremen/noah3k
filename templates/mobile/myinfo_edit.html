@@ -1,5 +1,5 @@
 <%inherit file="base.html" />
-<% import util
+<% import util, config
 from i18n import custom_gettext as _ %>
 <form name="modify_form" method="post" action="/m/+u/+modify">
 <h3>${_('Edit My Information')}</h3>
@@ -9,8 +9,7 @@ from i18n import custom_gettext as _ %>
     <li>${_('Nickname')}: <input name="nick" type="text" maxlength="16" style="width: 12em" value="${user.uNick}" /></li>
     <li>${_('E-Mail')}: <input name="email" type="text" maxlength="64" style="width: 12em" value="${user.uEmail}" /></li>
     <li>${_('Website')}: <input name="homepage" type="text" maxlength="64" style="width: 12em" value="${user.uHomepage}" /></li>
-    <li>${_('Language')}:
-        <select name="language"style="width: 12em">
+    <li>${_('Language')}:<select name="language"style="width: 12em">
 % for o in util.get_lang_map().keys():
     % if o == user.language:
             <option value="${o}" selected="selected">${util.lang_map[o]}</option>
@@ -18,7 +17,22 @@ from i18n import custom_gettext as _ %>
             <option value="${o}">${util.lang_map[o]}</option>
     % endif
 % endfor
-        </select></li>
+    </select></li>
+
+    <li>${_('Theme')}<select name="theme"style="width: 12em">
+% for o in config.render.keys():
+    % if o == user.theme:
+            <option value="${o}" selected="selected">${o}</option>
+    % else:
+            <option value="${o}">${o}</option>
+    % endif
+% endfor
+    </select></li>
+
+    <li>${_('Profile Image')}<br/><span class="miner">${config.pi_size[0]} x ${config.pi_size[1]}</span></th><input name="profile_image" type="file" /><input name="delete_profile_image" id="delete_profile_image" type="checkbox" value="True" />
+        <label for="delete_profile_image">${_('Delete')}</label>
+    </li>
+
     <!-- 비밀번호 수정 -->
     <li>${_('Current Password')}: <input name="oldpass" type="password" style="width: 12em"></li>
     <li>${_('New Password')}: <input name="newpass1" type="password" style="width: 12em"></li>

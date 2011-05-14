@@ -8,6 +8,7 @@
 	border-radius: 20px;
 
 	background-color: white;
+    overflow: hidden;
 }
 
 body {
@@ -16,16 +17,18 @@ body {
 
 div#header {
     background-color: white;
+    height: auto;
 }
 
 div#header div#title {
     vertical-align: bottom;
-    margin-left: 20px;
+    margin-left: 10px;
     overflow: hidden;
 }
 
-div#header {
-    height: auto;
+#branding_header {
+    float: right;
+    margin-right: 10px;
 }
 
 a.branding_title {
@@ -34,3 +37,5 @@ a.branding_title {
     font-size: 4.0em;
     font-weight: bold;
 }
+
+
