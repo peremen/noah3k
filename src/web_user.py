@@ -355,6 +355,61 @@ class personal_actions:
 
     @util.error_catcher
     @util.session_helper
+    def manage_subscription_post(self, current_uid = -1):
+        data = web.input()
+        favorite_add = False
+        favorite_delete = False
+        favorite_delete_list = []
+        favorite_name = ''
+
+        subscription_add = False
+        subscription_delete = False
+        subscription_delete_list = []
+        subscription_name = ''
+
+        for k in data.keys():
+            if k.startswith('favorite_delete_'):
+                favorite_delete_list.append(int(k[16:]))
+            elif k.startswith('subscription_delete_'):
+                subscription_delete_list.append(int(k[20:]))
+            elif k == 'favorite_add':
+                favorite_add = True
+            elif k == 'favorite_delete':
+                favorite_delete = True
+            elif k == 'favorite_name':
+                favorite_name = data[k]
+            elif k == 'subscription_add':
+                subscription_add = True
+            elif k == 'subscription_delete':
+                subscription_delete = True
+            elif k == 'subscription_name':
+                subscription_name = data[k]
+
+        if favorite_add == True:
+            if favorite_name.strip() == '':
+                raise web.seeother(util.link('/+u/+manage_subscription'))
+            board_id = board._get_board_id_from_path(favorite_name)
+            if board_id < 0:
+                raise web.notfound(util.render().error(lang='ko', error_message=_('INVALID_BOARD'), help_context='error'))
+            user.add_favorite_board(current_uid, board_id)
+        elif favorite_delete == True:
+            for b in favorite_delete_list:
+                user.remove_favorite_board(current_uid, b)
+        elif subscription_add == True:
+            if favorite_name.strip() == '':
+                raise web.seeother(util.link('/+u/+manage_subscription'))
+            board_id = board._get_board_id_from_path(subscription_name)
+            if board_id < 0:
+                raise web.notfound(util.render().error(lang='ko', error_message=_('INVALID_BOARD'), help_context='error'))
+            user.add_subscription_board(current_uid, board_id)
+        elif subscription_delete == True:
+            for b in subscription_delete_list:
+                user.remove_subscription_board(current_uid, b)
+
+        raise web.seeother(util.link('/+u/+manage_subscription'))
+
+    @util.error_catcher
+    @util.session_helper
     def my_article_get(self, current_uid = -1):
         qs = web.ctx.query
         if len(qs) > 0:

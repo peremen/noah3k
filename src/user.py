@@ -167,7 +167,7 @@ def get_favorite_board_with_detail(uid):
 def get_favorite_board(uid):
     # bSerial만 돌아오므로 적절한 가공이 필요함.
     val = dict(uid = uid)
-    result = db.select('Favorites', val, where='uSerial = $uid', order='bType, bName')
+    result = db.select('Favorites', val, where='uSerial = $uid')
     return result
 
 def is_favorite(uid, board_id):

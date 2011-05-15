@@ -3,18 +3,20 @@
 from web import ctx
 import board, acl, util %>
 
+<form method="post" action="${util.link('/+u/+manage_subscription')}">
 <span class="title">${_('Subscribed Boards')}</span>
 <% put_boards(subscribed_boards, 'subscription') %>
 
 <span class="title">${_('Favorite Boards')}</span>
 <% put_boards(favorite_boards, 'favorite') %>
+</form>
 
 <%def name="put_boards(boards, type)">
 <% print boards %>
 <table border="0" cellspacing="0" cellpadding="4" width="100%" class="list">
     <tr class="head">
-        <th width="20%">${_('Name')}</th>
-        <th width="73%">${_('Description')}</th>
+        <th width="40%">${_('Name')}</th>
+        <th width="52%">${_('Description')}</th>
         <th width="7%">${_('Delete')}</th>
     </tr>
     % if len(boards) == 0:
@@ -30,7 +32,7 @@ import board, acl, util %>
     <tr class="odd">
     %endif
     <% i = i + 1 %>
-        <td width="20%">
+        <td width="40%">
             %if dest_board.bType == 0:
             <img class="type" src="/static/image/folder.png" alt="디렉터리" />
             %else:
@@ -38,7 +40,7 @@ import board, acl, util %>
             %endif
             <a href= "${dest_board.bName}" class="boardlink">${dest_board.bName}&nbsp;</a>
         </td>
-        <td width="73%">
+        <td width="52%">
             <a href= "${dest_board.bName}" class="boardlink">${dest_board.bDescription}&nbsp; </a>
         </td>
         <td style="text-align: center;"><input type="checkbox" name="${type}_delete_${dest_board.bSerial}" /> </td>
@@ -47,9 +49,10 @@ import board, acl, util %>
     % endif
 </table>
 <p>
-<a class="button">${_('Add')}</a>
-<a class="button">${_('Delete')}</a>
-<a class="button"><img src="/static/image/feed.png" /> RSS</a> 
-<a class="button"><img src="/static/image/feed.png" /> Atom</a> 
+<input class="flat_input" type="text" name="${type}_name" style="width: 200px;" />
+<input class="button" type="submit" name="${type}_add" value="${_('Add')}" />
+<input class="button" type="submit" name="${type}_delete" value="${_('Delete')}" />
+<a class="button" href="${'/+u/%s/+%s_rss' % (ctx.session.username, type)}"><img src="/static/image/feed.png" /> RSS</a> 
+<a class="button" href="${'/+u/%s/+%s_atom' % (ctx.session.username, type)}"><img src="/static/image/feed.png" /> Atom</a> 
 </p>
 </%def>

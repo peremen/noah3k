@@ -18,7 +18,7 @@ a.button, input.button {
 
 a.button img, input.button img {
     border-style: none;
-    vertical-align: bottom;
+    vertical-align: middle;
 }
 a.button:hover { background: gray; color: white }
 
@@ -165,6 +165,7 @@ div#sidebar br {
 }
 
 div#sidebar div.heading {
+    font-weight: bold;
     border-top: 1px solid #CCC;
     width: 200px;
     padding: 3px;
