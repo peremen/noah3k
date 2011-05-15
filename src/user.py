@@ -156,18 +156,18 @@ def login(username, password):
 def get_owned_board(uid):
     # 모든 정보가 돌아옴.
     val = dict(uid = uid)
-    result = db.select('Boards', val, where='uSerial = $uid', order = 'bName')
+    result = db.select('Boards', val, where='uSerial = $uid', order = 'bType, bName')
     return result
 
 def get_favorite_board_with_detail(uid):
     val = dict(uid = uid)
-    result = db.query('select * from Boards inner join Favorites where Favorites.uSerial = $uid and Boards.bSerial = Favorites.bSerial', val)
+    result = db.query('SELECT * FROM Boards INNER JOIN Favorites WHERE Favorites.uSerial = $uid AND Boards.bSerial = Favorites.bSerial ORDER BY bType, bName', val)
     return result
 
 def get_favorite_board(uid):
     # bSerial만 돌아오므로 적절한 가공이 필요함.
     val = dict(uid = uid)
-    result = db.select('Favorites', val, where='uSerial = $uid')
+    result = db.select('Favorites', val, where='uSerial = $uid', order='bType, bName')
     return result
 
 def is_favorite(uid, board_id):
@@ -407,7 +407,7 @@ def update_new_article_none_hit(uid):
 ###
 def get_subscription_board_with_detail(uid):
     val = dict(uid = uid)
-    result = db.query('SELECT * FROM Boards INNER JOIN Subscriptions WHERE Subscriptions.uSerial = $uid AND Boards.bSerial = Subscriptions.bSerial', val)
+    result = db.query('SELECT * FROM Boards INNER JOIN Subscriptions WHERE Subscriptions.uSerial = $uid AND Boards.bSerial = Subscriptions.bSerial ORDER BY bType, bName', val)
     return result
 
 def get_subscription_board(uid):
@@ -501,19 +501,15 @@ def get_article_list_by_user(uid, page_size, page_number):
     total_article = get_post_count(uid)
     if total_article < 0:
         return []
-
     last_page = (total_article + page_size - 1) / page_size
-
     if not (page_number >= 1 and page_number <= last_page):
         return []
-
     begin = page_size * (page_number - 1)
-
     val = dict(uid = uid, begin = begin, page_size = page_size)
     result = db.query('''SELECT * FROM Articles
 NATURAL LEFT JOIN (SELECT aSerial, COUNT(*) AS comment_count FROM Comments GROUP BY aSerial) AS comment_group
 NATURAL LEFT JOIN (SELECT bSerial, bName AS board_name FROM Boards) AS board_group
 WHERE uSerial=$uid
-ORDER BY aSerial DESC
+ORDER BY aDatetime DESC
 LIMIT $begin, $page_size''', val)
     return result
