@@ -455,9 +455,12 @@ def is_unreaded_article(uid, aSerial):
     result = db.select('UserArticles', dict(uid=uid, aSerial=aSerial), where='uSerial = $uid and aSerial = $aSerial')
     return len(result)
 
-def get_unreaded_articles(uid):
+def get_unreaded_articles(uid, limit = -1):
     update_unreaded_articles(uid)
-    result = db.query('select * from Articles inner join UserArticles where Articles.aSerial = UserArticles.aSerial and UserArticles.uSerial = $uSerial', dict(uSerial = uid))
+    if limit < 0:
+        result = db.query('SELECT * FROM Articles INNER JOIN UserArticles WHERE Articles.aSerial = UserArticles.aSerial AND UserArticles.uSerial = $uSerial', dict(uSerial = uid))
+    else:
+        result = db.query('SELECT * FROM Articles INNER JOIN UserArticles WHERE Articles.aSerial = UserArticles.aSerial AND UserArticles.uSerial = $uSerial LIMIT $limit', dict(uSerial = uid, limit = limit))
     return result
 
 def update_unreaded_articles_board(uid, bSerial):
@@ -465,7 +468,7 @@ def update_unreaded_articles_board(uid, bSerial):
     if len(subscription) is not 0:
         sub = subscription[0]
         val = dict(uSerial = uid, bSerial = sub.bSerial, subscriptedDate = sub.lastSubscriptedDate)
-        db.query('insert ignore into UserArticles (select $uSerial, aSerial, NOW() from Articles where bSerial = $bSerial and aUpdatedDatetime > $subscriptedDate)', val)
+        db.query('INSERT ignore INTO UserArticles (SELECT $uSerial, aSerial, NOW() FROM Articles WHERE bSerial = $bSerial AND aUpdatedDatetime > $subscriptedDate)', val)
 
         db.update('Subscriptions', vars=dict(uSerial=uid, bSerial=sub.bSerial), where='uSerial=$uSerial and bSerial = $bSerial', lastSubscriptedDate = web.SQLLiteral('NOW()'))
 

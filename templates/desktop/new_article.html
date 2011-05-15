@@ -22,6 +22,8 @@ def get_formatted_username(uid):
 <div id="listmenu">
 <p>
     <a class="button" href="${util.link('/+u/+manage_subscription')}" title="${_('Manage new article and favorites')}">${_('Manage')}</a> 
+    <a class="button" href="${'/+u/%s/+subscription_rss' % (ctx.session.username)}"><img src="/static/image/feed.png" /> RSS</a> 
+    <a class="button" href="${'/+u/%s/+subscription_atom' % (ctx.session.username)}"><img src="/static/image/feed.png" /> Atom</a> 
 </p>
 </div>
 % else:
@@ -46,6 +48,8 @@ def get_formatted_username(uid):
 <p>
     <a class="button" href="${util.link('/+u/+manage_subscription')}" title="${_('Manage new article and favorites')}">${_('Manage')}</a> 
     <a class="button" href="${util.link('/+u/+clear_new_article')}">${_('Mark_All_Read')}</a> 
+    <a class="button" href="${'/+u/%s/+subscription_rss' % (ctx.session.username)}"><img src="/static/image/feed.png" /> RSS</a> 
+    <a class="button" href="${'/+u/%s/+subscription_atom' % (ctx.session.username)}"><img src="/static/image/feed.png" /> Atom</a> 
 </p>
 </div>
 % endif

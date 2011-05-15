@@ -23,28 +23,69 @@ class personal_actions_unauthorized:
         except AttributeError:
             raise web.notfound(util.render().error(error_message = _('INVALID_ACTION'), help_context='error'))
 
+    def generate_feed(self, username, user_id, feed_type, feed_source):
+        # feed_type: 0: rss, 1: atom
+        # feed_source: 0: 즐겨찾기, 1: 새글읽기
+        if web.ctx.query == '':
+            qs = dict()
+            feed_size = config.feed_size
+        else:
+            qs = parse_qs(web.ctx.query[1:])
+            feed_size = int(qs['size'][0])
+
+        article = None
+        date = datetime.today()
+        feed_title = ''
+        feed_user_address = 'http://noah.kaist.ac.kr/+u/%s' % username
+        board_path = ''
+        feed_self_address = ''
+
+        if feed_source == 0:
+            articles = user.get_favorite_board_feed(user_id, feed_size)
+            feed_title = u'%s의 즐겨찾는 보드 피드' % username
+            board_path = '+u/%s/+favorite_%s' % (username, '%s')
+        elif feed_source == 1:
+            articles = user.get_unreaded_articles(user_id, feed_size)
+            feed_title = u'%s의 구독하는 보드 피드' % username
+            board_path = '+u/%s/+subscription_%s' % (username, '%s')
+
+        if feed_type == 0:
+            web.header('Content-Type', 'application/rss+xml')
+            board_path = board_path % ('rss')
+            feed_self_address = 'http://noah.kaist.ac.kr/%s' % board_path
+
+            return render['default'].rss(today = date,
+                    articles = articles, board_path=board_path,
+                    board_desc = feed_title,
+                    link_address = feed_user_address)
+        elif feed_type == 1:
+            web.header('Content-Type', 'application/atom+xml')
+            board_path = board_path % ('atom')
+            feed_self_address = 'http://noah.kaist.ac.kr/%s' % board_path
+
+            return render['default'].atom(today = date,
+                    articles = articles, board_path = board_path,
+                    board_desc = feed_title,
+                    self_address = feed_self_address,
+                    head_address = feed_user_address)
+        else:
+            return ''
+
     @util.error_catcher
     def favorite_rss(self, username, user_id):
-        articles = user.get_favorite_board_feed(user_id, config.favorite_feed_size)
-        date = datetime.today()
-        web.header('Content-Type', 'application/rss+xml')
-
-        return render['default'].rss(today = date,
-                articles = articles, board_path="+u/%s/+favorite_rss" % username,
-                board_desc = u'%s의 즐겨찾는 보드 피드' % username,
-                link_address = 'http://noah.kaist.ac.kr/+u/%s' % username)
+        return self.generate_feed(username, user_id, 0, 0)
 
     @util.error_catcher
     def favorite_atom(self, username, user_id):
-        articles = user.get_favorite_board_feed(user_id, config.favorite_feed_size)
-        date = datetime.today()
-        web.header('Content-Type', 'application/atom+xml')
+        return self.generate_feed(username, user_id, 1, 0)
 
-        return render['default'].atom(today = date,
-                articles = articles, board_path="+u/%s/+favorite_atom" % username,
-                board_desc = (u'%s의 즐겨찾는 보드 피드' % username),
-                self_address = 'http://noah.kaist.ac.kr/+u/%s/+favorite_atom' % username,
-                href_address = 'http://noah.kaist.ac.kr/+u/%s' % username)
+    @util.error_catcher
+    def subscription_rss(self, username, user_id):
+        return self.generate_feed(username, user_id, 0, 1)
+
+    @util.error_catcher
+    def subscription_atom(self, username, user_id):
+        return self.generate_feed(username, user_id, 1, 1)
 
 class personal_page:
     @util.error_catcher
