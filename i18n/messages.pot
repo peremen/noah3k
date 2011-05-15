@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2011-05-07 01:29+0900\n"
+"POT-Creation-Date: 2011-05-15 21:16+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,35 +17,35 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: ../src/article.py:176 ../src/article.py:225 ../src/article.py:265
-#: ../src/article.py:304 ../src/article.py:392 ../src/article.py:431
-#: ../src/board.py:101 ../src/board.py:133 ../src/board.py:189
-#: ../src/web_article.py:85 ../src/web_article.py:102 ../src/web_article.py:129
-#: ../src/web_article.py:144 ../src/web_article.py:185
-#: ../src/web_article.py:198 ../src/web_article.py:210
-#: ../src/web_article.py:235 ../src/web_article.py:243 ../src/web_board.py:184
-#: ../src/web_board.py:199 ../src/web_board.py:236 ../src/web_board.py:252
-#: ../src/web_user.py:241 ../src/web_user.py:289 ../src/web_user.py:311
+#: ../src/article.py:202 ../src/article.py:251 ../src/article.py:291
+#: ../src/article.py:330 ../src/article.py:418 ../src/article.py:457
+#: ../src/board.py:101 ../src/board.py:133 ../src/board.py:193
+#: ../src/web_article.py:86 ../src/web_article.py:106 ../src/web_article.py:133
+#: ../src/web_article.py:151 ../src/web_article.py:192
+#: ../src/web_article.py:207 ../src/web_article.py:219
+#: ../src/web_article.py:244 ../src/web_article.py:252 ../src/web_board.py:230
+#: ../src/web_board.py:248 ../src/web_board.py:285 ../src/web_board.py:304
+#: ../src/web_user.py:282 ../src/web_user.py:330 ../src/web_user.py:352
 msgid "NO_PERMISSION"
 msgstr ""
 
-#: ../src/article.py:179 ../src/article.py:228 ../src/article.py:268
-#: ../src/article.py:307 ../src/article.py:395 ../src/user.py:149
-#: ../src/user.py:238 ../src/web_user.py:70
+#: ../src/article.py:205 ../src/article.py:254 ../src/article.py:294
+#: ../src/article.py:333 ../src/article.py:421 ../src/user.py:149
+#: ../src/user.py:238 ../src/web_user.py:111
 msgid "NO_SUCH_USER"
 msgstr ""
 
-#: ../src/article.py:182 ../src/article.py:231 ../src/article.py:310
+#: ../src/article.py:208 ../src/article.py:257 ../src/article.py:336
 #: ../src/pm.py:102
 msgid "EMPTY_TITLE"
 msgstr ""
 
-#: ../src/article.py:184 ../src/article.py:233 ../src/article.py:312
+#: ../src/article.py:210 ../src/article.py:259 ../src/article.py:338
 #: ../src/pm.py:104
 msgid "EMPTY_BODY"
 msgstr ""
 
-#: ../src/article.py:192 ../src/article.py:320 ../src/board.py:94
+#: ../src/article.py:218 ../src/article.py:346 ../src/board.py:94
 #: ../src/board.py:136 ../src/web_noah2k_support.py:31
 #: ../src/web_noah2k_support.py:41 ../src/web_noah2k_support.py:55
 #: ../src/web_noah2k_support.py:64 ../src/web_noah2k_support.py:74
@@ -54,38 +54,38 @@ msgstr ""
 msgid "NO_SUCH_BOARD"
 msgstr ""
 
-#: ../src/article.py:194 ../src/article.py:322
+#: ../src/article.py:220 ../src/article.py:348
 msgid "FOLDER"
 msgstr ""
 
-#: ../src/article.py:212 ../src/article.py:257 ../src/article.py:296
-#: ../src/article.py:369 ../src/article.py:417 ../src/article.py:435
+#: ../src/article.py:238 ../src/article.py:283 ../src/article.py:322
+#: ../src/article.py:395 ../src/article.py:443 ../src/article.py:461
 #: ../src/pm.py:117 ../src/pm.py:128 ../src/user.py:282 ../src/user.py:363
 msgid "DATABASE_ERROR"
 msgstr ""
 
-#: ../src/article.py:242 ../src/article.py:279 ../src/article.py:407
+#: ../src/article.py:268 ../src/article.py:305 ../src/article.py:433
 #: ../src/web_article.py:64
 msgid "NO_SUCH_ARTICLE"
 msgstr ""
 
-#: ../src/article.py:288
+#: ../src/article.py:314
 msgid "HAS_REPLY"
 msgstr ""
 
-#: ../src/article.py:300 ../src/pm.py:120 ../src/pm.py:131 ../src/user.py:366
+#: ../src/article.py:326 ../src/pm.py:120 ../src/pm.py:131 ../src/user.py:366
 msgid "SUCCESS"
 msgstr ""
 
-#: ../src/article.py:398
+#: ../src/article.py:424
 msgid "EMPTY_COMMENT"
 msgstr ""
 
-#: ../src/article.py:428
+#: ../src/article.py:454
 msgid "NO_SUCH_COMMENT"
 msgstr ""
 
-#: ../src/article.py:447 ../src/article.py:449 ../src/web_board.py:307
+#: ../src/article.py:473 ../src/article.py:475 ../src/web_board.py:361
 msgid "NO_KEYWORD_SPECIFIED"
 msgstr ""
 
@@ -105,7 +105,7 @@ msgstr ""
 msgid "NO_PERMISSION_ON_NEW_PARENT"
 msgstr ""
 
-#: ../src/board.py:198
+#: ../src/board.py:202
 msgid "HAS_CHILD"
 msgstr ""
 
@@ -113,7 +113,7 @@ msgstr ""
 msgid "INVALID_SENDER"
 msgstr ""
 
-#: ../src/pm.py:100 ../src/web_user.py:266
+#: ../src/pm.py:100 ../src/web_user.py:307
 msgid "INVALID_RECEIVER"
 msgstr ""
 
@@ -167,7 +167,7 @@ msgstr ""
 msgid ", %(number)d %(type)s"
 msgstr ""
 
-#: ../src/user.py:151 ../src/web_user.py:127 ../src/web_user.py:175
+#: ../src/user.py:151 ../src/web_user.py:168 ../src/web_user.py:216
 msgid "INVALID_PASSWORD"
 msgstr ""
 
@@ -195,91 +195,94 @@ msgstr ""
 msgid "NO_NOTICE"
 msgstr ""
 
-#: ../src/web_article.py:29 ../src/web_board.py:38 ../src/webpage.py:111
+#: ../src/web_article.py:29 ../src/web_board.py:38 ../src/web_user.py:434
+#: ../src/web_user.py:444 ../src/webpage.py:113
 msgid "INVALID_BOARD"
 msgstr ""
 
 #: ../src/web_article.py:33 ../src/web_board.py:42 ../src/web_main.py:29
-#: ../src/web_user.py:24 ../src/web_user.py:88
+#: ../src/web_user.py:24 ../src/web_user.py:129
 msgid "INVALID_ACTION"
 msgstr ""
 
-#: ../src/web_article.py:90
+#: ../src/web_article.py:91
 #, python-format
 msgid "From %s's Article %s:"
 msgstr ""
 
-#: ../src/web_article.py:92
+#: ../src/web_article.py:94
 #, python-format
 msgid "Reply - /%s"
 msgstr ""
 
-#: ../src/web_article.py:93
+#: ../src/web_article.py:97
 msgid "Reply to the article"
 msgstr ""
 
-#: ../src/web_article.py:134
+#: ../src/web_article.py:139
 #, python-format
 msgid "Modify - /%s"
 msgstr ""
 
-#: ../src/web_article.py:135 ../templates/desktop/editor.html:45
+#: ../src/web_article.py:142 ../templates/desktop/article_edit.html:50
+#: ../templates/desktop/editor.html:50
 msgid "Modify article"
 msgstr ""
 
-#: ../src/web_article.py:188
+#: ../src/web_article.py:196
 msgid "Do you want to delete the article?"
 msgstr ""
 
-#: ../src/web_article.py:189 ../src/web_board.py:283 ../src/web_user.py:315
+#: ../src/web_article.py:198 ../src/web_board.py:337 ../src/web_user.py:358
+#: ../src/web_user.py:359
 msgid "Confirmation"
 msgstr ""
 
-#: ../src/web_board.py:62
+#: ../src/web_board.py:101
 #, python-format
 msgid "Write article - %s"
 msgstr ""
 
-#: ../src/web_board.py:63
+#: ../src/web_board.py:102
 msgid "Write article"
 msgstr ""
 
-#: ../src/web_board.py:154
+#: ../src/web_board.py:196
 #, python-format
 msgid "Information - %s"
 msgstr ""
 
-#: ../src/web_board.py:161
+#: ../src/web_board.py:203
 msgid "Main menu"
 msgstr ""
 
-#: ../src/web_board.py:190
+#: ../src/web_board.py:239
 #, python-format
 msgid "Create child board - %s"
 msgstr ""
 
-#: ../src/web_board.py:208 ../src/web_board.py:261
+#: ../src/web_board.py:257 ../src/web_board.py:313
 msgid "NO_SUCH_USER_FOR_BOARD_ADMIN"
 msgstr ""
 
-#: ../src/web_board.py:210
+#: ../src/web_board.py:259
 msgid "NO_NAME_SPECIFIED"
 msgstr ""
 
-#: ../src/web_board.py:216
+#: ../src/web_board.py:265
 msgid "BOARD_EXISTS"
 msgstr ""
 
-#: ../src/web_board.py:243
+#: ../src/web_board.py:295
 #, python-format
 msgid "Modify information - %s"
 msgstr ""
 
-#: ../src/web_board.py:282
+#: ../src/web_board.py:336
 msgid "Do you want to delete this board?"
 msgstr ""
 
-#: ../src/web_board.py:345
+#: ../src/web_board.py:399
 msgid "Search Results"
 msgstr ""
 
@@ -302,11 +305,11 @@ msgstr ""
 msgid "NO_USERNAME_SPECIFIED"
 msgstr ""
 
-#: ../src/web_main.py:61 ../src/web_user.py:129
+#: ../src/web_main.py:61 ../src/web_user.py:170
 msgid "PASSWORD_DO_NOT_MATCH"
 msgstr ""
 
-#: ../src/web_main.py:63 ../src/web_user.py:131
+#: ../src/web_main.py:63 ../src/web_user.py:172
 msgid "PASSWORD_TOO_SHORT"
 msgstr ""
 
@@ -354,6 +357,7 @@ msgid "Message Sent. Please follow instructions on the message."
 msgstr ""
 
 #: ../src/web_main.py:176 ../src/web_main.py:205
+#: ../templates/mobile/board.html:58 ../templates/mobile/subboard_list.html:37
 #: ../templates/mobile/view_board.html:58
 #: ../templates/mobile/view_subboard_list.html:37
 msgid "Information"
@@ -393,76 +397,274 @@ msgstr ""
 msgid "NO_ATTACHMENT_SPECIFIED"
 msgstr ""
 
-#: ../src/web_user.py:60 ../templates/mobile/myinfo.html:6
+#: ../src/web_user.py:101 ../templates/mobile/myinfo.html:6
 msgid "My Information"
 msgstr ""
 
-#: ../src/web_user.py:73
+#: ../src/web_user.py:114
 msgid "User Information"
 msgstr ""
 
-#: ../src/web_user.py:95 ../src/web_user.py:96
+#: ../src/web_user.py:136 ../src/web_user.py:137
 #: ../templates/desktop/sidebar.html:64 ../templates/mobile/base.html:116
 msgid "New Article"
 msgstr ""
 
-#: ../src/web_user.py:113 ../src/web_user.py:114
+#: ../src/web_user.py:154 ../src/web_user.py:155
 #: ../templates/mobile/myinfo_edit.html:5
 msgid "Edit My Information"
 msgstr ""
 
-#: ../src/web_user.py:162 ../src/web_user.py:163
+#: ../src/web_user.py:203 ../src/web_user.py:204
 #: ../templates/desktop/myinfo.html:127 ../templates/mobile/myinfo.html:91
 msgid "Leave NOAH"
 msgstr ""
 
-#: ../src/web_user.py:190 ../src/web_user.py:191
+#: ../src/web_user.py:231 ../src/web_user.py:232
 #: ../templates/desktop/sidebar.html:86 ../templates/mobile/base.html:119
 msgid "My Boards"
 msgstr ""
 
-#: ../src/web_user.py:201 ../src/web_user.py:202
+#: ../src/web_user.py:242 ../src/web_user.py:243
+#: ../templates/desktop/manage_subscription.html:11
 msgid "Favorite Boards"
 msgstr ""
 
-#: ../src/web_user.py:220 ../src/web_user.py:221
+#: ../src/web_user.py:261 ../src/web_user.py:262
 msgid "Inbox"
 msgstr ""
 
-#: ../src/web_user.py:238 ../src/web_user.py:286 ../src/web_user.py:308
-#: ../src/web_user.py:333
+#: ../src/web_user.py:279 ../src/web_user.py:327 ../src/web_user.py:349
+#: ../src/web_user.py:377
 msgid "NO_SUCH_MESSAGE"
 msgstr ""
 
-#: ../src/web_user.py:242
+#: ../src/web_user.py:283
 #, python-format
 msgid "From message \"%s\":"
 msgstr ""
 
-#: ../src/web_user.py:244
+#: ../src/web_user.py:285
 msgid "Write Reply"
 msgstr ""
 
-#: ../src/web_user.py:252 ../templates/desktop/editor_mail.html:41
-#: ../templates/desktop/inbox.html:51 ../templates/desktop/read_mail.html:37
+#: ../src/web_user.py:293 ../templates/desktop/editor_mail.html:41
+#: ../templates/desktop/inbox.html:51 ../templates/desktop/mail.html:37
+#: ../templates/desktop/mail_edit.html:41
+#: ../templates/desktop/read_mail.html:37
 msgid "Write Message"
 msgstr ""
 
-#: ../src/web_user.py:292
+#: ../src/web_user.py:333
 msgid "Read Message"
 msgstr ""
 
-#: ../src/web_user.py:314
+#: ../src/web_user.py:356
 msgid "Do you want to delete the message?"
 msgstr ""
 
-#: ../src/webpage.py:86
+#: ../src/web_user.py:393 ../src/web_user.py:394
+msgid "Manage subscribed and favorite boards"
+msgstr ""
+
+#: ../src/web_user.py:468 ../src/web_user.py:469
+#: ../templates/desktop/myinfo.html:125 ../templates/mobile/myinfo.html:89
+msgid "My Posts"
+msgstr ""
+
+#: ../src/webpage.py:87
 msgid "[KAIST CS BBS]"
 msgstr ""
 
-#: ../src/webpage.py:97
+#: ../src/webpage.py:98
 #, python-format
 msgid "Help: %s"
+msgstr ""
+
+#: ../templates/desktop/article.html:15 ../templates/desktop/inbox.html:10
+#: ../templates/desktop/mail.html:10 ../templates/desktop/my_article.html:11
+#: ../templates/desktop/new_article.html:11
+#: ../templates/desktop/read_article.html:15
+#: ../templates/desktop/read_mail.html:10 ../templates/mobile/article.html:14
+#: ../templates/mobile/article_new.html:11 ../templates/mobile/board.html:13
+#: ../templates/mobile/my_article.html:11
+#: ../templates/mobile/new_article.html:11
+#: ../templates/mobile/read_article.html:14
+#: ../templates/mobile/view_board.html:13
+msgid "Former Member"
+msgstr ""
+
+#: ../templates/desktop/article.html:38 ../templates/desktop/mail.html:25
+#: ../templates/desktop/read_article.html:38
+#: ../templates/desktop/read_mail.html:25
+#, python-format
+msgid "Written on %s"
+msgstr ""
+
+#: ../templates/desktop/article.html:40
+#: ../templates/desktop/read_article.html:40
+#, python-format
+msgid "Modified on %s"
+msgstr ""
+
+#: ../templates/desktop/article.html:45
+#: ../templates/desktop/article_edit.html:46
+#: ../templates/desktop/editor.html:46
+#: ../templates/desktop/read_article.html:45
+#: ../templates/mobile/article.html:28 ../templates/mobile/article_edit.html:28
+#: ../templates/mobile/editor.html:28 ../templates/mobile/read_article.html:28
+msgid "Attachment"
+msgstr ""
+
+#: ../templates/desktop/article.html:97 ../templates/desktop/main.html:146
+#: ../templates/desktop/read_article.html:97
+#, python-format
+msgid "%s ago"
+msgstr ""
+
+#: ../templates/desktop/article.html:101 ../templates/desktop/article.html:144
+#: ../templates/desktop/article_edit.html:39
+#: ../templates/desktop/editor.html:39 ../templates/desktop/mail.html:39
+#: ../templates/desktop/manage_subscription.html:22
+#: ../templates/desktop/manage_subscription.html:56
+#: ../templates/desktop/myinfo_edit.html:53
+#: ../templates/desktop/read_article.html:101
+#: ../templates/desktop/read_article.html:144
+#: ../templates/desktop/read_mail.html:39 ../templates/mobile/article.html:95
+#: ../templates/mobile/article_edit.html:23 ../templates/mobile/editor.html:23
+#: ../templates/mobile/myinfo_edit.html:33
+#: ../templates/mobile/read_article.html:95
+msgid "Delete"
+msgstr ""
+
+#: ../templates/desktop/article.html:112
+#: ../templates/desktop/read_article.html:112
+#, python-format
+msgid "To post commment, please <a href=\"%s\">log in</a>"
+msgstr ""
+
+#: ../templates/desktop/article.html:115
+#: ../templates/desktop/read_article.html:115
+#: ../templates/mobile/article.html:60 ../templates/mobile/read_article.html:60
+msgid "Write Comment"
+msgstr ""
+
+#: ../templates/desktop/article.html:117
+#: ../templates/desktop/article_edit.html:59
+#: ../templates/desktop/board_edit.html:205
+#: ../templates/desktop/board_editor.html:205
+#: ../templates/desktop/editor.html:59 ../templates/desktop/myinfo_edit.html:85
+#: ../templates/desktop/read_article.html:117
+#: ../templates/mobile/article.html:62 ../templates/mobile/article_edit.html:31
+#: ../templates/mobile/board_edit.html:122
+#: ../templates/mobile/board_editor.html:122 ../templates/mobile/editor.html:31
+#: ../templates/mobile/myinfo_edit.html:47
+#: ../templates/mobile/read_article.html:62
+msgid "Submit"
+msgstr ""
+
+#: ../templates/desktop/article.html:129 ../templates/desktop/article.html:131
+#: ../templates/desktop/mail.html:33 ../templates/desktop/read_article.html:129
+#: ../templates/desktop/read_article.html:131
+#: ../templates/desktop/read_mail.html:33 ../templates/mobile/article.html:80
+#: ../templates/mobile/article.html:82 ../templates/mobile/read_article.html:80
+#: ../templates/mobile/read_article.html:82
+msgid "List"
+msgstr ""
+
+#: ../templates/desktop/article.html:135 ../templates/desktop/board.html:57
+#: ../templates/desktop/read_article.html:135
+#: ../templates/desktop/view_board.html:57 ../templates/mobile/article.html:86
+#: ../templates/mobile/board.html:55 ../templates/mobile/read_article.html:86
+#: ../templates/mobile/view_board.html:55
+msgid "Write"
+msgstr ""
+
+#: ../templates/desktop/article.html:136 ../templates/desktop/mail.html:35
+#: ../templates/desktop/read_article.html:136
+#: ../templates/desktop/read_mail.html:35 ../templates/mobile/article.html:87
+#: ../templates/mobile/read_article.html:87
+msgid "Reply"
+msgstr ""
+
+#: ../templates/desktop/article.html:140
+#: ../templates/desktop/board_summary.html:22
+#: ../templates/desktop/myinfo.html:126
+#: ../templates/desktop/read_article.html:140
+#: ../templates/mobile/article.html:91 ../templates/mobile/board_edit.html:11
+#: ../templates/mobile/board_editor.html:11
+#: ../templates/mobile/board_summary.html:44 ../templates/mobile/myinfo.html:90
+#: ../templates/mobile/read_article.html:91
+msgid "Modify"
+msgstr ""
+
+#: ../templates/desktop/article.html:149
+#: ../templates/desktop/read_article.html:149
+#: ../templates/mobile/article.html:100
+#: ../templates/mobile/read_article.html:100
+msgid "Unmark"
+msgstr ""
+
+#: ../templates/desktop/article.html:151
+#: ../templates/desktop/read_article.html:151
+#: ../templates/mobile/article.html:102
+#: ../templates/mobile/read_article.html:102
+msgid "Mark"
+msgstr ""
+
+#: ../templates/desktop/article_edit.html:16 ../templates/desktop/board.html:31
+#: ../templates/desktop/board.html:145 ../templates/desktop/board.html:147
+#: ../templates/desktop/editor.html:16 ../templates/desktop/editor_mail.html:20
+#: ../templates/desktop/inbox.html:22 ../templates/desktop/mail_edit.html:20
+#: ../templates/desktop/main.html:11 ../templates/desktop/main.html:23
+#: ../templates/desktop/main.html:37 ../templates/desktop/main.html:49
+#: ../templates/desktop/my_article.html:27
+#: ../templates/desktop/new_article.html:34
+#: ../templates/desktop/view_board.html:31
+#: ../templates/desktop/view_board.html:145
+#: ../templates/desktop/view_board.html:147
+#: ../templates/mobile/article_edit.html:5
+#: ../templates/mobile/article_new.html:26 ../templates/mobile/board.html:30
+#: ../templates/mobile/board.html:137 ../templates/mobile/board.html:139
+#: ../templates/mobile/editor.html:5 ../templates/mobile/my_article.html:27
+#: ../templates/mobile/new_article.html:26
+#: ../templates/mobile/view_board.html:30
+#: ../templates/mobile/view_board.html:137
+#: ../templates/mobile/view_board.html:139
+msgid "Title"
+msgstr ""
+
+#: ../templates/desktop/article_edit.html:24
+#: ../templates/desktop/editor.html:24 ../templates/desktop/editor_mail.html:30
+#: ../templates/desktop/mail_edit.html:30
+#: ../templates/mobile/article_edit.html:13 ../templates/mobile/editor.html:13
+msgid "Content"
+msgstr ""
+
+#: ../templates/desktop/article_edit.html:26
+#: ../templates/desktop/editor.html:26 ../templates/mobile/article_edit.html:13
+#: ../templates/mobile/editor.html:13
+msgid "(BBCode Help)"
+msgstr ""
+
+#: ../templates/desktop/article_edit.html:38
+#: ../templates/desktop/editor.html:38 ../templates/mobile/article_edit.html:23
+#: ../templates/mobile/editor.html:23
+#, python-format
+msgid "Attachment %s"
+msgstr ""
+
+#: ../templates/desktop/article_edit.html:52
+#: ../templates/desktop/editor.html:52
+msgid "MARK_AS_UNREADED"
+msgstr ""
+
+#: ../templates/desktop/article_edit.html:60
+#: ../templates/desktop/editor.html:60 ../templates/desktop/editor_mail.html:42
+#: ../templates/desktop/error.html:26 ../templates/desktop/mail_edit.html:42
+#: ../templates/mobile/article_edit.html:32 ../templates/mobile/editor.html:32
+#: ../templates/mobile/error.html:26
+msgid "Go Back"
 msgstr ""
 
 #: ../templates/desktop/base.html:14 ../templates/desktop/error.html:8
@@ -476,141 +678,258 @@ msgstr ""
 msgid "Close this window"
 msgstr ""
 
+#: ../templates/desktop/board.html:19 ../templates/desktop/view_board.html:19
+#: ../templates/mobile/board.html:20 ../templates/mobile/view_board.html:20
+msgid "No articles in this board.<br />Press 'Write' to write one."
+msgstr ""
+
+#: ../templates/desktop/board.html:21 ../templates/desktop/view_board.html:21
+#: ../templates/mobile/board.html:22 ../templates/mobile/view_board.html:22
+msgid "No search results."
+msgstr ""
+
+#: ../templates/desktop/board.html:32 ../templates/desktop/board.html:140
+#: ../templates/desktop/board.html:142 ../templates/desktop/new_article.html:35
+#: ../templates/desktop/view_board.html:32
+#: ../templates/desktop/view_board.html:140
+#: ../templates/desktop/view_board.html:142
+#: ../templates/mobile/article_new.html:27 ../templates/mobile/board.html:31
+#: ../templates/mobile/board.html:132 ../templates/mobile/board.html:134
+#: ../templates/mobile/new_article.html:27
+#: ../templates/mobile/view_board.html:31
+#: ../templates/mobile/view_board.html:132
+#: ../templates/mobile/view_board.html:134
+msgid "Author"
+msgstr ""
+
+#: ../templates/desktop/board.html:33 ../templates/desktop/inbox.html:23
+#: ../templates/desktop/main.html:12 ../templates/desktop/main.html:24
+#: ../templates/desktop/main.html:38 ../templates/desktop/main.html:50
+#: ../templates/desktop/my_article.html:29
+#: ../templates/desktop/new_article.html:36
+#: ../templates/desktop/view_board.html:33
+#: ../templates/mobile/article_new.html:28 ../templates/mobile/board.html:32
+#: ../templates/mobile/new_article.html:28
+#: ../templates/mobile/view_board.html:32
+msgid "Date"
+msgstr ""
+
+#: ../templates/desktop/board.html:34 ../templates/desktop/my_article.html:30
+#: ../templates/desktop/new_article.html:37
+#: ../templates/desktop/view_board.html:34
+#: ../templates/mobile/article_new.html:29
+#: ../templates/mobile/new_article.html:29
+msgid "Hit"
+msgstr ""
+
+#: ../templates/desktop/board.html:57 ../templates/desktop/view_board.html:57
+#: ../templates/mobile/board.html:55 ../templates/mobile/view_board.html:55
+msgid "Write new article"
+msgstr ""
+
+#: ../templates/desktop/board.html:61 ../templates/desktop/view_board.html:61
+#: ../templates/desktop/view_subboard_list_content.html:41
+msgid "Modify Board"
+msgstr ""
+
+#: ../templates/desktop/board.html:63 ../templates/desktop/view_board.html:63
+#: ../templates/desktop/view_subboard_list_content.html:43
+msgid "Backup Board"
+msgstr ""
+
+#: ../templates/desktop/board.html:65 ../templates/desktop/view_board.html:65
+#: ../templates/desktop/view_subboard_list_content.html:45
+msgid "Board Statistics"
+msgstr ""
+
+#: ../templates/desktop/board.html:69 ../templates/desktop/view_board.html:69
+#: ../templates/mobile/board.html:61 ../templates/mobile/view_board.html:61
+msgid "Unsubscribe from this board"
+msgstr ""
+
+#: ../templates/desktop/board.html:69 ../templates/desktop/view_board.html:69
+#: ../templates/mobile/board.html:61 ../templates/mobile/view_board.html:61
+msgid "Unsubscribe"
+msgstr ""
+
+#: ../templates/desktop/board.html:71 ../templates/desktop/view_board.html:71
+#: ../templates/mobile/board.html:63 ../templates/mobile/view_board.html:63
+msgid "Subscribe to this board"
+msgstr ""
+
+#: ../templates/desktop/board.html:71 ../templates/desktop/view_board.html:71
+#: ../templates/mobile/board.html:63 ../templates/mobile/view_board.html:63
+msgid "Subscribe"
+msgstr ""
+
+#: ../templates/desktop/board.html:150 ../templates/desktop/board.html:152
+#: ../templates/desktop/view_board.html:150
+#: ../templates/desktop/view_board.html:152 ../templates/mobile/board.html:142
+#: ../templates/mobile/board.html:144 ../templates/mobile/view_board.html:142
+#: ../templates/mobile/view_board.html:144
+msgid "Body"
+msgstr ""
+
+#: ../templates/desktop/board.html:179 ../templates/desktop/sidebar.html:159
+#: ../templates/desktop/view_board.html:179 ../templates/mobile/login.html:17
+msgid "Notice"
+msgstr ""
+
+#: ../templates/desktop/board_edit.html:26
 #: ../templates/desktop/board_editor.html:26
 #: ../templates/desktop/board_summary.html:47
+#: ../templates/mobile/board_edit.html:17
 #: ../templates/mobile/board_editor.html:17
 #: ../templates/mobile/board_summary.html:21
 msgid "Location"
 msgstr ""
 
+#: ../templates/desktop/board_edit.html:37
 #: ../templates/desktop/board_editor.html:37
 #: ../templates/desktop/board_summary.html:54
+#: ../templates/desktop/manage_subscription.html:20
 #: ../templates/desktop/view_subboard_list_content.html:8
+#: ../templates/mobile/board_edit.html:24
 #: ../templates/mobile/board_editor.html:24
 #: ../templates/mobile/board_summary.html:22
 msgid "Name"
 msgstr ""
 
+#: ../templates/desktop/board_edit.html:48
 #: ../templates/desktop/board_editor.html:48
 #: ../templates/desktop/board_summary.html:60
+#: ../templates/mobile/board_edit.html:31
 #: ../templates/mobile/board_editor.html:31
 #: ../templates/mobile/board_summary.html:23
 msgid "Admin"
 msgstr ""
 
+#: ../templates/desktop/board_edit.html:56
 #: ../templates/desktop/board_editor.html:56
 #: ../templates/desktop/board_summary.html:67
 msgid "Upper Admin(s)"
 msgstr ""
 
+#: ../templates/desktop/board_edit.html:63
 #: ../templates/desktop/board_editor.html:63
 #: ../templates/desktop/board_summary.html:77
+#: ../templates/mobile/board_edit.html:35
 #: ../templates/mobile/board_editor.html:35
 #: ../templates/mobile/board_summary.html:28
 msgid "Type"
 msgstr ""
 
+#: ../templates/desktop/board_edit.html:74
 #: ../templates/desktop/board_editor.html:74
 #: ../templates/desktop/board_summary.html:79
+#: ../templates/mobile/board_edit.html:45
 #: ../templates/mobile/board_editor.html:45
 #: ../templates/mobile/board_summary.html:28
 msgid "Folder"
 msgstr ""
 
+#: ../templates/desktop/board_edit.html:84
 #: ../templates/desktop/board_editor.html:84
 #: ../templates/desktop/board_summary.html:79
+#: ../templates/desktop/my_article.html:28
+#: ../templates/mobile/board_edit.html:55
 #: ../templates/mobile/board_editor.html:55
 #: ../templates/mobile/board_summary.html:28
+#: ../templates/mobile/my_article.html:28
 msgid "Board"
 msgstr ""
 
+#: ../templates/desktop/board_edit.html:95
 #: ../templates/desktop/board_editor.html:95
 msgid "Alias"
 msgstr ""
 
+#: ../templates/desktop/board_edit.html:100
 #: ../templates/desktop/board_editor.html:100
 msgid "Allow Comment"
 msgstr ""
 
+#: ../templates/desktop/board_edit.html:115
 #: ../templates/desktop/board_editor.html:115
 msgid "Allow Guest Writing"
 msgstr ""
 
+#: ../templates/desktop/board_edit.html:130
 #: ../templates/desktop/board_editor.html:130
 msgid "Include in Search"
 msgstr ""
 
+#: ../templates/desktop/board_edit.html:145
 #: ../templates/desktop/board_editor.html:145
 msgid "Show Profile Images"
 msgstr ""
 
-#: ../templates/desktop/board_editor.html:162
+#: ../templates/desktop/board_edit.html:160
+#: ../templates/desktop/board_editor.html:160
+msgid "Stylesheet"
+msgstr ""
+
+#: ../templates/desktop/board_edit.html:173
+#: ../templates/desktop/board_editor.html:173
 #: ../templates/desktop/board_summary.html:99
+#: ../templates/mobile/board_edit.html:105
 #: ../templates/mobile/board_editor.html:105
 #: ../templates/mobile/board_summary.html:35
 msgid "Short Description"
 msgstr ""
 
-#: ../templates/desktop/board_editor.html:174
+#: ../templates/desktop/board_edit.html:185
+#: ../templates/desktop/board_editor.html:185
 #: ../templates/desktop/board_summary.html:106
+#: ../templates/mobile/board_edit.html:112
 #: ../templates/mobile/board_editor.html:112
 #: ../templates/mobile/board_summary.html:36
 msgid "Long Description"
 msgstr ""
 
-#: ../templates/desktop/board_editor.html:187
+#: ../templates/desktop/board_edit.html:198
+#: ../templates/desktop/board_editor.html:198
 #: ../templates/desktop/board_summary.html:33
 #: ../templates/mobile/board_summary.html:53
 msgid "Delete This Board"
 msgstr ""
 
-#: ../templates/desktop/board_editor.html:191
+#: ../templates/desktop/board_edit.html:202
+#: ../templates/desktop/board_editor.html:202
 #: ../templates/desktop/board_summary.html:37
+#: ../templates/mobile/board_edit.html:13
 #: ../templates/mobile/board_editor.html:13
 #: ../templates/mobile/board_summary.html:58
 msgid "Create Child Board"
 msgstr ""
 
-#: ../templates/desktop/board_editor.html:194
-#: ../templates/desktop/editor.html:54 ../templates/desktop/myinfo_edit.html:85
-#: ../templates/desktop/read_article.html:112
-#: ../templates/mobile/board_editor.html:122 ../templates/mobile/editor.html:31
-#: ../templates/mobile/myinfo_edit.html:33
-#: ../templates/mobile/read_article.html:62
-msgid "Submit"
-msgstr ""
-
-#: ../templates/desktop/board_editor.html:195 ../templates/desktop/join.html:57
+#: ../templates/desktop/board_edit.html:206
+#: ../templates/desktop/board_editor.html:206 ../templates/desktop/join.html:57
 #: ../templates/desktop/leave.html:30 ../templates/desktop/lost_login.html:40
 #: ../templates/desktop/myinfo_edit.html:86
 #: ../templates/desktop/question.html:14
+#: ../templates/mobile/board_edit.html:123
 #: ../templates/mobile/board_editor.html:123 ../templates/mobile/join.html:32
-#: ../templates/mobile/myinfo_edit.html:34 ../templates/mobile/question.html:12
+#: ../templates/mobile/myinfo_edit.html:48 ../templates/mobile/question.html:12
 msgid "Cancel"
 msgstr ""
 
-#: ../templates/desktop/board_summary.html:22
-#: ../templates/desktop/myinfo.html:126
-#: ../templates/desktop/read_article.html:135
-#: ../templates/mobile/board_editor.html:11
-#: ../templates/mobile/board_summary.html:44 ../templates/mobile/myinfo.html:90
-#: ../templates/mobile/read_article.html:91
-msgid "Modify"
-msgstr ""
-
 #: ../templates/desktop/board_summary.html:44
+#: ../templates/mobile/board_edit.html:15
 #: ../templates/mobile/board_editor.html:15
 #: ../templates/mobile/board_summary.html:19
 msgid "Basic Information"
 msgstr ""
 
 #: ../templates/desktop/board_summary.html:73
+#: ../templates/mobile/board_edit.html:33
 #: ../templates/mobile/board_editor.html:33
 #: ../templates/mobile/board_summary.html:26
 msgid "Details"
 msgstr ""
 
 #: ../templates/desktop/board_summary.html:84
+#: ../templates/mobile/board_edit.html:57
 #: ../templates/mobile/board_editor.html:57
 #: ../templates/mobile/board_summary.html:29
 msgid "Comments"
@@ -618,6 +937,8 @@ msgstr ""
 
 #: ../templates/desktop/board_summary.html:86
 #: ../templates/desktop/board_summary.html:93
+#: ../templates/mobile/board_edit.html:77
+#: ../templates/mobile/board_edit.html:99
 #: ../templates/mobile/board_editor.html:77
 #: ../templates/mobile/board_editor.html:99
 #: ../templates/mobile/board_summary.html:29
@@ -627,6 +948,8 @@ msgstr ""
 
 #: ../templates/desktop/board_summary.html:86
 #: ../templates/desktop/board_summary.html:93
+#: ../templates/mobile/board_edit.html:67
+#: ../templates/mobile/board_edit.html:89
 #: ../templates/mobile/board_editor.html:67
 #: ../templates/mobile/board_editor.html:89
 #: ../templates/mobile/board_summary.html:29
@@ -635,12 +958,14 @@ msgid "Allow"
 msgstr ""
 
 #: ../templates/desktop/board_summary.html:91
+#: ../templates/mobile/board_edit.html:79
 #: ../templates/mobile/board_editor.html:79
 #: ../templates/mobile/board_summary.html:30
 msgid "Guest Writing"
 msgstr ""
 
 #: ../templates/desktop/board_summary.html:96
+#: ../templates/mobile/board_edit.html:103
 #: ../templates/mobile/board_editor.html:103
 #: ../templates/mobile/board_summary.html:33
 msgid "Board Description"
@@ -650,63 +975,13 @@ msgstr ""
 msgid "No long description available."
 msgstr ""
 
-#: ../templates/desktop/editor.html:11 ../templates/desktop/editor_mail.html:20
-#: ../templates/desktop/inbox.html:22 ../templates/desktop/main.html:11
-#: ../templates/desktop/main.html:23 ../templates/desktop/main.html:37
-#: ../templates/desktop/main.html:49 ../templates/desktop/new_article.html:27
-#: ../templates/desktop/view_board.html:27
-#: ../templates/desktop/view_board.html:141
-#: ../templates/desktop/view_board.html:143 ../templates/mobile/editor.html:5
-#: ../templates/mobile/new_article.html:26
-#: ../templates/mobile/view_board.html:30
-#: ../templates/mobile/view_board.html:137
-#: ../templates/mobile/view_board.html:139
-msgid "Title"
-msgstr ""
-
-#: ../templates/desktop/editor.html:19 ../templates/desktop/editor_mail.html:30
-#: ../templates/mobile/editor.html:13
-msgid "Content"
-msgstr ""
-
-#: ../templates/desktop/editor.html:21 ../templates/mobile/editor.html:13
-msgid "(BBCode Help)"
-msgstr ""
-
-#: ../templates/desktop/editor.html:33 ../templates/mobile/editor.html:23
-#, python-format
-msgid "Attachment %s"
-msgstr ""
-
-#: ../templates/desktop/editor.html:34 ../templates/desktop/myinfo_edit.html:53
-#: ../templates/desktop/read_article.html:96
-#: ../templates/desktop/read_article.html:139
-#: ../templates/desktop/read_mail.html:39 ../templates/mobile/editor.html:23
-#: ../templates/mobile/read_article.html:95
-msgid "Delete"
-msgstr ""
-
-#: ../templates/desktop/editor.html:41
-#: ../templates/desktop/read_article.html:40 ../templates/mobile/editor.html:28
-#: ../templates/mobile/read_article.html:28
-msgid "Attachment"
-msgstr ""
-
-#: ../templates/desktop/editor.html:47
-msgid "MARK_AS_UNREADED"
-msgstr ""
-
-#: ../templates/desktop/editor.html:55 ../templates/desktop/editor_mail.html:42
-#: ../templates/desktop/error.html:26 ../templates/mobile/editor.html:32
-#: ../templates/mobile/error.html:26
-msgid "Go Back"
-msgstr ""
-
 #: ../templates/desktop/editor_mail.html:4
+#: ../templates/desktop/mail_edit.html:4
 msgid "Write Private Message"
 msgstr ""
 
 #: ../templates/desktop/editor_mail.html:10
+#: ../templates/desktop/mail_edit.html:10
 msgid "To"
 msgstr ""
 
@@ -732,15 +1007,6 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
-#: ../templates/desktop/inbox.html:10 ../templates/desktop/new_article.html:11
-#: ../templates/desktop/read_article.html:15
-#: ../templates/desktop/read_mail.html:10
-#: ../templates/mobile/new_article.html:11
-#: ../templates/mobile/read_article.html:14
-#: ../templates/mobile/view_board.html:13
-msgid "Former Member"
-msgstr ""
-
 #: ../templates/desktop/inbox.html:14 ../templates/desktop/inbox.html:16
 msgid "No private messages."
 msgstr ""
@@ -754,15 +1020,6 @@ msgstr ""
 msgid "From"
 msgstr ""
 
-#: ../templates/desktop/inbox.html:23 ../templates/desktop/main.html:12
-#: ../templates/desktop/main.html:24 ../templates/desktop/main.html:38
-#: ../templates/desktop/main.html:50 ../templates/desktop/new_article.html:29
-#: ../templates/desktop/view_board.html:29
-#: ../templates/mobile/new_article.html:28
-#: ../templates/mobile/view_board.html:32
-msgid "Date"
-msgstr ""
-
 #: ../templates/desktop/join.html:21 ../templates/desktop/leave.html:23
 #: ../templates/desktop/login.html:30 ../templates/desktop/sidebar.html:40
 #: ../templates/mobile/join.html:13 ../templates/mobile/login.html:13
@@ -770,7 +1027,7 @@ msgid "Password"
 msgstr ""
 
 #: ../templates/desktop/join.html:25 ../templates/desktop/myinfo_edit.html:66
-#: ../templates/mobile/join.html:14 ../templates/mobile/myinfo_edit.html:25
+#: ../templates/mobile/join.html:14 ../templates/mobile/myinfo_edit.html:39
 msgid "Repeat Password"
 msgstr ""
 
@@ -795,8 +1052,8 @@ msgstr ""
 msgid "Leave"
 msgstr ""
 
-#: ../templates/desktop/login.html:8 ../templates/desktop/read_mail.html:14
-#: ../templates/mobile/login.html:20
+#: ../templates/desktop/login.html:8 ../templates/desktop/mail.html:14
+#: ../templates/desktop/read_mail.html:14 ../templates/mobile/login.html:20
 msgid "Internal Error"
 msgstr ""
 
@@ -951,9 +1208,36 @@ msgstr ""
 msgid "NOAH Notifier for Android"
 msgstr ""
 
-#: ../templates/desktop/main.html:146 ../templates/desktop/read_article.html:92
-#, python-format
-msgid "%s ago"
+#: ../templates/desktop/manage_subscription.html:7
+msgid "Subscribed Boards"
+msgstr ""
+
+#: ../templates/desktop/manage_subscription.html:8
+msgid "\"New Article\" menu on the sidebar will track boards in this list."
+msgstr ""
+
+#: ../templates/desktop/manage_subscription.html:12
+msgid "Boards listed in \"Favorites\" section on the sidebar."
+msgstr ""
+
+#: ../templates/desktop/manage_subscription.html:21
+#: ../templates/desktop/view_subboard_list_content.html:9
+msgid "Description"
+msgstr ""
+
+#: ../templates/desktop/manage_subscription.html:26
+#: ../templates/mobile/subboard_list.html:15
+#: ../templates/mobile/view_subboard_list.html:15
+msgid "No boards."
+msgstr ""
+
+#: ../templates/desktop/manage_subscription.html:55
+msgid "Add"
+msgstr ""
+
+#: ../templates/desktop/my_article.html:17
+#: ../templates/mobile/my_article.html:17
+msgid "You did not wrote any articles."
 msgstr ""
 
 #: ../templates/desktop/myinfo.html:16 ../templates/desktop/myinfo.html:24
@@ -973,12 +1257,12 @@ msgid "Website"
 msgstr ""
 
 #: ../templates/desktop/myinfo.html:38 ../templates/desktop/myinfo_edit.html:71
-#: ../templates/mobile/myinfo.html:37 ../templates/mobile/myinfo_edit.html:26
+#: ../templates/mobile/myinfo.html:37 ../templates/mobile/myinfo_edit.html:40
 msgid "Signature"
 msgstr ""
 
 #: ../templates/desktop/myinfo.html:49 ../templates/desktop/myinfo_edit.html:77
-#: ../templates/mobile/myinfo.html:48 ../templates/mobile/myinfo_edit.html:29
+#: ../templates/mobile/myinfo.html:48 ../templates/mobile/myinfo_edit.html:43
 msgid "Introduction"
 msgstr ""
 
@@ -988,6 +1272,7 @@ msgid "Language"
 msgstr ""
 
 #: ../templates/desktop/myinfo.html:62 ../templates/desktop/myinfo_edit.html:39
+#: ../templates/mobile/myinfo_edit.html:22
 msgid "Theme"
 msgstr ""
 
@@ -1055,104 +1340,43 @@ msgstr ""
 msgid "(Change password NOW)"
 msgstr ""
 
-#: ../templates/desktop/myinfo.html:125 ../templates/mobile/myinfo.html:89
-msgid "My Posts"
-msgstr ""
-
 #: ../templates/desktop/myinfo_edit.html:51
+#: ../templates/mobile/myinfo_edit.html:32
 msgid "Profile Image"
 msgstr ""
 
 #: ../templates/desktop/myinfo_edit.html:58
-#: ../templates/mobile/myinfo_edit.html:23
+#: ../templates/mobile/myinfo_edit.html:37
 msgid "Current Password"
 msgstr ""
 
 #: ../templates/desktop/myinfo_edit.html:62
-#: ../templates/mobile/myinfo_edit.html:24
+#: ../templates/mobile/myinfo_edit.html:38
 msgid "New Password"
 msgstr ""
 
 #: ../templates/desktop/new_article.html:18
+#: ../templates/mobile/article_new.html:17
 #: ../templates/mobile/new_article.html:17
 msgid "No new articles."
 msgstr ""
 
-#: ../templates/desktop/new_article.html:28
-#: ../templates/desktop/view_board.html:28
-#: ../templates/desktop/view_board.html:136
-#: ../templates/desktop/view_board.html:138
-#: ../templates/mobile/new_article.html:27
-#: ../templates/mobile/view_board.html:31
-#: ../templates/mobile/view_board.html:132
-#: ../templates/mobile/view_board.html:134
-msgid "Author"
+#: ../templates/desktop/new_article.html:24
+#: ../templates/desktop/new_article.html:49
+msgid "Manage new article and favorites"
 msgstr ""
 
-#: ../templates/desktop/new_article.html:30
-#: ../templates/desktop/view_board.html:30
-#: ../templates/mobile/new_article.html:29
-msgid "Hit"
+#: ../templates/desktop/new_article.html:24
+#: ../templates/desktop/new_article.html:49
+msgid "Manage"
 msgstr ""
 
-#: ../templates/desktop/new_article.html:40
+#: ../templates/desktop/new_article.html:50
 msgid "Mark_All_Read"
 msgstr ""
 
 #: ../templates/desktop/question.html:13 ../templates/mobile/question.html:11
 msgid "OK"
-msgstr ""
-
-#: ../templates/desktop/read_article.html:33
-#: ../templates/desktop/read_mail.html:25
-#, python-format
-msgid "Written on %s"
-msgstr ""
-
-#: ../templates/desktop/read_article.html:35
-#, python-format
-msgid "Modified on %s"
-msgstr ""
-
-#: ../templates/desktop/read_article.html:107
-#, python-format
-msgid "To post commment, please <a href=\"%s\">log in</a>"
-msgstr ""
-
-#: ../templates/desktop/read_article.html:110
-#: ../templates/mobile/read_article.html:60
-msgid "Write Comment"
-msgstr ""
-
-#: ../templates/desktop/read_article.html:124
-#: ../templates/desktop/read_article.html:126
-#: ../templates/desktop/read_mail.html:33
-#: ../templates/mobile/read_article.html:80
-#: ../templates/mobile/read_article.html:82
-msgid "List"
-msgstr ""
-
-#: ../templates/desktop/read_article.html:130
-#: ../templates/desktop/view_board.html:53
-#: ../templates/mobile/read_article.html:86
-#: ../templates/mobile/view_board.html:55
-msgid "Write"
-msgstr ""
-
-#: ../templates/desktop/read_article.html:131
-#: ../templates/desktop/read_mail.html:35
-#: ../templates/mobile/read_article.html:87
-msgid "Reply"
-msgstr ""
-
-#: ../templates/desktop/read_article.html:144
-#: ../templates/mobile/read_article.html:100
-msgid "Unmark"
-msgstr ""
-
-#: ../templates/desktop/read_article.html:146
-#: ../templates/mobile/read_article.html:102
-msgid "Mark"
 msgstr ""
 
 #: ../templates/desktop/sidebar.html:39
@@ -1165,10 +1389,6 @@ msgstr ""
 
 #: ../templates/desktop/sidebar.html:61 ../templates/mobile/base.html:121
 msgid "My Info"
-msgstr ""
-
-#: ../templates/desktop/sidebar.html:64
-msgid "Manage"
 msgstr ""
 
 #: ../templates/desktop/sidebar.html:67 ../templates/desktop/sidebar.html:69
@@ -1203,17 +1423,16 @@ msgstr ""
 msgid "(add)"
 msgstr ""
 
+#: ../templates/desktop/sidebar.html:125
+msgid "(manage)"
+msgstr ""
+
 #: ../templates/desktop/sidebar.html:146
 msgid "No board in your favorites"
 msgstr ""
 
 #: ../templates/desktop/sidebar.html:148
 msgid "Feed"
-msgstr ""
-
-#: ../templates/desktop/sidebar.html:159
-#: ../templates/desktop/view_board.html:175 ../templates/mobile/login.html:17
-msgid "Notice"
 msgstr ""
 
 #: ../templates/desktop/sidebar.html:177
@@ -1224,70 +1443,30 @@ msgstr ""
 msgid "No course boards"
 msgstr ""
 
-#: ../templates/desktop/view_board.html:15
-#: ../templates/mobile/view_board.html:20
-msgid "No articles in this board.<br />Press 'Write' to write one."
-msgstr ""
-
-#: ../templates/desktop/view_board.html:17
-#: ../templates/mobile/view_board.html:22
-msgid "No search results."
-msgstr ""
-
-#: ../templates/desktop/view_board.html:53
-#: ../templates/mobile/view_board.html:55
-msgid "Write new article"
-msgstr ""
-
-#: ../templates/desktop/view_board.html:57
-#: ../templates/desktop/view_subboard_list_content.html:41
-msgid "Modify Board"
-msgstr ""
-
-#: ../templates/desktop/view_board.html:59
-#: ../templates/desktop/view_subboard_list_content.html:43
-msgid "Backup Board"
-msgstr ""
-
-#: ../templates/desktop/view_board.html:61
-#: ../templates/desktop/view_subboard_list_content.html:45
-msgid "Board Statistics"
-msgstr ""
-
-#: ../templates/desktop/view_board.html:65
-#: ../templates/mobile/view_board.html:61
-msgid "Unsubscribe from this board"
-msgstr ""
-
-#: ../templates/desktop/view_board.html:65
-#: ../templates/mobile/view_board.html:61
-msgid "Unsubscribe"
-msgstr ""
-
-#: ../templates/desktop/view_board.html:67
-#: ../templates/mobile/view_board.html:63
-msgid "Subscribe to this board"
-msgstr ""
-
-#: ../templates/desktop/view_board.html:67
-#: ../templates/mobile/view_board.html:63
-msgid "Subscribe"
-msgstr ""
-
-#: ../templates/desktop/view_board.html:146
-#: ../templates/desktop/view_board.html:148
-#: ../templates/mobile/view_board.html:142
-#: ../templates/mobile/view_board.html:144
-msgid "Body"
-msgstr ""
-
-#: ../templates/desktop/view_subboard_list_content.html:9
-msgid "Description"
-msgstr ""
-
 #: ../templates/desktop/view_subboard_list_content.html:13
+#: ../templates/mobile/subboard_list.html:13
 #: ../templates/mobile/view_subboard_list.html:13
 msgid "No child boards."
+msgstr ""
+
+#: ../templates/mobile/article.html:20 ../templates/mobile/read_article.html:20
+msgid "Last Modified"
+msgstr ""
+
+#: ../templates/mobile/article.html:22 ../templates/mobile/read_article.html:22
+msgid "Date/Time"
+msgstr ""
+
+#: ../templates/mobile/article.html:57 ../templates/mobile/read_article.html:57
+msgid "To post commment, please <a href=\"/m/+login\">log in</a>"
+msgstr ""
+
+#: ../templates/mobile/article.html:70 ../templates/mobile/read_article.html:70
+msgid "Prev"
+msgstr ""
+
+#: ../templates/mobile/article.html:73 ../templates/mobile/read_article.html:73
+msgid "Next"
 msgstr ""
 
 #: ../templates/mobile/base.html:86
@@ -1296,6 +1475,10 @@ msgstr ""
 
 #: ../templates/mobile/base.html:103
 msgid "Home"
+msgstr ""
+
+#: ../templates/mobile/board.html:58 ../templates/mobile/view_board.html:58
+msgid "Display and modify board information"
 msgstr ""
 
 #: ../templates/mobile/board_summary.html:18
@@ -1310,35 +1493,8 @@ msgstr ""
 msgid "Usage Statistics"
 msgstr ""
 
-#: ../templates/mobile/read_article.html:20
-msgid "Last Modified"
-msgstr ""
-
-#: ../templates/mobile/read_article.html:22
-msgid "Date/Time"
-msgstr ""
-
-#: ../templates/mobile/read_article.html:57
-msgid "To post commment, please <a href=\"/m/+login\">log in</a>"
-msgstr ""
-
-#: ../templates/mobile/read_article.html:70
-msgid "Prev"
-msgstr ""
-
-#: ../templates/mobile/read_article.html:73
-msgid "Next"
-msgstr ""
-
-#: ../templates/mobile/view_board.html:58
-msgid "Display and modify board information"
-msgstr ""
-
+#: ../templates/mobile/subboard_list.html:6
 #: ../templates/mobile/view_subboard_list.html:6
 msgid "Child Boards"
-msgstr ""
-
-#: ../templates/mobile/view_subboard_list.html:15
-msgid "No boards."
 msgstr ""
 

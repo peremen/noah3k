@@ -4,10 +4,12 @@ from web import ctx
 import board, acl, util %>
 
 <form method="post" action="${util.link('/+u/+manage_subscription')}">
-<span class="title">${_('Subscribed Boards')}</span>
+    <p><span class="title">${_('Subscribed Boards')}</span></p>
+    <p>${_('\"New Article\" menu on the sidebar will track boards in this list.')}</p>
 <% put_boards(subscribed_boards, 'subscription') %>
 
-<span class="title">${_('Favorite Boards')}</span>
+    <p><span class="title">${_('Favorite Boards')}</span></p>
+    <p>${_('Boards listed in \"Favorites\" section on the sidebar.')}</p>
 <% put_boards(favorite_boards, 'favorite') %>
 </form>
 
