@@ -69,6 +69,10 @@ mobile_render = render_mako(
     directories = [_join(_path, '../templates/mobile/').replace('\\','/'),],
     input_encoding = 'utf-8', output_encoding = 'utf-8',
 )
+mobile_2_render = render_mako(
+    directories = [_join(_path, '../templates/mobile_2/').replace('\\','/'),],
+    input_encoding = 'utf-8', output_encoding = 'utf-8',
+)
 simple_render = render_mako(
     directories = [_join(_path, '../templates/simple/').replace('\\','/'),],
     input_encoding = 'utf-8', output_encoding = 'utf-8',
@@ -81,12 +85,13 @@ test_render = render_mako(
 render = {
         'default': desktop_render, 
         'classic': desktop_render,
-        'm': mobile_render,
+        'n': mobile_render,
+        'm': mobile_2_render,
         'simple': simple_render, 
 }
 default_render = desktop_render
-theme_regex = '(classic/|m/|simple/)'
-theme_regex_main = '(classic|m|simple)'
+theme_regex = '(classic/|m/|n/|simple/)'
+theme_regex_main = '(classic|m|n|simple)'
 
 
 #set database
