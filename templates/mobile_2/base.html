@@ -1,0 +1,155 @@
+<% from web import ctx 
+import board, util
+import posixpath
+from i18n import custom_gettext as _
+
+def traverse_child_board(path):
+    ret = ""
+    id = board._get_board_id_from_path(path)
+    if id < 0:
+        return ''
+    fmt = '<li><a href="%s"><img src="%s" />&nbsp;%s</a></li>\n'
+    children = board.get_child(id)
+    for child in children:
+        if child.bType == 0:
+            child_image = '/static/image/folder.png'
+        else:
+            child_image = '/static/image/board.png'
+        if child.bDescription.strip() == '':
+            child_desc = posixpath.basename(child.bName)
+        else:
+            child_desc = child.bDescription
+        ret += fmt % (util.link(child.bName), child_image, child_desc)
+    return ret
+
+def traverse_board_path(path):
+    divided_path = path.split('/')
+    ret = ''
+    fmt = '<li><a href="/%s">%s</a>%s</li>\n'
+    for i in range(len(divided_path)):
+        ret += fmt % (util.link('/'.join(divided_path[:i+1])), divided_path[i], '&nbsp;&gt;' if i<len(divided_path)-1 else '')
+    return ret
+
+%><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+%if lang is UNDEFINED:
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko">
+% else:
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="${lang}">
+% endif
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+% if title is UNDEFINED:
+    <title>${_('Error')}</title>
+% else:
+    <title>${title}</title>
+% endif
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0;">
+    <meta name="MobileOptimized" content="0"/>
+    <link href="/static/style/mobile_2.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="resources/scripts/templates.js"></script>
+    <script type="text/javascript">
+        function init() {
+                var myStyleTweaks = new StyleTweaker();
+                myStyleTweaks.add("AppleWebKit/420+", "resources/styles/tweaks/S40webkit.css");
+                myStyleTweaks.add("Maemo", "resources/styles/tweaks/maemo.css");
+                myStyleTweaks.tweak();
+        }
+        addEvent("onload",init);
+    </script>
+% if board_path is not UNDEFINED:
+% if feed is not UNDEFINED:
+    <link rel="alternate" type="application/rss+xml" href="/${board_path}/+rss" title="RSS 피드 (/${board_path})" />
+    <link rel="alternate" type="application/atom+xml" href="/${board_path}/+atom" title="Atom 피드 (/${board_path})" />
+% endif
+% endif
+%if feeds is not UNDEFINED:
+%for f in feeds:
+    <link rel="alternate" type="application/${f['type']}+xml" href="${f['path']}" title="${f['name']}" />
+% endfor
+% endif
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-368496-3']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+</head>
+<body>
+<div id="wrap">
+<div id="content">
+
+%if board_path is UNDEFINED:
+    %if board_desc is UNDEFINED:
+    <h1 class="top-aligned">${_('Error')}</h1>
+    %else:
+    <h1 class="top-aligned">${board_desc}</h1>
+    %endif
+%else:
+    <h1 class="top-aligned"><a href="${util.link('/%s/+cover' % board_path)}">${board_desc}</a></h1>
+%endif
+
+<ul class="nav-breadcrumbs">
+%if board_path is not UNDEFINED:
+    ${traverse_board_path(board_path)}
+%endif
+</ul>
+
+## 자식 보드
+% if board_path is not UNDEFINED:
+    % if util.get_type(board_path) > 0:
+<ul class="nav-breadcrumbs">
+    ${traverse_child_board(board_path)}
+</ul>
+    % endif
+% endif
+
+${next.body()}
+<br />
+
+## ${_('Login')}을 비롯한 다른 버튼들을 여기로.
+%if ctx.session is UNDEFINED or not ctx.session.has_key('uid'):
+    <ul class="nav-horizontal four-piece">
+        <li><a href="${util.link('/divisionCS')}">${_('Dept.')}</a></a>
+        <li><a href="${util.link('/course')}">${_('Course')}</a></li>
+        <li><a href="${util.link('/+join')}">${_('Join')}</a></li>
+        <li><a href="${util.link('/+login')}">${_('Login')}</a></li>
+    </ul>
+% else:
+    <ul class="nav-horizontal four-piece">
+        <li><a href="${util.link('/divisionCS')}">${_('Dept.')}</a></a>
+        <li><a href="${util.link('/course')}">${_('Course')}</a></li>
+        <li><a href="${util.link('/+u')}">${ctx.session.username}</a></li>
+        <li><a href="${util.link('/+u/+new_article')}">${_('New Article')}</a></li>
+    </ul>
+    <ul class="nav-horizontal three-piece">
+        <li><a href="${util.link('/+u/+my_board')}">${_('My Boards')}</a></li>
+        <li><a href="${util.link('/+u/+favorites')}">${_('Favorites')}</a></li>
+        <li><a href="${util.link('/+logout')}">${_('Logout')}</a></li>
+    </ul>
+% endif
+&nbsp;
+<div class="pagelevel home">
+    <a href="${util.link('/')}">${_('Home')}</a>
+</div>
+</div>
+
+<div id="footer" class="group">
+    <div class="nav-admin">
+        <ul>
+            <li class="first">Powered by <a href="http://haje.org">HAJE</a></li>
+            <li class="last"><a href="${util.link('/+credits')}">${_('Credits')}</a></li>
+        </ul>
+    </div>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<%inherit file="base.html" />
+<% import user, board, config
+import attachment as A_
+import article as A
+from web import ctx
+import urllib
+import util, acl
+from i18n import custom_gettext as _
+def get_formatted_username(uid):
+    u = user.get_user(uid)
+    if u[0]:
+        return "%(nick)s (%(id)s)" % {'id': u[1]['uId'], 'nick':u[1]['uNick']}
+    else:
+        return _("Former Member")
+%>
+<div id="article">
+<h2>${article['aTitle']}</h2>
+${get_formatted_username(article['uSerial'])}
+% if article.aEditedDatetime:
+${_('Last Modified')}: ${article['aEditedDatetime'].strftime('%Y-%m-%d %H:%M')}
+% else:
+${_('Date/Time')}: ${article['aDatetime'].strftime('%Y-%m-%d %H:%M')}
+% endif
+</div> <!-- end of article -->
+% if attachment is not UNDEFINED:
+	% for a in attachment:
+${_('Attachment')}: <a class="filelink" href="${config.attachment_web_path}${article['aSerial']}/${urllib.quote(a[1])}">${a[1].decode('utf-8')}</a> (${A_.format_file_size(A_.get_attachment_size(article['aSerial'], a[1]))})<br />
+	% endfor 
+% endif
+<hr />
+% if thumbnail is not UNDEFINED:
+% for t in thumbnail:
+    <div class="image">
+        (${t[1].decode('utf-8')})<br />
+        <a href="${config.attachment_web_path}${article['aSerial']}/${urllib.quote(t[1])}" target="_blank"><img class="image" src="${config.thumbnail_mobile_web_path}${article['aSerial']}/${urllib.quote(t[1])}" /></a>
+    </div>
+% endfor
+% endif
+${util.format(article['aContent'])}
+<hr />
+
+% if acl.is_allowed('board', board._get_board_id_from_path('/%s' % board_path), 1, 'comment'):
+<!-- 코멘트 -->
+% if comments:
+<ul class="comment">
+% for comment in comments:
+    <li>
+    % if comment['uNick'] == '' or comment['uNick'] == comment['cId']:
+<b>${comment['cId']}</b>
+    % else:
+<b>${comment['uNick']} (${comment['cId']})</b>
+    % endif
+<span title="${comment['cDatetime']}">${util.format(comment['cContent'])}</span>
+    %if ctx.session.has_key('uid') and ctx.session.uid == comment['uSerial']:
+<a href="/${util.link(board_path)}/+comment_delete/${comment['cSerial']}">X</a>
+    % endif
+    </li>
+% endfor
+</ul>
+% endif
+
+% if not ctx.session.has_key('uid'):
+<p style="text-align: center;">${_('To post commment, please <a href="/m/+login">log in</a>')}</p>
+% else:
+<p><form name="comment" method="post" action="/${util.link(board_path)}/+comment/${article['aSerial']}">
+    <label for="comment">${_('Write Comment')}</label>
+    <input name="comment" type="text" style="width: 50%;"/>
+    <input type="submit" name="Submit" value="${_('Submit')}" />
+</form></p>
+% endif
+<hr />
+% endif
+
+<!-- 이전글/다음글 -->
+% if prev_id > 0:
+<div class="pagelevel home">
+    <a href="/${util.link(board_path)}/+read/${prev_id}">${_('Prev')}:&nbsp;${A.get_title(prev_id)}</a></a>
+</div>
+% endif
+% if next_id > 0:
+<div class="pagelevel home_reverse">
+    <a href="/${util.link(board_path)}/+read/${next_id}">${_('Next')}:&nbsp;${A.get_title(next_id)}</a></a>
+</div>
+% endif
+
+<!-- 버튼: 목록/글쓰기/답글/메일답신/수정/삭제 -->
+<ul class="nav-horizontal five-piece">
+% if page_no is UNDEFINED:
+    <li> <a  href="/${util.link(board_path)}">${_('List')}</a></li>
+% else:
+    <li> <a  href="/${util.link(board_path)}?page=${page_no}">${_('List')}</a></li>
+% endif
+%if ctx.session.has_key('uid') and acl.is_allowed('board', board._get_board_id_from_path('/%s' % board_path), ctx.session.uid, 'write'):
+    <!-- 쓰기 권한 -->	
+    <li><a  href="/${util.link(board_path)}/+write">${_('Write')}</a></li>
+    <li><a  href="/${util.link(board_path)}/+reply/${article['aSerial']}">${_('Reply')}</a></li>
+% endif
+%if ctx.session.has_key('uid') and acl.is_allowed('article', article.aSerial, ctx.session.uid, 'modify'):
+    <!-- 로그인 --> 
+    <li><a  href="/${util.link(board_path)}/+modify/${article['aSerial']}">${_('Modify')}</a></li>
+% endif
+%if ctx.session.has_key('uid') and acl.is_allowed('article', article.aSerial, ctx.session.uid, 'delete'):
+    <!-- 삭제 권한 --> 
+    <li><a  href="/${util.link(board_path)}/+delete/${article['aSerial']}">${_('Delete')}</a></li>
+% endif
+% if ctx.session.has_key('uid') and acl.is_allowed('board', article.bSerial, ctx.session.uid, 'mark'):
+    % if A.get_mark_status(article['aSerial']):
+    <!-- 강조 권한 --> 
+    <li><a  href="/${util.link(board_path)}/+unmark/${article['aSerial']}">${_('Unmark')}</a></li>
+    % else:
+    <li><a  href="/${util.link(board_path)}/+mark/${article['aSerial']}">${_('Mark')}</a></li>
+    % endif
+% endif
+</ul>
+<br />
+

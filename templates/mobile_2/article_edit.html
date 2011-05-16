@@ -1,0 +1,41 @@
+<%inherit file="base.html" />
+<% from i18n import custom_gettext as _
+import util%>
+<h2>${action_name}</h2>
+<div class="box-flat">
+<form name="write_form" enctype="multipart/form-data" method="POST" action="/${util.link(board_path)}/+${action}">
+<fieldset>
+    <label for="title">${_('Title')}</label>
+%if article_title is UNDEFINED:
+    <input id="title" name="title" type="text" style="width: 60%; display: inline;"maxlength="255" value="">
+%else:
+    <input id="title" name="title" type="text" style="width: 60%; display: inline;" maxlength="255" value="${article_title}">
+%endif
+<br />
+
+<label for="content">${_('Content')} <a href="${util.link('/+help/editor#bbcode')}" target="_blank">${_('(BBCode Help)')}</a></label><br />
+%if body is UNDEFINED:
+    <textarea id="content" name="content" style="width: 100%; height: 320px;"></textarea>
+%else:
+    <textarea id="content" name="content" style="width: 100%; height: 320px;">${body}</textarea>
+%endif
+<br />
+%if attachment is not UNDEFINED:
+    <% i = 1 %>
+    %for a in attachment:
+    <label>${_('Attachment %s') % i}: ${a[1].decode('utf-8')}</label>
+    <input id="attachment_${i}" name="delete" type="checkbox" value="${a[1].decode('utf-8')}" />
+    <label for="attachment_${i}">(${_('Delete')})</label><br />
+    <% i = i + 1 %>
+    % endfor
+% endif
+<br />
+<label for="attachment">${_('Attachment')}</label> <input id="attachment" name="new_attachment" class="multi" type="file" />
+<br />
+<br />
+<input type="submit" name="ok" value="${_('Submit')}">
+<input type="button" value="${_('Go Back')}" onclick="history.back()">
+</fieldset>
+</form>
+</div>
+<!-- <iframe id="sessionKeeper" src="sessionkeeper.jsp" scrolling="no" frameborder="0" width="1px" height="1px"></iframe> -->

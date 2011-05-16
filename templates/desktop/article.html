@@ -10,7 +10,7 @@ def get_formatted_username(uid):
     u = user.get_user(uid)
     if u[0]:
         url = util.link("/+u/%s" % u[1]['uId'])
-        return '<a class=\"articlelink\" href=\"%(url)s">%(id)s (%(nick)s)</a>' % {'url':url, 'id': u[1]['uId'], 'nick':u[1]['uNick']}
+        return '<a class=\"articlelink\" href=\"%(url)s">%(nick)s (%(id)s)</a>' % {'url':url, 'id': u[1]['uId'], 'nick':u[1]['uNick']}
     else:
         return _("Former Member")
 %>
@@ -92,7 +92,7 @@ ${util.format(article['aContent'])}
 % if comment['uNick'] == '' or comment['uNick'] == comment['cId']:
 <b class="major">${comment['cId']}</b>
 % else:
-<b class="major">${comment['cId']}</b><br /><b>${comment['uNick']}</b>
+<b class="major">${comment['uNick']}</b><br /><b>${comment['cId']}</b>
 % endif
 <br /><span title="${comment['cDatetime']}">(${_('%s ago') % reldates.timesince(comment['cDatetime'])})</span>
                         </td>

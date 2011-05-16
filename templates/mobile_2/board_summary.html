@@ -1,0 +1,60 @@
+<%inherit file="base.html" />
+<%
+import user, board, util, acl
+import posixpath
+from web import ctx
+from i18n import custom_gettext as _ 
+def get_formatted_username(uid):
+    u = user.get_user(uid)[1]
+    return "%(id)s (%(nick)s)" % {'id': u['uId'], 'nick':u['uNick']}
+
+upper_admin_list = []
+for i in acl.get_board_admins(board_info.bSerial):
+    if (i != board_info.uSerial) and (i != 1):
+        upper_admin_list.append(get_formatted_username(i))
+
+upper_admin_list.sort()
+%>
+<h3>${_('Board Information')}</h3>
+<h4>${_('Basic Information')}</h4>
+<ul class="list2">
+    <li>${_('Location')}: ${posixpath.dirname(board_info.bName)}</li>
+    <li>${_('Name')}: ${posixpath.basename(board_info.bName)}</li>
+    <li>${_('Admin')}: ${get_formatted_username(board_info.uSerial)}</li>
+</ul>
+
+<h4>${_('Details')}</h4>
+<ul class="list2">
+    <li>${_('Type')}: ${[_('Folder'), _('Board')][board_info.bType]}</li>
+    <li>${_('Comments')}: ${[_('Not Allow'), _('Allow')][board_info.bComment]}</li>
+    <li>${_('Guest Writing')}: ${[_('Not Allow'), _('Allow')][board_info.bWrite]}</li>
+</ul>
+
+<h4>${_('Board Description')}</h4>
+<ul class="list2">
+    <li>${_('Short Description')}: ${board_info.bDescription}</li>
+    <li>${_('Long Description')}<br />
+    <div style="border: solid 1px lightgray;">
+        <span style="font-size: 0.9em">${util.format(board_info.bInformation)}</span>
+    </div>
+</ul>
+
+% if ctx.session.has_key('uid') and acl.is_allowed('board', board_info.bSerial, ctx.session.uid, 'modify'):
+<!-- 게시판 수정 -->
+<a class="button" href="/m/${board_path}/+modify">${_('Modify')}</a> 
+##        <!-- 게시판 백업 -->
+##        <a class="button" href="/${board_path}/+backup">${_('Backup')}</a>
+##        <!-- 게시판 통계 -->
+##        <a class="button" href="/m/${board_path}/+statistics">${_('Statistics')}</a>
+% endif
+
+%if ctx.session.has_key('uid') and acl.is_allowed('board', board_info.bSerial, ctx.session.uid, 'delete'):
+<!-- 게시판 삭제 -->
+<a class="button" href="/m/${board_path}/+delete">${_('Delete This Board')}</a> 
+% endif
+
+%if ctx.session.has_key('uid') and acl.is_allowed('board', board_info.bSerial, ctx.session.uid, 'create'):
+<!-- 게시판 생성  -->
+<a class="button" href="/m/${board_path}/+create_board">${_('Create Child Board')}</a>
+% endif
+<div style="height: 10px"></div>

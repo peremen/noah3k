@@ -1,0 +1,127 @@
+<%inherit file="base.html" />
+<% import user
+import posixpath
+from i18n import custom_gettext as _ 
+def get_userid(uid):
+    u = user.get_user(uid)[1]
+    return '%s' % u.uId
+%>
+<form name="write_form" method="post" action="/m/${board_path}/+${action}">
+%if action == 'modify':
+<h2>${_('Modify')}</h2>
+% elif action == 'create_board':
+<h2>${_('Create Child Board')}</h2>
+% endif
+<h3>${_('Basic Information')}</h3>
+<ul class="list2">
+    <li><label>${_('Location')}</label> \
+% if action == 'modify':
+        <input name="path" type="text" value="${posixpath.dirname(board_info.bName)}" /> \
+%elif action == 'create_board':
+        ${board_info.bName} \
+% endif
+    </li>
+    <li><label>${_('Name')}</label> \
+% if action == 'modify':
+        <input name="name" type="text" maxlength="255" value="${posixpath.basename(board_info.bName)}" /> \
+%elif action == 'create_board':
+        <input name="name" type="text" maxlength="255" /> \
+% endif
+    </li>
+    <li><label>${_('Admin')}</label> <input name="owner" type="text" size="12" value="${get_userid(board_info.uSerial)}" /></li>
+</ul>
+<h3>${_('Details')}</h3>
+<ul class="list2">
+    <li><label>${_('Type')}</label> \
+% if action == 'modify':
+        <input id="radio_dir" type="radio" name="type" onclick="dirclick()" value="0" \
+        % if board_info.bType == 0:
+checked="checked" \
+        %endif 
+        />
+% elif action == 'create_board':
+        <input id="radio_dir" type="radio" name="type" onclick="dirclick()" value="0">
+% endif
+        <label class="plain" for="radio_dir">${_('Folder')}</label>
+% if action == 'modify':
+        <input id="radio_board" type="radio" name="type" onclick="boardclick()" value="1" \
+        % if board_info.bType == 1:
+checked="checked" \
+        %endif 
+        />
+% elif action == 'create_board':
+        <input id="radio_board" type="radio" name="type" onclick="boardclick()" value="1" checked="checked">
+% endif
+        <label class="plain" for="radio_board">${_('Board')}</label>
+    </li>
+    <li><label>${_('Comments')}</label> \
+% if action == 'modify':
+        <input id="radio_comyes" type="radio" name="commentable" value="yes" \
+        % if board_info.bComment == 1:
+checked="checked" \
+        %endif 
+        />
+% elif action == 'create_board':
+        <input id="radio_comyes" type="radio" name="commentable" value="yes" checked="checked" />
+% endif
+        <label class="plain" for="radio_comyes">${_('Allow')}</label>
+% if action == 'modify':
+        <input id="radio_comno" type="radio" name="commentable" value="no" \
+        % if board_info.bComment == 0:
+checked="checked" \
+        %endif 
+        />
+% elif action == 'create_board':
+        <input id="radio_comno" type="radio" name="commentable" value="no" />
+% endif
+        <label class="plain" for="radio_comno">${_('Not Allow')}</label>
+    </li>
+    <li><label>${_('Guest Writing')}</label> \
+% if action == 'modify':
+        <input id="radio_comyes" type="radio" name="writable" value="yes" \
+% if board_info.bWrite == 1:
+checked="checked" \
+%endif 
+/>
+% elif action == 'create_board':
+        <input id="radio_comyes" type="radio" name="writable" value="yes" checked="checked" />
+% endif
+        <label class="plain" for="radio_comyes">${_('Allow')}</label>
+% if action == 'modify':
+        <input id="radio_comno" type="radio" name="writable" value="no" \
+% if board_info.bWrite == 0:
+checked="checked" \
+%endif 
+/>
+% elif action == 'create_board':
+        <input id="radio_comno" type="radio" name="writable" value="no" />
+% endif
+        <label class="plain" for="radio_comno">${_('Not Allow')}</label>
+    </li>
+</ul>
+
+<h3>${_('Board Description')}</h3>
+<ul class="list2">
+    <li><label>${_('Short Description')}</label><input name="description" type="text" maxlength="255" \
+% if action == 'modify':
+value="${board_info.bDescription}" /> \
+% else:
+/> \
+% endif
+    </li>
+    <li><label>${_('Long Description')}</label><br />
+        <textarea name="information" style="font-size: 0.9em; width: 100%; height: 360px"> \
+% if action == 'modify':
+${board_info.bInformation}
+% endif
+        </textarea>
+    </li>
+</ul>
+
+<!-- 완료/취소 버튼 -->			
+<input type="submit" name="ok" value="${_('Submit')}">
+<input type="submit" name="cancel" value="${_('Cancel')}">
+<input type="hidden" name="referer" value="${referer}">
+
+<div style="height: 10px"></div>
+</form>

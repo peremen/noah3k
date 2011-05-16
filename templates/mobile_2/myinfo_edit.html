@@ -1,0 +1,49 @@
+<%inherit file="base.html" />
+<% import util, config
+from i18n import custom_gettext as _ %>
+<form name="modify_form" method="post" action="/m/+u/+modify">
+<ul class="list2">
+    <li><label>ID</label> ${user.uId}</li>
+    <li><label>${_('Nickname')}</label> <input name="nick" type="text" maxlength="16"  value="${user.uNick}" /></li>
+    <li><label>${_('E-Mail')}</label> <input name="email" type="text" maxlength="64" value="${user.uEmail}" /></li>
+    <li><label>${_('Website')}</label> <input name="homepage" type="text" maxlength="64" value="${user.uHomepage}" /></li>
+    <li><label>${_('Language')}</label><select name="language">
+% for o in util.get_lang_map().keys():
+    % if o == user.language:
+            <option value="${o}" selected="selected">${util.lang_map[o]}</option>
+    % else:
+            <option value="${o}">${util.lang_map[o]}</option>
+    % endif
+% endfor
+    </select></li>
+
+    <li><label>${_('Theme')}</label><select name="theme">
+% for o in config.render.keys():
+    % if o == user.theme:
+            <option value="${o}" selected="selected">${o}</option>
+    % else:
+            <option value="${o}">${o}</option>
+    % endif
+% endfor
+    </select></li>
+
+    <li><label>${_('Profile Image')}</label><input name="profile_image" type="file" /><input name="delete_profile_image" id="delete_profile_image" type="checkbox" value="True" />
+        <label style="display: inline; width: 10%; font-weight: normal;" for="delete_profile_image">${_('Delete')}</label>
+    </li>
+
+    <!-- 비밀번호 수정 -->
+    <li><label>${_('Current Password')}</label> <input name="oldpass" type="password" /></li>
+    <li><label>${_('New Password')}</label> <input name="newpass1" type="password" /></li>
+    <li><label>${_('Repeat Password')}</label> <input name="newpass2" type="password" /></li>
+    <li><label>${_('Signature')}</label><br />
+    <textarea name="sig" style="height: 100px">${user.uSig}</textarea>
+    </li>
+    <li><label>${_('Introduction')}</label><br />
+    <textarea name="introduction" style="height: 100px">${user.uPlan}</textarea>
+</ul>
+<!-- 완료/취소 버튼 -->			
+<input type="submit" name="ok" value="${_('Submit')}" style="margin: 6px" />
+<input type="submit" name="cancel" value="${_('Cancel')}" style="margin: 6px" />
+<input type="hidden" name="referer" value="${referer}" />
+
+</form>

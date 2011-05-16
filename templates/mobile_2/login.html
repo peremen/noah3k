@@ -1,0 +1,17 @@
+<%inherit file="base.html" />
+<% import util
+from i18n import custom_gettext as _ %>
+${_('To join NOAH, click <a href="%s">here</a>' % util.link('/+join/'))}
+% if error is not UNDEFINED:
+    <br /><span style="color: red">${error}</span>
+% endif
+<hr />
+<form method="post" action="/m/+login">
+    <input name="url" type="hidden" value="${referer}" />
+    <label class="four_em" for="username">ID</label>
+    <input id="username" name="username" type="text" style="width: 60%;"/>
+    <br />
+    <label class="four_em" for="password">${_('Password')}</label>
+    <input id="password" name="password" type="password" style="width: 60%;"/>
+    <input type="submit" name="Submit" value="${_('Login')}"/>
+</form>

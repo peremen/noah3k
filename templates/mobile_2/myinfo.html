@@ -1,0 +1,94 @@
+<% import user as user_ 
+import util
+from web import ctx
+from i18n import custom_gettext as _ %>
+<%inherit file="base.html" />
+<h2>${_('Personal Information')}</h2>
+<ul class="list2">
+    <li><label>ID</label> ${user.uId}</li>
+    <li><label>${_('Nickname')}</label> \
+%if user.uNick is UNDEFINED:
+    <span class="none">${_('None')}</span>
+%elif user.uNick.strip() == '':
+    <span class="none">${_('None')}</span>
+% else:
+${user.uNick} \
+% endif
+    </li>
+    <li><label>${_('E-Mail')}</label> \
+%if user.uEmail is UNDEFINED:
+    <span class="none">${_('None')}</span>
+%elif user.uEmail.strip() == '':
+    <span class="none">${_('None')}</span>
+% else:
+<span>${user.uEmail}</span> \
+% endif
+    </li>
+    <li><label>${_('Website')}</label> \
+%if user.uHomepage is UNDEFINED:
+    <span class="none">${_('None')}</span>
+% elif user.uHomepage.strip() == '':
+    <span class="none">${_('None')}</span>
+%else:
+<span>${user.uHomepage}</span> \
+% endif
+    </li>
+    <li><label>${_('Signature')}</label><br />
+<div style="border: solid 1px lightgray;">
+%if user.uSig is UNDEFINED:
+    <span class="none">${_('None')}</span>
+%elif user.uSig.strip() == '':
+    <span class="none">${_('None')}</span>
+% else:
+    <span >${util.format(user.uSig)}</span>
+% endif
+</div>
+    </li>
+    <li><label>${_('Introduction')}</label><br />
+<div style="border: solid 1px lightgray;">
+%if user.uPlan is UNDEFINED:
+    <span class="none">${_('None')}</span>
+%elif user.uPlan.strip() == '':
+    <span class="none">${_('None')}</span>
+% else:
+<span style="font-size: 0.9em">${user.uPlan}</span>
+% endif
+</div>
+    </li>
+</ul>
+
+<h2>${_('Usage Statistics')}</h2>
+<ul class="list2 wide">
+    <li><label>${_('Join Date')}</label> ${user.uDatetime}</li>
+    <li><label>${_('Login Count')}</label> ${user.uNumLogin}</li>
+    <li><label>${_('Posts')}</label> ${user_.get_post_count(user_id)}</li>
+    <li><label>${_('_:Count\nComments')}</label> ${user_.get_comment_count(user_id)}</li>
+    <li><label>${_('New Article Hit Count')}</label> ${user.new_article_hit}</li>
+    <li><label>${_('No New Article Hit Count')}</label>${user.new_article_none_hit}</li>
+% if ctx.session is not UNDEFINED and ctx.session.has_key('uid'):
+    % if ctx.session.uid == 1 or ctx.session.uid == user_id:
+    <li><label>${_('Last Login')}</label>  \
+        %if user.uLastLogin is UNDEFINED:
+<span style='color: #aa0000'>${_('Unknown')}</span>
+        % else:
+<span>${user.uLastLogin}</span> \
+        % endif
+    </li>
+    <li><label>${_('Last Login IP')}</label> \
+        %if user.uLastHost is UNDEFINED:
+<span style='color: #aa0000'>${_('Unknown')}</span>
+        %elif user.uLastHost.strip() == '':
+<span style='color: #aa0000'>${_('Unknown')}</span>
+        % else:
+<span>${user.uLastHost}</span> \
+        % endif
+    </li>
+    % endif
+% endif
+</ul>
+<br />
+<ul class="nav-horizontal three-piece">
+    <li><a href="${util.link('/+u/+my_article')}">${_('My Posts')}</a></li>
+    <li><a href="${util.link('/+u/+modify')}">${_('Modify')}</a></li>
+    <li><a href="${util.link('/+u/+leave')}">${_('Leave NOAH')}</a></li>
+</ul>

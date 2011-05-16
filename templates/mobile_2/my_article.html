@@ -1,0 +1,92 @@
+<%inherit file="base.html" />
+<%
+import user, article, acl, board, util
+from web import ctx
+from i18n import custom_gettext as _
+def get_formatted_username(uid):
+    u = user.get_user(uid)
+    if u[0]:
+        return "%(id)s" % {'id': u[1]['uId']}
+    else:
+        return _('Former Member')
+%>
+% if len(articles) == 0:
+<div align="center">
+    <div style="width: 500px; padding: 25px">
+        <hr />
+        ${_('You did not wrote any articles.')}
+        <hr />
+    </div>
+</div>
+<div id="listmenu">
+</div>
+% else:
+<!-- 글 -->
+<table border="0" cellspacing="0" cellpadding="4" style="width: 100%; margin-bottom: 10px; " class="list">
+    <tr align="center" class="head">
+        <th>${_('Title')}</th>
+        <th>${_('Board')}</th>
+    </tr>
+    <% i = 1 %>
+    %if articles is not UNDEFINED:
+        % for a in articles:
+        ${put_article(a, i)}
+        <% i = i + 1 %>
+        % endfor
+    % endif
+</table>
+<ul class="nav-horizontal">
+% if page > 0:
+    % if page > 5:
+    <li style="width: 7%"><a href="${util.link('/+u/+my_article')}?page=1"><img src="/static/image/arrows/first.png" alt="first" border="0" style="vertical-align: middle" /></a></li>
+    % else:
+    <li style="width: 7%">&nbsp;</li>
+    % endif
+    % if page > 1:
+    <li style="width: 7%"><a href="${util.link('/+u/+my_article')}?page=${page-1}"><img src="/static/image/arrows/prev.png" alt="prev" border="0" style="vertical-align: middle" /> </a>&nbsp;</a>
+    % else:
+    <li style="width: 7%">&nbsp;</li>
+    % endif
+    % for i in range(((page-1)/4)*4+1, min(total_page, ((page-1)/4*4+4))+1):
+        % if i == page:
+    <li style="width: 18%"><a href="#"><b>${i}</b></a></li>
+        % else:
+    <li style="width: 18%"><a href="${util.link('/+u/+my_article')}?page=${i}">${i}</a></li>
+        % endif
+    % endfor
+    % if page < total_page:
+    <li style="width: 7%"><a href="${util.link('/+u/+my_article')}?page=${page+1}"><img src="/static/image/arrows/next.png" alt="next" border="0" style="vertical-align: middle" /></a></li>
+    % else:
+    <li style="width: 7%">&nbsp;</li>
+    % endif
+    % if page < total_page - 3:
+    <li style="width: 7%"><a href="${util.link('/+u/+my_article')}?page=${total_page}"><img src="/static/image/arrows/last.png" alt="last" border="0" style="vertical-align: middle" /></a></li>
+    % else:
+    <li style="width: 7%">&nbsp;</li>
+    % endif
+% endif
+% endif
+</ul>
+
+<%def name="put_article(a, i)" >
+% if i%2 == 0:
+<tr class="even">
+% else:
+<tr class="odd">
+% endif
+    <!-- 제목 --> 
+    <td width="75%">
+%if a.aLevel > 0:
+        <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (a.aLevel-1)}px" />
+%endif
+        <a href="${util.link('%s/+read/%s' % (a.board_name, a.aSerial))}" class="articlelink">${a.aTitle}
+        % if a.comment_count > 0:
+        <span class="commentCount">[${a.comment_count}]</span>
+        % endif
+        </a>
+    </td>
+    <!-- 게시판 -->
+    <td style="padding-left: 1em"><a class="articlelink" href="${util.link(a.board_name)}">${util.strip_path(a.board_name)}</a></td>
+</tr>
+</%def>
+
