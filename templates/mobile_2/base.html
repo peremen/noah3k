@@ -137,6 +137,11 @@ ${next.body()}
     <div class="nav-admin">
         <ul>
             <li class="first">Powered by <a href="http://haje.org">HAJE</a></li>
+%if len(ctx.path) > 2:
+            <li><a href="${ctx.path[2:]}">${_('PC Version')}</a></li>
+% else:
+            <li><a href="/">${_('PC Version')}</a></li>
+% endif
             <li class="last"><a href="${util.link('/+credits')}">${_('Credits')}</a></li>
         </ul>
     </div>

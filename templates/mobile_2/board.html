@@ -25,7 +25,7 @@ today = datetime.datetime.today()
 </div>
 %else:
 <!-- 글 -->
-<table border="0" cellspacing="0" cellpadding="4" style="width: 100%; margin-bottom: 10px; " class="list">
+<table class="list" >
     <thead>
         <tr>
         <th scope="col">${_('Title')}</th>
@@ -88,29 +88,29 @@ today = datetime.datetime.today()
     % if page > 5:
     <li style="width: 7%"><a href="/${util.link(board_path)}?page=1"><img src="/static/image/arrows/first.png" alt="first" border="0" style="vertical-align: middle" /></a></li>
     % else:
-    <li style="width: 7%">&nbsp;</li>
+    <li style="width: 7%"><a href="#">&nbsp;</a></li>
     % endif
     % if page > 1:
     <li style="width: 7%"><a href="/${util.link(board_path)}?page=${page-1}"><img src="/static/image/arrows/prev.png" alt="prev" border="0" style="vertical-align: middle" /></a></li>
     % else:
-    <li style="width: 7%">&nbsp;</li>
+    <li style="width: 7%"><a href="#">&nbsp;</a></li>
     % endif
     % for i in range(((page-1)/4)*4+1, min(total_page, ((page-1)/4*4+4))+1):
         % if i == page:
     <li style="width: 18%"><a href="#"><b>${i}</b></a></li>
         % else:
-    <li style="width: 18%"><a class="listlink" href="/${util.link(board_path)}?page=${i}">${i}</a></li>
+    <li style="width: 18%"><a href="/${util.link(board_path)}?page=${i}">${i}</a></li>
         % endif
     % endfor
     % if page < total_page:
     <li style="width: 7%" ><a href="/${util.link(board_path)}?page=${page+1}"><img src="/static/image/arrows/next.png" alt="next" border="0" style="vertical-align: middle" /></a></li>
     % else:
-    <li style="width: 7%">&nbsp;</li>
+    <li style="width: 7%"><a href="#">&nbsp;</a></li>
     % endif
     % if page < total_page - 3:
     <li style="width: 7%"><a href="/${util.link(board_path)}?page=${total_page}"><img src="/static/image/arrows/last.png" alt="last" border="0" style="vertical-align: middle" /></a></li>
     % else:
-    <li style="width: 7%">&nbsp;</li>
+    <li style="width: 7%"><a href="#">&nbsp;</a></li>
     % endif
 % endif
 % else:
@@ -137,23 +137,23 @@ today = datetime.datetime.today()
 % endif
 % endif
 </ul>
+%if ctx.session.has_key('uid'):
 <ul class="nav-horizontal three-piece">
-%if ctx.session.has_key('uid') and acl.is_allowed('board', board._get_board_id_from_path('/%s' % board_path), ctx.session.uid, 'write'):
+    % if acl.is_allowed('board', board._get_board_id_from_path('/%s' % board_path), ctx.session.uid, 'write'):
     <!-- 글쓰기 -->
     <li><a href="/${util.link(board_path)}/+write" title="${_('Write new article')}">${_('Write')}</a></li>
-% endif
-%if ctx.session.has_key('uid') and acl.is_allowed('board', board._get_board_id_from_path('/%s' % board_path), ctx.session.uid, 'modify'):
+    % endif
+    % if acl.is_allowed('board', board._get_board_id_from_path('/%s' % board_path), ctx.session.uid, 'modify'):
     <!-- 게시판 수정 -->
     <li><a href="/${util.link(board_path)}/+modify">${_('Modify Board')}</a></li>
-% endif
-%if ctx.session.has_key('uid'):
+    % endif
     % if user.is_subscribed(ctx.session.uid, board._get_board_id_from_path(board_path)):
     <li><a href="/${util.link(board_path)}/+subscribe" title="${_('Unsubscribe from this board')}">${_('Unsubscribe')}</a> </li>
     % else:
     <li><a href="/${util.link(board_path)}/+subscribe" title="${_('Subscribe to this board')}">${_('Subscribe')}</a> </li>
     %endif
-%endif
 </ul>
+%endif
 
 
 <%def name="put_article(a, i, mark=False)" >
