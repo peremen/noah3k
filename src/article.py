@@ -216,8 +216,8 @@ def write_article(uid, board_id, article):
         board_info = result[0]
     except:
         return (False, _('NO_SUCH_BOARD'))
-    if board_info.bType == 0:
-        return (False, _('FOLDER'))
+    if board_info.bType != 1:
+        return (False, _('CANNOT_WRITE_ON_THIS_BOARD'))
 
     index = _get_article_count(board_id) + 1
 
@@ -344,8 +344,8 @@ def reply_article(uid, board_id, article_id, reply):
         board_info = result[0]
     except IndexError:
         return (False, _('NO_SUCH_BOARD'))
-    if board_info.bType == 0:
-        return (False, _('FOLDER'))
+    if board_info.bType != 1:
+        return (False, _('CANNOT_WRITE_ON_THIS_BOARD'))
 
     val = dict(board_id = board_id, article_id = article_id)
     ret = db.select('Articles', val, where='bSerial = $board_id AND aSerial = $article_id',

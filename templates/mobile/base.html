@@ -13,8 +13,10 @@ def traverse_child_board(path):
     for child in children:
         if child.bType == 0:
             child_image = '/static/image/folder.png'
-        else:
+        elif child.bType == 1:
             child_image = '/static/image/board.png'
+        else:
+            child_image = '/static/image/alias.png'
         if child.bDescription.strip() == '':
             child_desc = posixpath.basename(child.bName)
         else:

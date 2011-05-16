@@ -8,6 +8,7 @@ import user, util
 import posixpath
 import acl
 import i18n
+import article
 _ = i18n.custom_gettext
 
 """
@@ -99,6 +100,9 @@ def create_board(parent_id, settings):
         return (False, _('BOARD_ALREADY_EXIST'))
     if not acl.is_allowed('board', parent_id, settings['current_uid'], 'create'):
         return (False, _('NO_PERMISSION'))
+    if settings['board_type'] == 2:
+        if _get_board_id_from_path(settings['description']) < 0 or settings['description'].strip() == '':
+            return (False, _('NO_SUCH_BOARD'))
 
     t = db.transaction()
     try:
@@ -138,6 +142,11 @@ def board_edit(current_uid, board_id, settings):
     new_path = posixpath.join(settings['path'], settings['name'])
     if not util.validate_boardname(new_path):
         return (False, _('INVALID_BOARDNAME'))
+    if settings['board_type'] == 2:
+        if article._get_article_count(board_id) > 0:
+            return (False, _('ALIAS_CANT_HAVE_ARTICLE'))
+        if _get_board_id_from_path(settings['description']) < 0 or settings['description'].strip() == '':
+            return (False, _('NO_SUCH_BOARD'))
     old_path = original_board_info.bName
     old_directory = posixpath.dirname(old_path)
     new_directory = settings['path']

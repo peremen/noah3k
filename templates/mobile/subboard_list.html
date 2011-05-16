@@ -25,8 +25,10 @@ from i18n import custom_gettext as _ %>
     <% i = i + 1 %>
         %if child_board.bType == 0:
         <img class="type" src="/static/image/folder.png" alt="디렉터리" />
-        %else:
+        %elif child_board.bType == 1:
         <img class="type" src="/static/image/board.png" alt="게시판" />
+        %else:
+        <img class="type" src="/static/image/alias.png" alt="넘겨주기" />
         %endif
         <a href= "/m${child_board.bName}" class="boardlink">${posixpath.basename(child_board.bName)}&nbsp;&mdash;&nbsp;${child_board.bDescription}</a>
     </li>

@@ -95,6 +95,8 @@ class board_actions:
     @util.session_helper
     def write_get(self, board_name, board_id, current_uid = -1):
         board_info = board.get_board_info(board_id)
+        if board_info.bType != 1:
+            raise web.notfound(util.render().error(error_message = _('CANNOT_WRITE_ON_THIS_BOARD'), help_context='error'))
         board_desc = board_info.bDescription
         user_info = user.get_user(current_uid)[1]
         return util.render().article_edit(
@@ -313,7 +315,7 @@ class board_actions:
             return util.render().error(error_message=_('NO_SUCH_USER_FOR_BOARD_ADMIN'), help_context='error')
 
         board_info = dict(path = data.path, name = data.name,
-                owner = owner_uid, board_type = data.type,
+                owner = owner_uid, board_type = int(data.type),
                 can_comment = comment, can_write_by_other = write_by_other,
                 indexable = indexable, show_avatar = show_avatar,
                 stylesheet = data.stylesheet,

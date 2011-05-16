@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2011-05-16 19:01+0900\n"
+"POT-Creation-Date: 2011-05-17 03:22+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,12 +19,12 @@ msgstr ""
 
 #: ../src/article.py:202 ../src/article.py:251 ../src/article.py:291
 #: ../src/article.py:330 ../src/article.py:418 ../src/article.py:457
-#: ../src/board.py:101 ../src/board.py:133 ../src/board.py:193
+#: ../src/board.py:102 ../src/board.py:137 ../src/board.py:202
 #: ../src/web_article.py:86 ../src/web_article.py:106 ../src/web_article.py:133
 #: ../src/web_article.py:151 ../src/web_article.py:192
 #: ../src/web_article.py:207 ../src/web_article.py:219
-#: ../src/web_article.py:244 ../src/web_article.py:252 ../src/web_board.py:230
-#: ../src/web_board.py:248 ../src/web_board.py:285 ../src/web_board.py:304
+#: ../src/web_article.py:244 ../src/web_article.py:252 ../src/web_board.py:232
+#: ../src/web_board.py:250 ../src/web_board.py:287 ../src/web_board.py:306
 #: ../src/web_user.py:282 ../src/web_user.py:330 ../src/web_user.py:352
 msgid "NO_PERMISSION"
 msgstr ""
@@ -45,17 +45,18 @@ msgstr ""
 msgid "EMPTY_BODY"
 msgstr ""
 
-#: ../src/article.py:218 ../src/article.py:346 ../src/board.py:94
-#: ../src/board.py:136 ../src/web_noah2k_support.py:31
-#: ../src/web_noah2k_support.py:41 ../src/web_noah2k_support.py:55
-#: ../src/web_noah2k_support.py:64 ../src/web_noah2k_support.py:74
-#: ../src/web_noah2k_support.py:79 ../src/web_noah2k_support.py:89
-#: ../src/web_noah2k_support.py:100 ../src/web_noah2k_support.py:110
+#: ../src/article.py:218 ../src/article.py:346 ../src/board.py:95
+#: ../src/board.py:105 ../src/board.py:140 ../src/board.py:149
+#: ../src/web_noah2k_support.py:31 ../src/web_noah2k_support.py:41
+#: ../src/web_noah2k_support.py:55 ../src/web_noah2k_support.py:64
+#: ../src/web_noah2k_support.py:74 ../src/web_noah2k_support.py:79
+#: ../src/web_noah2k_support.py:89 ../src/web_noah2k_support.py:100
+#: ../src/web_noah2k_support.py:110
 msgid "NO_SUCH_BOARD"
 msgstr ""
 
-#: ../src/article.py:220 ../src/article.py:348
-msgid "FOLDER"
+#: ../src/article.py:220 ../src/article.py:348 ../src/web_board.py:99
+msgid "CANNOT_WRITE_ON_THIS_BOARD"
 msgstr ""
 
 #: ../src/article.py:238 ../src/article.py:283 ../src/article.py:322
@@ -85,27 +86,31 @@ msgstr ""
 msgid "NO_SUCH_COMMENT"
 msgstr ""
 
-#: ../src/article.py:473 ../src/article.py:475 ../src/web_board.py:361
+#: ../src/article.py:473 ../src/article.py:475 ../src/web_board.py:363
 msgid "NO_KEYWORD_SPECIFIED"
 msgstr ""
 
-#: ../src/board.py:96 ../src/board.py:140
+#: ../src/board.py:97 ../src/board.py:144
 msgid "INVALID_BOARDNAME"
 msgstr ""
 
-#: ../src/board.py:99 ../src/board.py:145
+#: ../src/board.py:100 ../src/board.py:154
 msgid "BOARD_ALREADY_EXIST"
 msgstr ""
 
-#: ../src/board.py:148
+#: ../src/board.py:147
+msgid "ALIAS_CANT_HAVE_ARTICLE"
+msgstr ""
+
+#: ../src/board.py:157
 msgid "INVALID_PARENT"
 msgstr ""
 
-#: ../src/board.py:151
+#: ../src/board.py:160
 msgid "NO_PERMISSION_ON_NEW_PARENT"
 msgstr ""
 
-#: ../src/board.py:202
+#: ../src/board.py:211
 msgid "HAS_CHILD"
 msgstr ""
 
@@ -233,64 +238,64 @@ msgstr ""
 msgid "Do you want to delete the article?"
 msgstr ""
 
-#: ../src/web_article.py:198 ../src/web_board.py:337 ../src/web_user.py:358
+#: ../src/web_article.py:198 ../src/web_board.py:339 ../src/web_user.py:358
 #: ../src/web_user.py:359
 msgid "Confirmation"
 msgstr ""
 
-#: ../src/web_board.py:101
+#: ../src/web_board.py:103
 #, python-format
 msgid "Write article - %s"
 msgstr ""
 
-#: ../src/web_board.py:102
+#: ../src/web_board.py:104
 msgid "Write article"
 msgstr ""
 
-#: ../src/web_board.py:196
+#: ../src/web_board.py:198
 #, python-format
 msgid "Information - %s"
 msgstr ""
 
-#: ../src/web_board.py:203
+#: ../src/web_board.py:205
 msgid "Main menu"
 msgstr ""
 
-#: ../src/web_board.py:239
+#: ../src/web_board.py:241
 #, python-format
 msgid "Create child board - %s"
 msgstr ""
 
-#: ../src/web_board.py:257 ../src/web_board.py:313
+#: ../src/web_board.py:259 ../src/web_board.py:315
 msgid "NO_SUCH_USER_FOR_BOARD_ADMIN"
 msgstr ""
 
-#: ../src/web_board.py:259
+#: ../src/web_board.py:261
 msgid "NO_NAME_SPECIFIED"
 msgstr ""
 
-#: ../src/web_board.py:265
+#: ../src/web_board.py:267
 msgid "BOARD_EXISTS"
 msgstr ""
 
-#: ../src/web_board.py:295
+#: ../src/web_board.py:297
 #, python-format
 msgid "Modify information - %s"
 msgstr ""
 
-#: ../src/web_board.py:336
+#: ../src/web_board.py:338
 msgid "Do you want to delete this board?"
 msgstr ""
 
-#: ../src/web_board.py:399
+#: ../src/web_board.py:401
 msgid "Search Results"
 msgstr ""
 
 #: ../src/web_main.py:34 ../src/web_main.py:35
-#: ../templates/desktop/join.html:56 ../templates/desktop/sidebar.html:41
-#: ../templates/mobile/base.html:110 ../templates/mobile/base.html:113
+#: ../templates/desktop/join.html:56 ../templates/desktop/sidebar.html:43
+#: ../templates/mobile/base.html:112 ../templates/mobile/base.html:115
 #: ../templates/mobile/join.html:3 ../templates/mobile/join.html:31
-#: ../templates/mobile_2/base.html:122 ../templates/mobile_2/join.html:3
+#: ../templates/mobile_2/base.html:116 ../templates/mobile_2/join.html:3
 #: ../templates/mobile_2/join.html:31
 msgid "Join"
 msgstr ""
@@ -316,9 +321,9 @@ msgid "PASSWORD_TOO_SHORT"
 msgstr ""
 
 #: ../src/web_main.py:90 ../src/web_main.py:125
-#: ../templates/desktop/login.html:33 ../templates/desktop/sidebar.html:41
-#: ../templates/mobile/base.html:111 ../templates/mobile/base.html:114
-#: ../templates/mobile/login.html:15 ../templates/mobile_2/base.html:123
+#: ../templates/desktop/login.html:33 ../templates/desktop/sidebar.html:43
+#: ../templates/mobile/base.html:113 ../templates/mobile/base.html:116
+#: ../templates/mobile/login.html:15 ../templates/mobile_2/base.html:117
 #: ../templates/mobile_2/login.html:16
 msgid "Login"
 msgstr ""
@@ -328,7 +333,7 @@ msgid "No user ID or password specified."
 msgstr ""
 
 #: ../src/web_main.py:140 ../src/web_main.py:141
-#: ../templates/desktop/sidebar.html:41
+#: ../templates/desktop/sidebar.html:43
 msgid "Lost Login?"
 msgstr ""
 
@@ -360,7 +365,7 @@ msgid "Message Sent. Please follow instructions on the message."
 msgstr ""
 
 #: ../src/web_main.py:176 ../src/web_main.py:205
-#: ../templates/mobile/board.html:58 ../templates/mobile/subboard_list.html:37
+#: ../templates/mobile/board.html:58 ../templates/mobile/subboard_list.html:39
 msgid "Information"
 msgstr ""
 
@@ -378,7 +383,7 @@ msgid "Your temporary password is \"%s\"(case-sensitive). Change password now."
 msgstr ""
 
 #: ../src/web_main.py:209 ../src/web_main.py:210
-#: ../templates/mobile/base.html:126 ../templates/mobile_2/base.html:148
+#: ../templates/mobile/base.html:128 ../templates/mobile_2/base.html:147
 msgid "Credits"
 msgstr ""
 
@@ -407,8 +412,8 @@ msgid "User Information"
 msgstr ""
 
 #: ../src/web_user.py:136 ../src/web_user.py:137
-#: ../templates/desktop/sidebar.html:64 ../templates/mobile/base.html:116
-#: ../templates/mobile_2/base.html:130
+#: ../templates/desktop/sidebar.html:66 ../templates/mobile/base.html:118
+#: ../templates/mobile_2/base.html:124
 msgid "New Article"
 msgstr ""
 
@@ -424,8 +429,8 @@ msgid "Leave NOAH"
 msgstr ""
 
 #: ../src/web_user.py:231 ../src/web_user.py:232
-#: ../templates/desktop/sidebar.html:86 ../templates/mobile/base.html:119
-#: ../templates/mobile_2/base.html:133
+#: ../templates/desktop/sidebar.html:88 ../templates/mobile/base.html:121
+#: ../templates/mobile_2/base.html:127
 msgid "My Boards"
 msgstr ""
 
@@ -486,6 +491,10 @@ msgstr ""
 msgid "Help: %s"
 msgstr ""
 
+#: ../src/webpage.py:125
+msgid "INVALID_ALIAS"
+msgstr ""
+
 #: ../templates/desktop/article.html:15 ../templates/desktop/inbox.html:10
 #: ../templates/desktop/mail.html:10 ../templates/desktop/my_article.html:11
 #: ../templates/desktop/new_article.html:11
@@ -536,7 +545,7 @@ msgstr ""
 #: ../templates/desktop/read_mail.html:39 ../templates/mobile/article.html:95
 #: ../templates/mobile/article_edit.html:23 ../templates/mobile/editor.html:23
 #: ../templates/mobile/myinfo_edit.html:33
-#: ../templates/mobile_2/article.html:104
+#: ../templates/mobile_2/article.html:107
 #: ../templates/mobile_2/article_edit.html:28
 #: ../templates/mobile_2/editor.html:23
 #: ../templates/mobile_2/myinfo_edit.html:31
@@ -557,16 +566,16 @@ msgstr ""
 
 #: ../templates/desktop/article.html:117
 #: ../templates/desktop/article_edit.html:59
-#: ../templates/desktop/board_edit.html:205
+#: ../templates/desktop/board_edit.html:204
 #: ../templates/desktop/board_editor.html:205
 #: ../templates/desktop/editor.html:59 ../templates/desktop/myinfo_edit.html:85
 #: ../templates/mobile/article.html:62 ../templates/mobile/article_edit.html:31
-#: ../templates/mobile/board_edit.html:122
+#: ../templates/mobile/board_edit.html:132
 #: ../templates/mobile/board_editor.html:122 ../templates/mobile/editor.html:31
 #: ../templates/mobile/myinfo_edit.html:47
 #: ../templates/mobile_2/article.html:68
 #: ../templates/mobile_2/article_edit.html:36
-#: ../templates/mobile_2/board_edit.html:122
+#: ../templates/mobile_2/board_edit.html:132
 #: ../templates/mobile_2/editor.html:31
 #: ../templates/mobile_2/myinfo_edit.html:45
 #: ../templates/mobile_2/read_article.html:62
@@ -584,7 +593,7 @@ msgstr ""
 
 #: ../templates/desktop/article.html:135 ../templates/desktop/board.html:57
 #: ../templates/mobile/article.html:86 ../templates/mobile/board.html:55
-#: ../templates/mobile_2/article.html:95 ../templates/mobile_2/board.html:143
+#: ../templates/mobile_2/article.html:95 ../templates/mobile_2/board.html:144
 #: ../templates/mobile_2/read_article.html:86
 msgid "Write"
 msgstr ""
@@ -602,7 +611,7 @@ msgstr ""
 #: ../templates/mobile/board_edit.html:11
 #: ../templates/mobile/board_editor.html:11
 #: ../templates/mobile/board_summary.html:44 ../templates/mobile/myinfo.html:90
-#: ../templates/mobile_2/article.html:100
+#: ../templates/mobile_2/article.html:103
 #: ../templates/mobile_2/board_edit.html:11
 #: ../templates/mobile_2/board_summary.html:44
 #: ../templates/mobile_2/myinfo.html:92
@@ -611,13 +620,13 @@ msgid "Modify"
 msgstr ""
 
 #: ../templates/desktop/article.html:149 ../templates/mobile/article.html:100
-#: ../templates/mobile_2/article.html:109
+#: ../templates/mobile_2/article.html:112
 #: ../templates/mobile_2/read_article.html:100
 msgid "Unmark"
 msgstr ""
 
 #: ../templates/desktop/article.html:151 ../templates/mobile/article.html:102
-#: ../templates/mobile_2/article.html:111
+#: ../templates/mobile_2/article.html:114
 #: ../templates/mobile_2/read_article.html:102
 msgid "Mark"
 msgstr ""
@@ -683,10 +692,10 @@ msgid "Go Back"
 msgstr ""
 
 #: ../templates/desktop/base.html:14 ../templates/desktop/error.html:8
-#: ../templates/desktop/question.html:8 ../templates/mobile/base.html:37
-#: ../templates/mobile/base.html:74 ../templates/mobile/error.html:9
-#: ../templates/mobile/question.html:6 ../templates/mobile_2/base.html:43
-#: ../templates/mobile_2/base.html:91 ../templates/mobile_2/error.html:9
+#: ../templates/desktop/question.html:8 ../templates/mobile/base.html:39
+#: ../templates/mobile/base.html:76 ../templates/mobile/error.html:9
+#: ../templates/mobile/question.html:6 ../templates/mobile_2/base.html:45
+#: ../templates/mobile_2/base.html:85 ../templates/mobile_2/error.html:9
 #: ../templates/mobile_2/question.html:6
 msgid "Error"
 msgstr ""
@@ -735,23 +744,23 @@ msgid "Hit"
 msgstr ""
 
 #: ../templates/desktop/board.html:57 ../templates/mobile/board.html:55
-#: ../templates/mobile_2/board.html:143
+#: ../templates/mobile_2/board.html:144
 msgid "Write new article"
 msgstr ""
 
 #: ../templates/desktop/board.html:61
-#: ../templates/desktop/view_subboard_list_content.html:41
-#: ../templates/mobile_2/board.html:147
+#: ../templates/desktop/view_subboard_list_content.html:43
+#: ../templates/mobile_2/board.html:148
 msgid "Modify Board"
 msgstr ""
 
 #: ../templates/desktop/board.html:63
-#: ../templates/desktop/view_subboard_list_content.html:43
+#: ../templates/desktop/view_subboard_list_content.html:45
 msgid "Backup Board"
 msgstr ""
 
 #: ../templates/desktop/board.html:65
-#: ../templates/desktop/view_subboard_list_content.html:45
+#: ../templates/desktop/view_subboard_list_content.html:47
 msgid "Board Statistics"
 msgstr ""
 
@@ -781,7 +790,7 @@ msgstr ""
 msgid "Body"
 msgstr ""
 
-#: ../templates/desktop/board.html:179 ../templates/desktop/sidebar.html:159
+#: ../templates/desktop/board.html:179 ../templates/desktop/sidebar.html:165
 #: ../templates/mobile/login.html:17
 msgid "Notice"
 msgstr ""
@@ -863,59 +872,65 @@ msgstr ""
 msgid "Board"
 msgstr ""
 
-#: ../templates/desktop/board_edit.html:95
+#: ../templates/desktop/board_edit.html:94
 #: ../templates/desktop/board_editor.html:95
+#: ../templates/mobile/board_edit.html:65
+#: ../templates/mobile_2/board_edit.html:65
 msgid "Alias"
 msgstr ""
 
-#: ../templates/desktop/board_edit.html:100
+#: ../templates/desktop/board_edit.html:94
+msgid "To use alias, write original board name in Short Description."
+msgstr ""
+
+#: ../templates/desktop/board_edit.html:99
 #: ../templates/desktop/board_editor.html:100
 msgid "Allow Comment"
 msgstr ""
 
-#: ../templates/desktop/board_edit.html:115
+#: ../templates/desktop/board_edit.html:114
 #: ../templates/desktop/board_editor.html:115
 msgid "Allow Guest Writing"
 msgstr ""
 
-#: ../templates/desktop/board_edit.html:130
+#: ../templates/desktop/board_edit.html:129
 #: ../templates/desktop/board_editor.html:130
 msgid "Include in Search"
 msgstr ""
 
-#: ../templates/desktop/board_edit.html:145
+#: ../templates/desktop/board_edit.html:144
 #: ../templates/desktop/board_editor.html:145
 msgid "Show Profile Images"
 msgstr ""
 
-#: ../templates/desktop/board_edit.html:160
+#: ../templates/desktop/board_edit.html:159
 #: ../templates/desktop/board_editor.html:160
 msgid "Stylesheet"
 msgstr ""
 
-#: ../templates/desktop/board_edit.html:173
+#: ../templates/desktop/board_edit.html:172
 #: ../templates/desktop/board_editor.html:173
 #: ../templates/desktop/board_summary.html:99
-#: ../templates/mobile/board_edit.html:105
+#: ../templates/mobile/board_edit.html:115
 #: ../templates/mobile/board_editor.html:105
 #: ../templates/mobile/board_summary.html:35
-#: ../templates/mobile_2/board_edit.html:105
+#: ../templates/mobile_2/board_edit.html:115
 #: ../templates/mobile_2/board_summary.html:35
 msgid "Short Description"
 msgstr ""
 
-#: ../templates/desktop/board_edit.html:185
+#: ../templates/desktop/board_edit.html:184
 #: ../templates/desktop/board_editor.html:185
 #: ../templates/desktop/board_summary.html:106
-#: ../templates/mobile/board_edit.html:112
+#: ../templates/mobile/board_edit.html:122
 #: ../templates/mobile/board_editor.html:112
 #: ../templates/mobile/board_summary.html:36
-#: ../templates/mobile_2/board_edit.html:112
+#: ../templates/mobile_2/board_edit.html:122
 #: ../templates/mobile_2/board_summary.html:36
 msgid "Long Description"
 msgstr ""
 
-#: ../templates/desktop/board_edit.html:198
+#: ../templates/desktop/board_edit.html:197
 #: ../templates/desktop/board_editor.html:198
 #: ../templates/desktop/board_summary.html:33
 #: ../templates/mobile/board_summary.html:53
@@ -923,7 +938,7 @@ msgstr ""
 msgid "Delete This Board"
 msgstr ""
 
-#: ../templates/desktop/board_edit.html:202
+#: ../templates/desktop/board_edit.html:201
 #: ../templates/desktop/board_editor.html:202
 #: ../templates/desktop/board_summary.html:37
 #: ../templates/mobile/board_edit.html:13
@@ -934,15 +949,15 @@ msgstr ""
 msgid "Create Child Board"
 msgstr ""
 
-#: ../templates/desktop/board_edit.html:206
+#: ../templates/desktop/board_edit.html:205
 #: ../templates/desktop/board_editor.html:206 ../templates/desktop/join.html:57
 #: ../templates/desktop/leave.html:30 ../templates/desktop/lost_login.html:40
 #: ../templates/desktop/myinfo_edit.html:86
 #: ../templates/desktop/question.html:14
-#: ../templates/mobile/board_edit.html:123
+#: ../templates/mobile/board_edit.html:133
 #: ../templates/mobile/board_editor.html:123 ../templates/mobile/join.html:32
 #: ../templates/mobile/myinfo_edit.html:48 ../templates/mobile/question.html:12
-#: ../templates/mobile_2/board_edit.html:123 ../templates/mobile_2/join.html:32
+#: ../templates/mobile_2/board_edit.html:133 ../templates/mobile_2/join.html:32
 #: ../templates/mobile_2/myinfo_edit.html:46
 #: ../templates/mobile_2/question.html:13
 msgid "Cancel"
@@ -967,24 +982,24 @@ msgid "Details"
 msgstr ""
 
 #: ../templates/desktop/board_summary.html:84
-#: ../templates/mobile/board_edit.html:57
+#: ../templates/mobile/board_edit.html:67
 #: ../templates/mobile/board_editor.html:57
 #: ../templates/mobile/board_summary.html:29
-#: ../templates/mobile_2/board_edit.html:57
+#: ../templates/mobile_2/board_edit.html:67
 #: ../templates/mobile_2/board_summary.html:29
 msgid "Comments"
 msgstr ""
 
 #: ../templates/desktop/board_summary.html:86
 #: ../templates/desktop/board_summary.html:93
-#: ../templates/mobile/board_edit.html:77
-#: ../templates/mobile/board_edit.html:99
+#: ../templates/mobile/board_edit.html:87
+#: ../templates/mobile/board_edit.html:109
 #: ../templates/mobile/board_editor.html:77
 #: ../templates/mobile/board_editor.html:99
 #: ../templates/mobile/board_summary.html:29
 #: ../templates/mobile/board_summary.html:30
-#: ../templates/mobile_2/board_edit.html:77
-#: ../templates/mobile_2/board_edit.html:99
+#: ../templates/mobile_2/board_edit.html:87
+#: ../templates/mobile_2/board_edit.html:109
 #: ../templates/mobile_2/board_summary.html:29
 #: ../templates/mobile_2/board_summary.html:30
 msgid "Not Allow"
@@ -992,33 +1007,33 @@ msgstr ""
 
 #: ../templates/desktop/board_summary.html:86
 #: ../templates/desktop/board_summary.html:93
-#: ../templates/mobile/board_edit.html:67
-#: ../templates/mobile/board_edit.html:89
+#: ../templates/mobile/board_edit.html:77
+#: ../templates/mobile/board_edit.html:99
 #: ../templates/mobile/board_editor.html:67
 #: ../templates/mobile/board_editor.html:89
 #: ../templates/mobile/board_summary.html:29
 #: ../templates/mobile/board_summary.html:30
-#: ../templates/mobile_2/board_edit.html:67
-#: ../templates/mobile_2/board_edit.html:89
+#: ../templates/mobile_2/board_edit.html:77
+#: ../templates/mobile_2/board_edit.html:99
 #: ../templates/mobile_2/board_summary.html:29
 #: ../templates/mobile_2/board_summary.html:30
 msgid "Allow"
 msgstr ""
 
 #: ../templates/desktop/board_summary.html:91
-#: ../templates/mobile/board_edit.html:79
+#: ../templates/mobile/board_edit.html:89
 #: ../templates/mobile/board_editor.html:79
 #: ../templates/mobile/board_summary.html:30
-#: ../templates/mobile_2/board_edit.html:79
+#: ../templates/mobile_2/board_edit.html:89
 #: ../templates/mobile_2/board_summary.html:30
 msgid "Guest Writing"
 msgstr ""
 
 #: ../templates/desktop/board_summary.html:96
-#: ../templates/mobile/board_edit.html:103
+#: ../templates/mobile/board_edit.html:113
 #: ../templates/mobile/board_editor.html:103
 #: ../templates/mobile/board_summary.html:33
-#: ../templates/mobile_2/board_edit.html:103
+#: ../templates/mobile_2/board_edit.html:113
 #: ../templates/mobile_2/board_summary.html:33
 msgid "Board Description"
 msgstr ""
@@ -1078,7 +1093,7 @@ msgid "From"
 msgstr ""
 
 #: ../templates/desktop/join.html:21 ../templates/desktop/leave.html:23
-#: ../templates/desktop/login.html:30 ../templates/desktop/sidebar.html:40
+#: ../templates/desktop/login.html:30 ../templates/desktop/sidebar.html:42
 #: ../templates/mobile/join.html:13 ../templates/mobile/login.html:13
 #: ../templates/mobile_2/join.html:13 ../templates/mobile_2/login.html:14
 msgid "Password"
@@ -1160,7 +1175,7 @@ msgstr ""
 msgid "Department Notice"
 msgstr ""
 
-#: ../templates/desktop/main.html:19 ../templates/desktop/sidebar.html:160
+#: ../templates/desktop/main.html:19 ../templates/desktop/sidebar.html:166
 msgid "Student Notice"
 msgstr ""
 
@@ -1169,17 +1184,17 @@ msgid "Free Board"
 msgstr ""
 
 #: ../templates/desktop/main.html:45 ../templates/desktop/main.html:78
-#: ../templates/desktop/sidebar.html:168 ../templates/mobile/base.html:105
+#: ../templates/desktop/sidebar.html:174 ../templates/mobile/base.html:107
 msgid "Friends"
 msgstr ""
 
 #: ../templates/desktop/main.html:45 ../templates/desktop/main.html:78
-#: ../templates/desktop/sidebar.html:169
+#: ../templates/desktop/sidebar.html:175
 msgid "Undergraduate"
 msgstr ""
 
-#: ../templates/desktop/main.html:65 ../templates/desktop/sidebar.html:176
-#: ../templates/mobile/base.html:106
+#: ../templates/desktop/main.html:65 ../templates/desktop/sidebar.html:182
+#: ../templates/mobile/base.html:108
 msgid "Courses"
 msgstr ""
 
@@ -1191,24 +1206,24 @@ msgstr ""
 msgid "Old Courses"
 msgstr ""
 
-#: ../templates/desktop/main.html:73 ../templates/desktop/sidebar.html:156
-#: ../templates/mobile/base.html:104
+#: ../templates/desktop/main.html:73 ../templates/desktop/sidebar.html:162
+#: ../templates/mobile/base.html:106
 msgid "Department"
 msgstr ""
 
-#: ../templates/desktop/main.html:75 ../templates/desktop/sidebar.html:161
+#: ../templates/desktop/main.html:75 ../templates/desktop/sidebar.html:167
 msgid "To Dept."
 msgstr ""
 
-#: ../templates/desktop/main.html:76 ../templates/desktop/sidebar.html:164
+#: ../templates/desktop/main.html:76 ../templates/desktop/sidebar.html:170
 msgid "EVE Room"
 msgstr ""
 
-#: ../templates/desktop/main.html:77 ../templates/desktop/sidebar.html:165
+#: ../templates/desktop/main.html:77 ../templates/desktop/sidebar.html:171
 msgid "Job Offer"
 msgstr ""
 
-#: ../templates/desktop/main.html:78 ../templates/desktop/sidebar.html:170
+#: ../templates/desktop/main.html:78 ../templates/desktop/sidebar.html:176
 msgid "Master"
 msgstr ""
 
@@ -1470,69 +1485,69 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:39
+#: ../templates/desktop/sidebar.html:41
 msgid "ID"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:43
+#: ../templates/desktop/sidebar.html:45
 msgid "Auto Login (max two weeks)"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:61 ../templates/mobile/base.html:121
+#: ../templates/desktop/sidebar.html:63 ../templates/mobile/base.html:123
 msgid "My Info"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:67 ../templates/desktop/sidebar.html:69
+#: ../templates/desktop/sidebar.html:69 ../templates/desktop/sidebar.html:71
 msgid "Mail"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:71 ../templates/mobile/base.html:122
-#: ../templates/mobile_2/base.html:135
+#: ../templates/desktop/sidebar.html:73 ../templates/mobile/base.html:124
+#: ../templates/mobile_2/base.html:129
 msgid "Logout"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:78
+#: ../templates/desktop/sidebar.html:80
 msgid "Sub-boards"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:107
+#: ../templates/desktop/sidebar.html:111
 msgid "You have no boards"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:113 ../templates/mobile/base.html:120
-#: ../templates/mobile_2/base.html:134
+#: ../templates/desktop/sidebar.html:117 ../templates/mobile/base.html:122
+#: ../templates/mobile_2/base.html:128
 msgid "Favorites"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:116 ../templates/desktop/sidebar.html:123
+#: ../templates/desktop/sidebar.html:120 ../templates/desktop/sidebar.html:127
 msgid "(not available)"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:118
+#: ../templates/desktop/sidebar.html:122
 msgid "(remove)"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:120
+#: ../templates/desktop/sidebar.html:124
 msgid "(add)"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:125
+#: ../templates/desktop/sidebar.html:129
 msgid "(manage)"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:146
+#: ../templates/desktop/sidebar.html:152
 msgid "No board in your favorites"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:148
+#: ../templates/desktop/sidebar.html:154
 msgid "Feed"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:177
+#: ../templates/desktop/sidebar.html:183
 msgid "(archive)"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:192
+#: ../templates/desktop/sidebar.html:198
 msgid "No course boards"
 msgstr ""
 
@@ -1567,11 +1582,11 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
-#: ../templates/mobile/base.html:86
+#: ../templates/mobile/base.html:88
 msgid "Boards"
 msgstr ""
 
-#: ../templates/mobile/base.html:103 ../templates/mobile_2/base.html:140
+#: ../templates/mobile/base.html:105 ../templates/mobile_2/base.html:134
 msgid "Home"
 msgstr ""
 
@@ -1598,11 +1613,15 @@ msgstr ""
 msgid "Child Boards"
 msgstr ""
 
-#: ../templates/mobile_2/base.html:120 ../templates/mobile_2/base.html:127
+#: ../templates/mobile_2/base.html:114 ../templates/mobile_2/base.html:121
 msgid "Dept."
 msgstr ""
 
-#: ../templates/mobile_2/base.html:121 ../templates/mobile_2/base.html:128
+#: ../templates/mobile_2/base.html:115 ../templates/mobile_2/base.html:122
 msgid "Course"
+msgstr ""
+
+#: ../templates/mobile_2/base.html:143 ../templates/mobile_2/base.html:145
+msgid "PC Version"
 msgstr ""
 

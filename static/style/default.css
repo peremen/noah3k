@@ -528,6 +528,8 @@ div.personal_tools a.userinfo_side:hover {
 .prop_table th, td { padding-bottom: 5px;}
 .prop_table th { padding-right: 10px; vertical-align: top;}
 .prop_table hr { background-color: #aaaaaa; height: 1px;}
+.prop_table input[type='text'] { width: 300px; }
+.prop_table textarea { font-size: 1em; width: 550px; height: 360px; }
 tr.final_buttons { padding-top: 10px; text-align: right;}
 
 div.avatar_body {

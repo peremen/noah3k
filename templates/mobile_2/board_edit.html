@@ -53,6 +53,16 @@ checked="checked" \
         <input id="radio_board" type="radio" name="type" onclick="boardclick()" value="1" checked="checked">
 % endif
         <label class="plain" for="radio_board">${_('Board')}</label>
+% if action == 'modify':
+        <input id="radio_alias" type="radio" name="type" onclick="boardclick()" value="2" \
+        % if board_info.bType == 2:
+checked="checked" \
+        %endif 
+        />
+% elif action == 'create_board':
+        <input id="radio_alias" type="radio" name="type" onclick="boardclick()" value="2">
+% endif
+        <label class="plain" for="radio_alias">${_('Alias')}</label>
     </li>
     <li><label>${_('Comments')}</label> \
 % if action == 'modify':

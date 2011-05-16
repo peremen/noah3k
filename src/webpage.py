@@ -119,6 +119,12 @@ class view_board:
         if board_info.bType == 0: # 디렉터리
             v = board_actions()
             return v.subboard_list_get(board_name, board_id)
+        elif board_info.bType == 2: # 넘겨주기
+            board_id = board._get_board_id_from_path(board_info.bDescription)
+            if board_id < 0 or board_info.bDescription.strip() == '':
+                raise web.notfound(util.render().error(lang='ko', error_message=_('INVALID_ALIAS'), help_context='error'))
+            else:
+                raise web.seeother(util.link(board_info.bDescription))
 
         #processing new_article
         if web.ctx.session.has_key('uid'):

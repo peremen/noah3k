@@ -26,7 +26,7 @@ upper_admin_list.sort()
         <th>${_('Location')}</th>
         <td>
         % if action == 'modify':
-            <input name="path" class="flat_input" type="text" value="${posixpath.dirname(board_info.bName)}" style="width: 300px;" />
+            <input name="path" class="flat_input" type="text" value="${posixpath.dirname(board_info.bName)}"/>
         %elif action == 'create_board':
             ${board_info.bName}
         % endif
@@ -37,9 +37,9 @@ upper_admin_list.sort()
         <th>${_('Name')}</th>
         <td>
         % if action == 'modify':
-            <input name="name" class="flat_input" type="text" maxlength="255" style="width:300px" value="${posixpath.basename(board_info.bName)}" />
+            <input name="name" class="flat_input" type="text" maxlength="255" value="${posixpath.basename(board_info.bName)}" />
         %elif action == 'create_board':
-            <input name="name" class="flat_input" type="text" maxlength="255" style="width:300px" />
+            <input name="name" class="flat_input" type="text" maxlength="255" />
         % endif
         </td>
     </tr>
@@ -47,7 +47,7 @@ upper_admin_list.sort()
     <tr>
         <th>${_('Admin')}</th>
         <td>
-            <input name="owner" class="flat_input" type="text" size="12" value="${get_userid(board_info.uSerial)}" style="width: 300px;" />
+            <input name="owner" class="flat_input" type="text" size="12" value="${get_userid(board_info.uSerial)}"/>
         </td>
     </tr>
 % if len(upper_admin_list) > 0:
@@ -82,7 +82,6 @@ checked="checked" \
         <input id="radio_board" type="radio" name="type" onclick="boardclick()" value="1" checked="checked">
 % endif
         <label for="radio_board">${_('Board')}</label>
-        <!--
 % if action == 'modify':
         <input id="radio_alias" type="radio" name="type" onclick="boardclick()" value="2" \
         % if board_info.bType == 2:
@@ -92,7 +91,7 @@ checked="checked" \
 % elif action == 'create_board':
         <input id="radio_alias" type="radio" name="type" onclick="boardclick()" value="2">
 % endif
-<label for="radio_alias">${_('Alias')}</label> -->
+<label for="radio_alias">${_('Alias')}: ${_('To use alias, write original board name in Short Description.')}</label>
         </td>
     </tr>
     <!-- 커멘트 여부 -->
@@ -159,7 +158,7 @@ checked="checked" \
     <tr>
         <th>${_('Stylesheet')}</th>
         <td>
-        <textarea class="flat_input" name="stylesheet" style="font-size: 1.2em; width: 550px; height: 360px">
+        <textarea class="flat_input" name="stylesheet">
 % if action == 'modify':
 ${board_info.stylesheet}
 % endif
@@ -184,7 +183,7 @@ value="${board_info.bDescription}" /> \
     <tr>
         <th>${_('Long Description')}</th>
         <td>
-        <textarea class="flat_input" name="information" style="font-size: 1.2em; width: 550px; height: 360px">
+        <textarea class="flat_input" name="information" >
 % if action == 'modify':
 ${board_info.bInformation}
 % endif

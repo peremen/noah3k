@@ -21,8 +21,10 @@ def traverse_child_board(path):
     for child in children:
         if child.bType == 0:
             child_image = '/static/image/folder.png'
-        else:
+        elif child.bType == 1:
             child_image = '/static/image/board.png'
+        else:
+            child_image = '/static/image/alias.png'
         if child.bDescription.strip() == '':
             child_desc = posixpath.basename(child.bName)
         else:
@@ -92,8 +94,10 @@ def traverse_child_board(path):
     <li><a class="boardlink" href="${util.link(my_board.bName)}">\
     % if my_board.bType == 0:
 <img class="type" src="/static/image/folder.png" /> \
-    % else:
+    % elif my_board.bType == 1:
 <img class="type" src="/static/image/board.png" /> \
+    % else:
+<img class="type" src="/static/image/alias.png" /> \
     % endif
     % if my_board.bDescription.strip() == '':
 ${my_board.bName}\
@@ -131,8 +135,10 @@ href="#">${_('(not available)')}\
     <li><a class="boardlink" href="${util.link(my_board.bName)}">\
     % if my_board.bType == 0:
 <img class="type" src="/static/image/folder.png" /> \
-    % else:
+    % elif my_board.bType == 1:
 <img class="type" src="/static/image/board.png" /> \
+    % else:
+<img class="type" src="/static/image/alias.png" /> \
     % endif
     % if my_board.bDescription.strip() == '':
 ${my_board.bName}\

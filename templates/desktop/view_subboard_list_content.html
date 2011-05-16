@@ -24,8 +24,10 @@ import board, acl, util %>
         <td width="20%">
             %if child_board.bType == 0:
             <img class="type" src="/static/image/folder.png" alt="디렉터리" />
-            %else:
+            %elif child_board.bType == 1:
             <img class="type" src="/static/image/board.png" alt="게시판" />
+            %else:
+            <img class="type" src="/static/image/alias.png" alt="넘겨주기" />
             %endif
             <a href= "${child_board.bName}" class="boardlink">${child_board.bName}&nbsp;</a>
         </td>
