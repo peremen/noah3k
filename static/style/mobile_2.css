@@ -422,7 +422,7 @@ a.button {
      * 6. FORMS
      * 
      */
-fieldset { margin-top: 0em; }
+fieldset { border: 0;margin-top: 0em; }
 
 legend {
     font-size: 110%;
