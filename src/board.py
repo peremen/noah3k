@@ -100,7 +100,7 @@ def create_board(parent_id, settings):
         return (False, _('BOARD_ALREADY_EXIST'))
     if not acl.is_allowed('board', parent_id, settings['current_uid'], 'create'):
         return (False, _('NO_PERMISSION'))
-    if settings['board_type'] == 2:
+    if settings['type'] == 2:
         if _get_board_id_from_path(settings['description']) < 0 or settings['description'].strip() == '':
             return (False, _('NO_SUCH_BOARD'))
 

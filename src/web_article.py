@@ -46,10 +46,13 @@ class article_actions:
 
         read_articles = web.cookies().get('read_articles')
         if read_articles:
-            read_articles = [int(i) for i in read_articles.split(';')]
-            if article_id not in read_articles:
-                article.increase_read_count(article_id)
-                read_articles.append(article_id)
+            try:
+                read_articles = [int(i) for i in read_articles.split(';')]
+                if article_id not in read_articles:
+                    article.increase_read_count(article_id)
+                    read_articles.append(article_id)
+            except ValueError:
+                read_articles = []
         else:
             article.increase_read_count(article_id)
             read_articles = [article_id]
