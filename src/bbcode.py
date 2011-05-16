@@ -50,6 +50,10 @@ def _fmt_code(args):
         html = "<pre class=\"brush: plain\">%s</pre>" % (text)
     return html
 
+def _fmt_math(args):
+    math = '<img src="http://l.wordpress.com/latex.php?bg=ffffff&fg=000000&latex=%s" alt="latex math"/>'
+    return math % args[1].replace('+', '%2B')
+
 _tags = {"b": {"tmpl":_fmt("<b>%s</b>"), "nest":True},
         "i": {"tmpl":_fmt("<i>%s</i>"), "nest":True},
         "u": {"tmpl":_fmt("<u>%s</u>"), "nest":True},
@@ -66,7 +70,7 @@ _tags = {"b": {"tmpl":_fmt("<b>%s</b>"), "nest":True},
         "video": {"tmpl":_fmt_video, "nest":False},
         "list": {"tmpl":_fmt_list, "nest":False},
 
-        "latex": {"tmpl":_fmt('<img src="http://l.wordpress.com/latex.php?bg=ffffff&fg=000000&latex=%s" alt="latex math"/>'), "nest":False},
+        "latex": {"tmpl":_fmt_math, "nest":False},
         };
 
 def getRegex(tags):

@@ -131,21 +131,8 @@ em {
  * 
  */
 a {
-    color: black;
+    color: #003399;
 }
-/*
-a:link {
-  color: #003399; }
-
-a:visited {
-  color: #006600; }
-
-a:hover {
-  color: #ff9900; }
-
-a:active {
-  color: #990000; }
-  */
 
 /*
  * NATIVE LISTS
@@ -720,6 +707,10 @@ tr {
   tr:hover {
     background: #e0e0ff url('/static/image/mobile_2/global-hover.png') repeat-x top;
     color: white; }
+  tr a {
+    color: black;}
+  tr a:hover {
+    color: white;}
 
 th, tfoot {
   border-top: 1px solid white;
@@ -920,54 +911,37 @@ ul.list-toggle {
  * SLIDESHOW
  * 
  */
-#slideshow {
-  width: 200px;
-  text-align: center;
-  margin: 0 auto; }
-  #slideshow .slideshow-image {
-    display: block;
+#slideshow-control {
     width: 200px;
-    height: 130px;
-    background: url('/static/image/mobile_2/loading.gif') no-repeat center 4em; }
-    #slideshow .slideshow-image img {
-      margin: 0 auto; }
-  #slideshow span {
-    width: 13em;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 0.5em;
-    font-size: 0.9em;
-    padding: .3em 5px; }
-  #slideshow a {
-    text-decoration: none; }
-  #slideshow p {
-    margin: 0;
-    padding: .3em 0;
-    font-size: .8em; }
-  #slideshow ul.controls {
+    text-align: center;
+    height: 2em;
+    margin: 0 auto; 
+    list-style-type: none;
     width: 6em;
     float: none;
-    margin: 0 auto 1em auto; }
-    #slideshow ul.controls li {
-      /* if not using the doHighlight function, remove the 'hovering' style */
-      /* then apply the background image declarations to the :hover class above*/ }
-      #slideshow ul.controls li:hover {
-        background-image: none;
-        background-color: #f6f6f6; }
-      #slideshow ul.controls li.hovering {
-        background: #c0da07 url('/static/image/mobile_2/global-hover.png') repeat-x top; }
-        #slideshow ul.controls li.hovering a {
-          background-image: none; }
-    #slideshow ul.controls img {
-      margin: .5em 0;
-      background-image: none;
-      vertical-align: middle; }
-    #slideshow ul.controls a {
-      line-height: 1.5em;
-      background: url('/static/image/mobile_2/vertical-divider.png') repeat-y left center; }
-      #slideshow ul.controls a.first {
-        background-image: none; }
+    border-bottom: 2px solid #d8d8d8;
+    margin: 0 auto 1em auto;
+ }
+#slideshow-control li {
+    width: 50%;
+       /* if not using the doHighlight function, remove the 'hovering' style */
+       /* then apply the background image declarations to the :hover class above*/ }
+#slideshow-control li:hover {
+    background-image: none;
+    background-color: #f6f6f6; }
+#slideshow-control li.hovering {
+    background: #c0da07 url('/static/image/mobile_2/global-hover.png') repeat-x top; }
+#slideshow-controlli.hovering a {
+    background-image: none; }
+#slideshow-control img {
+    margin: .5em 0;
+    background-image: none;
+    vertical-align: middle; }
+#slideshow-control a {
+    line-height: 1.5em;
+    background: url('/static/image/mobile_2/vertical-divider.png') repeat-y left center; }
+#slideshow-control a.first {
+    background-image: none; }
 
 ol.data {
   display: none; }
@@ -1010,4 +984,21 @@ ul.list2 input[type='text'], ul.list2 select, ul.list2 input[type='password'] {
 
 .none {
     color: #aaa;
+}
+
+#slideshow {
+    position: relative;
+    height: 320px;
+    text-align: center;
+}
+
+#slideshow a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 8;
+}
+
+#slideshow a.active {
+    z-index: 10;
 }

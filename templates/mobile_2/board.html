@@ -168,10 +168,11 @@ today = datetime.datetime.today()
 % else:
     <td width="60%">
 % endif
+        <a href="/${util.link('%s/+read/%s') % (board_path, a.aSerial)}" class="articlelink" style="display: block;">
     %if (indent is UNDEFINED or indent == True) and a.aLevel > 0:
         <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (a.aLevel-1)}px" />
     %endif
-        <a href="/${util.link('%s/+read/%s') % (board_path, a.aSerial)}" class="articlelink">${a.aTitle}
+    ${a.aTitle}
     <% attach_cnt = len(attachment.get_attachment(a.aSerial)) %>
     % if attach_cnt > 0:
     <img src="/static/image/file.png" alt="attachment" />
