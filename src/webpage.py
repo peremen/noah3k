@@ -61,7 +61,7 @@ class redirect:
 class main_page:
     @util.theme
     def GET(self):
-        if web.config.theme == 'm':
+        if web.config.theme == 'm' or web.config.theme == 'n':
             v = board_actions()
             return v.subboard_list_get()
         else:

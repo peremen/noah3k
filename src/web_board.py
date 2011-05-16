@@ -393,7 +393,7 @@ class board_actions:
         if keyword:
             search_qs += "q=%s" % urllib.quote(keyword.encode('utf-8'))
         if ret[0]:
-            return util.render().view_board(lang="ko",
+            return util.render().board(lang="ko",
                 title = board_info.bName,
                 board_path = board_info.bName[1:],
                 board_desc = _('Search Results'),
