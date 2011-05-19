@@ -209,6 +209,27 @@ If you did not requested password recovery, then please log in into your account
         return util.render().credits(title = _('Credits'),
                lang="ko", board_desc=_('Credits'), )
 
+    @util.error_catcher
+    def all_get(self):
+        qs = web.ctx.query
+        if len(qs) > 0:
+            qs = qs[1:]
+            qs = parse_qs(qs)
+
+        t = (article._get_all_article_count() + config.page_size -1) / config.page_size
+        if qs:
+            page = int(qs['page'][0])
+        else:
+            page = 1
+
+        all_article = article.get_all_articles(config.page_size, page)
+        return util.render().my_article(lang="ko",
+            title = _('All Posts'),
+            board_desc = _('All Posts'),
+            articles=all_article,
+            total_page = t, page = page,
+            help_context = 'board')
+
     def session_set(self, username):
         u = user.get_user(user._get_uid_from_username(username))[1];
         web.ctx.session.uid = u.uSerial
@@ -216,3 +237,4 @@ If you did not requested password recovery, then please log in into your account
         web.ctx.session.usernick = u.uNick
         web.ctx.session.lang = u.language
         return u
+

@@ -79,14 +79,29 @@ def get_formatted_username(uid):
 %if a.aLevel > 0:
         <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (a.aLevel-1)}px" />
 %endif
+%if a.has_key('board_name'):
         <a href="${util.link('%s/+read/%s' % (a.board_name, a.aSerial))}" class="articlelink">${a.aTitle}
+% else:
+        <a href="${util.link('%s/+read/%s' % (board._get_path_from_board_id(a.bSerial), a.aSerial))}" class="articlelink">${a.aTitle}
+% endif
+%if a.has_key('comment_count'):
         % if a.comment_count > 0:
         <span class="commentCount">[${a.comment_count}]</span>
         % endif
+% else:
+        <% cmt_cnt = article.get_comment_count(a.aSerial) %>
+        % if cmt_cnt > 0:
+        <span class="commentCount">[${cmt_cnt}]</span>
+        % endif
+% endif
         </a>
     </td>
     <!-- 글쓴이 -->
+%if a.has_key('board_name'):
     <td style="padding-left: 1em"><a class="articlelink" href="${util.link(a.board_name)}">${util.strip_path(a.board_name)}</a></td>
+% else:
+    <td style="padding-left: 1em"><a class="articlelink" href="${util.link(board._get_path_from_board_id(a.bSerial))}">${util.strip_path(board._get_path_from_board_id(a.bSerial))}</a></td>
+% endif
     <!-- 날짜 -->
     <td align="center">${a.aDatetime.strftime('%Y-%m-%d')}</td>
     <!-- 조회수 -->

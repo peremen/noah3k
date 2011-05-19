@@ -23,6 +23,10 @@ def _get_recurse_article_count(board_path):
     result = db.query('SELECT COUNT(*) AS article_count FROM Articles WHERE bSerial in (SELECT bSerial from Boards WHERE bName regexp "^' + board_path + '")')
     return result[0].article_count
 
+def _get_all_article_count():
+    result = db.query('SELECT COUNT(aSerial) AS a FROM Articles')
+    return result[0].a
+
 def _get_total_page_count(board_id, page_size):
     total_article = _get_article_count(board_id)
     return  (total_article + page_size -1) / page_size
@@ -496,3 +500,16 @@ def search_article(board_id, keyword, page_size=20, page_no = 1, author=False, t
 
     ret = db.query('SELECT * from Articles NATURAL LEFT JOIN (SELECT aSerial, COUNT(*) AS comment_count FROM Comments WHERE bSerial = $board_id GROUP BY aSerial) AS comment_group WHERE ' + cond + ' ORDER BY aIndex DESC LIMIT $offset, $page_size', val)
     return (True, total_pages, ret)
+
+def get_all_articles(page_size, page_number):
+    #total_article = _get_all_article_count()
+    #if total_article < 0:
+    #    return []
+    #last_page = (total_article + page_size - 1) / page_size
+    #if not (page_number >= 1 and page_number <= last_page):
+    #    return []
+    begin = page_size * (page_number - 1)
+    val = dict(begin = begin, page_size = page_size)
+    print begin, page_size
+    result = db.query('''SELECT * FROM Articles ORDER BY aDatetime DESC LIMIT $begin, $page_size''', val)
+    return result
