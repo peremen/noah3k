@@ -26,6 +26,8 @@ def get_formatted_username(uid):
     <tr align="center" class="head">
         <th>${_('Title')}</th>
         <th>${_('Board')}</th>
+        <th>${_('Date')}</th>
+        <th>${_('Hit')}</th>
     </tr>
     <% i = 1 %>
     %if articles is not UNDEFINED:
@@ -38,29 +40,29 @@ def get_formatted_username(uid):
 <p style="text-align: center;">
 % if page > 0:
     % if page > 11:
-    <a href="${util.link('/+u/+my_article')}?page=1"><img src="/static/image/arrows/first.png" alt="first" border="0" style="vertical-align: top" /></a>&nbsp;
+    <a href="${util.link(action)}?page=1"><img src="/static/image/arrows/first.png" alt="first" border="0" style="vertical-align: top" /></a>&nbsp;
     % endif
     % if page > 2:
-    <a href="${util.link('/+u/+my_article')}?page=${max(1, page-10)}"><img src="/static/image/arrows/more_prev.png" alt="more_prev" border="0" style="vertical-align: top" /></a>&nbsp;
+    <a href="${util.link(action)}?page=${max(1, page-10)}"><img src="/static/image/arrows/more_prev.png" alt="more_prev" border="0" style="vertical-align: top" /></a>&nbsp;
     % endif
     % if page > 1:
-    <a href="${util.link('/+u/+my_article')}?page=${page-1}"><img src="/static/image/arrows/prev.png" alt="prev" border="0" style="vertical-align: top" /> </a>&nbsp;
+    <a href="${util.link(action)}?page=${page-1}"><img src="/static/image/arrows/prev.png" alt="prev" border="0" style="vertical-align: top" /> </a>&nbsp;
     % endif
     % for i in range(((page-1)/10)*10+1, min(total_page, ((page-1)/10*10+10))+1):
         % if i == page:
     <b>${i}</b>
         % else:
-    <a class="listlink" href="${util.link('/+u/+my_article')}?page=${i}">${i}</a>
+    <a class="listlink" href="${util.link(action)}?page=${i}">${i}</a>
         % endif
     % endfor
     % if page < total_page - 1:
-    <a href="${util.link('/+u/+my_article')}?page=${page+1}"><img src="/static/image/arrows/next.png" alt="next" border="0" style="vertical-align: top" /></a>&nbsp;
+    <a href="${util.link(action)}?page=${page+1}"><img src="/static/image/arrows/next.png" alt="next" border="0" style="vertical-align: top" /></a>&nbsp;
     % endif
     % if page < total_page - 2:
-    <a href="${util.link('/+u/+my_article')}?page=${min(total_page, page+10)}"><img src="/static/image/arrows/more_next.png" alt="more_next" border="0" style="vertical-align: top" /></a>&nbsp;
+    <a href="${util.link(action)}?page=${min(total_page, page+10)}"><img src="/static/image/arrows/more_next.png" alt="more_next" border="0" style="vertical-align: top" /></a>&nbsp;
     % endif
     % if page < total_page - 11:
-    <a href="${util.link('/+u/+my_article')}?page=${total_page}"><img src="/static/image/arrows/last.png" alt="last" border="0" style="vertical-align: top" /></a>&nbsp;
+    <a href="${util.link(action)}?page=${total_page}"><img src="/static/image/arrows/last.png" alt="last" border="0" style="vertical-align: top" /></a>&nbsp;
     % endif
 % endif
 </p>
@@ -73,18 +75,37 @@ def get_formatted_username(uid):
 <tr class="odd">
 % endif
     <!-- 제목 --> 
-    <td width="75%">
+    <td width="65%">
 %if a.aLevel > 0:
         <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (a.aLevel-1)}px" />
 %endif
+%if a.has_key('board_name'):
         <a href="${util.link('%s/+read/%s' % (a.board_name, a.aSerial))}" class="articlelink">${a.aTitle}
+% else:
+        <a href="${util.link('%s/+read/%s' % (board._get_path_from_board_id(a.bSerial), a.aSerial))}" class="articlelink">${a.aTitle}
+% endif
+%if a.has_key('comment_count'):
         % if a.comment_count > 0:
         <span class="commentCount">[${a.comment_count}]</span>
         % endif
+% else:
+        <% cmt_cnt = article.get_comment_count(a.aSerial) %>
+        % if cmt_cnt > 0:
+        <span class="commentCount">[${cmt_cnt}]</span>
+        % endif
+% endif
         </a>
     </td>
-    <!-- 게시판 -->
+    <!-- 글쓴이 -->
+%if a.has_key('board_name'):
     <td style="padding-left: 1em"><a class="articlelink" href="${util.link(a.board_name)}">${util.strip_path(a.board_name)}</a></td>
+% else:
+    <td style="padding-left: 1em"><a class="articlelink" href="${util.link(board._get_path_from_board_id(a.bSerial))}">${util.strip_path(board._get_path_from_board_id(a.bSerial))}</a></td>
+% endif
+    <!-- 날짜 -->
+    <td align="center">${a.aDatetime.strftime('%Y-%m-%d')}</td>
+    <!-- 조회수 -->
+    <td align="center">${a.aHit}</td>
 </tr>
 </%def>
 

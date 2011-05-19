@@ -510,6 +510,5 @@ def get_all_articles(page_size, page_number):
     #    return []
     begin = page_size * (page_number - 1)
     val = dict(begin = begin, page_size = page_size)
-    print begin, page_size
     result = db.query('''SELECT * FROM Articles ORDER BY aDatetime DESC LIMIT $begin, $page_size''', val)
     return result

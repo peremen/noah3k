@@ -223,11 +223,12 @@ If you did not requested password recovery, then please log in into your account
             page = 1
 
         all_article = article.get_all_articles(config.page_size, page)
-        return util.render().my_article(lang="ko",
+        return util.render().board_aggregated(lang="ko",
             title = _('All Posts'),
             board_desc = _('All Posts'),
             articles=all_article,
             total_page = t, page = page,
+            action = '/+all',
             help_context = 'board')
 
     def session_set(self, username):

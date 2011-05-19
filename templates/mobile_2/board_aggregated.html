@@ -38,12 +38,12 @@ def get_formatted_username(uid):
 <ul class="nav-horizontal">
 % if page > 0:
     % if page > 5:
-    <li style="width: 7%"><a href="${util.link('/+u/+my_article')}?page=1"><img src="/static/image/arrows/first.png" alt="first" border="0" style="vertical-align: middle" /></a></li>
+    <li style="width: 7%"><a href="${util.link(action)}?page=1"><img src="/static/image/arrows/first.png" alt="first" border="0" style="vertical-align: middle" /></a></li>
     % else:
     <li style="width: 7%">&nbsp;</li>
     % endif
     % if page > 1:
-    <li style="width: 7%"><a href="${util.link('/+u/+my_article')}?page=${page-1}"><img src="/static/image/arrows/prev.png" alt="prev" border="0" style="vertical-align: middle" /> </a>&nbsp;</a>
+    <li style="width: 7%"><a href="${util.link(action)}?page=${page-1}"><img src="/static/image/arrows/prev.png" alt="prev" border="0" style="vertical-align: middle" /> </a>&nbsp;</a>
     % else:
     <li style="width: 7%">&nbsp;</li>
     % endif
@@ -51,16 +51,16 @@ def get_formatted_username(uid):
         % if i == page:
     <li style="width: 18%"><a href="#"><b>${i}</b></a></li>
         % else:
-    <li style="width: 18%"><a href="${util.link('/+u/+my_article')}?page=${i}">${i}</a></li>
+    <li style="width: 18%"><a href="${util.link(action)}?page=${i}">${i}</a></li>
         % endif
     % endfor
     % if page < total_page:
-    <li style="width: 7%"><a href="${util.link('/+u/+my_article')}?page=${page+1}"><img src="/static/image/arrows/next.png" alt="next" border="0" style="vertical-align: middle" /></a></li>
+    <li style="width: 7%"><a href="${util.link(action)}?page=${page+1}"><img src="/static/image/arrows/next.png" alt="next" border="0" style="vertical-align: middle" /></a></li>
     % else:
     <li style="width: 7%">&nbsp;</li>
     % endif
     % if page < total_page - 3:
-    <li style="width: 7%"><a href="${util.link('/+u/+my_article')}?page=${total_page}"><img src="/static/image/arrows/last.png" alt="last" border="0" style="vertical-align: middle" /></a></li>
+    <li style="width: 7%"><a href="${util.link(action)}?page=${total_page}"><img src="/static/image/arrows/last.png" alt="last" border="0" style="vertical-align: middle" /></a></li>
     % else:
     <li style="width: 7%">&nbsp;</li>
     % endif
@@ -79,10 +79,22 @@ def get_formatted_username(uid):
 %if a.aLevel > 0:
         <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (a.aLevel-1)}px" />
 %endif
+%if a.has_key('board_name'):
         <a href="${util.link('%s/+read/%s' % (a.board_name, a.aSerial))}" class="articlelink">${a.aTitle}
-        % if a.comment_count > 0:
+% else:
+        <a href="${util.link('%s/+read/%s' % (board._get_path_from_board_id(a.bSerial), a.aSerial))}" class="articlelink">${a.aTitle}
+% endif
+
+%if a.has_key('comment_count'):
+    % if a.comment_count > 0:
         <span class="commentCount">[${a.comment_count}]</span>
-        % endif
+    % endif
+% else:
+    <% cmt_cnt = article.get_comment_count(a.aSerial) %>
+    % if cmt_cnt
+        <span class="commentCount">[${cmt_cnt}]</span>
+    % endif
+% endif
         </a>
     </td>
     <!-- 게시판 -->

@@ -464,9 +464,10 @@ class personal_actions:
             page = 1
 
         my_article = user.get_article_list_by_user(current_uid, config.page_size, page)
-        return util.render().my_article(lang="ko",
+        return util.render().board_aggregated(lang="ko",
             title = _('My Posts'),
             board_desc = _('My Posts'),
             articles=my_article,
             total_page = t, page = page,
+            action = '/+u/+my_article',
             help_context = 'board')
