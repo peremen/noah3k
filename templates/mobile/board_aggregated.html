@@ -95,7 +95,11 @@ def get_formatted_username(uid):
         </a>
     </td>
     <!-- 게시판 -->
+%if a.has_key('board_name'):
     <td style="padding-left: 1em"><a class="articlelink" href="${util.link(a.board_name)}">${util.strip_path(a.board_name)}</a></td>
+% else:
+    <td style="padding-left: 1em"><a class="articlelink" href="${util.link(board._get_path_from_board_id(a.bSerial))}">${util.strip_path(board._get_path_from_board_id(a.bSerial))}</a></td>
+% endif
 </tr>
 </%def>
 

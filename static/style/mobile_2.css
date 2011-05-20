@@ -37,7 +37,7 @@ body {
     left: 0;
     padding: 0; }
 
-#content { margin: 0; }
+#content { margin: 0; line-height: 150%;}
 
 #footer {
     background: #bfc8db url('/static/image/mobile_2/footer.png') repeat-x top;
@@ -628,7 +628,6 @@ table.list {
 ul.comment{
     list-style: none;
     margin-left: 0.2em;
-    line-height: 150%;
 }
 
 ul.comment b{
