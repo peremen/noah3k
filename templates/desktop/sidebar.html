@@ -43,6 +43,10 @@ def traverse_child_board(path):
         <input class="button" type="submit" id="submit" tabindex="3" value="${_('Login')}"/> <a class="button" href="${util.link('/+join')}">${_('Join')}</a> <a class="button" href="${util.link('/+lost_login')}">${_('Lost Login?')}</a>
         <br />
         <input id="autologin" type="checkbox" name="autologin" value="on" /><label for="autologin">${_('Auto Login (max two weeks)')}</label>
+%if ctx.protocol != 'https':
+        <br />
+        <a class="servicelink" href="https://noah.haje.org">${_('Secure Connection')} <sup>new</sup></a>
+% endif
     </form>
     <script> $("#username").focus(); </script>
 % else:
