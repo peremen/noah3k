@@ -204,7 +204,7 @@ def delete_board(current_uid, board_id):
     has_child = False
     result = db.select('Boards', val, where = 'bName LIKE $old_path')
     for r in result:
-        if not r.bName.startswith(old_path):
+        if (r.bName == old_path) or (not r.bName.startswith(old_path)):
             continue
         has_child = True
     if has_child:

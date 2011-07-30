@@ -91,6 +91,34 @@ class main_actions:
                 lang="ko", referer = referer)
 
     @util.error_catcher
+    def login_xdomain_get(self):
+        qs = web.ctx.query
+        if len(qs) > 0:
+            qs = qs[1:]
+            qs = parse_qs(qs)
+
+        referer = util.link('/')
+        if qs.has_key('referer'):
+            referer = qs['referer'][0]
+        session_id = 0
+        if qs.has_key('session_id'):
+            session_id = qs['session_id'][0]
+        persistent = False
+        if qs.has_key('persistent'):
+            persistent = (int(qs['persistent'][0]) == 1)
+        username = ''
+        if qs.has_key('username'):
+            username = qs['username'][0]
+
+        if persistent:
+            web.setcookie('webpy_session_id', session_id, expires=14*86400)
+        else:
+            web.setcookie('webpy_session_id', session_id)
+        self.session_set(username)
+        web.ctx.session.session_id = session_id
+        raise web.seeother(referer)
+
+    @util.error_catcher
     def login_post(self):
         user_input = web.input()
         username, password = user_input.username.strip(), user_input.password.strip()
@@ -126,6 +154,7 @@ class main_actions:
                     lang="ko", error = err, referer = referer)
         else:
             raise web.seeother(referer)
+            #raise web.seeother('http://noah.kaist.ac.kr/+login_xdomain?session_id=%s&referer=%s&persistent=%s&username=%s' % (web.ctx.session.session_id, referer, 1 if web.ctx.session.persistent else 0, username))
             # 이전 페이지로 '묻지 않고' 되돌림
 
     @util.error_catcher
