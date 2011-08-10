@@ -288,6 +288,10 @@ span#attachment {
     font-style: normal;
 }
 
+.content-p {
+    text-indent: 1em;
+}
+
 div#article {
     border-bottom: 1px solid #3C78B5;
     margin-bottom: 10px;
