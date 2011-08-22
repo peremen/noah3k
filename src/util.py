@@ -284,6 +284,8 @@ def link(url):
             url = web.config.theme + '/' + url
     return url
 
+def https():
+    return config.safe_login_domain;
 
 def render():
     try:

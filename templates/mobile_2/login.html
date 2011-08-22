@@ -6,12 +6,22 @@ ${_('To join NOAH, click <a href="%s">here</a>' % util.link('/+join/'))}
     <br /><span style="color: red">${error}</span>
 % endif
 <hr />
-<form method="post" action="https://noah.haje.org${util.link('/+login')}">
+<form id="form-login" method="post" action="${util.link('/+login')}">
     <input name="url" type="hidden" value="${referer}" />
     <label class="four_em" for="username">ID</label>
     <input id="username" name="username" type="text" style="width: 60%;"/>
     <br />
     <label class="four_em" for="password">${_('Password')}</label>
-    <input id="password" name="password" type="password" style="width: 60%;"/>
+    <input id="password" name="password" type="password" style="width: 60%;"/></br>
+    <input id="safelogin" type="checkbox" name="safelogin" value="off"/><label for="safelogin">${_("Safe Login (https)")}</label><br />
     <input type="submit" name="Submit" value="${_('Login')}"/>
 </form>
+<script>
+$("#safelogin").change(function() {
+    if(this.checked) {
+        $("#form-login").attr('action', "${util.https()}${util.link('/+login')}");
+    } else {
+        $("#form-login").attr('action', "${util.link('/+login')}");
+    }
+});
+</script>

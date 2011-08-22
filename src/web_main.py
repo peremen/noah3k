@@ -158,10 +158,18 @@ class main_actions:
                 'persistent': 1 if autologin else 0,
                 'password_hash': user._generate_noah3k_password(password),
                 })
-            if referer.startswith('http'):
-                host = referer[:referer.find('/', len('http')+3)]
-            elif referer.startswith('https'):
-                host = referer[:referer.find('/', len('https')+3)]
+            if referer.startswith('https'):
+                pos = referer.find('/', len('https')+3)
+                if pos > 0:
+                    host = referer[:pos]
+                else:
+                    host = 'http://noah.haje.org'
+            elif referer.startswith('http'):
+                pos = referer.find('/', len('http')+3)
+                if pos > 0:
+                    host = referer[:pos]
+                else:
+                    host = 'http://noah.kaist.ac.kr'
             else:
                 host = 'http://noah.kaist.ac.kr'
             raise web.seeother('%s/+login_xdomain?%s' % (host, xdomain_qs))

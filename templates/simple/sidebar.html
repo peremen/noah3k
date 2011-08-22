@@ -34,7 +34,7 @@ def traverse_child_board(path):
 
 <div class="personal_tools" style="display: inline;">
 %if ctx.session is UNDEFINED or (not ctx.session.has_key('uid')):
-    <form method="post" action="https://noah.haje.org${util.link('/+login')}">
+    <form id="form-login" method="post" action="${util.link('/+login')}">
         <input name="url" type="hidden" value=""/>
         <p><label for="username">${_('ID')}</label> <input id="username" name="username" type="text" tabindex="1" class="auth_input"/></p>
         <p><label for="password">${_('Password')}</label> <input id="password" name="password" type="password" tabindex="2" class="auth_input"/></p>
@@ -43,10 +43,21 @@ def traverse_child_board(path):
         <input id="autologin" type="checkbox" name="autologin" value="on" /><label for="autologin">${_('Auto Login (max two weeks)')}</label>
 %if ctx.protocol != 'https':
         <br />
-        <a class="servicelink" href="https://noah.haje.org/simple">${_('Secure Connection')} <sup>new</sup></a>
+        <input id="safelogin" type="checkbox" name="safelogin" value="off"/><label for="safelogin">${_("Safe Login (https)")}</label>
+        <br />
+        <a class="userinfo_side" href="https://noah.haje.org">${_('Full HTTPS session')}</a>
 % endif
     </form>
-    <script> $("#username").focus(); </script>
+    <script> 
+    $("#safelogin").change(function() {
+        if(this.checked) {
+            $("#form-login").attr('action', "${util.https()}${util.link('/+login')}");
+        } else {
+            $("#form-login").attr('action', "${util.link('/+login')}");
+        }
+    });
+    $("#username").focus(); 
+    </script>
 % else:
 <p>
 <div class="myinfo_left">
