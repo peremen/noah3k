@@ -6,7 +6,7 @@ ${_('To join NOAH, click <a href="%s">here</a>' % util.link('/+join/'))}
     <br /><span style="color: red">${error}</span>
 % endif
 <hr />
-<form method="post" action="/m/+login">
+<form method="post" action="https://noah.haje.org${util.link('/+login')}">
     <input name="url" type="hidden" value="${referer}" />
     <label for="username">ID</label>
     <input id="username" name="username" type="text" style="width: 8em;"/>
