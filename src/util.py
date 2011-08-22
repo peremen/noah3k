@@ -285,7 +285,7 @@ def link(url):
     return url
 
 def https():
-    return config.safe_login_domain;
+    return config.https_domain;
 
 def render():
     try:

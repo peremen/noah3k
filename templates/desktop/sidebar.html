@@ -47,7 +47,7 @@ def traverse_child_board(path):
         <br />
         <input id="safelogin" type="checkbox" name="safelogin" value="off"/><label for="safelogin">${_("Safe Login (https)")}</label>
         <br />
-        <a class="userinfo_side" href="https://noah.haje.org">${_('Full HTTPS session')}</a>
+        <a class="userinfo_side" href="${util.https()}">${_('Full HTTPS session')}</a>
 % endif
     </form>
     <script> 
