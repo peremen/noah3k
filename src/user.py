@@ -125,17 +125,18 @@ def get_password_strength(uid):
         return -1
     return strength[len(user[1].uPasswd)]
 
-def login(username, password):
+def login(username, password, is_hash = False):
     """
     로그인 처리. 사용자 ID와 암호를 평문으로 입력받은 다음,
     해당하는 사용자가 있는 지 확인하고 존재하면 세션 키,
-    존재하지 않으면 오류 코드를 돌려 준다. 암호는 평문으로만 전송해야 하므로,
-    암호를 보호하려면 별도의 보안 통신 채널을 열어야 한다.
+    존재하지 않으면 오류 코드를 돌려 준다.
 
     @type username: string
     @param username: 사용자 ID.
     @type password: string
     @param password: 암호. 평문으로 전송되어야 한다.
+    @type is_hash: bool
+    @param is_hash: 인자로 넘겨준 암호가 해시인지 여부.
     @rtype tuple
     @return: 로그인 성공 여부(T/F)와 사용자 또는 오류 코드(실패 시)를 포함하는 튜플.
     """
@@ -147,11 +148,17 @@ def login(username, password):
         user = result[0]
     except IndexError:
         return (False, _('NO_SUCH_USER'))
-    if not password_set[len(user.uPasswd)](user.uPasswd, password):
-        return (False, _('INVALID_PASSWORD'))
-    if len(user.uPasswd) < 64:
-        update_password(user.uSerial, password)
-    return (True, user)
+    if is_hash:
+        if user.uPasswd == password:
+            return (True, user)
+        else:
+            return (False, _('INVALID_PASSWORD'))
+    else:
+        if not password_set[len(user.uPasswd)](user.uPasswd, password):
+            return (False, _('INVALID_PASSWORD'))
+        if len(user.uPasswd) < 64:
+            update_password(user.uSerial, password)
+        return (True, user)
 
 def get_owned_board(uid):
     # 모든 정보가 돌아옴.

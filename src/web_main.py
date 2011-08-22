@@ -97,12 +97,16 @@ class main_actions:
             qs = qs[1:]
             qs = parse_qs(qs)
 
+        if type(qs) != dict:
+            return util.render().login(title = _('Login'), board_desc=_('Login'),
+                lang="ko", error = _('INVALID_PASSWORD'), referer = util.link('/'))
+
         referer = util.link('/')
         if qs.has_key('referer'):
             referer = qs['referer'][0]
-        session_id = 0
-        if qs.has_key('session_id'):
-            session_id = qs['session_id'][0]
+        password_hash = ''
+        if qs.has_key('password_hash'):
+            password_hash = qs['password_hash'][0]
         persistent = False
         if qs.has_key('persistent'):
             persistent = (int(qs['persistent'][0]) == 1)
@@ -110,12 +114,18 @@ class main_actions:
         if qs.has_key('username'):
             username = qs['username'][0]
 
+        login = user.login(username, password_hash, True)
+        if not login[0]:
+            err = login[1]
+            return util.render().login(title = _('Login'), board_desc=_('Login'),
+                lang="ko", error = err, referer = referer)
+
+        u = self.session_set(username)
         if persistent:
-            web.setcookie('webpy_session_id', session_id, expires=14*86400)
+            web.ctx.session.persistent = True
         else:
-            web.setcookie('webpy_session_id', session_id)
-        self.session_set(username)
-        web.ctx.session.session_id = session_id
+            web.ctx.session.persistent = False
+        user.update_last_login(u.uSerial, web.ctx.ip)
         raise web.seeother(referer)
 
     @util.error_catcher
@@ -124,38 +134,42 @@ class main_actions:
         username, password = user_input.username.strip(), user_input.password.strip()
         referer = user_input.url.strip()
         if referer == '' or referer == 'None':
-            referer = web.ctx.env.get('HTTP_REFERER', util.link('/'))
-        if referer.endswith('login'):
-            referer = util.link('/')
+            referer = web.ctx.env.get('HTTP_REFERER', 'http://noah.kaist.ac.kr' + util.link('/'))
+        if referer.endswith('/+login'):
+            referer = referer[:-6]
         err = ''
         valid = True
-        login = (False, 'UNDEFINED')
+        login = (False, _('UNDEFINED'))
         autologin = user_input.has_key('autologin')
         username, password = username.strip(), password.strip()
         if username == '' or password == '':
             err = _('No user ID or password specified.')
             valid = False
 
-        if valid:
-            login = user.login(username, password)
-            if login[0]:
-                # 로그인 성공. referer로 돌아감.
-                u = self.session_set(username)
-                if autologin:
-                    web.ctx.session.persistent = True
-                else:
-                    web.ctx.session.persistent = False
-                user.update_last_login(u.uSerial, web.ctx.ip)
-            else:
-                # 로그인 실패
-                err = login[1]
-        if not login[0]:
+        if not valid:
             return util.render().login(title = _('Login'), board_desc=_('Login'),
                     lang="ko", error = err, referer = referer)
+
+        login = user.login(username, password)
+        if login[0]:
+            # 로그인 성공. +login_xdomain에서는 세션 설정 후 referer로 돌아감.
+            xdomain_qs = urllib.urlencode({'referer':referer,
+                'username': username,
+                'persistent': 1 if autologin else 0,
+                'password_hash': user._generate_noah3k_password(password),
+                })
+            if referer.startswith('http'):
+                host = referer[:referer.find('/', len('http')+3)]
+            elif referer.startswith('https'):
+                host = referer[:referer.find('/', len('https')+3)]
+            else:
+                host = 'http://noah.kaist.ac.kr'
+            raise web.seeother('%s/+login_xdomain?%s' % (host, xdomain_qs))
         else:
-            raise web.seeother(referer)
-            #raise web.seeother('http://noah.kaist.ac.kr/+login_xdomain?session_id=%s&referer=%s&persistent=%s&username=%s' % (web.ctx.session.session_id, referer, 1 if web.ctx.session.persistent else 0, username))
-            # 이전 페이지로 '묻지 않고' 되돌림
+            # 로그인 실패
+            err = login[1]
+            return util.render().login(title = _('Login'), board_desc=_('Login'),
+                lang="ko", error = err, referer = referer)
 
     @util.error_catcher
     def logout_get(self):

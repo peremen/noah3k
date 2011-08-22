@@ -45,7 +45,7 @@ def traverse_child_board(path):
         <input id="autologin" type="checkbox" name="autologin" value="on" /><label for="autologin">${_('Auto Login (max two weeks)')}</label>
 %if ctx.protocol != 'https':
         <br />
-        <a class="servicelink" href="https://noah.haje.org">${_('Secure Connection')} <sup>new</sup></a>
+        <a class="userinfo_side" href="https://noah.haje.org">${_('Full HTTPS session')}</a>
 % endif
     </form>
     <script> $("#username").focus(); </script>
