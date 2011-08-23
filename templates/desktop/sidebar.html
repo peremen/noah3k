@@ -36,7 +36,7 @@ def traverse_child_board(path):
 
 <div class="personal_tools" style="display: inline;">
 %if ctx.session is UNDEFINED or (not ctx.session.has_key('uid')):
-    <form id="form-login" method="post" action="${util.link('/+login')}">
+    <form id="form-login" method="post" action="${util.https()}${util.link('/+login')}">
         <input name="url" type="hidden" value=""/>
         <p><label for="username">${_('ID')}</label> <input id="username" name="username" type="text" tabindex="1" class="auth_input"/></p>
         <p><label for="password">${_('Password')}</label> <input id="password" name="password" type="password" tabindex="2" class="auth_input"/></p>
