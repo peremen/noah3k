@@ -6,24 +6,14 @@ ${_('To join NOAH, click <a href="%s">here</a>' % util.link('/+join/'))}
     <br /><span style="color: red">${error}</span>
 % endif
 <hr />
-<form id="form-login" method="post" action="${util.link('/+login')}">
+<form id="form-login" method="post" action="${util.https()}${util.link('/+login')}">
     <input name="url" type="hidden" value="${referer}" />
     <label for="username">ID</label>
     <input id="username" name="username" type="text" style="width: 8em;"/>
     <label for="password">${_('Password')}</label>
     <input id="password" name="password" type="password" style="width: 8em;"/></br>
-    <input id="safelogin" type="checkbox" name="safelogin" value="off"/><label for="safelogin">${_("Safe Login (https)")}</label><br />
     <input type="submit" name="Submit" value="${_('Login')}"/>
 </form>
-<script>
-$("#safelogin").change(function() {
-    if(this.checked) {
-        $("#form-login").attr('action', "${util.https()}${util.link('/+login')}");
-    } else {
-        $("#form-login").attr('action', "${util.link('/+login')}");
-    }
-});
-</script>
 <h3>${_('Notice')}</h3>
 <% notice_text = util.get_login_notice() %>
 % if notice_text == 'INVALID_NOTICE_BOARD':

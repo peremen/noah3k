@@ -43,7 +43,7 @@ def traverse_child_board(path):
         <input id="autologin" type="checkbox" name="autologin" value="on" /><label for="autologin">${_('Auto Login (max two weeks)')}</label>
 %if ctx.protocol != 'https':
         <br />
-        <input id="safelogin" type="checkbox" name="safelogin" value="off"/><label for="safelogin">${_("Safe Login (https)")}</label>
+        <input id="safelogin" type="checkbox" name="safelogin" value="on" checked="1" /><label for="safelogin">${_("Safe Login (HTTPS)")}</label>
         <br />
         <a class="userinfo_side" href="${util.https()}">${_('Full HTTPS session')}</a>
 % endif
