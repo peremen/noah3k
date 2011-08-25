@@ -102,17 +102,27 @@ class main_actions:
                 lang="ko", error = _('INVALID_PASSWORD'), referer = util.link('/'))
 
         referer = util.link('/')
-        if qs.has_key('referer'):
-            referer = qs['referer'][0]
         password_hash = ''
-        if qs.has_key('password_hash'):
-            password_hash = qs['password_hash'][0]
         persistent = False
-        if qs.has_key('persistent'):
-            persistent = (int(qs['persistent'][0]) == 1)
+
+        ts = 0
+        if qs.has_key('t'):
+            ts = int(qs['t'][0])
         username = ''
         if qs.has_key('username'):
             username = qs['username'][0]
+        if ts < 1 or username == '':
+            return util.render().login(title = _('Login'), board_desc=_('Login'),
+                lang="ko", error = _('INVALID_PASSWORD'), referer = util.link('/'))
+
+        login_info = user.get_login_info(username, ts)
+        if login_info == None:
+            return util.render().login(title = _('Login'), board_desc=_('Login'),
+                lang="ko", error = _('INVALID_PASSWORD'), referer = util.link('/'))
+        referer = login_info['referer']
+        password_hash = login_info['password_hash']
+        persistent = (login_info['persistent'] == 1)
+        user.remove_login_info(username, ts)
 
         login = user.login(username, password_hash, True)
         if not login[0]:
@@ -153,17 +163,16 @@ class main_actions:
         login = user.login(username, password)
         if login[0]:
             # 로그인 성공. +login_xdomain에서는 세션 설정 후 referer로 돌아감.
-            xdomain_qs = urllib.urlencode({'referer':referer,
-                'username': username,
-                'persistent': 1 if autologin else 0,
-                'password_hash': user._generate_noah3k_password(password),
-                })
+            ts = user.add_login_info(username, 
+                    user._generate_noah3k_password(password),
+                    referer, autologin)
+            xdomain_qs = urllib.urlencode({'t':ts, 'username':username})
             if referer.startswith('https'):
                 pos = referer.find('/', len('https')+3)
                 if pos > 0:
                     host = referer[:pos]
                 else:
-                    host = 'http://noah.haje.org'
+                    host = util.https()
             elif referer.startswith('http'):
                 pos = referer.find('/', len('http')+3)
                 if pos > 0:
@@ -283,10 +292,13 @@ If you did not requested password recovery, then please log in into your account
             help_context = 'board')
 
     def session_set(self, username):
-        u = user.get_user(user._get_uid_from_username(username))[1];
-        web.ctx.session.uid = u.uSerial
-        web.ctx.session.username = u.uId
-        web.ctx.session.usernick = u.uNick
-        web.ctx.session.lang = u.language
-        return u
+        u = user.get_user(user._get_uid_from_username(username))
+        if u[0]:
+            web.ctx.session.uid = u[1].uSerial
+            web.ctx.session.username = u[1].uId
+            web.ctx.session.usernick = u[1].uNick
+            web.ctx.session.lang = u[1].language
+            return u[1]
+        else:
+            return None
 

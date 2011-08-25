@@ -160,6 +160,42 @@ def login(username, password, is_hash = False):
             update_password(user.uSerial, password)
         return (True, user)
 
+def add_login_info(username, password_hash, referer, persistent):
+    t = db.transaction()
+    try:
+        result = db.insert('login_temp', id=username, password_hash=password_hash,
+                logintime = web.SQLLiteral('NOW()'), referer=referer,
+                persistent = persistent)
+    except:
+        t.rollback()
+        return -1
+    else:
+        t.commit()
+    result = db.select('login_temp', locals(), where='id = $username')
+    return int(time.mktime(result[0].logintime.timetuple()))
+
+def get_login_info(username, timestamp):
+    time = datetime.datetime.fromtimestamp(timestamp)
+    val = dict(username=username, time=time)
+    result = db.select('login_temp', val, where='logintime=$time AND id=$username')
+    if len(result) <= 0:
+        return None
+    else:
+        return result[0]
+
+def remove_login_info(username, timestamp):
+    time = datetime.datetime.fromtimestamp(timestamp)
+    val = dict(username=username, time=time)
+    t = db.transaction()
+    try:
+        result = db.delete('login_temp', vars=val, where='logintime=$time AND id=$username')
+    except:
+        t.rollback()
+        return False
+    else:
+        t.commit()
+        return True
+
 def get_owned_board(uid):
     # 모든 정보가 돌아옴.
     val = dict(uid = uid)
