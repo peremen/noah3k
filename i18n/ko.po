@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2011-08-22 20:04+0900\n"
-"PO-Revision-Date: 2011-08-22 20:05+0900\n"
+"POT-Creation-Date: 2011-08-25 16:40+0900\n"
+"PO-Revision-Date: 2011-08-25 16:40+0900\n"
 "Last-Translator: Park Shinjo <peremen@gmail.com>\n"
 "Language-Team: Korean <peremen@gmail.com>\n"
 "Language: ko\n"
@@ -32,7 +32,7 @@ msgstr "권한이 없습니다"
 
 #: ../src/article.py:209 ../src/article.py:258 ../src/article.py:298
 #: ../src/article.py:337 ../src/article.py:425 ../src/user.py:150
-#: ../src/user.py:245 ../src/web_user.py:111
+#: ../src/user.py:281 ../src/web_user.py:111
 msgid "NO_SUCH_USER"
 msgstr "그러한 사용자가 없습니다"
 
@@ -62,7 +62,7 @@ msgstr "이 게시판에 글을 쓸 수 없습니다"
 
 #: ../src/article.py:242 ../src/article.py:287 ../src/article.py:326
 #: ../src/article.py:399 ../src/article.py:447 ../src/article.py:465
-#: ../src/pm.py:117 ../src/pm.py:128 ../src/user.py:289 ../src/user.py:370
+#: ../src/pm.py:117 ../src/pm.py:128 ../src/user.py:325 ../src/user.py:406
 msgid "DATABASE_ERROR"
 msgstr "데이터베이스 오류 (관리자에게 알려 주십시오!)"
 
@@ -75,7 +75,7 @@ msgstr "글이 없습니다"
 msgid "HAS_REPLY"
 msgstr "답글이 달려 있습니다"
 
-#: ../src/article.py:330 ../src/pm.py:120 ../src/pm.py:131 ../src/user.py:373
+#: ../src/article.py:330 ../src/pm.py:120 ../src/pm.py:131 ../src/user.py:409
 msgid "SUCCESS"
 msgstr "성공"
 
@@ -168,19 +168,20 @@ msgid ", %(number)d %(type)s"
 msgstr " %(number)d%(type)s"
 
 #: ../src/user.py:155 ../src/user.py:158 ../src/web_main.py:102
-#: ../src/web_user.py:168 ../src/web_user.py:216
+#: ../src/web_main.py:116 ../src/web_main.py:121 ../src/web_user.py:168
+#: ../src/web_user.py:216
 msgid "INVALID_PASSWORD"
 msgstr "암호가 잘못되었습니다"
 
-#: ../src/user.py:279 ../src/web_main.py:236
+#: ../src/user.py:315 ../src/web_main.py:253
 msgid "INVALID_USERNAME"
 msgstr "사용자 이름이 잘못되었습니다"
 
-#: ../src/user.py:281 ../src/web_main.py:59
+#: ../src/user.py:317 ../src/web_main.py:59
 msgid "ID_ALREADY_EXISTS"
 msgstr "ID가 이미 존재합니다"
 
-#: ../src/user.py:357
+#: ../src/user.py:393
 msgid "HAS_BOARD"
 msgstr "자식 게시판이 있습니다"
 
@@ -296,11 +297,11 @@ msgstr "검색 결과"
 msgid "Join"
 msgstr "가입"
 
-#: ../src/web_main.py:52 ../src/web_main.py:199
+#: ../src/web_main.py:52 ../src/web_main.py:216
 msgid "INCORRECT_CAPTCHA"
 msgstr "CAPTCHA 문자열을 다시 확인하십시오"
 
-#: ../src/web_main.py:54 ../src/web_main.py:201
+#: ../src/web_main.py:54 ../src/web_main.py:218
 msgid "CAPTCHA_ERROR"
 msgstr "CAPTCHA 서버와 통신할 수 없음. 잠시 후 다시 시도하십시오."
 
@@ -316,37 +317,37 @@ msgstr "암호가 일치하지 않습니다"
 msgid "PASSWORD_TOO_SHORT"
 msgstr "암호가 너무 짧습니다"
 
-#: ../src/web_main.py:90 ../src/web_main.py:101 ../src/web_main.py:120
-#: ../src/web_main.py:150 ../src/web_main.py:171
-#: ../templates/desktop/login.html:33 ../templates/desktop/sidebar.html:43
-#: ../templates/mobile/base.html:113 ../templates/mobile/base.html:116
-#: ../templates/mobile/login.html:15 ../templates/mobile_2/base.html:115
-#: ../templates/mobile_2/login.html:16
+#: ../src/web_main.py:90 ../src/web_main.py:101 ../src/web_main.py:115
+#: ../src/web_main.py:120 ../src/web_main.py:130 ../src/web_main.py:160
+#: ../src/web_main.py:188 ../templates/desktop/login.html:33
+#: ../templates/desktop/sidebar.html:43 ../templates/mobile/base.html:113
+#: ../templates/mobile/base.html:116 ../templates/mobile/login.html:15
+#: ../templates/mobile_2/base.html:115 ../templates/mobile_2/login.html:16
 msgid "Login"
 msgstr "로그인"
 
-#: ../src/web_main.py:142
+#: ../src/web_main.py:152
 msgid "UNDEFINED"
 msgstr "정의되지 않음"
 
-#: ../src/web_main.py:146
+#: ../src/web_main.py:156
 msgid "No user ID or password specified."
 msgstr "사용자 ID나 암호를 입력하지 않았습니다."
 
-#: ../src/web_main.py:183 ../src/web_main.py:184
+#: ../src/web_main.py:200 ../src/web_main.py:201
 #: ../templates/desktop/sidebar.html:43
 msgid "Lost Login?"
 msgstr "암호 찾기"
 
-#: ../src/web_main.py:204
+#: ../src/web_main.py:221
 msgid "NO_SUCH_MAIL_ADDRESS"
 msgstr "이메일 주소가 등록되지 않았습니다"
 
-#: ../src/web_main.py:209
+#: ../src/web_main.py:226
 msgid "NOAH password recovery"
 msgstr "노아 암호 찾기"
 
-#: ../src/web_main.py:210
+#: ../src/web_main.py:227
 #, python-format
 msgid ""
 "Dear NOAH user,\n"
@@ -371,34 +372,34 @@ msgstr ""
 "만약 암호 찾기를 요청하지 않으셨다면 지금 즉시 계정에 로그인하십시오. 이 링크"
 "는 계정에 로그인하기 전까지 사용할 수 있습니다."
 
-#: ../src/web_main.py:218
+#: ../src/web_main.py:235
 msgid "Message Sent. Please follow instructions on the message."
 msgstr "메시지를 보냈습니다. 메시지에 있는 지시 사항을 참고하십시오."
 
-#: ../src/web_main.py:219 ../src/web_main.py:248
+#: ../src/web_main.py:236 ../src/web_main.py:265
 #: ../templates/mobile/board.html:58 ../templates/mobile/subboard_list.html:39
 msgid "Information"
 msgstr "정보"
 
-#: ../src/web_main.py:230
+#: ../src/web_main.py:247
 msgid "INVALID_LINK"
 msgstr "잘못된 링크"
 
-#: ../src/web_main.py:239
+#: ../src/web_main.py:256
 msgid "INVALID_PASSWORD_KEY"
 msgstr "잘못된 암호 찾기 키"
 
-#: ../src/web_main.py:247
+#: ../src/web_main.py:264
 #, python-format
 msgid "Your temporary password is \"%s\"(case-sensitive). Change password now."
 msgstr "임시 암호는 \"%s\"입니다. (대소문자 구분) 지금 암호를 바꾸십시오."
 
-#: ../src/web_main.py:252 ../src/web_main.py:253
+#: ../src/web_main.py:269 ../src/web_main.py:270
 #: ../templates/mobile/base.html:128 ../templates/mobile_2/base.html:145
 msgid "Credits"
 msgstr "개발자 정보"
 
-#: ../src/web_main.py:270 ../src/web_main.py:271
+#: ../src/web_main.py:287 ../src/web_main.py:288
 msgid "All Posts"
 msgstr "모든 글"
 
@@ -427,7 +428,7 @@ msgid "User Information"
 msgstr "사용자 정보"
 
 #: ../src/web_user.py:136 ../src/web_user.py:137
-#: ../templates/desktop/sidebar.html:70 ../templates/mobile/base.html:118
+#: ../templates/desktop/sidebar.html:81 ../templates/mobile/base.html:118
 #: ../templates/mobile_2/base.html:122
 msgid "New Article"
 msgstr "새글읽기"
@@ -444,7 +445,7 @@ msgid "Leave NOAH"
 msgstr "회원 탈퇴"
 
 #: ../src/web_user.py:231 ../src/web_user.py:232
-#: ../templates/desktop/sidebar.html:92 ../templates/mobile/base.html:121
+#: ../templates/desktop/sidebar.html:103 ../templates/mobile/base.html:121
 #: ../templates/mobile_2/base.html:125
 msgid "My Boards"
 msgstr "내 게시판"
@@ -730,7 +731,8 @@ msgstr "이 창 닫기"
 #: ../templates/desktop/board.html:19 ../templates/mobile/board.html:20
 #: ../templates/mobile_2/board.html:20
 msgid "No articles in this board.<br />Press 'Write' to write one."
-msgstr "현재 게시판에 글이 없습니다.<br />'글 쓰기'를 누르면 글을 쓸 수 있습니다."
+msgstr ""
+"현재 게시판에 글이 없습니다.<br />'글 쓰기'를 누르면 글을 쓸 수 있습니다."
 
 #: ../templates/desktop/board.html:21 ../templates/mobile/board.html:22
 #: ../templates/mobile_2/board.html:22
@@ -815,7 +817,7 @@ msgstr "구독"
 msgid "Body"
 msgstr "본문"
 
-#: ../templates/desktop/board.html:179 ../templates/desktop/sidebar.html:169
+#: ../templates/desktop/board.html:179 ../templates/desktop/sidebar.html:180
 #: ../templates/mobile/login.html:17
 msgid "Notice"
 msgstr "공지"
@@ -1211,7 +1213,7 @@ msgstr "메시지 보내기"
 msgid "Department Notice"
 msgstr "전산학과 공지"
 
-#: ../templates/desktop/main.html:19 ../templates/desktop/sidebar.html:170
+#: ../templates/desktop/main.html:19 ../templates/desktop/sidebar.html:181
 msgid "Student Notice"
 msgstr "학생 공지"
 
@@ -1220,16 +1222,16 @@ msgid "Free Board"
 msgstr "자유 게시판"
 
 #: ../templates/desktop/main.html:45 ../templates/desktop/main.html:78
-#: ../templates/desktop/sidebar.html:178 ../templates/mobile/base.html:107
+#: ../templates/desktop/sidebar.html:189 ../templates/mobile/base.html:107
 msgid "Friends"
 msgstr "친목"
 
 #: ../templates/desktop/main.html:45 ../templates/desktop/main.html:78
-#: ../templates/desktop/sidebar.html:179
+#: ../templates/desktop/sidebar.html:190
 msgid "Undergraduate"
 msgstr "학부"
 
-#: ../templates/desktop/main.html:65 ../templates/desktop/sidebar.html:186
+#: ../templates/desktop/main.html:65 ../templates/desktop/sidebar.html:197
 #: ../templates/mobile/base.html:108
 msgid "Courses"
 msgstr "개설 교과목"
@@ -1242,24 +1244,24 @@ msgstr "이번 학기 과목"
 msgid "Old Courses"
 msgstr "예전 과목"
 
-#: ../templates/desktop/main.html:73 ../templates/desktop/sidebar.html:166
+#: ../templates/desktop/main.html:73 ../templates/desktop/sidebar.html:177
 #: ../templates/mobile/base.html:106
 msgid "Department"
 msgstr "전산학과"
 
-#: ../templates/desktop/main.html:75 ../templates/desktop/sidebar.html:171
+#: ../templates/desktop/main.html:75 ../templates/desktop/sidebar.html:182
 msgid "To Dept."
 msgstr "건의"
 
-#: ../templates/desktop/main.html:76 ../templates/desktop/sidebar.html:174
+#: ../templates/desktop/main.html:76 ../templates/desktop/sidebar.html:185
 msgid "EVE Room"
 msgstr "과기계실"
 
-#: ../templates/desktop/main.html:77 ../templates/desktop/sidebar.html:175
+#: ../templates/desktop/main.html:77 ../templates/desktop/sidebar.html:186
 msgid "Job Offer"
 msgstr "구인/구직"
 
-#: ../templates/desktop/main.html:78 ../templates/desktop/sidebar.html:180
+#: ../templates/desktop/main.html:78 ../templates/desktop/sidebar.html:191
 msgid "Master"
 msgstr "석사"
 
@@ -1529,64 +1531,68 @@ msgid "Auto Login (max two weeks)"
 msgstr "자동 로그인 (최대 2주)"
 
 #: ../templates/desktop/sidebar.html:48
+msgid "Safe Login (HTTPS)"
+msgstr "보안 로그인 (HTTPS)"
+
+#: ../templates/desktop/sidebar.html:50
 msgid "Full HTTPS session"
 msgstr "HTTPS 세션 접속"
 
-#: ../templates/desktop/sidebar.html:67 ../templates/mobile/base.html:123
+#: ../templates/desktop/sidebar.html:78 ../templates/mobile/base.html:123
 msgid "My Info"
 msgstr "내 정보"
 
-#: ../templates/desktop/sidebar.html:73 ../templates/desktop/sidebar.html:75
+#: ../templates/desktop/sidebar.html:84 ../templates/desktop/sidebar.html:86
 msgid "Mail"
 msgstr "메일"
 
-#: ../templates/desktop/sidebar.html:77 ../templates/mobile/base.html:124
+#: ../templates/desktop/sidebar.html:88 ../templates/mobile/base.html:124
 #: ../templates/mobile_2/base.html:127
 msgid "Logout"
 msgstr "로그아웃"
 
-#: ../templates/desktop/sidebar.html:84
+#: ../templates/desktop/sidebar.html:95
 msgid "Sub-boards"
 msgstr "하위 게시판"
 
-#: ../templates/desktop/sidebar.html:115
+#: ../templates/desktop/sidebar.html:126
 msgid "You have no boards"
 msgstr "만든 게시판이 없습니다"
 
-#: ../templates/desktop/sidebar.html:121 ../templates/mobile/base.html:122
+#: ../templates/desktop/sidebar.html:132 ../templates/mobile/base.html:122
 #: ../templates/mobile_2/base.html:126
 msgid "Favorites"
 msgstr "즐겨찾기"
 
-#: ../templates/desktop/sidebar.html:124 ../templates/desktop/sidebar.html:131
+#: ../templates/desktop/sidebar.html:135 ../templates/desktop/sidebar.html:142
 msgid "(not available)"
 msgstr "(사용 불가)"
 
-#: ../templates/desktop/sidebar.html:126
+#: ../templates/desktop/sidebar.html:137
 msgid "(remove)"
 msgstr "(삭제)"
 
-#: ../templates/desktop/sidebar.html:128
+#: ../templates/desktop/sidebar.html:139
 msgid "(add)"
 msgstr "(추가)"
 
-#: ../templates/desktop/sidebar.html:133
+#: ../templates/desktop/sidebar.html:144
 msgid "(manage)"
 msgstr "(관리)"
 
-#: ../templates/desktop/sidebar.html:156
+#: ../templates/desktop/sidebar.html:167
 msgid "No board in your favorites"
 msgstr "즐겨찾는 게시판이 없습니다"
 
-#: ../templates/desktop/sidebar.html:158
+#: ../templates/desktop/sidebar.html:169
 msgid "Feed"
 msgstr "피드"
 
-#: ../templates/desktop/sidebar.html:187
+#: ../templates/desktop/sidebar.html:198
 msgid "(archive)"
 msgstr "(예전)"
 
-#: ../templates/desktop/sidebar.html:202
+#: ../templates/desktop/sidebar.html:213
 msgid "No course boards"
 msgstr "과목 게시판이 없습니다"
 

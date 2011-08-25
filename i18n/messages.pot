@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2011-08-22 20:04+0900\n"
+"POT-Creation-Date: 2011-08-25 16:40+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,7 +31,7 @@ msgstr ""
 
 #: ../src/article.py:209 ../src/article.py:258 ../src/article.py:298
 #: ../src/article.py:337 ../src/article.py:425 ../src/user.py:150
-#: ../src/user.py:245 ../src/web_user.py:111
+#: ../src/user.py:281 ../src/web_user.py:111
 msgid "NO_SUCH_USER"
 msgstr ""
 
@@ -61,7 +61,7 @@ msgstr ""
 
 #: ../src/article.py:242 ../src/article.py:287 ../src/article.py:326
 #: ../src/article.py:399 ../src/article.py:447 ../src/article.py:465
-#: ../src/pm.py:117 ../src/pm.py:128 ../src/user.py:289 ../src/user.py:370
+#: ../src/pm.py:117 ../src/pm.py:128 ../src/user.py:325 ../src/user.py:406
 msgid "DATABASE_ERROR"
 msgstr ""
 
@@ -74,7 +74,7 @@ msgstr ""
 msgid "HAS_REPLY"
 msgstr ""
 
-#: ../src/article.py:330 ../src/pm.py:120 ../src/pm.py:131 ../src/user.py:373
+#: ../src/article.py:330 ../src/pm.py:120 ../src/pm.py:131 ../src/user.py:409
 msgid "SUCCESS"
 msgstr ""
 
@@ -173,19 +173,20 @@ msgid ", %(number)d %(type)s"
 msgstr ""
 
 #: ../src/user.py:155 ../src/user.py:158 ../src/web_main.py:102
-#: ../src/web_user.py:168 ../src/web_user.py:216
+#: ../src/web_main.py:116 ../src/web_main.py:121 ../src/web_user.py:168
+#: ../src/web_user.py:216
 msgid "INVALID_PASSWORD"
 msgstr ""
 
-#: ../src/user.py:279 ../src/web_main.py:236
+#: ../src/user.py:315 ../src/web_main.py:253
 msgid "INVALID_USERNAME"
 msgstr ""
 
-#: ../src/user.py:281 ../src/web_main.py:59
+#: ../src/user.py:317 ../src/web_main.py:59
 msgid "ID_ALREADY_EXISTS"
 msgstr ""
 
-#: ../src/user.py:357
+#: ../src/user.py:393
 msgid "HAS_BOARD"
 msgstr ""
 
@@ -301,11 +302,11 @@ msgstr ""
 msgid "Join"
 msgstr ""
 
-#: ../src/web_main.py:52 ../src/web_main.py:199
+#: ../src/web_main.py:52 ../src/web_main.py:216
 msgid "INCORRECT_CAPTCHA"
 msgstr ""
 
-#: ../src/web_main.py:54 ../src/web_main.py:201
+#: ../src/web_main.py:54 ../src/web_main.py:218
 msgid "CAPTCHA_ERROR"
 msgstr ""
 
@@ -321,37 +322,37 @@ msgstr ""
 msgid "PASSWORD_TOO_SHORT"
 msgstr ""
 
-#: ../src/web_main.py:90 ../src/web_main.py:101 ../src/web_main.py:120
-#: ../src/web_main.py:150 ../src/web_main.py:171
-#: ../templates/desktop/login.html:33 ../templates/desktop/sidebar.html:43
-#: ../templates/mobile/base.html:113 ../templates/mobile/base.html:116
-#: ../templates/mobile/login.html:15 ../templates/mobile_2/base.html:115
-#: ../templates/mobile_2/login.html:16
+#: ../src/web_main.py:90 ../src/web_main.py:101 ../src/web_main.py:115
+#: ../src/web_main.py:120 ../src/web_main.py:130 ../src/web_main.py:160
+#: ../src/web_main.py:188 ../templates/desktop/login.html:33
+#: ../templates/desktop/sidebar.html:43 ../templates/mobile/base.html:113
+#: ../templates/mobile/base.html:116 ../templates/mobile/login.html:15
+#: ../templates/mobile_2/base.html:115 ../templates/mobile_2/login.html:16
 msgid "Login"
 msgstr ""
 
-#: ../src/web_main.py:142
+#: ../src/web_main.py:152
 msgid "UNDEFINED"
 msgstr ""
 
-#: ../src/web_main.py:146
+#: ../src/web_main.py:156
 msgid "No user ID or password specified."
 msgstr ""
 
-#: ../src/web_main.py:183 ../src/web_main.py:184
+#: ../src/web_main.py:200 ../src/web_main.py:201
 #: ../templates/desktop/sidebar.html:43
 msgid "Lost Login?"
 msgstr ""
 
-#: ../src/web_main.py:204
+#: ../src/web_main.py:221
 msgid "NO_SUCH_MAIL_ADDRESS"
 msgstr ""
 
-#: ../src/web_main.py:209
+#: ../src/web_main.py:226
 msgid "NOAH password recovery"
 msgstr ""
 
-#: ../src/web_main.py:210
+#: ../src/web_main.py:227
 #, python-format
 msgid ""
 "Dear NOAH user,\n"
@@ -366,34 +367,34 @@ msgid ""
 "account. This link will not be vaild after logging into the account."
 msgstr ""
 
-#: ../src/web_main.py:218
+#: ../src/web_main.py:235
 msgid "Message Sent. Please follow instructions on the message."
 msgstr ""
 
-#: ../src/web_main.py:219 ../src/web_main.py:248
+#: ../src/web_main.py:236 ../src/web_main.py:265
 #: ../templates/mobile/board.html:58 ../templates/mobile/subboard_list.html:39
 msgid "Information"
 msgstr ""
 
-#: ../src/web_main.py:230
+#: ../src/web_main.py:247
 msgid "INVALID_LINK"
 msgstr ""
 
-#: ../src/web_main.py:239
+#: ../src/web_main.py:256
 msgid "INVALID_PASSWORD_KEY"
 msgstr ""
 
-#: ../src/web_main.py:247
+#: ../src/web_main.py:264
 #, python-format
 msgid "Your temporary password is \"%s\"(case-sensitive). Change password now."
 msgstr ""
 
-#: ../src/web_main.py:252 ../src/web_main.py:253
+#: ../src/web_main.py:269 ../src/web_main.py:270
 #: ../templates/mobile/base.html:128 ../templates/mobile_2/base.html:145
 msgid "Credits"
 msgstr ""
 
-#: ../src/web_main.py:270 ../src/web_main.py:271
+#: ../src/web_main.py:287 ../src/web_main.py:288
 msgid "All Posts"
 msgstr ""
 
@@ -422,7 +423,7 @@ msgid "User Information"
 msgstr ""
 
 #: ../src/web_user.py:136 ../src/web_user.py:137
-#: ../templates/desktop/sidebar.html:70 ../templates/mobile/base.html:118
+#: ../templates/desktop/sidebar.html:81 ../templates/mobile/base.html:118
 #: ../templates/mobile_2/base.html:122
 msgid "New Article"
 msgstr ""
@@ -439,7 +440,7 @@ msgid "Leave NOAH"
 msgstr ""
 
 #: ../src/web_user.py:231 ../src/web_user.py:232
-#: ../templates/desktop/sidebar.html:92 ../templates/mobile/base.html:121
+#: ../templates/desktop/sidebar.html:103 ../templates/mobile/base.html:121
 #: ../templates/mobile_2/base.html:125
 msgid "My Boards"
 msgstr ""
@@ -803,7 +804,7 @@ msgstr ""
 msgid "Body"
 msgstr ""
 
-#: ../templates/desktop/board.html:179 ../templates/desktop/sidebar.html:169
+#: ../templates/desktop/board.html:179 ../templates/desktop/sidebar.html:180
 #: ../templates/mobile/login.html:17
 msgid "Notice"
 msgstr ""
@@ -1194,7 +1195,7 @@ msgstr ""
 msgid "Department Notice"
 msgstr ""
 
-#: ../templates/desktop/main.html:19 ../templates/desktop/sidebar.html:170
+#: ../templates/desktop/main.html:19 ../templates/desktop/sidebar.html:181
 msgid "Student Notice"
 msgstr ""
 
@@ -1203,16 +1204,16 @@ msgid "Free Board"
 msgstr ""
 
 #: ../templates/desktop/main.html:45 ../templates/desktop/main.html:78
-#: ../templates/desktop/sidebar.html:178 ../templates/mobile/base.html:107
+#: ../templates/desktop/sidebar.html:189 ../templates/mobile/base.html:107
 msgid "Friends"
 msgstr ""
 
 #: ../templates/desktop/main.html:45 ../templates/desktop/main.html:78
-#: ../templates/desktop/sidebar.html:179
+#: ../templates/desktop/sidebar.html:190
 msgid "Undergraduate"
 msgstr ""
 
-#: ../templates/desktop/main.html:65 ../templates/desktop/sidebar.html:186
+#: ../templates/desktop/main.html:65 ../templates/desktop/sidebar.html:197
 #: ../templates/mobile/base.html:108
 msgid "Courses"
 msgstr ""
@@ -1225,24 +1226,24 @@ msgstr ""
 msgid "Old Courses"
 msgstr ""
 
-#: ../templates/desktop/main.html:73 ../templates/desktop/sidebar.html:166
+#: ../templates/desktop/main.html:73 ../templates/desktop/sidebar.html:177
 #: ../templates/mobile/base.html:106
 msgid "Department"
 msgstr ""
 
-#: ../templates/desktop/main.html:75 ../templates/desktop/sidebar.html:171
+#: ../templates/desktop/main.html:75 ../templates/desktop/sidebar.html:182
 msgid "To Dept."
 msgstr ""
 
-#: ../templates/desktop/main.html:76 ../templates/desktop/sidebar.html:174
+#: ../templates/desktop/main.html:76 ../templates/desktop/sidebar.html:185
 msgid "EVE Room"
 msgstr ""
 
-#: ../templates/desktop/main.html:77 ../templates/desktop/sidebar.html:175
+#: ../templates/desktop/main.html:77 ../templates/desktop/sidebar.html:186
 msgid "Job Offer"
 msgstr ""
 
-#: ../templates/desktop/main.html:78 ../templates/desktop/sidebar.html:180
+#: ../templates/desktop/main.html:78 ../templates/desktop/sidebar.html:191
 msgid "Master"
 msgstr ""
 
@@ -1507,64 +1508,68 @@ msgid "Auto Login (max two weeks)"
 msgstr ""
 
 #: ../templates/desktop/sidebar.html:48
+msgid "Safe Login (HTTPS)"
+msgstr ""
+
+#: ../templates/desktop/sidebar.html:50
 msgid "Full HTTPS session"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:67 ../templates/mobile/base.html:123
+#: ../templates/desktop/sidebar.html:78 ../templates/mobile/base.html:123
 msgid "My Info"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:73 ../templates/desktop/sidebar.html:75
+#: ../templates/desktop/sidebar.html:84 ../templates/desktop/sidebar.html:86
 msgid "Mail"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:77 ../templates/mobile/base.html:124
+#: ../templates/desktop/sidebar.html:88 ../templates/mobile/base.html:124
 #: ../templates/mobile_2/base.html:127
 msgid "Logout"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:84
+#: ../templates/desktop/sidebar.html:95
 msgid "Sub-boards"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:115
+#: ../templates/desktop/sidebar.html:126
 msgid "You have no boards"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:121 ../templates/mobile/base.html:122
+#: ../templates/desktop/sidebar.html:132 ../templates/mobile/base.html:122
 #: ../templates/mobile_2/base.html:126
 msgid "Favorites"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:124 ../templates/desktop/sidebar.html:131
+#: ../templates/desktop/sidebar.html:135 ../templates/desktop/sidebar.html:142
 msgid "(not available)"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:126
+#: ../templates/desktop/sidebar.html:137
 msgid "(remove)"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:128
+#: ../templates/desktop/sidebar.html:139
 msgid "(add)"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:133
+#: ../templates/desktop/sidebar.html:144
 msgid "(manage)"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:156
+#: ../templates/desktop/sidebar.html:167
 msgid "No board in your favorites"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:158
+#: ../templates/desktop/sidebar.html:169
 msgid "Feed"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:187
+#: ../templates/desktop/sidebar.html:198
 msgid "(archive)"
 msgstr ""
 
-#: ../templates/desktop/sidebar.html:202
+#: ../templates/desktop/sidebar.html:213
 msgid "No course boards"
 msgstr ""
 
