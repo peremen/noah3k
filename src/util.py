@@ -51,8 +51,6 @@ def confirmation_helper(func):
 
 def theme(func):
     def _exec(*args, **kwargs):
-        start = datetime.now()
-
         arglist = [args[0]]
         theme = args[1]
 
@@ -66,14 +64,10 @@ def theme(func):
         else:
             raise NameError('Invalid theme: ' + theme)
 
-        argstr = ""
         for i in range(2, len(args)):
             arglist.append(args[i])
-            argstr += args[i] + '/'
 
         res = func(*tuple(arglist), **kwargs)
-        delta = datetime.now() - start
-        print("[BENCHMARK] " + str(argstr) + "| " + str(delta))
         return res
     return _exec
 
