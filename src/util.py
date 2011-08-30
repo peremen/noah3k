@@ -12,6 +12,7 @@ import web
 import board, article
 import config
 from config import render
+from datetime import datetime
 import i18n
 import bbcode
 _ = i18n.custom_gettext
@@ -50,6 +51,8 @@ def confirmation_helper(func):
 
 def theme(func):
     def _exec(*args, **kwargs):
+        start = datetime.now()
+
         arglist = [args[0]]
         theme = args[1]
 
@@ -63,10 +66,15 @@ def theme(func):
         else:
             raise NameError('Invalid theme: ' + theme)
 
+        argstr = ""
         for i in range(2, len(args)):
             arglist.append(args[i])
+            argstr += args[i] + '/'
 
-        return func(*tuple(arglist), **kwargs)
+        res = func(*tuple(arglist), **kwargs)
+        delta = datetime.now() - start
+        print("[BENCHMARK] " + str(argstr) + "| " + str(delta))
+        return res
     return _exec
 
 def error_catcher(func):

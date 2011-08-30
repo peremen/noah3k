@@ -25,7 +25,6 @@ class api:
                 qs = dict()
             else:
                 qs = parse_qs(web.ctx.query[1:], keep_blank_values = True)
-            print qs['action']
             return eval('self.%s' % (qs['action'][0]))(qs)
         except AttributeError:
             return self.api_help()
