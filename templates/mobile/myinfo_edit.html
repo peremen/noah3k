@@ -1,7 +1,7 @@
 <%inherit file="base.html" />
 <% import util, config
 from i18n import custom_gettext as _ %>
-<form name="modify_form" method="post" action="/m/+u/+modify">
+<form name="modify_form" enctype="multipart/form-data" method="post" action="/m/+u/+modify">
 <h3>${_('Edit My Information')}</h3>
 <h4>${_('Personal Information')}</h4>
 <ul class="list2">

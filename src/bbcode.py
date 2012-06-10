@@ -62,6 +62,7 @@ _tags = {"b": {"tmpl":_fmt("<b>%s</b>"), "nest":True},
         "size": {"tmpl":_fmt('<font size="%s">%s</font>'), "nest":True},
 
         "link": {"tmpl":_fmt("<a href=\"%s\">%s</a>"), "nest":True},
+        "anchor": {"tmpl":_fmt("<a name=\"%s\">%s</a>"), "net":True},
         "img": {"tmpl":_fmt("<img src=\"%s\" alt=\"%s\"/>"), "nest":False},
         "color": {"tmpl":_fmt("<span style=\"color:%s;\">%s</span>"), "nest":True},
         "code": {"tmpl":_fmt_code, "nest":False},

@@ -1,7 +1,7 @@
 <%inherit file="base.html" />
 <% import util, config
 from i18n import custom_gettext as _ %>
-<form name="modify_form" method="post" action="/m/+u/+modify">
+<form name="modify_form" enctype="multipart/form-data" method="post" action="/m/+u/+modify">
 <ul class="list2">
     <li><label>ID</label> ${user.uId}</li>
     <li><label>${_('Nickname')}</label> <input name="nick" type="text" maxlength="16"  value="${user.uNick}" /></li>
