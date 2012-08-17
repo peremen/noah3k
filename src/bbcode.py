@@ -3,6 +3,7 @@
 
 import re
 import config
+from lepl.apps.rfc3696 import HttpUrl
 
 if "tmpl_video_width" not in dir(config):
     config.tmpl_video_width = 640
@@ -12,9 +13,24 @@ if "tmpl_video_height" not in dir(config):
 _re_url = re.compile(r"((https?):((//)|(\\\\))+[\S]*)", re.MULTILINE|re.UNICODE)
 _re_list = re.compile('\[\*\]([^[]*)')
 
-def _fmt(tmpl):
+def sanitize_url(u):
+    if u[:7] != 'http://':
+        colon_pos = u.find(':')
+        u2 = 'http' + u[colon_pos:]
+    else:
+        u2 = u
+    validator = HttpUrl()
+    if validator(u2):
+        return u
+    else:
+        return '/static/image/error/catch.jpg'
+
+def _fmt(tmpl, is_url = False):
     if(tmpl.count("%s") == 1):
-        return lambda args: tmpl % args[1];
+        if is_url:
+            return lambda args: tmpl % sanitize_url(args[1]);
+        else:
+            return lambda args: tmpl % args[1];
     return lambda args: tmpl % args;
 
 def _fmt_video(args):
@@ -54,6 +70,10 @@ def _fmt_math(args):
     math = '<img src="http://l.wordpress.com/latex.php?bg=ffffff&fg=000000&latex=%s" alt="latex math"/>'
     return math % args[1].replace('+', '%2B')
 
+def _fmt_image(args):
+    image = "<img src=\"%s\" alt=\"%s\"/>"
+    return image % (sanitize_url(args[0]), args[1])
+
 _tags = {"b": {"tmpl":_fmt("<b>%s</b>"), "nest":True},
         "i": {"tmpl":_fmt("<i>%s</i>"), "nest":True},
         "u": {"tmpl":_fmt("<u>%s</u>"), "nest":True},
@@ -61,9 +81,9 @@ _tags = {"b": {"tmpl":_fmt("<b>%s</b>"), "nest":True},
         "center": {"tmpl":_fmt("<center>%s</center>"), "nest":True},
         "size": {"tmpl":_fmt('<font size="%s">%s</font>'), "nest":True},
 
-        "link": {"tmpl":_fmt("<a href=\"%s\">%s</a>"), "nest":True},
+        "link": {"tmpl":_fmt("<a href=\"%s\">%s</a>", True), "nest":True},
         "anchor": {"tmpl":_fmt("<a name=\"%s\">%s</a>"), "net":True},
-        "img": {"tmpl":_fmt("<img src=\"%s\" alt=\"%s\"/>"), "nest":False},
+        "img": {"tmpl":_fmt_image, "nest":False},
         "color": {"tmpl":_fmt("<span style=\"color:%s;\">%s</span>"), "nest":True},
         "code": {"tmpl":_fmt_code, "nest":False},
         "quote": {"tmpl":_fmt("<b>%s</b><br/><blockquote>%s</blockquote>"), "nest":True},
