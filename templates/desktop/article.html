@@ -65,7 +65,7 @@ ${_('Attachment')}:
 	%if a[1].endswith('mp4'):
 	    (${a[1].decode('utf-8')})<br />
 	    <div class="video">
-		<video controls="controls" style="width: 600px;">
+		<video controls="controls" style="width: 640px;">
 			<source src="${config.attachment_web_path}${article['aSerial']}/${urllib.quote(a[1])}" type="video/mp4"/>
 		</video>
 	    </div>
