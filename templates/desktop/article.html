@@ -58,6 +58,21 @@ ${_('Attachment')}:
         </div>
     % endfor
 % endif
+
+% if attachment is not UNDEFINED:
+    %if len(attachment) > 0:
+    % for a in attachment:
+	%if a[1].endswith('mp4'):
+	    (${a[1].decode('utf-8')})<br />
+	    <div class="video">
+		<video controls="controls" style="width: 600px;">
+			<source src="${config.attachment_web_path}${article['aSerial']}/${urllib.quote(a[1])}" type="video/mp4"/>
+		</video>
+	    </div>
+	%endif
+    % endfor
+    % endif
+% endif
 ${util.format(article['aContent'])}
     </div>
 <!--
