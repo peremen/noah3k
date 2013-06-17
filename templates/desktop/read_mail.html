@@ -21,7 +21,7 @@ ${_('Internal Error')}
     <img src="/static/image/no_avatar.png" class="avatar_large" alt="Avatar" />
     % endif
 </div>
-<span class="title">${mail.mTitle}</span>&nbsp;&nbsp;&nbsp;${get_formatted_username(mail.mSenderSerial)}
+<span class="title">${mail.mTitle|h}</span>&nbsp;&nbsp;&nbsp;${get_formatted_username(mail.mSenderSerial)}
 <p style="font-family: monospace;" class="small">${_('Written on %s') % mail.mDatetime.strftime('%Y-%m-%d %H:%M:%S')}</p>
 <div id="content">
 ${util.format(mail.mContent)}

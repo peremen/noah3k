@@ -172,7 +172,7 @@ today = datetime.datetime.today()
     %if (indent is UNDEFINED or indent == True) and a.aLevel > 0:
         <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (a.aLevel-1)}px" />
     %endif
-    ${a.aTitle}
+    ${a.aTitle|h}
     <% attach_cnt = len(attachment.get_attachment(a.aSerial)) %>
     % if attach_cnt > 0:
     <img src="/static/image/file.png" alt="attachment" />

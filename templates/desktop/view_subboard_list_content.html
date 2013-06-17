@@ -32,7 +32,7 @@ import board, acl, util %>
             <a href= "${child_board.bName}" class="boardlink">${child_board.bName}&nbsp;</a>
         </td>
         <td width="55%">
-            <a href= "${child_board.bName}" class="boardlink">${child_board.bDescription}&nbsp; </a>
+            <a href= "${child_board.bName}" class="boardlink">${child_board.bDescription|h}&nbsp; </a>
         </td>
     </tr>
     % endfor

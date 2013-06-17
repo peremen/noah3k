@@ -43,7 +43,7 @@ import board, acl, util %>
             <a href= "${dest_board.bName}" class="boardlink">${dest_board.bName}&nbsp;</a>
         </td>
         <td width="52%">
-            <a href= "${dest_board.bName}" class="boardlink">${dest_board.bDescription}&nbsp; </a>
+            <a href= "${dest_board.bName}" class="boardlink">${dest_board.bDescription|h}&nbsp; </a>
         </td>
         <td style="text-align: center;"><input type="checkbox" name="${type}_delete_${dest_board.bSerial}" /> </td>
     </tr>

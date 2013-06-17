@@ -30,9 +30,9 @@ ${stylesheet}
 </div>
 % endif
 % if A.get_mark_status(article['aSerial']):
-<span class="title"><span class="emphasized">${article['aTitle']}</span></span>
+<span class="title"><span class="emphasized">${article['aTitle']|h}</span></span>
 % else:
-<span class="title">${article['aTitle']}</span>
+<span class="title">${article['aTitle']|h}</span>
 % endif
 &nbsp;&nbsp;&nbsp;${get_formatted_username(article['uSerial'])}</p>
 <p style="font-family: monospace;" class="small">${_('Written on %s') % article['aDatetime']}
@@ -83,10 +83,10 @@ ${util.format(article['aContent'])}
     <!-- 이전글/다음글 -->
     <div class="article-link">
 % if prev_id > 0:
-    <a class="articlelink prev-article" href="${util.link('/%s/+read/%s' % (board_path, prev_id))}">&lt;&nbsp;${A.get_title(prev_id)}</a> 
+    <a class="articlelink prev-article" href="${util.link('/%s/+read/%s' % (board_path, prev_id))}">&lt;&nbsp;${A.get_title(prev_id)|h}</a> 
 % endif
 % if next_id > 0:
-    <a class="articlelink next-article" href="${util.link('/%s/+read/%s' % (board_path, next_id))}">${A.get_title(next_id)}&nbsp;&gt;</a> 
+    <a class="articlelink next-article" href="${util.link('/%s/+read/%s' % (board_path, next_id))}">${A.get_title(next_id)|h}&nbsp;&gt;</a> 
 % else:
     <a class="articlelink next-article" href="#">&nbsp;</a> 
 % endif

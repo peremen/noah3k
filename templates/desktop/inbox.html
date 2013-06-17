@@ -34,7 +34,7 @@ ${_('%s messages' % len(mails))}<br />
 
         <!-- 제목 --> 
         <td width="55%">
-        <a class="articlelink" href="/+u/+read_message?message_id=${m.mSerial}">${m.mTitle}
+        <a class="articlelink" href="/+u/+read_message?message_id=${m.mSerial}">${m.mTitle|h}
         % if m.mMark == 0:
         <span class="new">new</span>
         % endif

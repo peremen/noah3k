@@ -113,7 +113,7 @@ def traverse_child_board(path):
     % if my_board.bDescription.strip() == '':
 ${my_board.bName}\
     % else:
-${my_board.bDescription}\
+${my_board.bDescription|h}\
     % endif
 </a></li>
     <% not_has_my_board = False %>
@@ -152,7 +152,7 @@ href="#">${_('(not available)')}\
     % if my_board.bDescription.strip() == '':
 ${my_board.bName}\
     % else:
-${my_board.bDescription}\
+${my_board.bDescription|h}\
     % endif
 </a></li>
     <% not_has_fav_board = False %>

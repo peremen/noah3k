@@ -80,9 +80,9 @@ def get_formatted_username(uid):
         <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (a.aLevel-1)}px" />
 %endif
 %if a.has_key('board_name'):
-        <a href="${util.link('%s/+read/%s' % (a.board_name, a.aSerial))}" class="articlelink">${a.aTitle}
+        <a href="${util.link('%s/+read/%s' % (a.board_name, a.aSerial))}" class="articlelink">${a.aTitle|h}
 % else:
-        <a href="${util.link('%s/+read/%s' % (board._get_path_from_board_id(a.bSerial), a.aSerial))}" class="articlelink">${a.aTitle}
+        <a href="${util.link('%s/+read/%s' % (board._get_path_from_board_id(a.bSerial), a.aSerial))}" class="articlelink">${a.aTitle|h}
 % endif
 
 %if a.has_key('comment_count'):

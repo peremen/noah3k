@@ -14,7 +14,7 @@ def get_formatted_username(uid):
         return _("Former Member")
 %>
 <div id="article">
-<h2>${article['aTitle']}</h2>
+<h2>${article['aTitle']|h}</h2>
 <span class="writer">${get_formatted_username(article['uSerial'])}</span>
 % if article.aEditedDatetime:
 <span class="last_modified">${_('Last Modified')}: ${article['aEditedDatetime'].strftime('%Y-%m-%d %H:%M')}</span>
@@ -67,10 +67,10 @@ ${util.format(article['aContent'])}
 
 <!-- 이전글/다음글 -->
 % if prev_id > 0:
-<span style="color: grey">${_('Prev')}</span> <a class="articlelink" href="/m/${board_path}/+read/${prev_id}">${A.get_title(prev_id)}</a><br />
+<span style="color: grey">${_('Prev')}</span> <a class="articlelink" href="/m/${board_path}/+read/${prev_id}">${A.get_title(prev_id)|h}</a><br />
 % endif
 % if next_id > 0:
-<span style="color: grey">${_('Next')}</span> <a class="articlelink" href="/m/${board_path}/+read/${next_id}">${A.get_title(next_id)}</a><br />
+<span style="color: grey">${_('Next')}</span> <a class="articlelink" href="/m/${board_path}/+read/${next_id}">${A.get_title(next_id)|h}</a><br />
 % endif
 <br />
 
