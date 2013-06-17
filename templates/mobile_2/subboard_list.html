@@ -24,7 +24,7 @@ import util %>
         %else:
         <img class="type" src="/static/image/board.png" alt="게시판" />
         %endif
-        ${posixpath.basename(child_board.bName)}&nbsp;&mdash;&nbsp;${child_board.bDescription}</a>
+        ${posixpath.basename(child_board.bName)}&nbsp;&mdash;&nbsp;${child_board.bDescription|h}</a>
     </li>
     % endfor
 % endif

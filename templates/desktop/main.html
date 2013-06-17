@@ -135,7 +135,7 @@ import reldates, util %><%inherit file="base.html" />
 %if a.aLevel > 0:
             <img src="/static/image/thread.png" alt="thread" style="margin-left: ${8 + 24 * (a.aLevel-1)}px" />
 %endif
-            <a href="${util.link('%s/+read/%s' % (board_path, a.aSerial))}" class="articlelink">${a.aTitle}
+            <a href="${util.link('%s/+read/%s' % (board_path, a.aSerial))}" class="articlelink">${a.aTitle|h}
 % if a.comment_count > 0:
             <span class="commentCount">[${a.comment_count}]</span>
 % endif
