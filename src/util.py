@@ -90,7 +90,7 @@ def error_catcher(func):
 def store_error(current_ctx, error_text):
     if not config.store_error_report:
         return
-    today = datetime.datetime.today()
+    today = datetime.today()
     filename = 'error_%s.txt' % today.strftime('%Y%m%d_%H%M%S')
     try:
         f = open(os.path.join(config.error_report_path, filename), 'w')
